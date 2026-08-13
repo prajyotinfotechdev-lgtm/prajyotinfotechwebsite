@@ -4,7 +4,7 @@ import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 
 // Eagerly load Hero for best LCP
-import Hero from "../components/Hero.jsx";
+import ParticleHero from "../components/ParticleHero.jsx";
 
 // Lazy load everything below the fold
 const Marquee      = lazy(() => import("../components/Marquee.jsx"));
@@ -17,6 +17,7 @@ const Testimonials = lazy(() => import("../components/Testimonials.jsx"));
 const CTA          = lazy(() => import("../components/CTA.jsx"));
 const ConsultBanner = lazy(() => import("../components/ConsultBanner.jsx"));
 const BeforeAfterSlider = lazy(() => import("../components/BeforeAfterSlider.jsx"));
+const ParallaxPortfolio = lazy(() => import("../components/ParallaxPortfolio.jsx"));
 
 const SectionSkeleton = ({ className = "" }) => (
   <div className={`mx-auto w-full max-w-7xl px-4 py-16 ${className}`}>
@@ -89,7 +90,7 @@ export default function Home() {
       <main role="main" aria-label="Prajyot Infotech — Website, App & Software Development">
 
         {/* 1. HERO — with stats bar. Eagerly loaded for best LCP */}
-        <Hero />
+        <ParticleHero />
 
         {/* 2. SERVICES MARQUEE — visual rhythm breaker */}
         <Suspense fallback={<div className="h-16 border-y border-slate-200 bg-white animate-pulse" />}>
@@ -119,6 +120,11 @@ export default function Home() {
         {/* 6. TECH STACK — builds technical trust */}
         <Suspense fallback={<SectionSkeleton />}>
           <TechStack />
+        </Suspense>
+
+        {/* 6.5 PARALLAX PORTFOLIO — Apple style scrolling */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <ParallaxPortfolio />
         </Suspense>
 
         {/* 7. CASE STUDIES — proof of work */}

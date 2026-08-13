@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import TechStackVisualizer from "../components/TechStackVisualizer.jsx";
+import BentoServices from "../components/BentoServices.jsx";
 
 const WA_NUMBER = "917020708747";
 const EMAIL = "prajyot.infotech@gmail.com";
@@ -233,8 +234,13 @@ export default function Services() {
           <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-brand-200/50 blur-3xl" />
         </section>
 
+        {/* BENTO BOX GRID */}
+        <div className="mt-20">
+          <BentoServices />
+        </div>
+
         {/* SERVICES GRID */}
-        <section className="mt-10" aria-label="All services">
+        <section className="mt-20" aria-label="All services">
           <h2 className="text-2xl md:text-3xl font-black text-navy-800">What We Build & Deliver</h2>
           <p className="mt-2 text-slate-600">Complete technology solutions covering every aspect of business digitalization.</p>
           <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
