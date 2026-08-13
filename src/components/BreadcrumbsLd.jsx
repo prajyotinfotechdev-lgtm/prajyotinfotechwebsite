@@ -64,27 +64,14 @@ export default function Breadcrumbs({
                       {label}
                     </span>
                   ) : (
-                    <>
-                      {it.to ? (
-                        <Link to={it.to} className="flex items-center gap-1.5 rounded-full hover:text-brand-600 hover:bg-slate-100/50 px-2 py-0.5 transition-all">
-                          {i === 0 && (
-                            <svg className="size-3.5" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.99 9a.75.75 0 1 1-1.06 1.06l-4.21-4.215V19.5a2.25 2.25 0 0 1-2.25 2.25h-2.25a.75.75 0 0 1-.75-.75v-3.5a.75.75 0 0 0-.75-.75h-2a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 1-.75.75H4.5A2.25 2.25 0 0 1 2.25 19.5v-9.814l-4.21 4.215a.75.75 0 0 1-1.06-1.06l8.99-9Z" />
-                            </svg>
-                          )}
-                          {label}
-                        </Link>
-                      ) : (
-                        <a href={it.url} className="flex items-center gap-1.5 rounded-full hover:text-brand-600 hover:bg-slate-100/50 px-2 py-0.5 transition-all">
-                          {i === 0 && (
-                            <svg className="size-3.5" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.99 9a.75.75 0 1 1-1.06 1.06l-4.21-4.215V19.5a2.25 2.25 0 0 1-2.25 2.25h-2.25a.75.75 0 0 1-.75-.75v-3.5a.75.75 0 0 0-.75-.75h-2a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 1-.75.75H4.5A2.25 2.25 0 0 1 2.25 19.5v-9.814l-4.21 4.215a.75.75 0 0 1-1.06-1.06l8.99-9Z" />
-                            </svg>
-                          )}
-                          {label}
-                        </a>
+                    <Link to={it.to || (it.url ? new URL(it.url, 'http://localhost').pathname : '/')} className="flex items-center gap-1.5 rounded-full hover:text-brand-600 hover:bg-slate-100/50 px-2 py-0.5 transition-all">
+                      {i === 0 && (
+                        <svg className="size-3.5" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.99 9a.75.75 0 1 1-1.06 1.06l-4.21-4.215V19.5a2.25 2.25 0 0 1-2.25 2.25h-2.25a.75.75 0 0 1-.75-.75v-3.5a.75.75 0 0 0-.75-.75h-2a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 1-.75.75H4.5A2.25 2.25 0 0 1 2.25 19.5v-9.814l-4.21 4.215a.75.75 0 0 1-1.06-1.06l8.99-9Z" />
+                        </svg>
                       )}
-                    </>
+                      {label}
+                    </Link>
                   )}
                 </li>
               );
