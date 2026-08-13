@@ -81,6 +81,9 @@ export default function HelpBot({
   const [messages, setMessages] = useState(() => safeGet("helpbot:messages_txt", []));
   const [unread, setUnread] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  
+  const recognitionRef = useRef(null);
 
   const listRef = useRef(null);
   const panelRef = useRef(null);
@@ -171,9 +174,60 @@ export default function HelpBot({
     return () => {
       document.removeEventListener("keydown", onKey);
       if (open) document.body.style.overflow = prevOverflow;
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
+  
+  // Voice Recognition Toggle
+  const toggleListen = () => {
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+      return;
+    }
+    
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Voice search is not supported in this browser. Please use Chrome or Safari.");
+      return;
+    }
+    
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = "en-IN";
+    
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+    
+    recognition.onresult = (e) => {
+      const transcript = e.results[0][0].transcript;
+      if (inputRef.current) {
+        inputRef.current.value = transcript;
+        // Automatically submit the voice query after a brief delay
+        setTimeout(() => {
+          if (inputRef.current.form) {
+            inputRef.current.form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+          }
+        }, 500);
+      }
+    };
+    
+    recognition.onerror = () => {
+      setIsListening(false);
+    };
+    
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+    
+    recognitionRef.current = recognition;
+    recognition.start();
+  };
 
   // Helpers
   const botSay = (text, opts = {}) => {
@@ -561,24 +615,37 @@ Notes: ${notes || "-"}`;
 
           {/* Input */}
           <form onSubmit={onSubmit} className="relative z-10 flex items-center gap-2 border-t border-white/10 bg-navy-900/80 p-3 backdrop-blur-md">
+            <button
+              type="button"
+              onClick={toggleListen}
+              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${isListening ? 'bg-rose-500 text-white animate-pulse shadow-lg shadow-rose-500/40' : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white'}`}
+              aria-label={isListening ? "Stop listening" : "Start voice input"}
+            >
+              <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
             <input
               ref={inputRef}
               name="msg"
               placeholder={
-                step === STEPS.NAME
+                isListening 
+                  ? "Listening..." 
+                  : step === STEPS.NAME
                   ? "Enter your name..."
                   : step === STEPS.CONTACT
                   ? "Email or WhatsApp..."
                   : "Type a message..."
               }
               aria-label="Type your answer"
-              className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-[13px] text-white placeholder:text-white/40 focus:border-brand-500 focus:bg-white/10 focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all"
+              className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-[13px] text-white placeholder:text-white/40 focus:border-brand-500 focus:bg-white/10 focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all min-w-0"
               maxLength={300}
               autoFocus
             />
             <button
               type="submit"
-              className="group flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-violet-600 text-white shadow-lg shadow-brand-500/20 transition-all hover:scale-105 hover:shadow-brand-500/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+              className="group flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-violet-600 text-white shadow-lg shadow-brand-500/20 transition-all hover:scale-105 hover:shadow-brand-500/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
             >
               <svg viewBox="0 0 24 24" className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none">
                 <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
