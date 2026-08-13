@@ -54,8 +54,8 @@ export default function App() {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-brand-50/20 text-navy-800 antialiased selection:bg-brand-200/50 selection:text-navy-900 overflow-x-hidden">
-      {/* ↑ overflow-x-hidden prevents mobile sideways scroll */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-brand-50/20 text-navy-800 antialiased selection:bg-brand-200/50 selection:text-navy-900 overflow-clip">
+      {/* ↑ overflow-clip prevents mobile sideways scroll without breaking position: sticky */}
       <ScrollToTop />
       <Nav />
 
