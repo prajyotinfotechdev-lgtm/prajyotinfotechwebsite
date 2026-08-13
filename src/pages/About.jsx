@@ -1,433 +1,756 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useInView, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 
 const WA_NUMBER = "917020708747";
 const EMAIL = "prajyot.infotech@gmail.com";
-const CALENDLY_LINK = ""; // e.g. "https://calendly.com/yourname/15min"
+const CALENDLY_LINK = "";
 const SITE_URL = "https://prajyotinfotech.in";
 const LOGO_URL = "https://prajyotinfotech.in/videos/Logo.jpg";
 const BRAND = "Prajyot Infotech";
-const SOCIALS = [
-  "https://www.linkedin.com/company/prajyotinfotech",
+const SOCIALS = ["https://www.linkedin.com/company/prajyotinfotech"];
+
+/* ─── Animated Counter ─── */
+function AnimatedCounter({ target, suffix = "", duration = 2 }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!isInView) return;
+    let start = 0;
+    const end = parseInt(target, 10);
+    const step = end / (duration * 60);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= end) { setCount(end); clearInterval(timer); }
+      else setCount(Math.floor(start));
+    }, 1000 / 60);
+    return () => clearInterval(timer);
+  }, [isInView, target, duration]);
+  return <span ref={ref}>{count}{suffix}</span>;
+}
+
+/* ─── 3D Floating Orb SVG ─── */
+function FloatingOrb({ color = "#7c3aed", size = 300, blur = 80, style = {} }) {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute rounded-full"
+      style={{ width: size, height: size, background: color, filter: `blur(${blur}px)`, opacity: 0.18, ...style }}
+    />
+  );
+}
+
+/* ─── 3D Isometric Laptop SVG ─── */
+function IsometricLaptop() {
+  return (
+    <svg viewBox="0 0 400 320" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-label="3D Isometric Laptop">
+      {/* Screen back */}
+      <path d="M80 60 L200 20 L320 60 L200 100 Z" fill="url(#lap_top)" />
+      {/* Screen face */}
+      <path d="M200 100 L320 60 L320 190 L200 230 Z" fill="url(#lap_side)" />
+      <path d="M80 60 L200 100 L200 230 L80 190 Z" fill="url(#lap_left)" />
+      {/* Screen inner (display) */}
+      <path d="M95 75 L200 42 L305 75 L200 108 Z" fill="#1e1b4b" />
+      <path d="M200 108 L305 75 L305 175 L200 208 Z" fill="#2d2a5e" />
+      <path d="M95 75 L200 108 L200 208 L95 175 Z" fill="#252350" />
+      {/* Code lines on screen */}
+      <path d="M130 95 L175 81" stroke="#7c3aed" strokeWidth="2.5" strokeLinecap="round" opacity=".8"/>
+      <path d="M130 103 L190 88" stroke="#a78bfa" strokeWidth="2" strokeLinecap="round" opacity=".6"/>
+      <path d="M135 111 L165 101" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" opacity=".5"/>
+      <path d="M135 119 L180 107" stroke="#6d28d9" strokeWidth="2" strokeLinecap="round" opacity=".7"/>
+      <path d="M130 127 L170 115" stroke="#a78bfa" strokeWidth="1.5" strokeLinecap="round" opacity=".5"/>
+      {/* Keyboard base */}
+      <path d="M60 220 L200 260 L340 220 L320 190 L200 230 L80 190 Z" fill="url(#lap_base)" />
+      {/* Keyboard keys */}
+      {[0,1,2,3,4].map(i => (
+        <rect key={i} x={115 + i * 25} y={222} width="18" height="10" rx="2" fill="rgba(255,255,255,0.15)" />
+      ))}
+      {[0,1,2,3].map(i => (
+        <rect key={i} x={120 + i * 25} y={234} width="18" height="10" rx="2" fill="rgba(255,255,255,0.12)" />
+      ))}
+      {/* Glint effect */}
+      <ellipse cx="225" cy="58" rx="60" ry="10" fill="white" opacity=".12" transform="rotate(-20 225 58)" />
+      <defs>
+        <linearGradient id="lap_top" x1="80" y1="60" x2="320" y2="60" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#7c3aed"/>
+          <stop offset="1" stopColor="#4f46e5"/>
+        </linearGradient>
+        <linearGradient id="lap_side" x1="320" y1="60" x2="320" y2="190" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#4c1d95"/>
+          <stop offset="1" stopColor="#2d1b69"/>
+        </linearGradient>
+        <linearGradient id="lap_left" x1="80" y1="60" x2="80" y2="190" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#6d28d9"/>
+          <stop offset="1" stopColor="#3b0764"/>
+        </linearGradient>
+        <linearGradient id="lap_base" x1="60" y1="220" x2="340" y2="260" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#7c3aed" stopOpacity=".5"/>
+          <stop offset="1" stopColor="#4338ca" stopOpacity=".4"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
+/* ─── 3D Floating Phone SVG ─── */
+function IsometricPhone() {
+  return (
+    <svg viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full" aria-label="3D Floating Phone">
+      {/* Phone body */}
+      <rect x="40" y="20" width="120" height="260" rx="22" fill="url(#ph_body)" />
+      {/* Screen */}
+      <rect x="50" y="50" width="100" height="190" rx="10" fill="url(#ph_screen)" />
+      {/* Status bar */}
+      <rect x="55" y="56" width="90" height="8" rx="4" fill="rgba(255,255,255,0.08)" />
+      {/* App rows */}
+      {[0,1,2,3].map(i => (
+        <rect key={i} x="60" y={75 + i * 38} width="80" height="28" rx="8" fill="rgba(124,58,237,0.25)" />
+      ))}
+      {/* App icons */}
+      {[0,1,2,3].map(i => (
+        <rect key={i} x="66" y={79 + i * 38} width="20" height="20" rx="6" fill="rgba(167,139,250,0.4)" />
+      ))}
+      {/* Text bars */}
+      {[0,1,2,3].map(i => (
+        <React.Fragment key={i}>
+          <rect x="93" y={81 + i * 38} width="38" height="6" rx="3" fill="rgba(255,255,255,0.25)" />
+          <rect x="93" y={91 + i * 38} width="24" height="4" rx="2" fill="rgba(255,255,255,0.12)" />
+        </React.Fragment>
+      ))}
+      {/* Home bar */}
+      <rect x="80" y="252" width="40" height="5" rx="2.5" fill="rgba(255,255,255,0.2)" />
+      {/* Camera notch */}
+      <rect x="82" y="27" width="36" height="12" rx="6" fill="rgba(0,0,0,0.4)" />
+      <circle cx="100" cy="33" r="3.5" fill="#1e1b4b" />
+      {/* Edge sheen */}
+      <rect x="40" y="20" width="120" height="260" rx="22" fill="url(#ph_sheen)" />
+      <defs>
+        <linearGradient id="ph_body" x1="40" y1="20" x2="160" y2="280" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#1e1b4b"/>
+          <stop offset="1" stopColor="#0f172a"/>
+        </linearGradient>
+        <linearGradient id="ph_screen" x1="50" y1="50" x2="150" y2="240" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#1e1b4b"/>
+          <stop offset="1" stopColor="#0d0d2b"/>
+        </linearGradient>
+        <linearGradient id="ph_sheen" x1="40" y1="20" x2="70" y2="280" gradientUnits="userSpaceOnUse">
+          <stop stopColor="white" stopOpacity=".06"/>
+          <stop offset=".3" stopColor="white" stopOpacity="0"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
+/* ─── 3D Orbit Ring ─── */
+function OrbitRing({ children, delay = 0 }) {
+  return (
+    <motion.div
+      className="relative flex items-center justify-center"
+      animate={{ rotate: 360 }}
+      transition={{ duration: 20 + delay * 3, repeat: Infinity, ease: "linear", delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ─── Tilt Card ─── */
+function TiltCard({ children, className = "" }) {
+  const ref = useRef(null);
+  const rotateX = useSpring(0, { stiffness: 200, damping: 25 });
+  const rotateY = useSpring(0, { stiffness: 200, damping: 25 });
+  const onMove = (e) => {
+    const r = ref.current?.getBoundingClientRect();
+    if (!r) return;
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    rotateX.set(-y * 12);
+    rotateY.set(x * 12);
+  };
+  const onLeave = () => { rotateX.set(0); rotateY.set(0); };
+  return (
+    <motion.div
+      ref={ref}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 800 }}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ─── Section Reveal ─── */
+function Reveal({ children, delay = 0 }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+const faqs = [
+  { q: "How does pricing work?", a: "We scope your project and offer a fixed price with clear deliverables. Add-ons are priced transparently — no surprises." },
+  { q: "How fast can you deliver?", a: "Most projects ship in 10–20 business days depending on scope and content readiness." },
+  { q: "What do you need from me?", a: "Brand name/logo, a short description, any product/menu data, and reference sites if you have them. We help fill gaps." },
+  { q: "Do you provide support after launch?", a: "Yes — 15-day post-launch support is included. Extended support and update plans are available." },
+  { q: "Can you migrate my existing site/app?", a: "Yes. We can modernize your UI, migrate data, and redirect URLs to preserve SEO." },
+  { q: "Who owns the code and assets?", a: "You do. We hand over admin access, repo, and instructions so you're never locked in." },
+];
+
+const PRINCIPLES = [
+  { icon: "⚡", label: "Speed First", desc: "Sub-2s loads on mobile. Performance is a feature." },
+  { icon: "🎯", icon2: null, label: "Clarity Over Complexity", desc: "Clean architecture, no unnecessary bloat." },
+  { icon: "🔐", label: "You Own It All", desc: "Full code ownership — repo, domain, credentials." },
+  { icon: "📅", label: "Reliable Timelines", desc: "We commit to deadlines and proactively communicate." },
+  { icon: "🎨", label: "Premium Design", desc: "Every pixel intentional. Design that converts." },
+  { icon: "🌏", label: "Local + Global", desc: "Serving Indian SMBs and international clients remotely." },
+];
+
+const STEPS = [
+  { n: "01", t: "Discover", d: "Deep-dive into your business goals, users, and must-haves.", color: "#7c3aed" },
+  { n: "02", t: "Design", d: "Wireframes → visual design → pixel-perfect UI prototype.", color: "#6d28d9" },
+  { n: "03", t: "Build", d: "Clean code, API integrations, and optimized assets shipped.", color: "#5b21b6" },
+  { n: "04", t: "Launch", d: "Deploy, domain, analytics, SEO setup — ready for the world.", color: "#4c1d95" },
+  { n: "05", t: "Support", d: "15-day post-launch care. Extensions available beyond.", color: "#3b0764" },
+];
+
+const TECH_STACK = [
+  { name: "React", cat: "Frontend", color: "#61DAFB" },
+  { name: "React Native", cat: "Mobile", color: "#7c3aed" },
+  { name: "Node.js", cat: "Backend", color: "#6BA24A" },
+  { name: "MongoDB", cat: "Database", color: "#4DB33D" },
+  { name: "Firebase", cat: "Auth/Cloud", color: "#FFCA28" },
+  { name: "Framer Motion", cat: "Animation", color: "#0055FF" },
+  { name: "Razorpay", cat: "Payments", color: "#3395FF" },
+  { name: "Vercel", cat: "Hosting", color: "#ffffff" },
+  { name: "Cloudinary", cat: "Media", color: "#F05A28" },
+  { name: "WhatsApp API", cat: "Automation", color: "#25D366" },
 ];
 
 export default function About() {
-  // FAQ data (used for both UI + JSON-LD)
-  const faqs = [
-    {
-      q: "How does pricing work?",
-      a: "We scope your project and offer a fixed price with clear deliverables. Add-ons (extra pages, advanced integrations) are priced transparently.",
-    },
-    {
-      q: "How fast can you deliver?",
-      a: "Most projects ship in 10–20 business days depending on scope and content readiness.",
-    },
-    {
-      q: "What do you need from me?",
-      a: "Brand name/logo, a short description, any product/menu data, and reference sites if you have them. We help fill gaps.",
-    },
-    {
-      q: "Do you provide support after launch?",
-      a: "Yes—15-day post-launch support is included. Extended support and update plans are available.",
-    },
-    {
-      q: "Can you migrate my existing site/app?",
-      a: "Yes. We can modernize your UI, migrate data, and redirect URLs to preserve SEO.",
-    },
-    {
-      q: "Who owns the code and assets?",
-      a: "You do. We hand over admin access, repo, and instructions so you’re never locked in.",
-    },
-  ];
+  const [openFaq, setOpenFaq] = useState(null);
 
-  // JSON-LD: Organization
   const orgLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: BRAND,
-    url: SITE_URL,
-    logo: LOGO_URL,
-    contactPoint: [
-      {
-        "@type": "ContactPoint",
-        contactType: "customer support",
-        telephone: "+917020708747",
-        email: EMAIL,
-        areaServed: "IN",
-        availableLanguage: ["en", "hi"],
-      },
-    ],
+    name: BRAND, url: SITE_URL, logo: LOGO_URL,
+    contactPoint: [{ "@type": "ContactPoint", contactType: "customer support", telephone: "+917020708747", email: EMAIL, areaServed: "IN", availableLanguage: ["en", "hi"] }],
     sameAs: SOCIALS,
   };
-
-  // JSON-LD: Breadcrumbs
-  const breadcrumbLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: `${SITE_URL}/`,
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "About",
-        item: `${SITE_URL}/about`,
-      },
-    ],
-  };
-
-  // JSON-LD: FAQ
   const faqLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: f.a,
-      },
-    })),
+    mainEntity: faqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
   };
 
   return (
     <>
-      <BreadcrumbsLd items={[
-        { name: "Home", url: `${SITE_URL}/` },
-        { name: "About Prajyot Infotech", url: `${SITE_URL}/about` },
-      ]} />
+      <BreadcrumbsLd items={[{ name: "Home", url: `${SITE_URL}/` }, { name: "About", url: `${SITE_URL}/about` }]} />
       <Seo
         title="About Prajyot Infotech — Software & Web Development Company in India"
         description="Learn about Prajyot Infotech, a professional software development company in India building custom websites, mobile apps, CRM, ERP, inventory software, and business automation solutions for SMBs."
         keywords="Prajyot Infotech, software development company India, web development company, about us, business digitalization India"
         path="/about"
-        schema={[
-          orgLd,
-          breadcrumbLd,
-          faqLd,
-          {
-            "@context": "https://schema.org",
-            "@type": "AboutPage",
-            "@id": `${SITE_URL}/about#webpage`,
-            "url": `${SITE_URL}/about`,
-            "name": "About Prajyot Infotech",
-            "description": "Prajyot Infotech is a software and web development company in India helping businesses digitalize with custom websites, mobile apps, CRM, ERP, and automation systems.",
-            "isPartOf": { "@id": `${SITE_URL}/#website` },
-            "about": { "@id": `${SITE_URL}/#organization` }
-          }
-        ]}
+        schema={[orgLd, faqLd, { "@context": "https://schema.org", "@type": "AboutPage", "@id": `${SITE_URL}/about#webpage`, url: `${SITE_URL}/about`, name: "About Prajyot Infotech", isPartOf: { "@id": `${SITE_URL}/#website` } }]}
       />
 
-      <main id="about-top" className="mx-auto max-w-6xl px-4 py-14" role="main" aria-label="About Prajyot Infotech">
+      <main role="main" className="overflow-x-hidden">
 
-      {/* HERO */}
-      <header className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-50 via-white to-slate-50 p-8 md:p-12 shadow-lg shadow-brand-500/5">
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-white px-3 py-2 rounded">
-          Skip to content
-        </a>
-        <div className="max-w-2xl" id="main-content" tabIndex={-1}>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-navy-800">
-            About {BRAND}
-          </h1>
-          <p className="mt-4 text-lg text-slate-700">
-            We design and build fast, premium websites and mobile apps with clean code and smooth UI.
-            From idea to launch—done right and on time. Our focus: clarity, speed, and ROI for local
-            businesses and growing brands.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a
-              href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
-                `Hi ${BRAND}, I'd like a free 15-min consultation for my website/app.`
-              )}`}
-              className="inline-flex items-center rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 px-5 py-2.5 text-white font-semibold shadow-lg shadow-brand-500/25 hover:shadow-xl transition-all"
-            >
-              Enquiry
-            </a>
-            {CALENDLY_LINK ? (
-              <a
-                href={CALENDLY_LINK}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-xl border-2 border-brand-200 bg-white px-5 py-2.5 text-brand-700 font-semibold shadow-sm hover:bg-brand-50 hover:border-brand-300 transition-all"
+        {/* ═══ HERO ═══ */}
+        <section className="relative min-h-[92vh] flex items-center overflow-hidden bg-[#05030f]">
+          {/* Ambient orbs */}
+          <FloatingOrb color="#7c3aed" size={600} blur={120} style={{ top: -100, left: -150 }} />
+          <FloatingOrb color="#4f46e5" size={500} blur={100} style={{ bottom: -80, right: -100 }} />
+          <FloatingOrb color="#ec4899" size={300} blur={90} style={{ top: "40%", left: "50%" }} />
+
+          {/* Animated grid */}
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)",
+              backgroundSize: "50px 50px",
+            }}
+          />
+
+          {/* Floating particles */}
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              aria-hidden
+              className="absolute rounded-full bg-brand-400/30"
+              style={{
+                width: Math.random() * 6 + 2,
+                height: Math.random() * 6 + 2,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{ y: [0, -30, 0], opacity: [0.2, 0.7, 0.2] }}
+              transition={{ duration: Math.random() * 4 + 3, repeat: Infinity, delay: Math.random() * 3 }}
+            />
+          ))}
+
+          <div className="relative z-10 mx-auto max-w-7xl px-4 py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Left: Text */}
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               >
-                Book a Free 15-min Call
-              </a>
-            ) : (
-              <a
-                href={`mailto:${EMAIL}?subject=${encodeURIComponent(
-                  `Free 15-min Consultation — ${BRAND}`
-                )}`}
-                className="inline-flex items-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-slate-700 shadow-sm hover:bg-slate-50 transition"
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold text-brand-300 backdrop-blur-sm mb-6">
+                  <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                  Est. 2018 — Pune, Maharashtra
+                </span>
+
+                <h1 className="text-5xl md:text-7xl font-black text-white leading-[1.05] tracking-tight">
+                  We Build
+                  <br />
+                  <span className="bg-gradient-to-r from-brand-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
+                    Digital Products
+                  </span>
+                  <br />
+                  That Matter
+                </h1>
+
+                <p className="mt-6 text-lg text-white/60 leading-relaxed max-w-lg">
+                  Prajyot Infotech is a full-stack product studio helping Indian businesses transform ideas
+                  into fast, beautiful, revenue-generating software — websites, apps, SaaS, and automation.
+                </p>
+
+                <div className="mt-8 flex flex-wrap gap-4">
+                  <motion.a
+                    href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Hi ${BRAND}, I'd like a free consultation.`)}`}
+                    whileHover={{ scale: 1.04, y: -2 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-brand-600 to-violet-600 px-7 py-3.5 text-white font-semibold shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 transition-shadow"
+                  >
+                    <svg className="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    WhatsApp Us
+                  </motion.a>
+                  <motion.a
+                    href={`mailto:${EMAIL}`}
+                    whileHover={{ scale: 1.04, y: -2 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm px-7 py-3.5 text-white font-semibold hover:bg-white/10 transition-all"
+                  >
+                    Email Us
+                  </motion.a>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right: 3D Visual */}
+            <div className="relative hidden lg:flex items-center justify-center h-[500px]">
+              {/* Central laptop */}
+              <motion.div
+                className="relative z-10 w-80 h-64"
+                initial={{ opacity: 0, scale: 0.8, rotateX: 20 }}
+                animate={{ opacity: 1, scale: 1, rotateX: 0, y: [0, -12, 0] }}
+                transition={{ opacity: { duration: 0.8 }, scale: { duration: 0.8 }, y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 } }}
+                style={{ filter: "drop-shadow(0 30px 60px rgba(124,58,237,0.4))" }}
               >
-                Email Us
-              </a>
-            )}
-          </div>
-        </div>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-brand-200/50 blur-3xl"
-        />
-      </header>
+                <IsometricLaptop />
+              </motion.div>
 
-      {/* QUICK STATS */}
-      <section className="mt-10 grid gap-6 md:grid-cols-3" aria-label="Quick stats">
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-md shadow-brand-500/5 hover:shadow-lg transition-shadow">
-          <div className="text-3xl font-extrabold text-gradient">50+</div>
-          <div className="mt-1 text-sm text-slate-600">Projects shipped</div>
-        </div>
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-md shadow-brand-500/5 hover:shadow-lg transition-shadow">
-          <div className="text-3xl font-extrabold text-gradient">&lt;20d</div>
-          <div className="mt-1 text-sm text-slate-600">Typical build timeline</div>
-        </div>
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-md shadow-brand-500/5 hover:shadow-lg transition-shadow">
-          <div className="text-3xl font-extrabold text-gradient">A+</div>
-          <div className="mt-1 text-sm text-slate-600">Lighthouse grade</div>
-        </div>
-      </section>
+              {/* Orbiting phone */}
+              <motion.div
+                className="absolute w-24 h-36"
+                style={{ right: "8%", top: "10%" }}
+                animate={{ y: [0, -10, 0], rotate: [-3, 3, -3] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <IsometricPhone />
+              </motion.div>
 
-      {/* WHO WE ARE (roles only) */}
-      <section className="mt-14" aria-label="Who we are">
-        <h2 className="text-2xl md:text-3xl font-black text-navy-800">Who we are</h2>
-        <p className="mt-3 max-w-3xl text-slate-700">
-          {BRAND} is a hands-on studio for modern web and mobile products. We keep things simple:
-          understand your business, design a clean customer journey, and ship a polished product with
-          fast performance and easy maintenance.
-        </p>
+              {/* Floating stat chips */}
+              {[
+                { label: "50+ Projects", top: "8%", left: "2%", color: "from-violet-600 to-brand-600" },
+                { label: "< 20 Days", bottom: "12%", right: "5%", color: "from-pink-600 to-rose-600" },
+                { label: "100% Ownership", bottom: "30%", left: "0%", color: "from-emerald-600 to-teal-600" },
+              ].map((chip) => (
+                <motion.div
+                  key={chip.label}
+                  className={`absolute bg-gradient-to-r ${chip.color} text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg`}
+                  style={{ top: chip.top, bottom: chip.bottom, left: chip.left, right: chip.right }}
+                  animate={{ y: [0, -6, 0] }}
+                  transition={{ duration: 3 + Math.random() * 2, repeat: Infinity, ease: "easeInOut", delay: Math.random() * 2 }}
+                >
+                  {chip.label}
+                </motion.div>
+              ))}
 
-        <div className="mt-6 grid gap-6 sm:grid-cols-2">
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-md shadow-brand-500/5 hover:shadow-lg transition-all hover:-translate-y-0.5">
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand-100 to-brand-50 text-brand-700 text-lg">
-                🧭
-              </div>
-              <div>
-                <div className="font-semibold text-slate-900">Client Success Lead</div>
-                <div className="text-sm text-slate-600">Sales &amp; Onboarding</div>
-              </div>
+              {/* Glow ring */}
+              <div
+                aria-hidden
+                className="absolute inset-0 rounded-full pointer-events-none"
+                style={{ background: "radial-gradient(ellipse at center, rgba(124,58,237,0.15) 0%, transparent 70%)" }}
+              />
             </div>
-            <p className="mt-3 text-sm text-slate-700">
-              Your first point of contact—from discovery to onboarding. Ensures your requirements are
-              clear, timelines are realistic, and communication stays smooth.
-            </p>
           </div>
 
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-md shadow-brand-500/5 hover:shadow-lg transition-all hover:-translate-y-0.5">
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand-100 to-brand-50 text-brand-700 text-lg">
-                🛠️
+          {/* Bottom fade */}
+          <div aria-hidden className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-slate-50 to-transparent" />
+        </section>
+
+        {/* ═══ STATS ═══ */}
+        <section className="relative bg-slate-50 py-20" aria-label="Company stats">
+          <div className="mx-auto max-w-7xl px-4">
+            <Reveal>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                {[
+                  { v: 50, s: "+", l: "Projects Shipped", icon: "🚀" },
+                  { v: 6, s: "+", l: "Years of Expertise", icon: "📅" },
+                  { v: 8, s: "+", l: "Industries Served", icon: "🏭" },
+                  { v: 100, s: "%", l: "Code Ownership", icon: "🔐" },
+                ].map((stat, i) => (
+                  <TiltCard key={stat.l}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.12, duration: 0.6 }}
+                      className="group relative overflow-hidden rounded-3xl border border-slate-200/60 bg-white p-8 shadow-lg shadow-brand-500/5 hover:shadow-xl hover:shadow-brand-500/10 transition-all"
+                    >
+                      <div aria-hidden className="absolute -right-6 -top-6 size-24 rounded-full bg-brand-500/5 group-hover:bg-brand-500/10 transition-colors" />
+                      <div className="text-3xl mb-3">{stat.icon}</div>
+                      <div className="text-4xl md:text-5xl font-black bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent">
+                        <AnimatedCounter target={stat.v} suffix={stat.s} />
+                      </div>
+                      <div className="mt-2 text-sm font-semibold text-slate-500 uppercase tracking-wider">{stat.l}</div>
+                    </motion.div>
+                  </TiltCard>
+                ))}
               </div>
-              <div>
-                <div className="font-semibold text-slate-900">Product &amp; Engineering Lead</div>
-                <div className="text-sm text-slate-600">Architecture &amp; Delivery</div>
-              </div>
-            </div>
-            <p className="mt-3 text-sm text-slate-700">
-              Leads architecture, API, and front-end execution. Focuses on speed, UX quality, and clean,
-              maintainable code that’s ready to scale.
-            </p>
+            </Reveal>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* WHAT WE BUILD */}
-      <section className="mt-14" aria-label="What we build">
-        <h2 className="text-2xl md:text-3xl font-black text-navy-800">What we build</h2>
-        <p className="mt-3 max-w-3xl text-slate-700">
-          Tailored solutions for local stores, dealers, and growing brands—built with modern stacks and
-          pixel-perfect UI.
-        </p>
+        {/* ═══ WHO WE ARE ═══ */}
+        <section className="relative py-24 bg-white overflow-hidden" aria-label="Who we are">
+          <FloatingOrb color="#7c3aed" size={400} blur={100} style={{ top: "10%", right: "-100px", opacity: 0.07 }} />
+          <div className="mx-auto max-w-7xl px-4 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Left: Phone visual */}
+            <Reveal>
+              <div className="relative flex items-center justify-center h-80 lg:h-[480px]">
+                <motion.div
+                  className="relative z-10 w-48 h-72"
+                  animate={{ y: [0, -16, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  style={{ filter: "drop-shadow(0 40px 80px rgba(124,58,237,0.45))" }}
+                >
+                  <IsometricPhone />
+                </motion.div>
 
-        <div className="mt-6 grid gap-6 md:grid-cols-3">
-          {[
-            {
-              title: "Premium Websites",
-              desc: "Blazing-fast landing pages & company sites with SEO, analytics, and lead capture.",
-            },
-            {
-              title: "Mobile Apps",
-              desc: "React Native apps with smooth UI, push notifications, and WhatsApp integration.",
-            },
-            {
-              title: "E-commerce",
-              desc: "Catalogs, carts, WhatsApp/checkout flows, dealer/retail pricing, and admin.",
-            },
-            {
-              title: "SaaS Catalog Platform",
-              desc: "Multi-tenant product catalogs with image hosting, auth, and seller dashboards.",
-            },
-            {
-              title: "QR Menu & Ordering",
-              desc: "Table-aware menus, simple ordering, and admin visibility for restaurants.",
-            },
-            {
-              title: "Custom Dashboards",
-              desc: "Admin panels, inventory tools, role-based access, and clean reporting.",
-            },
-          ].map((item) => (
-            <div key={item.title} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="text-lg font-semibold text-slate-900">{item.title}</div>
-              <p className="mt-2 text-sm text-slate-700">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+                {/* Orbiting mini dots */}
+                {[0, 1, 2, 3].map((i) => (
+                  <motion.div
+                    key={i}
+                    aria-hidden
+                    className="absolute rounded-full"
+                    style={{
+                      width: 10 + i * 4,
+                      height: 10 + i * 4,
+                      background: `hsl(${260 + i * 20}, 70%, 60%)`,
+                      boxShadow: `0 0 20px hsl(${260 + i * 20}, 70%, 60%)`,
+                    }}
+                    animate={{
+                      x: [0, Math.cos((i * Math.PI) / 2) * 110, 0],
+                      y: [0, Math.sin((i * Math.PI) / 2) * 110, 0],
+                    }}
+                    transition={{ duration: 4 + i, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
+                  />
+                ))}
 
-      {/* HOW WE WORK */}
-      <section className="mt-14" aria-label="How we work">
-        <h2 className="text-2xl md:text-3xl font-black text-navy-800">How we work</h2>
-        <p className="mt-3 max-w-3xl text-slate-700">
-          A simple, transparent process—so you always know what’s happening and when.
-        </p>
-
-        <ol className="mt-6 grid gap-6 md:grid-cols-5">
-          {[
-            { n: "1", t: "Discover", d: "Understand your goals, users, and must-haves." },
-            { n: "2", t: "Design", d: "Wireframes → visual design → final UI." },
-            { n: "3", t: "Build", d: "Clean code, API integrations, optimized assets." },
-            { n: "4", t: "Launch", d: "Deploy, domain, analytics, SEO basics." },
-            { n: "5", t: "Support", d: "15-day post-launch support; extensions available." },
-          ].map((s) => (
-            <li key={s.n} className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-md shadow-brand-500/5 hover:shadow-lg transition-all">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-600 to-brand-700 text-white text-sm font-bold shadow-md shadow-brand-500/25">
-                {s.n}
+                {/* Glow */}
+                <div
+                  aria-hidden
+                  className="absolute size-64 rounded-full pointer-events-none"
+                  style={{ background: "radial-gradient(circle, rgba(124,58,237,0.2) 0%, transparent 70%)" }}
+                />
               </div>
-              <div className="mt-3 font-semibold text-slate-900">{s.t}</div>
-              <p className="mt-1 text-sm text-slate-700">{s.d}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
+            </Reveal>
 
-      {/* PRINCIPLES */}
-      <section className="mt-14" aria-label="Principles">
-        <h2 className="text-2xl md:text-3xl font-black text-navy-800">Principles we work by</h2>
-        <ul className="mt-4 grid gap-4 md:grid-cols-2">
-          {[
-            "Clarity over complexity—no fluff, just outcomes.",
-            "Performance first—fast loads, smooth interactions.",
-            "Design consistency—premium but practical.",
-            "Reliable timelines and proactive communication.",
-            "Source-of-truth docs and clean handoffs.",
-            "You own your data, domain, and code.",
-          ].map((p) => (
-            <li key={p} className="flex items-start gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm hover:shadow-md transition-shadow">
-              <span className="mt-1" aria-hidden>✅</span>
-              <span className="text-sm text-slate-700">{p}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+            {/* Right: Content */}
+            <Reveal delay={0.2}>
+              <span className="inline-block text-xs font-bold tracking-widest uppercase text-brand-600 mb-3">Who We Are</span>
+              <h2 className="text-4xl md:text-5xl font-black text-navy-800 leading-tight">
+                A studio for<br />
+                <span className="bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent">modern digital</span><br />
+                products
+              </h2>
+              <p className="mt-5 text-lg text-slate-600 leading-relaxed">
+                We are a hands-on product studio specializing in high-performance web and mobile development.
+                We keep things simple: understand your business deeply, design a clean customer journey, and
+                ship a polished product — fast, beautiful, and built to scale.
+              </p>
+              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { role: "Client Success Lead", dept: "Sales & Onboarding", icon: "🎯", desc: "Your first point of contact — from discovery to onboarding. Clear timelines, smooth communication." },
+                  { role: "Product & Engineering", dept: "Architecture & Delivery", icon: "⚙️", desc: "Leads architecture, API, and frontend execution. Speed, UX quality, and scalable code." },
+                ].map(c => (
+                  <TiltCard key={c.role}>
+                    <div className="rounded-2xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-5 shadow-md hover:shadow-lg transition-all h-full">
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="size-12 rounded-xl bg-gradient-to-br from-brand-100 to-brand-50 flex items-center justify-center text-2xl shadow-sm">
+                          {c.icon}
+                        </div>
+                        <div>
+                          <div className="font-bold text-slate-900 text-sm">{c.role}</div>
+                          <div className="text-xs text-brand-600 font-semibold">{c.dept}</div>
+                        </div>
+                      </div>
+                      <p className="text-sm text-slate-600 leading-relaxed">{c.desc}</p>
+                    </div>
+                  </TiltCard>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </section>
 
-      {/* TECH STACK */}
-      <section className="mt-14" aria-label="Tech we use">
-        <h2 className="text-2xl md:text-3xl font-black text-navy-800">Tech we use</h2>
-        <p className="mt-3 max-w-3xl text-slate-700">
-          Modern, battle-tested tools that keep your product fast and scalable.
-        </p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {[
-            "React", "React Native", "Node.js", "Express", "MongoDB",
-            "Cloudinary", "Firebase Auth", "JWT", "Vercel/Netlify", "Render/Railway",
-            "WhatsApp Deep Links", "Razorpay/Stripe (optional)", "Tailwind CSS", "Framer Motion",
-          ].map((tag) => (
-            <span
-              key={tag}
-              className="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-700 shadow-sm"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      </section>
+        {/* ═══ PROCESS ═══ */}
+        <section className="relative py-24 bg-[#05030f] overflow-hidden" aria-label="How we work">
+          <FloatingOrb color="#7c3aed" size={500} blur={100} style={{ top: "20%", left: "-100px" }} />
+          <FloatingOrb color="#ec4899" size={400} blur={100} style={{ bottom: "10%", right: "-100px" }} />
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-[0.04]"
+            style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)", backgroundSize: "50px 50px" }}
+          />
 
-      {/* INDUSTRIES */}
-      <section className="mt-14" aria-label="Industries we serve">
-        <h2 className="text-2xl md:text-3xl font-black text-navy-800">Industries we serve</h2>
-        <p className="mt-3 max-w-3xl text-slate-700">
-          We work across categories—adapting features to match real-world needs.
-        </p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {[
-            "Mobile & Electronics",
-            "Fashion & Lifestyle",
-            "Grocery & Essentials",
-            "Restaurants & Cafés",
-            "Dealers & Distributors",
-            "Repair & Services",
-            "Education & Training",
-            "Hospitality",
-          ].map((tag) => (
-            <span
-              key={tag}
-              className="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1 text-sm text-slate-700 shadow-sm"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      </section>
+          <div className="relative z-10 mx-auto max-w-7xl px-4">
+            <Reveal>
+              <div className="text-center mb-16">
+                <span className="inline-block text-xs font-bold tracking-widest uppercase text-brand-400 mb-3">Our Process</span>
+                <h2 className="text-4xl md:text-5xl font-black text-white">
+                  How we{" "}
+                  <span className="bg-gradient-to-r from-brand-400 to-pink-400 bg-clip-text text-transparent">work</span>
+                </h2>
+                <p className="mt-4 text-white/50 max-w-2xl mx-auto">
+                  A simple, transparent process — so you always know what's happening and when.
+                </p>
+              </div>
+            </Reveal>
 
-      {/* FAQ */}
-      <section className="mt-14" aria-label="Frequently asked questions">
-        <h2 className="text-2xl md:text-3xl font-black text-navy-800">FAQs</h2>
-        <div className="mt-6 divide-y divide-slate-200/80 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-lg shadow-brand-500/5">
-          {faqs.map((item, i) => (
-            <details key={i} className="group p-5 open:bg-brand-50/30">
-              <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
-                <span className="font-semibold text-slate-900">{item.q}</span>
-                <span className="select-none text-slate-500 group-open:rotate-45 transition">+</span>
-              </summary>
-              <p className="mt-3 text-sm leading-6 text-slate-700">{item.a}</p>
-            </details>
-          ))}
-        </div>
-      </section>
+            <div className="relative">
+              {/* Connecting line */}
+              <div aria-hidden className="hidden md:block absolute top-[2.5rem] left-0 right-0 h-0.5 bg-gradient-to-r from-brand-600/0 via-brand-500/50 to-brand-600/0 mx-16" />
 
-      {/* FINAL CTA */}
-      <section className="mt-16 rounded-3xl bg-gradient-to-br from-brand-600 via-brand-700 to-navy-800 p-8 md:p-10 text-white shadow-xl shadow-brand-500/20">
-        <h3 className="text-2xl md:text-3xl font-extrabold">
-          Ready to plan your project?
-        </h3>
-        <p className="mt-2 max-w-2xl text-white/90 text-lg">
-          Get a free 15-minute consultation. We'll map your features, timeline, and best stack—no obligation.
-        </p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <a
-            href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
-              `Hi ${BRAND}, I'd like a free 15-min consultation for my website/app.`
-            )}`}
-            className="inline-flex items-center rounded-xl bg-white px-5 py-3 font-semibold text-brand-700 shadow-lg hover:bg-white/90 hover:shadow-xl transition-all"
-          >
-            Enquiry Now
-          </a>
-          {CALENDLY_LINK ? (
-            <a
-              href={CALENDLY_LINK}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center rounded-xl border border-white/70 px-4 py-2.5 font-semibold text-white hover:bg-white/10 transition"
-            >
-              Book a Slot
-            </a>
-          ) : (
-            <a
-              href={`mailto:${EMAIL}?subject=${encodeURIComponent(
-                `Project Enquiry — ${BRAND}`
-              )}`}
-              className="inline-flex items-center rounded-xl border border-white/70 px-4 py-2.5 font-semibold text-white hover:bg-white/10 transition"
-            >
-              Email Us
-            </a>
-          )}
-        </div>
-      </section>
-    </main>
+              <ol className="grid gap-6 md:grid-cols-5">
+                {STEPS.map((s, i) => (
+                  <Reveal key={s.n} delay={i * 0.1}>
+                    <TiltCard>
+                      <li className="relative group flex flex-col items-center text-center p-6 rounded-3xl border border-white/5 bg-white/[0.03] backdrop-blur-sm hover:bg-white/[0.07] hover:border-brand-500/30 transition-all">
+                        <div
+                          className="relative z-10 flex size-14 items-center justify-center rounded-2xl text-white text-lg font-black shadow-lg mb-4"
+                          style={{ background: `linear-gradient(135deg, ${s.color}, #1e1b4b)`, boxShadow: `0 8px 32px ${s.color}50` }}
+                        >
+                          {s.n}
+                        </div>
+                        <div className="font-bold text-white text-base mb-2">{s.t}</div>
+                        <p className="text-sm text-white/50 leading-relaxed">{s.d}</p>
+                      </li>
+                    </TiltCard>
+                  </Reveal>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        {/* ═══ PRINCIPLES ═══ */}
+        <section className="py-24 bg-white" aria-label="Principles we work by">
+          <div className="mx-auto max-w-7xl px-4">
+            <Reveal>
+              <div className="text-center mb-14">
+                <span className="inline-block text-xs font-bold tracking-widest uppercase text-brand-600 mb-3">Our Values</span>
+                <h2 className="text-4xl md:text-5xl font-black text-navy-800">
+                  Principles we{" "}
+                  <span className="bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent">work by</span>
+                </h2>
+              </div>
+            </Reveal>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {PRINCIPLES.map((p, i) => (
+                <Reveal key={p.label} delay={i * 0.1}>
+                  <TiltCard className="h-full">
+                    <div className="group relative overflow-hidden h-full rounded-3xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-7 shadow-md hover:shadow-xl hover:shadow-brand-500/10 transition-all">
+                      <div aria-hidden className="absolute -right-8 -bottom-8 size-32 rounded-full bg-brand-500/5 group-hover:bg-brand-500/10 transition-colors" />
+                      <div className="text-4xl mb-4">{p.icon}</div>
+                      <h3 className="font-bold text-navy-800 text-lg mb-2">{p.label}</h3>
+                      <p className="text-sm text-slate-600 leading-relaxed">{p.desc}</p>
+                      {/* Accent line */}
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 to-violet-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left rounded-b-3xl" />
+                    </div>
+                  </TiltCard>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══ TECH STACK ═══ */}
+        <section className="py-24 bg-slate-50" aria-label="Technologies we use">
+          <div className="mx-auto max-w-7xl px-4">
+            <Reveal>
+              <div className="text-center mb-14">
+                <span className="inline-block text-xs font-bold tracking-widest uppercase text-brand-600 mb-3">Our Stack</span>
+                <h2 className="text-4xl md:text-5xl font-black text-navy-800">
+                  Battle-tested{" "}
+                  <span className="bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent">technologies</span>
+                </h2>
+                <p className="mt-4 text-slate-600 max-w-xl mx-auto">Modern tools that keep your product fast, secure, and easy to scale.</p>
+              </div>
+            </Reveal>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+              {TECH_STACK.map((tech, i) => (
+                <Reveal key={tech.name} delay={i * 0.06}>
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -4 }}
+                    className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 text-center shadow-sm hover:shadow-md cursor-default transition-shadow"
+                  >
+                    <div
+                      aria-hidden
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ background: `radial-gradient(circle at center, ${tech.color}18 0%, transparent 70%)` }}
+                    />
+                    <div
+                      className="size-3 rounded-full mx-auto mb-3"
+                      style={{ background: tech.color, boxShadow: `0 0 12px ${tech.color}` }}
+                    />
+                    <div className="font-bold text-slate-800 text-sm">{tech.name}</div>
+                    <div className="mt-1 text-xs text-brand-500 font-semibold">{tech.cat}</div>
+                  </motion.div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══ FAQ ═══ */}
+        <section className="py-24 bg-white" aria-label="Frequently asked questions">
+          <div className="mx-auto max-w-3xl px-4">
+            <Reveal>
+              <div className="text-center mb-14">
+                <span className="inline-block text-xs font-bold tracking-widest uppercase text-brand-600 mb-3">FAQ</span>
+                <h2 className="text-4xl md:text-5xl font-black text-navy-800">
+                  Common{" "}
+                  <span className="bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent">questions</span>
+                </h2>
+              </div>
+            </Reveal>
+
+            <div className="space-y-3">
+              {faqs.map((item, i) => (
+                <Reveal key={i} delay={i * 0.07}>
+                  <motion.div
+                    className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow"
+                    layout
+                  >
+                    <button
+                      onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                      className="flex w-full items-center justify-between gap-4 p-6 text-left"
+                      aria-expanded={openFaq === i}
+                    >
+                      <span className="font-semibold text-slate-900">{item.q}</span>
+                      <motion.span
+                        animate={{ rotate: openFaq === i ? 45 : 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="flex-shrink-0 size-7 rounded-full bg-brand-50 flex items-center justify-center text-brand-600 font-bold"
+                      >
+                        +
+                      </motion.span>
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {openFaq === i && (
+                        <motion.div
+                          key="content"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                        >
+                          <div className="px-6 pb-6 text-slate-600 leading-relaxed border-t border-slate-100 pt-4">
+                            {item.a}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ═══ FINAL CTA ═══ */}
+        <section className="relative py-28 overflow-hidden bg-[#05030f]" aria-label="Start your project">
+          <FloatingOrb color="#7c3aed" size={500} blur={120} style={{ top: -100, left: "10%" }} />
+          <FloatingOrb color="#ec4899" size={400} blur={100} style={{ bottom: -80, right: "5%" }} />
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-[0.04]"
+            style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)", backgroundSize: "50px 50px" }}
+          />
+
+          <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
+            <Reveal>
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold text-brand-300 backdrop-blur-sm mb-6">
+                <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                Currently accepting new projects
+              </span>
+
+              <h2 className="text-5xl md:text-7xl font-black text-white leading-tight">
+                Ready to build
+                <br />
+                <span className="bg-gradient-to-r from-brand-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
+                  something great?
+                </span>
+              </h2>
+
+              <p className="mt-6 text-xl text-white/50 max-w-2xl mx-auto">
+                Get a free 15-minute consultation. We'll map your features, timeline, and best tech stack — no obligation, just clarity.
+              </p>
+
+              <div className="mt-10 flex flex-wrap gap-4 justify-center">
+                <motion.a
+                  href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Hi ${BRAND}, I'd like a free 15-min consultation.`)}`}
+                  whileHover={{ scale: 1.05, y: -3 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-brand-600 via-violet-600 to-pink-600 px-8 py-4 text-white font-bold text-lg shadow-2xl shadow-brand-500/30 hover:shadow-brand-500/50 transition-shadow"
+                >
+                  <svg className="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                  Start on WhatsApp
+                </motion.a>
+                <motion.a
+                  href={`mailto:${EMAIL}?subject=${encodeURIComponent(`Project Enquiry — ${BRAND}`)}`}
+                  whileHover={{ scale: 1.05, y: -3 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 backdrop-blur-sm px-8 py-4 text-white font-bold text-lg hover:bg-white/10 transition-all"
+                >
+                  Email Us
+                </motion.a>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+      </main>
     </>
   );
 }
