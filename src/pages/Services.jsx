@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
+import TechStackVisualizer from "../components/TechStackVisualizer.jsx";
 
 const WA_NUMBER = "917020708747";
 const EMAIL = "prajyot.infotech@gmail.com";
@@ -372,6 +373,11 @@ export default function Services() {
               </details>
             ))}
           </div>
+        </section>
+
+        {/* Tech Stack Visualizer Section */}
+        <section className="bg-slate-50 border-y border-slate-200 overflow-hidden">
+          <TechStackVisualizer />
         </section>
 
         {/* CTA */}

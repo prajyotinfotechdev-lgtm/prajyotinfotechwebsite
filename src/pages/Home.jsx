@@ -16,6 +16,7 @@ const CaseStudies  = lazy(() => import("../components/CaseStudies.jsx"));
 const Testimonials = lazy(() => import("../components/Testimonials.jsx"));
 const CTA          = lazy(() => import("../components/CTA.jsx"));
 const ConsultBanner = lazy(() => import("../components/ConsultBanner.jsx"));
+const BeforeAfterSlider = lazy(() => import("../components/BeforeAfterSlider.jsx"));
 
 const SectionSkeleton = ({ className = "" }) => (
   <div className={`mx-auto w-full max-w-7xl px-4 py-16 ${className}`}>
@@ -93,6 +94,11 @@ export default function Home() {
         {/* 2. SERVICES MARQUEE — visual rhythm breaker */}
         <Suspense fallback={<div className="h-16 border-y border-slate-200 bg-white animate-pulse" />}>
           <Marquee />
+        </Suspense>
+
+        {/* 2.5 BEFORE / AFTER SLIDER - educational quality contrast */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <BeforeAfterSlider />
         </Suspense>
 
         {/* 3. WHAT WE BUILD — service benefit cards (business outcomes) */}

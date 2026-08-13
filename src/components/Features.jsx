@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import Tooltip from "./Tooltip.jsx";
 
 // Business-outcome focused cards — not tech jargon
 const DEFAULT_ITEMS = [
@@ -38,7 +39,7 @@ const DEFAULT_ITEMS = [
   },
   {
     title: "Track Every Rupee",
-    desc: "GST billing, invoicing, expense tracking, and financial reports — all in one system.",
+    desc: <><Tooltip term="GST" text="Goods and Services Tax. We handle automatic tax calculations and compliant invoice generation." /> billing, invoicing, expense tracking, and financial reports — all in one system.</>,
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
         <path d="M9 7H6a2 2 0 00-2 2v9a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-3" stroke="currentColor" strokeWidth="2" fill="none"/>
@@ -61,7 +62,7 @@ const DEFAULT_ITEMS = [
   },
   {
     title: "Manage Customers & Leads",
-    desc: "CRM that captures every enquiry, tracks follow-ups, and never lets a lead fall through the cracks.",
+    desc: <><Tooltip term="CRM" text="Customer Relationship Management. A system to track all your leads, calls, and client interactions in one place." /> that captures every enquiry, tracks follow-ups, and never lets a lead fall through the cracks.</>,
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
         <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round"/>

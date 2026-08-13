@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useInView, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
+import ProcessRoadmap from "../components/ProcessRoadmap.jsx";
 
 const WA_NUMBER = "917020708747";
 const EMAIL = "prajyot.infotech@gmail.com";
@@ -564,54 +565,7 @@ export default function About() {
         </section>
 
         {/* ═══ PROCESS ═══ */}
-        <section className="relative py-24 bg-[#05030f] overflow-hidden" aria-label="How we work">
-          <FloatingOrb color="#7c3aed" size={500} blur={100} style={{ top: "20%", left: "-100px" }} />
-          <FloatingOrb color="#ec4899" size={400} blur={100} style={{ bottom: "10%", right: "-100px" }} />
-          <div
-            aria-hidden
-            className="absolute inset-0 opacity-[0.04]"
-            style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)", backgroundSize: "50px 50px" }}
-          />
-
-          <div className="relative z-10 mx-auto max-w-7xl px-4">
-            <Reveal>
-              <div className="text-center mb-16">
-                <span className="inline-block text-xs font-bold tracking-widest uppercase text-brand-400 mb-3">Our Process</span>
-                <h2 className="text-4xl md:text-5xl font-black text-white">
-                  How we{" "}
-                  <span className="bg-gradient-to-r from-brand-400 to-pink-400 bg-clip-text text-transparent">work</span>
-                </h2>
-                <p className="mt-4 text-white/50 max-w-2xl mx-auto">
-                  A simple, transparent process — so you always know what's happening and when.
-                </p>
-              </div>
-            </Reveal>
-
-            <div className="relative">
-              {/* Connecting line */}
-              <div aria-hidden className="hidden md:block absolute top-[2.5rem] left-0 right-0 h-0.5 bg-gradient-to-r from-brand-600/0 via-brand-500/50 to-brand-600/0 mx-16" />
-
-              <ol className="grid gap-6 md:grid-cols-5">
-                {STEPS.map((s, i) => (
-                  <Reveal key={s.n} delay={i * 0.1}>
-                    <TiltCard>
-                      <li className="relative group flex flex-col items-center text-center p-6 rounded-3xl border border-white/5 bg-white/[0.03] backdrop-blur-sm hover:bg-white/[0.07] hover:border-brand-500/30 transition-all">
-                        <div
-                          className="relative z-10 flex size-14 items-center justify-center rounded-2xl text-white text-lg font-black shadow-lg mb-4"
-                          style={{ background: `linear-gradient(135deg, ${s.color}, #1e1b4b)`, boxShadow: `0 8px 32px ${s.color}50` }}
-                        >
-                          {s.n}
-                        </div>
-                        <div className="font-bold text-white text-base mb-2">{s.t}</div>
-                        <p className="text-sm text-white/50 leading-relaxed">{s.d}</p>
-                      </li>
-                    </TiltCard>
-                  </Reveal>
-                ))}
-              </ol>
-            </div>
-          </div>
-        </section>
+        <ProcessRoadmap />
 
         {/* ═══ PRINCIPLES ═══ */}
         <section className="py-24 bg-white" aria-label="Principles we work by">
