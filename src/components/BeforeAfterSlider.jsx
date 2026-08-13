@@ -61,10 +61,10 @@ export default function BeforeAfterSlider({
         />
 
         {/* Labels */}
-        <div className="absolute top-6 left-6 px-4 py-2 bg-slate-900/80 backdrop-blur text-white text-sm font-bold tracking-widest uppercase rounded-full pointer-events-none">
+        <div className="absolute top-2 left-2 md:top-6 md:left-6 px-2 py-1 md:px-4 md:py-2 bg-slate-900/80 backdrop-blur text-white text-[10px] md:text-sm font-bold tracking-widest uppercase rounded-full pointer-events-none">
           {beforeLabel}
         </div>
-        <div className="absolute top-6 right-6 px-4 py-2 bg-brand-600/90 backdrop-blur text-white text-sm font-bold tracking-widest uppercase rounded-full pointer-events-none">
+        <div className="absolute top-2 right-2 md:top-6 md:right-6 px-2 py-1 md:px-4 md:py-2 bg-brand-600/90 backdrop-blur text-white text-[10px] md:text-sm font-bold tracking-widest uppercase rounded-full pointer-events-none">
           {afterLabel}
         </div>
 

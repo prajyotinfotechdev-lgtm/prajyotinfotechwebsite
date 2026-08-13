@@ -62,8 +62,8 @@ export default function TechStackVisualizer() {
 
       <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
         {/* Isometric Stack Interactive Graphic */}
-        <div className="relative w-full max-w-sm aspect-square perspective-1000">
-          <div className="relative w-full h-full transform-style-3d rotate-x-60 rotate-z-[-45deg] scale-75 group">
+        <div className="relative w-full max-w-sm aspect-square perspective-1000 overflow-hidden">
+          <div className="relative w-full h-full transform-style-3d rotate-x-60 rotate-z-[-45deg] scale-[0.65] sm:scale-75 md:scale-90 group">
             {STACK_DATA.slice().reverse().map((layer, idx) => {
               const isActive = activeLayer === layer.id;
               // Stacking them vertically in isometric view
