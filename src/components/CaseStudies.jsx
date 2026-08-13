@@ -4,28 +4,37 @@ import { motion } from "framer-motion";
 
 const studies = [
   {
-    tag: "SaaS",
-    title: "Vyapaariyo Catalog Platform",
-    copy: "Seller websites with their own products, prices, and logos.",
-    slug: "vyapaariyo-catalog-platform",
-    image: "", // e.g. "/images/case/vyapaariyo.jpg"
-    meta: "Node • React • MongoDB • Cloudinary",
-  },
-  {
-    tag: "E-commerce",
-    title: "JollyBaba Mobiles",
-    copy: "Retail/Dealer prices, fast search, and a smooth cart.",
-    slug: "jollybaba-mobiles",
-    image: "",
-    meta: "React • React Native • Express • UX Animations",
-  },
-  {
     tag: "Hospitality",
-    title: "QR Menu & Ordering",
-    copy: "Scan the table QR, view menu, order, and track in admin.",
-    slug: "qr-menu-ordering",
+    title: "Restaurant Management System",
+    copy: "QR table menus, live kitchen display screen, WhatsApp order confirmations, GST billing, and admin dashboard. Order errors dropped to 0%.",
+    slug: "restaurant-management",
     image: "",
-    meta: "Next: Coupons • KDS • UPI",
+    meta: "React · Node.js · MongoDB · WhatsApp API · Razorpay",
+    metric: "Order errors: 0%",
+    accent: "from-orange-400 to-red-500",
+    icon: "🍽️",
+  },
+  {
+    tag: "Retail",
+    title: "Mobile Shop Management System",
+    copy: "IMEI tracking, repair job cards, dual retail/dealer pricing, GST billing with PDF, and WhatsApp customer updates. Billing time cut 90%.",
+    slug: "mobile-shop-management",
+    image: "",
+    meta: "React · Node.js · Express · MongoDB · Cloudinary",
+    metric: "Billing time: 10min → 1min",
+    accent: "from-blue-400 to-indigo-500",
+    icon: "📱",
+  },
+  {
+    tag: "E-Commerce",
+    title: "JollyBaba Mobiles Online Store",
+    copy: "Dealer/retail price toggle, fuzzy product search, animated cart, Razorpay checkout, and WhatsApp order fallback. Search CTR up 28%.",
+    slug: "jollybaba-ecommerce",
+    image: "",
+    meta: "React · Node.js · MongoDB · Razorpay · Cloudinary",
+    metric: "Search CTR: +28%",
+    accent: "from-emerald-400 to-teal-500",
+    icon: "🛒",
   },
 ];
 
@@ -73,40 +82,25 @@ function redactCard(c) {
   };
 }
 
-export default function CaseStudies({ privateMode = true }) {
-  const cards = privateMode ? studies.map(redactCard) : studies;
+export default function CaseStudies() {
+  const cards = studies;
 
   return (
     <section id="work" className="mx-auto max-w-7xl px-4 py-16 md:py-24">
       <div className="flex items-end justify-between gap-4">
-        <h2 className="text-3xl md:text-5xl font-black tracking-tight text-navy-800">
-          Selected work
-        </h2>
-
-        {privateMode ? (
-          <Link
-            to="/contact#contact"
-            className="text-sm font-medium text-brand-700 hover:text-brand-800 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded px-1 transition-colors"
-            aria-label="Request private case studies"
-          >
-            Request private demos →
-          </Link>
-        ) : (
-          <Link
-            to="/case-studies"
-            className="text-sm font-medium text-brand-700 hover:text-brand-800 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded px-1 transition-colors"
-            aria-label="View all case studies"
-          >
-            View all →
-          </Link>
-        )}
-      </div>
-
-      {privateMode && (
-        <div className="mt-3 text-xs text-slate-500">
-          We keep client identifiers and sensitive metrics private. Ask for a redacted walkthrough or a live demo.
+        <div>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-navy-800">
+            Projects we've built
+          </h2>
+          <p className="mt-2 text-slate-600">Real software for real Indian businesses.</p>
         </div>
-      )}
+        <Link
+          to="/work"
+          className="shrink-0 text-sm font-semibold text-brand-700 hover:text-brand-800 underline underline-offset-2 focus:outline-none"
+        >
+          See all 8 projects →
+        </Link>
+      </div>
 
       <motion.div
         variants={container}
@@ -115,62 +109,43 @@ export default function CaseStudies({ privateMode = true }) {
         viewport={{ once: true, amount: 0.2 }}
         className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
-        {cards.map((c) => {
-          const href = privateMode ? "/contact#contact" : `/case-studies/${c.slug}`;
-          const cta = privateMode ? "Request demo" : "Read case study";
-          return (
-            <motion.div key={c.slug} variants={item}>
-              <Link
-                to={href}
-                className="group block rounded-2xl overflow-hidden border border-slate-200/80 bg-white shadow-sm transition-all duration-300
-                           hover:shadow-xl hover:shadow-brand-500/10 hover:border-brand-200 hover:-translate-y-1
-                           focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
-                aria-label={`${cta}: ${c.title}`}
-                rel={privateMode ? "nofollow" : undefined}
-              >
-                {/* Cover */}
-                <div className="relative aspect-[16/10]">
-                  {c.image ? (
-                    <img
-                      src={c.image}
-                      alt=""
-                      loading="lazy"
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-brand-50 via-slate-50 to-slate-100" />
-                  )}
-                  {/* Soft hover veil */}
-                  <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-t from-navy-900/10 to-transparent" />
-                  {/* Tag pill */}
-                  <div className="absolute left-3 top-3 inline-flex items-center rounded-full bg-white/95 px-3 py-1 text-[11px] font-semibold text-navy-800 ring-1 ring-brand-100 backdrop-blur shadow-sm">
-                    {c.tag}
-                  </div>
+        {cards.map((c) => (
+          <motion.div key={c.slug} variants={item}>
+            <Link
+              to="/work"
+              className="group block rounded-2xl overflow-hidden border border-slate-200/80 bg-white shadow-sm transition-all duration-300
+                         hover:shadow-xl hover:shadow-brand-500/10 hover:border-brand-200 hover:-translate-y-1.5
+                         focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+              aria-label={`View project: ${c.title}`}
+            >
+              {/* Gradient cover with icon */}
+              <div className={`relative h-36 bg-gradient-to-br ${c.accent || 'from-brand-400 to-brand-600'} overflow-hidden`}>
+                <div className="absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+                <div className="absolute bottom-3 left-4 text-4xl select-none">{c.icon}</div>
+                <div className="absolute top-3 left-4">
+                  <span className="rounded-full bg-white/20 px-3 py-1 text-[11px] font-bold text-white backdrop-blur-sm">{c.tag}</span>
                 </div>
-
-                {/* Body */}
-                <div className="p-5 md:p-6">
-                  <h3 className="text-lg font-bold text-navy-800 group-hover:text-brand-700 transition-colors">
-                    {c.title}
-                  </h3>
-
-                  <p className="mt-2 text-sm text-slate-600 leading-relaxed">{c.copy}</p>
-
-                  {c.meta && (
-                    <div className="mt-4 text-[11px] text-slate-500">
-                      {privateMode ? "Details shared on request • NDA-friendly" : c.meta}
-                    </div>
-                  )}
-
-                  <div className="mt-5 flex items-center gap-2 text-sm font-medium text-brand-700">
-                    <span className="transition-transform duration-300 group-hover:translate-x-0.5">{cta}</span>
-                    <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                {c.metric && (
+                  <div className="absolute bottom-3 right-4 rounded-xl bg-white/90 backdrop-blur-sm px-3 py-1.5 shadow-md">
+                    <p className="text-[10px] text-slate-500 font-medium">Key result</p>
+                    <p className="text-xs font-black text-navy-800">{c.metric}</p>
                   </div>
+                )}
+              </div>
+
+              {/* Body */}
+              <div className="p-5">
+                <h3 className="text-base font-bold text-navy-800 group-hover:text-brand-700 transition-colors">{c.title}</h3>
+                <p className="mt-2 text-sm text-slate-600 leading-relaxed line-clamp-3">{c.copy}</p>
+                <div className="mt-3 text-[11px] text-slate-400 font-medium">{c.meta}</div>
+                <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-brand-700">
+                  <span className="transition-transform duration-300 group-hover:translate-x-0.5">View project</span>
+                  <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                 </div>
-              </Link>
-            </motion.div>
-          );
-        })}
+              </div>
+            </Link>
+          </motion.div>
+        ))}
       </motion.div>
     </section>
   );

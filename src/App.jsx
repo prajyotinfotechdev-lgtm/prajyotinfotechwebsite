@@ -16,6 +16,7 @@ const NotFound = lazy(() => import("./pages/NotFound.jsx"));
 const Pricing = lazy(() => import("./pages/Pricing.jsx"));
 const Estimate = lazy(() => import("./pages/Estimate.jsx"));
 const CityLandingPage = lazy(() => import("./pages/CityLandingPage.jsx"));
+const Articles = lazy(() => import("./pages/Articles.jsx"));
 
 import HelpBot from "./components/HelpBot.jsx";
 import FloatingWhatsApp from "./components/FloatingWhatsApp.jsx";
@@ -52,6 +53,7 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/estimate" element={<Estimate />} />
           <Route path="/software-company-in-:city" element={<CityLandingPage />} />
+          <Route path="/articles" element={<Articles />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
