@@ -10,7 +10,18 @@ import { useReducedMotion } from "framer-motion";
  * - controllable speed & direction
  */
 export default function Marquee({
-  items = ["E-commerce", "Portfolio", "SaaS", "Mobile Apps", "Hospitality", "Landing Pages"],
+  items = [
+    "Business Websites",
+    "E-Commerce Stores",
+    "Android & iOS Apps",
+    "CRM Software",
+    "Billing & ERP Systems",
+    "Inventory Management",
+    "WhatsApp Automation",
+    "Custom Software",
+    "UI/UX Design",
+    "Business Digitalization",
+  ],
   speed = 20,                 // seconds per full loop (min 6s)
   direction = "left",         // "left" | "right"
   pauseOnHover = true,

@@ -1,103 +1,102 @@
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
+// Business-outcome focused cards — not tech jargon
 const DEFAULT_ITEMS = [
   {
-    title: "Design system",
-    desc: "Clear tokens for fonts, colors, spacing, and reusable UI parts.",
+    title: "Your Business Online in Days",
+    desc: "Professional website that looks great on every device, loads fast, and brings in real enquiries.",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-        <path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" />
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round"/>
+        <path d="M9 22V12h6v10" stroke="currentColor" strokeWidth="2" fill="none"/>
       </svg>
     ),
-    bullets: ["Figma → production parity", "Consistent theming & spacing"],
+    bullets: ["Mobile-first responsive design", "WhatsApp & call lead capture", "Google-ready from day one"],
   },
   {
-    title: "Full-stack delivery",
-    desc: "Frontend + backend with CI/CD, hosting, and monitoring.",
+    title: "Sell Online — 24/7",
+    desc: "Full e-commerce store with product catalog, cart, checkout, and payment. Customers order while you sleep.",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-        <path d="M4 7h16v10H4z" stroke="currentColor" strokeWidth="2" fill="none" />
-        <path d="M4 12h16" stroke="currentColor" strokeWidth="2" />
-        <circle cx="8" cy="9.5" r="0.9" fill="currentColor" />
-        <circle cx="11" cy="9.5" r="0.9" fill="currentColor" />
-        <circle cx="14" cy="9.5" r="0.9" fill="currentColor" />
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round"/>
+        <path d="M3 6h18M16 10a4 4 0 01-8 0" stroke="currentColor" strokeWidth="2" fill="none"/>
       </svg>
     ),
-    bullets: ["Zero-downtime deploys", "Observability & alerts"],
+    bullets: ["Product catalog with filters", "Razorpay/UPI payment", "WhatsApp order alerts"],
   },
   {
-    title: "SEO & speed",
-    desc: "Core Web Vitals, schema, sitemaps, and fast loads.",
+    title: "App for Your Customers",
+    desc: "Android & iOS app that keeps customers engaged, enables bookings, and builds your brand.",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-        <path d="M3 12h6l2-3 2 6 2-4 2 1h2" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" />
-        <circle cx="5" cy="18" r="1" fill="currentColor" />
-        <circle cx="12" cy="18" r="1" fill="currentColor" />
-        <circle cx="19" cy="18" r="1" fill="currentColor" />
+        <rect x="5" y="2" width="14" height="20" rx="2" stroke="currentColor" strokeWidth="2" fill="none"/>
+        <path d="M12 18h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
       </svg>
     ),
-    bullets: ["Lighthouse A+ targets", "OpenGraph & structured data"],
+    bullets: ["Android & iOS both", "Push notifications & offers", "Login, bookings & orders"],
   },
   {
-    title: "Easy CMS",
-    desc: "Sanity/Contentful/Strapi so you can edit without code.",
+    title: "Track Every Rupee",
+    desc: "GST billing, invoicing, expense tracking, and financial reports — all in one system.",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-        <path d="M4 5h16v14H4z" stroke="currentColor" strokeWidth="2" fill="none" />
-        <path d="M8 9h8M8 12h8M8 15h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M9 7H6a2 2 0 00-2 2v9a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-3" stroke="currentColor" strokeWidth="2" fill="none"/>
+        <path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2H9z" stroke="currentColor" strokeWidth="2" fill="none"/>
+        <path d="M9 12h6M9 16h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
       </svg>
     ),
-    bullets: ["Drafts & previews", "Role-based access"],
+    bullets: ["GST invoice generation", "Vendor & customer ledgers", "PDF export & reports"],
   },
   {
-    title: "Payments & auth",
-    desc: "Razorpay/Stripe, OTP login, and secure sessions.",
+    title: "Know Your Stock Always",
+    desc: "Real-time inventory system so you never oversell, never run out, and always know what's where.",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-        <rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" strokeWidth="2" fill="none" />
-        <path d="M3 11h18" stroke="currentColor" strokeWidth="2" />
+        <path d="M3 3h18v4H3zM3 11h18v4H3zM3 19h18v2H3z" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round"/>
+        <path d="M7 5v0M7 13v0" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
       </svg>
     ),
-    bullets: ["PCI-aware flows", "JWT / Firebase Auth"],
+    bullets: ["Stock in/out tracking", "Low-stock alerts", "Multi-branch support"],
   },
   {
-    title: "Analytics & A/B",
-    desc: "Track funnels and test features safely.",
+    title: "Manage Customers & Leads",
+    desc: "CRM that captures every enquiry, tracks follow-ups, and never lets a lead fall through the cracks.",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-        <path d="M4 20V10m6 10V6m6 14V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round"/>
+        <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="2" fill="none"/>
+        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round"/>
       </svg>
     ),
-    bullets: ["GA4/Pixel", "Server events & experiments"],
+    bullets: ["Lead capture & assignment", "Follow-up reminders", "Sales pipeline view"],
   },
   {
-    title: "Accessibility",
-    desc: "Keyboard support, color contrast, and ARIA semantics.",
+    title: "WhatsApp Automation",
+    desc: "Automated order confirmations, appointment reminders, and customer follow-ups via WhatsApp — without lifting a finger.",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-        <circle cx="12" cy="5" r="2" fill="currentColor" />
-        <path d="M5 9h14M8 9l4 10m4-10l-4 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round"/>
       </svg>
     ),
-    bullets: ["WCAG-friendly patterns", "Reduced-motion fallbacks"],
+    bullets: ["Order & booking alerts", "Auto-reply workflows", "Bulk campaign messaging"],
   },
   {
-    title: "Support & handover",
-    desc: "Clear docs, admin training, and safe updates.",
+    title: "You Own Everything",
+    desc: "Full source code, admin access, and documentation handed over at project completion. No lock-in, ever.",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-        <path d="M4 7h16v10H4z" stroke="currentColor" strokeWidth="2" fill="none" />
-        <path d="M8 7V5h8v2" stroke="currentColor" strokeWidth="2" />
+        <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" strokeWidth="2" fill="none"/>
+        <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round"/>
       </svg>
     ),
-    bullets: ["Runbooks & checklists", "Versioned releases"],
+    bullets: ["Full repository access", "Admin panel + docs", "15-day post-launch support"],
   },
 ];
 
 export default function Features({
-  title = "What we build",
-  subtitle = "End-to-end delivery with clean design and fast performance.",
+  title = "Everything your business needs to go digital",
+  subtitle = "From a simple website to full custom software — we handle every part of your digital journey.",
   items = DEFAULT_ITEMS,
   id = "services",
 }) {
@@ -112,24 +111,26 @@ export default function Features({
   };
 
   const card = {
-    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 16 },
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 18 },
     show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
   };
 
   return (
     <section id={id} className="mx-auto max-w-7xl px-4 py-16 md:py-24">
-      <h2 className="text-3xl md:text-5xl font-black tracking-tight text-navy-800">
-        {title}
-      </h2>
-      {subtitle && <p className="mt-3 max-w-2xl text-slate-600 text-lg">{subtitle}</p>}
+      <div className="max-w-3xl">
+        <h2 className="text-3xl md:text-5xl font-black tracking-tight text-navy-800">
+          {title}
+        </h2>
+        {subtitle && <p className="mt-4 text-slate-600 text-lg leading-relaxed">{subtitle}</p>}
+      </div>
 
       <motion.div
         role="list"
         variants={container}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
-        className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
+        viewport={{ once: true, amount: 0.15 }}
+        className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
       >
         {items.map((it) => (
           <motion.article
@@ -137,7 +138,7 @@ export default function Features({
             key={it.title}
             variants={card}
             className="group relative rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all duration-300
-                       hover:shadow-xl hover:shadow-brand-500/10 hover:border-brand-200 hover:-translate-y-1
+                       hover:shadow-xl hover:shadow-brand-500/10 hover:border-brand-200 hover:-translate-y-1.5
                        focus-within:ring-2 focus-within:ring-brand-500"
           >
             {/* Icon */}
@@ -150,7 +151,7 @@ export default function Features({
               {it.icon}
             </div>
 
-            <h3 className="text-lg font-bold text-navy-800">{it.title}</h3>
+            <h3 className="text-[15px] font-bold text-navy-800 leading-snug">{it.title}</h3>
             <p className="mt-2 text-sm text-slate-600 leading-relaxed">{it.desc}</p>
 
             {Array.isArray(it.bullets) && it.bullets.length > 0 && (
@@ -164,7 +165,6 @@ export default function Features({
               </ul>
             )}
 
-            {/* Optional deep link per card */}
             {it.href && (
               <a
                 href={it.href}
@@ -173,11 +173,14 @@ export default function Features({
                 tabIndex={-1}
               />
             )}
+
+            {/* Hover glow */}
+            <div className="pointer-events-none absolute inset-0 -z-10 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(ellipse_at_top,rgba(124,58,237,0.07),transparent_60%)]" />
           </motion.article>
         ))}
       </motion.div>
 
-      {/* (Optional) ItemList JSON-LD for SEO – only titles & URLs if provided */}
+      {/* JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -188,7 +191,7 @@ export default function Features({
               "@type": "ListItem",
               position: i + 1,
               name: it.title,
-              url: it.href || "https://prajyotinfotech.com/#services",
+              url: it.href || "https://prajyotinfotech.in/services",
             })),
           }),
         }}
