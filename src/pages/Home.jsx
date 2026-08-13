@@ -18,6 +18,7 @@ const CTA          = lazy(() => import("../components/CTA.jsx"));
 const ConsultBanner = lazy(() => import("../components/ConsultBanner.jsx"));
 const BeforeAfterSlider = lazy(() => import("../components/BeforeAfterSlider.jsx"));
 const ParallaxPortfolio = lazy(() => import("../components/ParallaxPortfolio.jsx"));
+const DigitalReadinessQuiz = lazy(() => import("../components/DigitalReadinessQuiz.jsx"));
 
 const SectionSkeleton = ({ className = "" }) => (
   <div className={`mx-auto w-full max-w-7xl px-4 py-16 ${className}`}>
@@ -95,6 +96,11 @@ export default function Home() {
         {/* 2. SERVICES MARQUEE — visual rhythm breaker */}
         <Suspense fallback={<div className="h-16 border-y border-slate-200 bg-white animate-pulse" />}>
           <Marquee />
+        </Suspense>
+
+        {/* 2.25 DIGITAL READINESS QUIZ */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <DigitalReadinessQuiz />
         </Suspense>
 
         {/* 2.5 BEFORE / AFTER SLIDER - educational quality contrast */}

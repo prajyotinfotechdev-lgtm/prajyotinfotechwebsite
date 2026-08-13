@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
+import { MapPin, CheckCircle2 } from "lucide-react";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import QuoteEstimator from "../components/QuoteEstimator.jsx";
 
@@ -151,8 +152,8 @@ export default function CityLandingPage() {
         {/* HERO */}
         <section className="py-16 px-4 bg-gradient-to-br from-brand-50 via-white to-slate-50 border-b border-slate-200">
           <div className="max-w-5xl mx-auto">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-brand-100 text-brand-700 font-semibold text-sm mb-6">
-              📍 Serving {formattedCity} & across Maharashtra
+            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-brand-100 text-brand-700 font-semibold text-sm mb-6">
+              <MapPin className="w-4 h-4 mr-1.5" /> Serving {formattedCity} & across Maharashtra
             </div>
             <h1 className="text-4xl md:text-5xl font-extrabold text-navy-900 mb-6 tracking-tight leading-tight">
               Software & Website Development Company in{" "}
@@ -239,7 +240,7 @@ export default function CityLandingPage() {
                 `Understands Indian SMB needs, GST compliance, and local workflows`,
               ].map((p) => (
                 <li key={p} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                  <span className="mt-1 text-brand-600 font-bold" aria-hidden>✓</span>
+                  <CheckCircle2 className="w-5 h-5 text-brand-600 shrink-0 mt-0.5" />
                   <span className="text-sm text-slate-700">{p}</span>
                 </li>
               ))}

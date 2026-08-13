@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Rocket, Zap, Calendar, Coffee } from 'lucide-react';
 
 const questions = [
   {
@@ -52,10 +53,10 @@ const questions = [
     id: 'timeline',
     title: 'How soon do you need this launched?',
     options: [
-      { label: 'ASAP (Under 2 weeks)', icon: <div className="text-2xl mb-2">🚀</div> },
-      { label: '2 - 4 weeks', icon: <div className="text-2xl mb-2">⚡</div> },
-      { label: '1 - 3 months', icon: <div className="text-2xl mb-2">🗓️</div> },
-      { label: 'No rush', icon: <div className="text-2xl mb-2">☕</div> },
+      { label: 'ASAP (Under 2 weeks)', icon: <Rocket className="w-8 h-8 mb-3 text-brand-500" strokeWidth={1.5} /> },
+      { label: '2 - 4 weeks', icon: <Zap className="w-8 h-8 mb-3 text-brand-500" strokeWidth={1.5} /> },
+      { label: '1 - 3 months', icon: <Calendar className="w-8 h-8 mb-3 text-brand-500" strokeWidth={1.5} /> },
+      { label: 'No rush', icon: <Coffee className="w-8 h-8 mb-3 text-brand-500" strokeWidth={1.5} /> },
     ],
   },
 ];

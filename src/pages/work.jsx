@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import Seo from "../components/Seo.jsx";
+import { X } from "lucide-react";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 
 const WA = (text) =>
@@ -420,7 +421,7 @@ function ProjectModal({ project, onClose }) {
               className="absolute right-4 top-4 flex size-8 items-center justify-center rounded-full bg-white/90 text-slate-600 hover:bg-white shadow-md transition"
               aria-label="Close"
             >
-              ✕
+              <X className="w-5 h-5" />
             </button>
           </div>
 

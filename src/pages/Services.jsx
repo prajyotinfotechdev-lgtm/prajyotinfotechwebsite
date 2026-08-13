@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
+import { CheckCircle2 } from "lucide-react";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import TechStackVisualizer from "../components/TechStackVisualizer.jsx";
 import BentoServices from "../components/BentoServices.jsx";
@@ -337,7 +338,7 @@ export default function Services() {
               "Available in English, Hindi, and Marathi",
             ].map((p) => (
               <li key={p} className="flex items-start gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm hover:shadow-md transition-shadow">
-                <span className="mt-1 text-brand-600" aria-hidden>✓</span>
+                <CheckCircle2 className="mt-0.5 w-5 h-5 text-brand-600 shrink-0" />
                 <span className="text-sm text-slate-700">{p}</span>
               </li>
             ))}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Zap } from 'lucide-react';
 
 const CodeTyping = () => {
   const codeString = `function buildBusiness() {\n  return success;\n}`;
@@ -104,8 +105,8 @@ export default function BentoServices() {
             whileHover={{ scale: 0.98 }}
             className="md:col-span-1 lg:col-span-1 rounded-3xl bg-white p-8 border border-slate-200 flex flex-col justify-between shadow-sm hover:shadow-lg transition-shadow"
           >
-            <div className="h-1/2 text-5xl flex items-center">
-              🚀
+            <div className="h-1/2 flex items-center">
+              <Zap className="w-12 h-12 text-amber-400" strokeWidth={1.5} />
             </div>
             <div>
               <h3 className="text-xl font-bold text-navy-900 mb-2">SEO & Speed</h3>
