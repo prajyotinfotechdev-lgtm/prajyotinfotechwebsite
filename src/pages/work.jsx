@@ -7,6 +7,118 @@ import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 const WA = (text) =>
   `https://wa.me/917020708747?text=${encodeURIComponent(text)}`;
 
+// ─── PREMIUM SVG MOCKUPS ─────────────────────────────────────────────────────
+
+function MockupPhone({ accent, secondary }) {
+  return (
+    <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full pointer-events-none">
+      <defs>
+        <linearGradient id={`gradPhone-${accent}`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor={accent} />
+          <stop offset="1" stopColor={secondary} />
+        </linearGradient>
+      </defs>
+      {/* Phone Body */}
+      <rect x="75" y="10" width="50" height="100" rx="10" fill="#111827" stroke={`url(#gradPhone-${accent})`} strokeWidth="1" />
+      <rect x="85" y="10" width="30" height="4" rx="2" fill="#030712" />
+      <rect x="79" y="18" width="42" height="88" rx="6" fill="#0B1120" />
+      {/* UI Elements */}
+      <rect x="83" y="24" width="34" height="6" rx="2" fill={accent} opacity="0.4" />
+      <rect x="83" y="34" width="22" height="3" rx="1.5" fill={secondary} opacity="0.7" />
+      <rect x="83" y="41" width="34" height="12" rx="3" fill="#1F2937" />
+      <rect x="83" y="57" width="15" height="15" rx="3" fill="#1F2937" />
+      <rect x="102" y="57" width="15" height="15" rx="3" fill="#1F2937" />
+      <rect x="83" y="76" width="34" height="4" rx="2" fill="#374151" />
+      <rect x="83" y="84" width="24" height="4" rx="2" fill="#374151" />
+      {/* Floating Sparkles */}
+      <circle cx="140" cy="30" r="2" fill={accent} opacity="0.6" />
+      <circle cx="60" cy="90" r="1.5" fill={secondary} opacity="0.5" />
+      <circle cx="130" cy="80" r="1" fill={accent} opacity="0.4" />
+    </svg>
+  );
+}
+
+function MockupTablet({ accent, secondary }) {
+  return (
+    <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full pointer-events-none">
+      <defs>
+        <linearGradient id={`gradTablet-${accent}`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor={accent} />
+          <stop offset="1" stopColor={secondary} />
+        </linearGradient>
+      </defs>
+      {/* Tablet Body */}
+      <rect x="40" y="25" width="120" height="80" rx="8" fill="#111827" stroke={`url(#gradTablet-${accent})`} strokeWidth="1" />
+      <rect x="44" y="29" width="112" height="72" rx="4" fill="#0B1120" />
+      {/* Left Sidebar */}
+      <rect x="44" y="29" width="24" height="72" fill="#111827" />
+      <rect x="48" y="35" width="16" height="4" rx="2" fill={accent} opacity="0.8" />
+      <rect x="48" y="45" width="12" height="3" rx="1.5" fill="#374151" />
+      <rect x="48" y="52" width="12" height="3" rx="1.5" fill="#374151" />
+      <rect x="48" y="59" width="12" height="3" rx="1.5" fill="#374151" />
+      {/* Main Content Area */}
+      <rect x="74" y="35" width="40" height="6" rx="2" fill={secondary} opacity="0.5" />
+      <rect x="135" y="35" width="15" height="6" rx="2" fill={accent} opacity="0.8" />
+      {/* Cards */}
+      <rect x="74" y="47" width="36" height="20" rx="3" fill="#1F2937" />
+      <rect x="114" y="47" width="36" height="20" rx="3" fill="#1F2937" />
+      <rect x="74" y="71" width="76" height="22" rx="3" fill="#1F2937" />
+      {/* Data Lines */}
+      <rect x="78" y="51" width="15" height="3" rx="1.5" fill="#374151" />
+      <rect x="78" y="58" width="25" height="4" rx="2" fill={accent} />
+      <rect x="118" y="51" width="15" height="3" rx="1.5" fill="#374151" />
+      <rect x="118" y="58" width="20" height="4" rx="2" fill={secondary} />
+      {/* Floating Sparkles */}
+      <circle cx="30" cy="40" r="2.5" fill={accent} opacity="0.6" />
+      <circle cx="170" cy="70" r="1.5" fill={secondary} opacity="0.5" />
+    </svg>
+  );
+}
+
+function MockupDashboard({ accent, secondary }) {
+  return (
+    <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full pointer-events-none">
+      <defs>
+        <linearGradient id={`gradDash-${accent}`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor={accent} />
+          <stop offset="1" stopColor={secondary} />
+        </linearGradient>
+      </defs>
+      {/* Browser Window */}
+      <rect x="25" y="15" width="150" height="90" rx="6" fill="#111827" stroke={`url(#gradDash-${accent})`} strokeWidth="1" />
+      <rect x="25" y="15" width="150" height="12" fill="#0B1120" />
+      <circle cx="32" cy="21" r="1.5" fill="#EF4444" opacity="0.8" />
+      <circle cx="37" cy="21" r="1.5" fill="#F59E0B" opacity="0.8" />
+      <circle cx="42" cy="21" r="1.5" fill="#10B981" opacity="0.8" />
+      {/* Dashboard Topbar */}
+      <rect x="25" y="27" width="150" height="10" fill="#1F2937" />
+      <rect x="32" y="30" width="20" height="4" rx="2" fill={accent} opacity="0.8" />
+      <rect x="155" y="30" width="12" height="4" rx="2" fill="#374151" />
+      {/* Chart Area */}
+      <rect x="32" y="42" width="90" height="35" rx="3" fill="#1F2937" />
+      <path d="M35 70 L55 55 L75 60 L95 45 L115 50" stroke={accent} strokeWidth="1.5" fill="none" strokeLinejoin="round" />
+      <circle cx="55" cy="55" r="1.5" fill={secondary} />
+      <circle cx="75" cy="60" r="1.5" fill={secondary} />
+      <circle cx="95" cy="45" r="1.5" fill={secondary} />
+      {/* Side Widgets */}
+      <rect x="127" y="42" width="40" height="15" rx="3" fill="#1F2937" />
+      <rect x="131" y="46" width="15" height="3" rx="1.5" fill="#374151" />
+      <rect x="131" y="52" width="25" height="2" rx="1" fill={secondary} />
+      <rect x="127" y="62" width="40" height="15" rx="3" fill="#1F2937" />
+      <rect x="131" y="66" width="15" height="3" rx="1.5" fill="#374151" />
+      <rect x="131" y="72" width="20" height="2" rx="1" fill={accent} />
+      {/* Bottom Table */}
+      <rect x="32" y="82" width="135" height="15" rx="3" fill="#1F2937" />
+      <rect x="36" y="85" width="20" height="2" rx="1" fill="#374151" />
+      <rect x="70" y="85" width="40" height="2" rx="1" fill="#374151" />
+      <rect x="130" y="85" width="30" height="2" rx="1" fill="#374151" />
+      {/* Floating Sparkles */}
+      <circle cx="10" cy="50" r="2" fill={secondary} opacity="0.6" />
+      <circle cx="185" cy="95" r="1.5" fill={accent} opacity="0.5" />
+    </svg>
+  );
+}
+
 // ─── PROJECT DATA ────────────────────────────────────────────────────────────
 const PROJECTS = [
   {
@@ -23,7 +135,8 @@ const PROJECTS = [
     metrics: { label: "Avg. order time reduced", value: "-35%", sub: "vs paper-based system" },
     gradient: "from-orange-500/20 via-red-400/10 to-transparent",
     accent: "#f97316",
-    icon: "🍽️",
+    secondary: "#ef4444",
+    mockupType: "Tablet",
   },
   {
     id: "mobile-shop-management",
@@ -39,7 +152,8 @@ const PROJECTS = [
     metrics: { label: "Billing time reduced", value: "90%", sub: "from 10 min to under 1 min" },
     gradient: "from-blue-500/20 via-indigo-400/10 to-transparent",
     accent: "#6366f1",
-    icon: "📱",
+    secondary: "#3b82f6",
+    mockupType: "Phone",
   },
   {
     id: "jollybaba-ecommerce",
@@ -55,7 +169,8 @@ const PROJECTS = [
     metrics: { label: "Search click-through rate", value: "+28%", sub: "after implementing fuzzy search" },
     gradient: "from-emerald-500/20 via-teal-400/10 to-transparent",
     accent: "#10b981",
-    icon: "🛒",
+    secondary: "#14b8a6",
+    mockupType: "Phone",
   },
   {
     id: "clinic-management",
@@ -71,7 +186,8 @@ const PROJECTS = [
     metrics: { label: "Patient no-show rate", value: "-40%", sub: "via WhatsApp appointment reminders" },
     gradient: "from-rose-500/20 via-pink-400/10 to-transparent",
     accent: "#f43f5e",
-    icon: "🏥",
+    secondary: "#ec4899",
+    mockupType: "Tablet",
   },
   {
     id: "vyapaariyo-saas",
@@ -87,7 +203,8 @@ const PROJECTS = [
     metrics: { label: "Seller onboarding time", value: "< 3 min", sub: "guided wizard from signup to live" },
     gradient: "from-violet-500/20 via-purple-400/10 to-transparent",
     accent: "#8b5cf6",
-    icon: "🚀",
+    secondary: "#a855f7",
+    mockupType: "Dashboard",
   },
   {
     id: "wholesale-order-management",
@@ -103,7 +220,8 @@ const PROJECTS = [
     metrics: { label: "Orders managed daily", value: "500+", sub: "with zero manual errors" },
     gradient: "from-amber-500/20 via-yellow-400/10 to-transparent",
     accent: "#f59e0b",
-    icon: "📦",
+    secondary: "#eab308",
+    mockupType: "Dashboard",
   },
   {
     id: "coaching-management",
@@ -119,7 +237,8 @@ const PROJECTS = [
     metrics: { label: "Fee collection efficiency", value: "100%", sub: "automated reminders & online payment" },
     gradient: "from-sky-500/20 via-cyan-400/10 to-transparent",
     accent: "#0ea5e9",
-    icon: "📚",
+    secondary: "#06b6d4",
+    mockupType: "Phone",
   },
   {
     id: "real-estate-crm",
@@ -135,7 +254,8 @@ const PROJECTS = [
     metrics: { label: "Lead conversion rate", value: "+25%", sub: "with automated follow-up system" },
     gradient: "from-teal-500/20 via-green-400/10 to-transparent",
     accent: "#14b8a6",
-    icon: "🏠",
+    secondary: "#22c55e",
+    mockupType: "Dashboard",
   },
 ];
 
@@ -144,6 +264,7 @@ const TAGS = ["All", "Hospitality", "Retail", "E-Commerce", "Healthcare", "SaaS"
 // ─── 3D PROJECT CARD ─────────────────────────────────────────────────────────
 function ProjectCard({ project, index, onSelect, prefersReducedMotion }) {
   const [hovered, setHovered] = useState(false);
+  const Mockup = project.mockupType === "Phone" ? MockupPhone : project.mockupType === "Tablet" ? MockupTablet : MockupDashboard;
 
   return (
     <motion.article
@@ -155,7 +276,7 @@ function ProjectCard({ project, index, onSelect, prefersReducedMotion }) {
       style={{ transformStyle: "preserve-3d", perspective: 1000 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="group relative cursor-pointer"
+      className="group relative cursor-pointer flex flex-col rounded-3xl border border-slate-200/80 bg-white shadow-lg shadow-slate-200/60 transition-all duration-500 hover:shadow-2xl hover:shadow-slate-300/40 hover:border-slate-300/60 overflow-hidden"
       onClick={() => onSelect(project)}
       role="button"
       tabIndex={0}
@@ -163,80 +284,53 @@ function ProjectCard({ project, index, onSelect, prefersReducedMotion }) {
       onKeyDown={(e) => e.key === "Enter" && onSelect(project)}
     >
       {/* Card shell */}
-      <div className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-lg shadow-slate-200/60 transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-slate-300/40 group-hover:border-slate-300/60">
+      <div className="relative">
 
         {/* Hero area — gradient + floating elements */}
-        <div className={`relative h-52 overflow-hidden bg-gradient-to-br ${project.gradient} bg-slate-50`}>
+        <div className={`relative h-56 overflow-hidden bg-gradient-to-br ${project.gradient} bg-slate-50 flex items-center justify-center`}>
           {/* Animated background grid */}
           <div className="absolute inset-0 opacity-[0.04]" style={{
             backgroundImage: "linear-gradient(rgba(0,0,0,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,1) 1px, transparent 1px)",
             backgroundSize: "32px 32px"
           }} />
 
-          {/* 3D floating window mockup */}
+          {/* 3D Mockup Component */}
           <motion.div
-            animate={hovered && !prefersReducedMotion ? { y: -6, rotateZ: -1.5, scale: 1.04 } : { y: 0, rotateZ: 0, scale: 1 }}
+            animate={hovered && !prefersReducedMotion ? { y: -5, rotateZ: -1, scale: 1.05 } : { y: 0, rotateZ: 0, scale: 1 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="absolute right-4 top-4 w-40 rounded-2xl border border-white/80 bg-white/90 backdrop-blur-sm shadow-2xl overflow-hidden"
+            className="w-full h-full absolute inset-0 flex items-center justify-center p-6"
             style={{ transformStyle: "preserve-3d" }}
           >
-            {/* Window chrome */}
-            <div className="flex items-center gap-1.5 border-b border-slate-100 bg-slate-50/80 px-3 py-2">
-              <span className="size-2 rounded-full bg-red-400" />
-              <span className="size-2 rounded-full bg-amber-400" />
-              <span className="size-2 rounded-full bg-emerald-400" />
-            </div>
-            {/* Fake UI lines */}
-            <div className="space-y-1.5 p-3">
-              <div className="h-1.5 rounded bg-slate-200 w-full" />
-              <div className="h-1.5 rounded w-4/5" style={{ background: project.accent + "60" }} />
-              <div className="h-1.5 rounded bg-slate-200 w-3/5" />
-              <div className="mt-2 h-6 rounded-lg w-full" style={{ background: project.accent + "25" }} />
-              <div className="h-1.5 rounded bg-slate-100 w-full" />
-              <div className="h-1.5 rounded bg-slate-100 w-4/5" />
-              <div className="mt-2 flex gap-1">
-                <div className="h-4 flex-1 rounded" style={{ background: project.accent + "30" }} />
-                <div className="h-4 flex-1 rounded bg-slate-100" />
-              </div>
-            </div>
+             <Mockup accent={project.accent} secondary={project.secondary} />
           </motion.div>
 
-          {/* Second floating card (shadow layer for 3D depth) */}
+          {/* Ambient Glow Orb */}
           <motion.div
-            animate={hovered && !prefersReducedMotion ? { y: -2, x: 2, scale: 1.02 } : { y: 4, x: 4, scale: 1 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="absolute right-8 top-8 w-40 h-32 rounded-2xl bg-slate-100/60 backdrop-blur-sm shadow-md"
-            aria-hidden
+            animate={{ y: [0, -8, 0], scale: [1, 1.1, 1] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full pointer-events-none"
+            style={{ background: `radial-gradient(circle, ${project.accent}, transparent)`, opacity: 0.15, filter: "blur(20px)" }}
           />
 
-          {/* Big icon */}
-          <div className="absolute left-5 top-5">
-            <motion.div
-              animate={hovered && !prefersReducedMotion ? { scale: 1.15, rotate: -5 } : { scale: 1, rotate: 0 }}
-              transition={{ duration: 0.35 }}
-              className="text-5xl select-none"
-            >
-              {project.icon}
-            </motion.div>
-          </div>
-
           {/* Tag pill */}
-          <div className="absolute bottom-4 left-5">
+          <div className="absolute top-4 left-4 z-10">
             <span className={`inline-flex items-center rounded-full bg-gradient-to-r ${project.tagColor} px-3 py-1 text-[11px] font-bold text-white shadow-md`}>
               {project.tag}
             </span>
           </div>
 
           {/* Year */}
-          <div className="absolute bottom-4 right-5">
-            <span className="text-xs font-medium text-slate-400">{project.year}</span>
+          <div className="absolute top-4 right-4 z-10">
+            <span className="rounded-full bg-white/50 backdrop-blur-md px-3 py-1 text-xs font-bold text-slate-600 shadow-sm border border-white/40">
+              {project.year}
+            </span>
           </div>
 
           {/* Glint on hover */}
           <motion.div
             animate={hovered && !prefersReducedMotion ? { opacity: 1, x: "200%" } : { opacity: 0, x: "-100%" }}
             transition={{ duration: 0.6 }}
-            className="absolute inset-y-0 -left-1/4 w-1/3 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 pointer-events-none"
+            className="absolute inset-y-0 -left-1/4 w-1/3 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 pointer-events-none"
           />
         </div>
 
@@ -421,16 +515,28 @@ export default function Work() {
 
   const itemListLd = {
     "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Prajyot Infotech — Software Development Projects Portfolio",
-    "description": "Real software projects built by Prajyot Infotech for Indian businesses — restaurant management, mobile shop billing, e-commerce, clinic systems, wholesale management, and more.",
-    itemListElement: PROJECTS.map((p, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: p.title,
-      description: p.shortDesc,
-      url: `https://prajyotinfotech.in/work#${p.id}`,
-    })),
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://prajyotinfotech.in/work/#webpage",
+        "url": "https://prajyotinfotech.in/work",
+        "name": "Projects & Portfolio | Prajyot Infotech",
+        "description": "Explore Prajyot Infotech's real software projects built for Indian businesses.",
+        "isPartOf": { "@id": "https://prajyotinfotech.in/#website" }
+      },
+      {
+        "@type": "ItemList",
+        "name": "Prajyot Infotech — Software Development Projects Portfolio",
+        "description": "Real software projects built by Prajyot Infotech for Indian businesses — restaurant management, mobile shop billing, e-commerce, clinic systems, wholesale management, and more.",
+        "itemListElement": PROJECTS.map((p, i) => ({
+          "@type": "ListItem",
+          "position": i + 1,
+          "name": p.title,
+          "description": p.shortDesc,
+          "url": `https://prajyotinfotech.in/work#${p.id}`,
+        })),
+      }
+    ]
   };
 
   return (
@@ -547,11 +653,16 @@ export default function Work() {
         </AnimatePresence>
 
         {/* Bottom CTA */}
-        <div className="mt-16 rounded-3xl border border-slate-200/80 bg-gradient-to-br from-brand-600 via-brand-700 to-navy-800 p-8 md:p-12 text-center overflow-hidden relative">
+        <div className="mt-16 rounded-3xl border border-slate-200/80 bg-gradient-to-br from-brand-600 via-brand-700 to-navy-800 p-8 md:p-12 text-center overflow-hidden relative shadow-2xl shadow-brand-500/20">
           <div className="absolute inset-0 opacity-[0.06]" style={{
             backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)",
             backgroundSize: "32px 32px"
           }} />
+          <motion.div 
+            animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }} 
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="absolute -top-24 -right-24 size-64 bg-brand-400/30 blur-[80px] rounded-full pointer-events-none"
+          />
           <div className="relative">
             <h2 className="text-2xl md:text-3xl font-black text-white">
               Want something like this for your business?
@@ -564,13 +675,13 @@ export default function Work() {
                 href={WA("Hi Prajyot Infotech, I saw your portfolio and I want to build a similar system for my business.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-xl bg-white px-7 py-3.5 font-bold text-brand-700 shadow-lg hover:bg-white/90 transition-all hover:scale-[1.02]"
+                className="rounded-xl bg-white px-7 py-3.5 font-bold text-brand-700 shadow-lg hover:bg-white/90 transition-all hover:scale-[1.02] flex items-center justify-center"
               >
-                💬 WhatsApp Us Now
+                WhatsApp Us Now
               </a>
               <Link
                 to="/estimate"
-                className="rounded-xl border-2 border-white/60 px-7 py-3.5 font-semibold text-white hover:bg-white/10 transition-all"
+                className="rounded-xl border-2 border-white/60 px-7 py-3.5 font-semibold text-white hover:bg-white/10 transition-all flex items-center justify-center"
               >
                 Estimate Project Cost
               </Link>
