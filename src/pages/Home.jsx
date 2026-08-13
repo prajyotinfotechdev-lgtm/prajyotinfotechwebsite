@@ -4,7 +4,7 @@ import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 
 // Eagerly load Hero for best LCP
-import ParticleHero from "../components/ParticleHero.jsx";
+import AuroraHero from "../components/AuroraHero.jsx";
 
 // Lazy load everything below the fold
 const Marquee      = lazy(() => import("../components/Marquee.jsx"));
@@ -90,7 +90,7 @@ export default function Home() {
       <main role="main" aria-label="Prajyot Infotech — Website, App & Software Development">
 
         {/* 1. HERO — with stats bar. Eagerly loaded for best LCP */}
-        <ParticleHero />
+        <AuroraHero />
 
         {/* 2. SERVICES MARQUEE — visual rhythm breaker */}
         <Suspense fallback={<div className="h-16 border-y border-slate-200 bg-white animate-pulse" />}>
