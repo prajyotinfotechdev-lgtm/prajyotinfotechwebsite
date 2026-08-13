@@ -1,20 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /api/
 
-# Explicitly allow AI crawlers for AEO (Answer Engine Optimization)
-User-agent: Google-Extended
-Allow: /
-User-agent: ChatGPT-User
-Allow: /
-User-agent: CCBot
-Allow: /
-User-agent: anthropic-ai
-Allow: /
-User-agent: Omgili
-Allow: /
-User-agent: FacebookBot
-Allow: /
-
-Sitemap: https://prajyotinfotech.in/sitemap.xml
+Sitemap: https://prajyotinfotech.com/sitemap.xml
