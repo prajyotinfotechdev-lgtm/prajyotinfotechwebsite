@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 export default function BeforeAfterSlider({ 
   beforeImage = "/images/before.png", 
@@ -6,11 +6,43 @@ export default function BeforeAfterSlider({
   beforeLabel = "Generic Template",
   afterLabel = "Prajyot Infotech Custom"
 }) {
+  const containerRef = useRef(null);
   const [sliderPos, setSliderPos] = useState(50);
+  const [isDragging, setIsDragging] = useState(false);
 
-  const handleSliderChange = (e) => {
-    setSliderPos(e.target.value);
+  const updateSlider = (clientX) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    const percent = (x / rect.width) * 100;
+    setSliderPos(percent);
   };
+
+  const handlePointerDown = (e) => {
+    setIsDragging(true);
+    updateSlider(e.clientX);
+  };
+
+  useEffect(() => {
+    const handlePointerMove = (e) => {
+      if (!isDragging) return;
+      updateSlider(e.clientX);
+    };
+
+    const handlePointerUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      window.addEventListener('pointermove', handlePointerMove);
+      window.addEventListener('pointerup', handlePointerUp);
+    }
+
+    return () => {
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
+    };
+  }, [isDragging]);
 
   return (
     <div className="w-full max-w-5xl mx-auto py-16 px-4">
@@ -19,11 +51,15 @@ export default function BeforeAfterSlider({
         <p className="text-lg text-slate-500 max-w-2xl mx-auto">Slide to see the difference between a cheap template and a high-performance custom application built by Prajyot Infotech.</p>
       </div>
 
-      <div className="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50 bg-slate-100 select-none">
+      <div 
+        ref={containerRef}
+        onPointerDown={handlePointerDown}
+        className="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50 bg-slate-100 select-none cursor-ew-resize"
+      >
         
         {/* Background (Before) */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
           style={{ backgroundImage: `url(${beforeImage})` }}
         />
 
@@ -49,22 +85,12 @@ export default function BeforeAfterSlider({
           className="absolute top-0 bottom-0 w-1 bg-white shadow-[0_0_10px_rgba(0,0,0,0.5)] z-10 flex justify-center items-center pointer-events-none"
           style={{ left: `${sliderPos}%`, transform: 'translateX(-50%)' }}
         >
-          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl border-4 border-brand-500 transition-transform">
+          <div className={`w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl border-4 border-brand-500 transition-transform ${isDragging ? 'scale-110' : ''}`}>
             <svg className="w-6 h-6 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l-3 3 3 3M16 15l3-3-3-3" />
             </svg>
           </div>
         </div>
-
-        {/* Invisible Native Range Input for Flawless Interaction */}
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={sliderPos}
-          onChange={handleSliderChange}
-          className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20 m-0"
-        />
       </div>
     </div>
   );
