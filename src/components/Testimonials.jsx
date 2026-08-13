@@ -1,6 +1,6 @@
 // src/components/Testimonials.jsx
-import React, { useMemo } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import React, { useMemo, useRef } from "react";
+import { motion, useReducedMotion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const DATA = [
   {
@@ -83,6 +83,77 @@ const INDUSTRY_COLORS = {
   "Education": "bg-amber-50 text-amber-700 border-amber-200",
 };
 
+function TiltCard({ children, index, variants }) {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+  
+  // Dynamic glare effect
+  const glareX = useTransform(mouseXSpring, [-0.5, 0.5], ["0%", "100%"]);
+  const glareY = useTransform(mouseYSpring, [-0.5, 0.5], ["0%", "100%"]);
+  const glareOpacity = useTransform(mouseYSpring, [-0.5, 0, 0.5], [0.1, 0, 0.1]);
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.figure
+      ref={ref}
+      variants={variants}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      className="relative flex flex-col rounded-3xl bg-white/70 backdrop-blur-xl p-8 ring-1 ring-slate-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-300
+                 hover:shadow-[0_20px_50px_rgba(124,58,237,0.1)] hover:ring-brand-200"
+    >
+      {/* Glare element */}
+      <motion.div 
+        className="pointer-events-none absolute inset-0 rounded-3xl overflow-hidden"
+        style={{ opacity: glareOpacity }}
+      >
+        <motion.div 
+          className="absolute inset-0 bg-white opacity-80 mix-blend-overlay w-[200%] h-[200%] -top-1/2 -left-1/2"
+          style={{ 
+            background: "radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, transparent 60%)",
+            x: useTransform(glareX, v => `calc(${v} - 50%)`),
+            y: useTransform(glareY, v => `calc(${v} - 50%)`)
+          }}
+        />
+      </motion.div>
+
+      {/* Content wrapper with translateZ for depth */}
+      <div className="relative z-10 flex flex-col h-full transform" style={{ transform: "translateZ(30px)" }}>
+        {children}
+      </div>
+    </motion.figure>
+  );
+}
+
 export default function Testimonials() {
   const prefersReducedMotion = useReducedMotion();
 
@@ -145,42 +216,36 @@ export default function Testimonials() {
           aria-label="Client testimonials"
         >
           {DATA.map((q) => (
-            <motion.figure
-              key={q.name}
-              variants={card}
-              role="listitem"
-              className="flex flex-col rounded-2xl bg-white p-6 ring-1 ring-slate-200/80 shadow-sm transition-all duration-300
-                         hover:shadow-xl hover:shadow-brand-500/8 hover:ring-brand-200 hover:-translate-y-1
-                         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
-            >
-              {/* Header */}
-              <div className="flex items-start justify-between gap-3 mb-4">
-                <div className="flex items-center gap-3">
-                  <div className="size-10 shrink-0 rounded-xl grid place-items-center font-bold text-sm bg-gradient-to-br from-brand-100 to-brand-50 text-brand-700 border border-brand-100">
+            <TiltCard key={q.name} variants={card}>
+              <div className="flex items-start justify-between gap-3 mb-6">
+                <div className="flex items-center gap-4">
+                  <div className="size-12 shrink-0 rounded-2xl grid place-items-center font-bold text-sm bg-gradient-to-br from-brand-100 to-brand-50 text-brand-700 border border-brand-100 shadow-sm">
                     {q.name.split(" ").map(n => n[0]).join("").slice(0, 2)}
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-navy-800">{q.name}</p>
-                    <p className="text-xs text-slate-500">{q.role}</p>
+                    <p className="text-base font-bold text-navy-900">{q.name}</p>
+                    <p className="text-sm text-slate-500">{q.role}</p>
                   </div>
                 </div>
-                <svg viewBox="0 0 24 24" className="size-5 text-brand-400 flex-shrink-0 mt-0.5" aria-hidden>
+                <svg viewBox="0 0 24 24" className="size-6 text-brand-400 opacity-20" aria-hidden>
                   <path fill="currentColor" d="M7.17 6A5.17 5.17 0 0 0 2 11.17V20h8v-8H7.17V9A2 2 0 0 1 9.17 7H10V6H7.17Zm10 0A5.17 5.17 0 0 0 12 11.17V20h8v-8h-2.83V9A2 2 0 0 1 19.17 7H20V6h-2.83Z" />
                 </svg>
               </div>
 
-              <Stars value={q.rating} />
+              <div className="mb-4">
+                <Stars value={q.rating} size={16} />
+              </div>
 
-              <blockquote className="mt-3 flex-1 text-sm leading-relaxed text-slate-700">
+              <blockquote className="flex-1 text-base leading-relaxed text-slate-700 italic">
                 "{q.quote}"
               </blockquote>
 
-              <div className="mt-4">
-                <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold ${INDUSTRY_COLORS[q.industry] || "bg-slate-50 text-slate-600 border-slate-200"}`}>
+              <div className="mt-6 pt-6 border-t border-slate-100">
+                <span className={`inline-flex items-center rounded-xl border px-3 py-1.5 text-xs font-bold ${INDUSTRY_COLORS[q.industry] || "bg-slate-50 text-slate-600 border-slate-200"}`}>
                   {q.industry}
                 </span>
               </div>
-            </motion.figure>
+            </TiltCard>
           ))}
         </motion.div>
       </div>

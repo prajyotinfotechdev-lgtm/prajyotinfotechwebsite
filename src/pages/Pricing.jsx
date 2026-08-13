@@ -1,6 +1,7 @@
 import React from "react";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
+import ROICalculator from "../components/ROICalculator.jsx";
 
 const WHATSAPP_NUMBER = "917020708747";
 const wa = (text) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
@@ -129,6 +130,11 @@ export default function Pricing() {
             </a>
           </article>
         ))}
+      </section>
+
+      {/* ROI Calculator */}
+      <section className="mt-20 mb-8 rounded-[2.5rem] overflow-hidden shadow-2xl">
+        <ROICalculator />
       </section>
 
       {/* FAQ */}
