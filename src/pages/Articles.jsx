@@ -1,18 +1,240 @@
 // src/pages/Articles.jsx
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 
 const WA = (t) => `https://wa.me/917020708747?text=${encodeURIComponent(t)}`;
+
+/* ─── SVG Illustrations (premium, no emoji) ───────────────── */
+function IllustrationRestaurant() {
+  return (
+    <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <defs>
+        <linearGradient id="rg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#FF6B35"/><stop offset="1" stopColor="#E63950"/></linearGradient>
+        <linearGradient id="rg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#1E293B"/><stop offset="1" stopColor="#0F172A"/></linearGradient>
+      </defs>
+      {/* Background plate */}
+      <rect width="200" height="120" fill="url(#rg2)"/>
+      {/* Glow */}
+      <ellipse cx="100" cy="60" rx="70" ry="50" fill="#FF6B35" opacity="0.08"/>
+      {/* QR table card */}
+      <rect x="20" y="22" width="60" height="76" rx="8" fill="#1E293B" stroke="#FF6B35" strokeWidth="0.5" strokeOpacity="0.4"/>
+      <rect x="26" y="28" width="48" height="36" rx="4" fill="#0F172A"/>
+      {/* QR pattern */}
+      {[[0,0],[1,0],[0,1],[2,2],[1,2],[2,1]].map(([r,c],i)=><rect key={i} x={30+c*13} y={32+r*10} width="9" height="7" rx="1.5" fill="#FF6B35" opacity={i%2===0?0.9:0.4}/>)}
+      <rect x="26" y="70" width="48" height="4" rx="2" fill="#FF6B35" opacity="0.6"/>
+      <rect x="26" y="78" width="36" height="3" rx="1.5" fill="#334155"/>
+      <rect x="26" y="83" width="24" height="3" rx="1.5" fill="#1E3A5F"/>
+      {/* Phone screen */}
+      <rect x="94" y="15" width="46" height="86" rx="10" fill="#1E293B" stroke="url(#rg1)" strokeWidth="1"/>
+      <rect x="110" y="15" width="14" height="4" rx="2" fill="#0F172A"/>
+      {[0,1,2,3].map(i=><rect key={i} x="100" y={26+i*18} width="34" height="13" rx="4" fill={i===0?"#FF6B35":"#0F172A"} opacity={i===0?0.2:1}/>)}
+      {[0,1,2,3].map(i=><rect key={i} x="104" y={30+i*18} width="20" height="3" rx="1.5" fill={i===0?"#FF6B35":"#334155"}/>)}
+      {[0,1,2,3].map(i=><rect key={i} x="104" y={34+i*18} width="14" height="2" rx="1" fill="#1E3A5F"/>)}
+      {/* Floating badge */}
+      <g transform="translate(150,20)">
+        <rect width="42" height="22" rx="11" fill="url(#rg1)" opacity="0.95"/>
+        <rect x="6" y="8" width="30" height="3" rx="1.5" fill="white"/>
+        <rect x="10" y="13" width="22" height="2" rx="1" fill="rgba(255,255,255,0.5)"/>
+      </g>
+      {/* Sparkle dots */}
+      <circle cx="165" cy="75" r="2.5" fill="#FF6B35" opacity="0.7"/>
+      <circle cx="155" cy="88" r="1.5" fill="#FF6B35" opacity="0.4"/>
+      <circle cx="175" cy="85" r="1.5" fill="#E63950" opacity="0.5"/>
+    </svg>
+  );
+}
+
+function IllustrationRetail() {
+  return (
+    <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <defs>
+        <linearGradient id="bl1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#4F8EF7"/><stop offset="1" stopColor="#6C3FC2"/></linearGradient>
+      </defs>
+      <rect width="200" height="120" fill="#0A1020"/>
+      <ellipse cx="100" cy="60" rx="70" ry="50" fill="#4F8EF7" opacity="0.07"/>
+      {/* Main phone - center */}
+      <rect x="72" y="10" width="56" height="100" rx="12" fill="#1A2340" stroke="url(#bl1)" strokeWidth="1"/>
+      <rect x="84" y="10" width="20" height="5" rx="2.5" fill="#0A1020"/>
+      <rect x="78" y="20" width="44" height="70" rx="4" fill="#0D1929"/>
+      {/* IMEI screen content */}
+      <rect x="82" y="24" width="36" height="5" rx="2" fill="#4F8EF7" opacity="0.6"/>
+      <rect x="82" y="31" width="28" height="3" rx="1.5" fill="#334155"/>
+      {[0,1,2,3].map(i=><g key={i}><rect x="82" y={38+i*13} width="36" height="10" rx="3" fill="#1E293B"/><rect x="86" y={41+i*13} width="12" height="2.5" rx="1" fill={i===0?"#4F8EF7":"#334155"}/><rect x="86" y={45+i*13} width="8" height="2" rx="1" fill="#1E3A5F"/><circle cx="112" cy={43+i*13} r="3" fill={["#10C98F","#F59E0B","#4F8EF7","#EF4444"][i]} opacity="0.8"/></g>)}
+      {/* Left phone (angled) */}
+      <g transform="rotate(-15, 40, 60)">
+        <rect x="16" y="22" width="36" height="66" rx="8" fill="#162035" stroke="#4F8EF7" strokeWidth="0.5" strokeOpacity="0.5"/>
+        <rect x="22" y="30" width="24" height="42" rx="3" fill="#0D1929"/>
+        {[0,1,2].map(i=><rect key={i} x="24" y={33+i*12} width="18" height="9" rx="2" fill={i===0?"#4F8EF7":"#1E293B"} opacity="0.3"/>)}
+      </g>
+      {/* Right phone (angled) */}
+      <g transform="rotate(15, 160, 60)">
+        <rect x="145" y="22" width="36" height="66" rx="8" fill="#162035" stroke="#6C3FC2" strokeWidth="0.5" strokeOpacity="0.5"/>
+        <rect x="151" y="30" width="24" height="42" rx="3" fill="#0D1929"/>
+        {[0,1,2].map(i=><rect key={i} x="153" y={33+i*12} width="18" height="9" rx="2" fill={i===0?"#6C3FC2":"#1E293B"} opacity="0.3"/>)}
+      </g>
+      {/* Badge */}
+      <g transform="translate(10, 8)">
+        <rect width="50" height="20" rx="10" fill="#4F8EF7" opacity="0.15"/>
+        <rect x="6" y="7" width="38" height="3" rx="1.5" fill="#4F8EF7"/>
+      </g>
+      <circle cx="165" cy="108" r="2" fill="#4F8EF7" opacity="0.6"/>
+      <circle cx="158" cy="103" r="1.5" fill="#6C3FC2" opacity="0.5"/>
+    </svg>
+  );
+}
+
+function IllustrationDigital() {
+  return (
+    <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <defs><linearGradient id="gl1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#10C98F"/><stop offset="1" stopColor="#0891B2"/></linearGradient></defs>
+      <rect width="200" height="120" fill="#061410"/>
+      <ellipse cx="100" cy="60" rx="65" ry="45" fill="#10C98F" opacity="0.06"/>
+      {/* Globe wireframe */}
+      <ellipse cx="70" cy="60" rx="40" ry="40" stroke="#10C98F" strokeWidth="0.5" strokeOpacity="0.3" fill="none"/>
+      <ellipse cx="70" cy="60" rx="25" ry="40" stroke="#10C98F" strokeWidth="0.5" strokeOpacity="0.2" fill="none"/>
+      <ellipse cx="70" cy="60" rx="40" ry="15" stroke="#10C98F" strokeWidth="0.5" strokeOpacity="0.2" fill="none"/>
+      <ellipse cx="70" cy="48" rx="40" ry="5" stroke="#10C98F" strokeWidth="0.5" strokeOpacity="0.15" fill="none"/>
+      <ellipse cx="70" cy="72" rx="40" ry="5" stroke="#10C98F" strokeWidth="0.5" strokeOpacity="0.15" fill="none"/>
+      {/* Nodes */}
+      <circle cx="70" cy="60" r="4" fill="#10C98F"/>
+      <circle cx="30" cy="60" r="2.5" fill="#10C98F" opacity="0.7"/>
+      <circle cx="110" cy="60" r="2.5" fill="#10C98F" opacity="0.7"/>
+      <circle cx="70" cy="20" r="2" fill="#10C98F" opacity="0.5"/>
+      <circle cx="70" cy="100" r="2" fill="#10C98F" opacity="0.5"/>
+      {/* Connection lines to right panel */}
+      <line x1="110" y1="60" x2="140" y2="40" stroke="#10C98F" strokeWidth="0.5" strokeOpacity="0.4" strokeDasharray="3 3"/>
+      <line x1="110" y1="60" x2="140" y2="60" stroke="#10C98F" strokeWidth="0.5" strokeOpacity="0.4" strokeDasharray="3 3"/>
+      <line x1="110" y1="60" x2="140" y2="80" stroke="#10C98F" strokeWidth="0.5" strokeOpacity="0.4" strokeDasharray="3 3"/>
+      {/* Info cards */}
+      <rect x="140" y="28" width="48" height="20" rx="5" fill="#132B1F"/>
+      <rect x="146" y="34" width="20" height="3" rx="1.5" fill="#10C98F"/>
+      <rect x="146" y="39" width="32" height="2" rx="1" fill="#2D4A3B"/>
+      <rect x="140" y="52" width="48" height="20" rx="5" fill="#132B1F" stroke="#10C98F" strokeWidth="0.5" strokeOpacity="0.5"/>
+      <rect x="146" y="58" width="28" height="3" rx="1.5" fill="#4ADE80"/>
+      <rect x="146" y="63" width="20" height="2" rx="1" fill="#2D4A3B"/>
+      <rect x="140" y="76" width="48" height="20" rx="5" fill="#132B1F"/>
+      <rect x="146" y="82" width="16" height="3" rx="1.5" fill="#10C98F"/>
+      <rect x="146" y="87" width="28" height="2" rx="1" fill="#2D4A3B"/>
+    </svg>
+  );
+}
+
+function IllustrationDigitalize() {
+  return (
+    <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <defs><linearGradient id="vg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#A855F7"/><stop offset="1" stopColor="#6366F1"/></linearGradient></defs>
+      <rect width="200" height="120" fill="#0C0A1E"/>
+      <ellipse cx="100" cy="60" rx="70" ry="50" fill="#A855F7" opacity="0.06"/>
+      {/* Staircase steps — growth chart */}
+      {[0,1,2,3,4].map(i=>(
+        <g key={i}>
+          <rect x={20+i*30} y={90-i*14} width="28" height={14+i*14} rx="3" fill="#A855F7" opacity={0.1+i*0.12}/>
+          <rect x={20+i*30} y={90-i*14} width="28" height="3" rx="1.5" fill="url(#vg1)" opacity={0.5+i*0.1}/>
+        </g>
+      ))}
+      {/* Rocket */}
+      <g transform="translate(130, 15) rotate(45)">
+        <ellipse rx="12" ry="22" fill="url(#vg1)" opacity="0.9"/>
+        <polygon points="0,-22 -8,-8 8,-8" fill="white" opacity="0.3"/>
+        <ellipse cy="22" rx="6" ry="4" fill="#6366F1" opacity="0.6"/>
+        <circle cy="-5" r="5" fill="white" opacity="0.2"/>
+      </g>
+      {/* Exhaust trail */}
+      <path d="M148 52 Q148 70 138 85" stroke="#A855F7" strokeWidth="1.5" strokeOpacity="0.4" fill="none" strokeDasharray="3 3"/>
+      <circle cx="138" cy="85" r="3" fill="#A855F7" opacity="0.3"/>
+      <circle cx="142" cy="80" r="2" fill="#6366F1" opacity="0.2"/>
+      {/* Stars */}
+      {[[15,18],[35,12],[170,20],[185,45],[25,85]].map(([x,y],i)=>(
+        <circle key={i} cx={x} cy={y} r="1.5" fill="white" opacity="0.3"/>
+      ))}
+    </svg>
+  );
+}
+
+function IllustrationEcom() {
+  return (
+    <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <defs><linearGradient id="og1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#F59E0B"/><stop offset="1" stopColor="#EF4444"/></linearGradient></defs>
+      <rect width="200" height="120" fill="#100808"/>
+      <ellipse cx="100" cy="60" rx="70" ry="50" fill="#F59E0B" opacity="0.06"/>
+      {/* Shopping bag */}
+      <rect x="55" y="40" width="90" height="68" rx="10" fill="#1F1208"/>
+      <rect x="55" y="40" width="90" height="68" rx="10" stroke="url(#og1)" strokeWidth="1" strokeOpacity="0.4" fill="none"/>
+      {/* Handle */}
+      <path d="M75 40 Q75 22 100 22 Q125 22 125 40" stroke="url(#og1)" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+      {/* Items */}
+      {[0,1,2].map(i=>(
+        <g key={i}>
+          <rect x={64+i*26} y="53" width="20" height="20" rx="4" fill="#2A1510"/>
+          <rect x={68+i*26} y="57" width="12" height="12" rx="2" fill="#F59E0B" opacity={0.15+i*0.1}/>
+        </g>
+      ))}
+      {/* Price tag */}
+      <rect x="64" y="80" width="72" height="18" rx="5" fill="url(#og1)" opacity="0.15"/>
+      <rect x="70" y="86" width="40" height="3" rx="1.5" fill="#F59E0B"/>
+      <rect x="116" y="84" width="14" height="14" rx="4" fill="#F59E0B"/>
+      <rect x="120" y="88" width="6" height="2" rx="1" fill="white"/>
+      <rect x="122" y="86" width="2" height="6" rx="1" fill="white"/>
+      {/* Stars */}
+      {[[15,20],[185,25],[30,100],[170,95]].map(([x,y],i)=>(
+        <circle key={i} cx={x} cy={y} r="1.5" fill="#F59E0B" opacity="0.4"/>
+      ))}
+    </svg>
+  );
+}
+
+function IllustrationCRM() {
+  return (
+    <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <defs><linearGradient id="pg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#EC4899"/><stop offset="1" stopColor="#A855F7"/></linearGradient></defs>
+      <rect width="200" height="120" fill="#110818"/>
+      <ellipse cx="100" cy="60" rx="65" ry="45" fill="#EC4899" opacity="0.06"/>
+      {/* Central node */}
+      <circle cx="100" cy="60" r="16" fill="#1F0F1A" stroke="url(#pg1)" strokeWidth="1.5"/>
+      <circle cx="100" cy="60" r="8" fill="url(#pg1)" opacity="0.7"/>
+      {/* Satellite nodes */}
+      {[[48,30],[152,30],[34,78],[166,78],[100,10]].map(([x,y],i)=>(
+        <g key={i}>
+          <line x1="100" y1="60" x2={x} y2={y} stroke="#EC4899" strokeWidth="0.5" strokeOpacity="0.3" strokeDasharray="3 3"/>
+          <circle cx={x} cy={y} r="10" fill="#1F0F1A" stroke="#EC4899" strokeWidth="0.5" strokeOpacity="0.5"/>
+          <circle cx={x} cy={y} r="4" fill="#EC4899" opacity="0.5"/>
+        </g>
+      ))}
+      {/* Labels */}
+      <rect x="28" y="17" width="40" height="8" rx="4" fill="#EC4899" opacity="0.1"/>
+      <rect x="32" y="20" width="28" height="2" rx="1" fill="#EC4899" opacity="0.5"/>
+      <rect x="132" y="17" width="40" height="8" rx="4" fill="#A855F7" opacity="0.1"/>
+      <rect x="136" y="20" width="28" height="2" rx="1" fill="#A855F7" opacity="0.5"/>
+    </svg>
+  );
+}
+
+const ILLUSTRATIONS = {
+  Restaurant: IllustrationRestaurant,
+  Retail: IllustrationRetail,
+  "Digital Strategy": IllustrationDigital,
+  Digitalization: IllustrationDigitalize,
+  "E-Commerce": IllustrationEcom,
+  "CRM & Management": IllustrationCRM,
+};
+
+const ACCENT_COLORS = {
+  Restaurant: { a: "#FF6B35", b: "#E63950", glow: "rgba(255,107,53,0.25)" },
+  Retail: { a: "#4F8EF7", b: "#6C3FC2", glow: "rgba(79,142,247,0.25)" },
+  "Digital Strategy": { a: "#10C98F", b: "#0891B2", glow: "rgba(16,201,143,0.2)" },
+  Digitalization: { a: "#A855F7", b: "#6366F1", glow: "rgba(168,85,247,0.2)" },
+  "E-Commerce": { a: "#F59E0B", b: "#EF4444", glow: "rgba(245,158,11,0.2)" },
+  "CRM & Management": { a: "#EC4899", b: "#A855F7", glow: "rgba(236,72,153,0.2)" },
+};
 
 const ARTICLES = [
   {
     id: "why-every-restaurant-needs-management-system",
     category: "Restaurant",
     categoryColor: "from-orange-400 to-red-500",
-    icon: "🍽️",
     title: "Why Every Restaurant in India Needs a Digital Management System in 2025",
     excerpt: "Paper KOTs, WhatsApp orders, and manual billing cost Indian restaurants lakhs every year in waste, errors, and slow service. Here's why a digital system changes everything.",
     readTime: "6 min read",
@@ -31,7 +253,7 @@ const ARTICLES = [
     id: "mobile-shop-billing-software-india",
     category: "Retail",
     categoryColor: "from-blue-400 to-indigo-500",
-    icon: "📱",
+    illustrationKey: "Retail",
     title: "Why Mobile Phone Shops in India Need Custom Billing & Inventory Software",
     excerpt: "Tally doesn't track IMEI numbers. Excel can't send WhatsApp repair updates. Here's exactly what mobile shop owners need — and why generic software doesn't cut it.",
     readTime: "5 min read",
@@ -50,7 +272,7 @@ const ARTICLES = [
     id: "website-vs-whatsapp-business-india",
     category: "Digital Strategy",
     categoryColor: "from-emerald-400 to-teal-500",
-    icon: "💡",
+    illustrationKey: "Digital Strategy",
     title: "Website vs. WhatsApp Business: What Every Indian SMB Owner Should Know",
     excerpt: "Many Indian businesses skip building a website because 'WhatsApp is enough.' Here's why that's a costly mistake — and how the two work best together.",
     readTime: "4 min read",
@@ -68,7 +290,7 @@ const ARTICLES = [
     id: "how-to-digitalize-your-business-india-2025",
     category: "Digitalization",
     categoryColor: "from-violet-400 to-purple-500",
-    icon: "🚀",
+    illustrationKey: "Digitalization",
     title: "How to Digitalize Your Business in India: A Step-by-Step Guide for 2025",
     excerpt: "From a basic website to full ERP — here's a practical, jargon-free guide to taking your Indian business fully digital in 2025 without wasting money.",
     readTime: "8 min read",
@@ -123,47 +345,94 @@ const ARTICLES = [
 const ALL_CATS = ["All", ...new Set(ARTICLES.map((a) => a.category))];
 
 function ArticleCard({ article, index, prefersReducedMotion }) {
+  const ref = useRef(null);
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+  const springX = useSpring(rawX, { stiffness: 200, damping: 25 });
+  const springY = useSpring(rawY, { stiffness: 200, damping: 25 });
+  const rotateY = useTransform(springX, [-0.5, 0.5], [-10, 10]);
+  const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
+
+  function handleMove(e) {
+    if (prefersReducedMotion) return;
+    const rect = ref.current.getBoundingClientRect();
+    rawX.set((e.clientX - rect.left) / rect.width - 0.5);
+    rawY.set((e.clientY - rect.top) / rect.height - 0.5);
+  }
+  function handleLeave() { rawX.set(0); rawY.set(0); }
+
+  const IllustrationComponent = ILLUSTRATIONS[article.illustrationKey || article.category] || IllustrationRestaurant;
+  const accent = ACCENT_COLORS[article.illustrationKey || article.category] || { a: "#4F8EF7", b: "#6C3FC2", glow: "rgba(79,142,247,0.2)" };
+
   return (
     <motion.article
+      ref={ref}
       initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.5, delay: prefersReducedMotion ? 0 : index * 0.07 }}
-      className="group relative flex flex-col rounded-3xl border border-slate-200/80 bg-white shadow-sm overflow-hidden hover:shadow-xl hover:shadow-brand-500/8 hover:-translate-y-1 transition-all duration-300"
+      transition={{ duration: 0.55, delay: prefersReducedMotion ? 0 : index * 0.07, ease: [0.22, 1, 0.36, 1] }}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      className="group relative flex flex-col rounded-3xl overflow-hidden focus-within:outline-none"
+      style={{
+        background: "#0A0F1E",
+        border: "1px solid rgba(255,255,255,0.07)",
+        boxShadow: `0 4px 24px -6px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04)`,
+      }}
     >
-      {/* Header */}
-      <div className={`relative h-28 bg-gradient-to-br ${article.categoryColor} opacity-90 overflow-hidden`}>
-        <div className="absolute inset-0 opacity-[0.08]" style={{
-          backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)",
-          backgroundSize: "24px 24px"
-        }} />
-        <div className="absolute bottom-4 left-5 text-4xl select-none">{article.icon}</div>
-        <div className="absolute top-4 right-4">
-          <span className="rounded-full bg-white/20 px-3 py-1 text-[11px] font-bold text-white backdrop-blur-sm">
+      {/* 3D tilt illustration header */}
+      <div
+        className="relative overflow-hidden"
+        style={{ height: 160, perspective: "600px" }}
+      >
+        {/* Glow beneath illustration */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          background: `radial-gradient(ellipse 80% 70% at 50% 60%, ${accent.glow}, transparent 70%)`
+        }}/>
+        <motion.div
+          style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+          className="absolute inset-0"
+        >
+          <IllustrationComponent />
+        </motion.div>
+        {/* Floating accent orb */}
+        <motion.div
+          animate={{ y: [0, -6, 0], scale: [1, 1.06, 1] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: index * 0.5 }}
+          className="absolute top-3 right-3 w-8 h-8 rounded-full pointer-events-none"
+          style={{ background: `radial-gradient(circle, ${accent.a}, transparent)`, opacity: 0.4, filter: "blur(6px)" }}
+        />
+        {/* Category badge */}
+        <div className="absolute top-3 left-3 z-10">
+          <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold backdrop-blur-md"
+            style={{ background: "rgba(0,0,0,0.4)", border: `1px solid ${accent.a}40`, color: accent.a }}>
+            <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: accent.a }}/>
             {article.category}
           </span>
         </div>
       </div>
 
-      {/* Body */}
-      <div className="flex flex-col flex-1 p-6">
-        <div className="flex items-center gap-3 text-xs text-slate-400 mb-3">
-          <span>{article.date}</span>
-          <span>·</span>
-          <span>{article.readTime}</span>
+      {/* Card body */}
+      <div className="flex flex-col flex-1 p-5" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-[11px] font-medium" style={{ color: "rgba(255,255,255,0.35)" }}>{article.date}</span>
+          <span style={{ color: "rgba(255,255,255,0.2)" }}>·</span>
+          <span className="text-[11px] font-medium" style={{ color: "rgba(255,255,255,0.35)" }}>{article.readTime}</span>
         </div>
 
-        <h2 className="text-base font-black text-navy-800 leading-snug group-hover:text-brand-700 transition-colors line-clamp-3 flex-1">
+        <h2 className="text-[14px] font-bold leading-snug line-clamp-3 flex-1"
+          style={{ color: "rgba(255,255,255,0.9)" }}>
           {article.title}
         </h2>
-        <p className="mt-3 text-sm text-slate-600 leading-relaxed line-clamp-3">
+        <p className="mt-2 text-[12px] leading-relaxed line-clamp-2" style={{ color: "rgba(255,255,255,0.4)" }}>
           {article.excerpt}
         </p>
 
         {/* Tags */}
-        <div className="mt-4 flex flex-wrap gap-1.5">
+        <div className="mt-3 flex flex-wrap gap-1.5">
           {article.tags.slice(0, 2).map((t) => (
-            <span key={t} className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-[11px] font-medium text-slate-600">
+            <span key={t} className="rounded-full px-2.5 py-0.5 text-[10px] font-medium"
+              style={{ background: `${accent.a}15`, color: accent.a, border: `1px solid ${accent.a}25` }}>
               {t}
             </span>
           ))}
@@ -171,10 +440,13 @@ function ArticleCard({ article, index, prefersReducedMotion }) {
 
         <Link
           to={`/articles/${article.id}`}
-          className="mt-5 flex items-center gap-2 text-sm font-semibold text-brand-700 group-hover:gap-3 transition-all"
+          className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all duration-300"
+          style={{ color: accent.a }}
         >
           Read article
-          <span aria-hidden>→</span>
+          <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </Link>
       </div>
     </motion.article>
@@ -232,7 +504,8 @@ export default function Articles() {
         <div className="relative mx-auto max-w-4xl text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold text-white/80 mb-5">
-              📖 {ARTICLES.length} Articles on Business Digitalization
+              <svg className="w-3.5 h-3.5" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1" opacity="0.4"/></svg>
+              {ARTICLES.length} Articles on Business Digitalization
             </span>
             <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight">
               Guides for Indian businesses{" "}
@@ -283,7 +556,7 @@ export default function Articles() {
           <div className="mt-7 flex flex-wrap justify-center gap-4">
             <a href={WA("Hi Prajyot Infotech, I read your articles and want to discuss digitalizing my business.")} target="_blank" rel="noopener noreferrer"
               className="rounded-xl bg-white px-7 py-3 font-bold text-brand-700 hover:bg-white/90 transition-all hover:scale-[1.02]">
-              💬 WhatsApp Now
+              WhatsApp Now
             </a>
             <Link to="/services" className="rounded-xl border-2 border-white/60 px-7 py-3 font-semibold text-white hover:bg-white/10 transition">
               View All Services
