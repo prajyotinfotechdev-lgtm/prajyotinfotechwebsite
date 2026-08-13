@@ -1,5 +1,5 @@
 // App.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense, lazy } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import Nav from "./components/Nav.jsx";
@@ -7,15 +7,15 @@ import Footer from "./components/Footer.jsx";
 import "./styles/responsive.css";
 import "./style.css";
 
-import Home from "./pages/Home.jsx";
-import Work from "./pages/work.jsx"; // ✅ ensure case matches actual file on disk
-import Services from "./pages/Services.jsx";
-import About from "./pages/About.jsx";
-import Contact from "./pages/Contact.jsx";
-import NotFound from "./pages/NotFound.jsx";
-import Pricing from "./pages/Pricing.jsx";
-import Estimate from "./pages/Estimate.jsx";
-import CityLandingPage from "./pages/CityLandingPage.jsx";
+const Home = lazy(() => import("./pages/Home.jsx"));
+const Work = lazy(() => import("./pages/work.jsx")); // ✅ ensure case matches actual file on disk
+const Services = lazy(() => import("./pages/Services.jsx"));
+const About = lazy(() => import("./pages/About.jsx"));
+const Contact = lazy(() => import("./pages/Contact.jsx"));
+const NotFound = lazy(() => import("./pages/NotFound.jsx"));
+const Pricing = lazy(() => import("./pages/Pricing.jsx"));
+const Estimate = lazy(() => import("./pages/Estimate.jsx"));
+const CityLandingPage = lazy(() => import("./pages/CityLandingPage.jsx"));
 
 import HelpBot from "./components/HelpBot.jsx";
 import FloatingWhatsApp from "./components/FloatingWhatsApp.jsx";
@@ -42,17 +42,19 @@ export default function App() {
       <ScrollToTop />
       <Nav />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/pricing" element={<Pricing />} />
-        <Route path="/work" element={<Work />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/estimate" element={<Estimate />} />
-        <Route path="/software-company-in-:city" element={<CityLandingPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={<div className="flex h-screen items-center justify-center text-brand-500">Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/work" element={<Work />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/estimate" element={<Estimate />} />
+          <Route path="/software-company-in-:city" element={<CityLandingPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
 
       {showChats && (
         <>

@@ -8,13 +8,12 @@ const PHONE_DISPLAY = "+91 70207 08747";
 const PHONE_TEL = "+917020708747";
 const WHATSAPP = "917020708747";
 
-// If you know your public site & logo URL, fill these for richer JSON-LD:
-const SITE_URL = "https://prajyotinfotech.com/";
-const LOGO_URL = "https://prajyotinfotech.com/videos/Logo.jpg";
+const SITE_URL = "https://prajyotinfotech.in/";
+const LOGO_URL = "https://prajyotinfotech.in/videos/Logo.jpg";
 
 const SOCIALS = {
-  instagram: "https://www.instagram.com/prajyot.infotech?igsh=MWlxaXptejl4Y3pmMQ==",
-  linkedin: "https://www.linkedin.com/",
+  instagram: "https://www.instagram.com/prajyot.infotech",
+  linkedin: "https://www.linkedin.com/company/prajyotinfotech",
 };
 
 const buildWA = () =>
@@ -111,7 +110,7 @@ export default function Footer() {
             {/* <span className="font-bold text-navy-800 text-lg">{BRAND}</span> */}
           </Link>
           <p className="mt-4 text-slate-600 leading-relaxed">
-            We build clean, fast websites and apps with a focus on ROI. Premium quality, transparent pricing.
+            Professional website, app, and software development for Indian businesses. Custom CRM, ERP, inventory management, billing, and WhatsApp automation. Fixed pricing. Full ownership.
           </p>
 
           {/* Quick CTAs */}
@@ -142,10 +141,11 @@ export default function Footer() {
             <h4 className="text-navy-800 font-semibold text-base">Company</h4>
             <ul className="mt-4 space-y-3 text-slate-600">
               <li><Link to="/" className="hover:text-brand-700 transition-colors">Home</Link></li>
-              <li><Link to="/about" className="hover:text-brand-700 transition-colors">About</Link></li>
-              <li><Link to="/work" className="hover:text-brand-700 transition-colors">Work</Link></li>
+              <li><Link to="/about" className="hover:text-brand-700 transition-colors">About Us</Link></li>
+              <li><Link to="/work" className="hover:text-brand-700 transition-colors">Our Work</Link></li>
               <li><Link to="/services" className="hover:text-brand-700 transition-colors">Services</Link></li>
               <li><Link to="/pricing" className="hover:text-brand-700 transition-colors">Pricing</Link></li>
+              <li><Link to="/contact" className="hover:text-brand-700 transition-colors">Contact</Link></li>
             </ul>
           </div>
 
@@ -204,13 +204,14 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-navy-800 font-semibold text-base">Service Areas</h4>
+            <h4 className="text-navy-800 font-semibold text-base">Services</h4>
             <ul className="mt-4 space-y-3 text-slate-600 text-sm">
-              <li><Link to="/software-company-in-mumbai" className="hover:text-brand-700 transition-colors">Mumbai</Link></li>
-              <li><Link to="/software-company-in-pune" className="hover:text-brand-700 transition-colors">Pune</Link></li>
-              <li><Link to="/software-company-in-nagpur" className="hover:text-brand-700 transition-colors">Nagpur</Link></li>
-              <li><Link to="/software-company-in-nashik" className="hover:text-brand-700 transition-colors">Nashik</Link></li>
-              <li><Link to="/software-company-in-aurangabad" className="hover:text-brand-700 transition-colors">Aurangabad</Link></li>
+              <li><Link to="/services#business-websites" className="hover:text-brand-700 transition-colors">Business Websites</Link></li>
+              <li><Link to="/services#ecommerce-development" className="hover:text-brand-700 transition-colors">E-Commerce</Link></li>
+              <li><Link to="/services#mobile-app-development" className="hover:text-brand-700 transition-colors">Mobile Apps</Link></li>
+              <li><Link to="/services#crm-development" className="hover:text-brand-700 transition-colors">CRM Software</Link></li>
+              <li><Link to="/services#billing-erp-software" className="hover:text-brand-700 transition-colors">ERP & Billing</Link></li>
+              <li><Link to="/services#whatsapp-automation" className="hover:text-brand-700 transition-colors">WhatsApp Automation</Link></li>
             </ul>
           </div>
         </nav>

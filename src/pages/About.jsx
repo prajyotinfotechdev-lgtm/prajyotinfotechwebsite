@@ -1,13 +1,12 @@
 import React from "react";
-// Optional: if you have these already like on Home, use them
-// import Seo from "../components/Seo.jsx";
-// import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
+import Seo from "../components/Seo.jsx";
+import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 
 const WA_NUMBER = "917020708747";
 const EMAIL = "prajyot.infotech@gmail.com";
 const CALENDLY_LINK = ""; // e.g. "https://calendly.com/yourname/15min"
-const SITE_URL = "https://prajyotinfotech.com";
-const LOGO_URL = "https://prajyotinfotech.com/videos/Logo.jpg";
+const SITE_URL = "https://prajyotinfotech.in";
+const LOGO_URL = "https://prajyotinfotech.in/videos/Logo.jpg";
 const BRAND = "Prajyot Infotech";
 const SOCIALS = [
   "https://www.linkedin.com/company/prajyotinfotech",
@@ -97,11 +96,34 @@ export default function About() {
   };
 
   return (
-    <main id="about-top" className="mx-auto max-w-6xl px-4 py-14" role="main" aria-label="About Prajyot Infotech">
-      {/* Inject JSON-LD for SEO */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+    <>
+      <BreadcrumbsLd items={[
+        { name: "Home", url: `${SITE_URL}/` },
+        { name: "About Prajyot Infotech", url: `${SITE_URL}/about` },
+      ]} />
+      <Seo
+        title="About Prajyot Infotech — Software & Web Development Company in India"
+        description="Learn about Prajyot Infotech, a professional software development company in India building custom websites, mobile apps, CRM, ERP, inventory software, and business automation solutions for SMBs."
+        keywords="Prajyot Infotech, software development company India, web development company, about us, business digitalization India"
+        path="/about"
+        schema={[
+          orgLd,
+          breadcrumbLd,
+          faqLd,
+          {
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "@id": `${SITE_URL}/about#webpage`,
+            "url": `${SITE_URL}/about`,
+            "name": "About Prajyot Infotech",
+            "description": "Prajyot Infotech is a software and web development company in India helping businesses digitalize with custom websites, mobile apps, CRM, ERP, and automation systems.",
+            "isPartOf": { "@id": `${SITE_URL}/#website` },
+            "about": { "@id": `${SITE_URL}/#organization` }
+          }
+        ]}
+      />
+
+      <main id="about-top" className="mx-auto max-w-6xl px-4 py-14" role="main" aria-label="About Prajyot Infotech">
 
       {/* HERO */}
       <header className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-50 via-white to-slate-50 p-8 md:p-12 shadow-lg shadow-brand-500/5">
@@ -406,5 +428,6 @@ export default function About() {
         </div>
       </section>
     </main>
+    </>
   );
 }

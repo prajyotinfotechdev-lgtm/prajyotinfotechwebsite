@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import Seo from "../components/Seo.jsx";
+import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 
 const PRIVACY_MODE = true; // keep true to avoid revealing details
 
@@ -143,11 +145,12 @@ export default function Work() {
   const itemListLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
+    "name": "Prajyot Infotech Portfolio",
     itemListElement: shown.map((c, i) => ({
       "@type": "ListItem",
       position: i + 1,
       name: displayTitle(c),
-      url: "https://yourdomain.com/work",
+      url: "https://prajyotinfotech.in/work",
     })),
   };
 
@@ -155,12 +158,19 @@ export default function Work() {
   // 4) RENDER
   // ---------------------------
   return (
-    <main className="mx-auto max-w-7xl px-4 py-14">
-      {/* JSON-LD for visible items */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }}
+    <>
+      <BreadcrumbsLd items={[
+        { name: "Home", url: "https://prajyotinfotech.in/" },
+        { name: "Our Work", url: "https://prajyotinfotech.in/work" },
+      ]} />
+      <Seo
+        title="Our Work & Portfolio — Prajyot Infotech Software Development Projects"
+        description="Explore Prajyot Infotech's portfolio of software development projects including SaaS platforms, e-commerce stores, QR ordering systems, mobile apps, and custom business software."
+        keywords="Prajyot Infotech portfolio, software development projects, web development work, case studies India, business software examples"
+        path="/work"
+        schema={itemListLd}
       />
+      <main className="mx-auto max-w-7xl px-4 py-14">
 
       {/* HERO / PROMISE */}
       <section className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-brand-50 via-white to-slate-50 p-8 md:p-12 shadow-lg shadow-brand-500/5">
@@ -413,5 +423,6 @@ export default function Work() {
         </div>
       </section>
     </main>
+    </>
   );
 }

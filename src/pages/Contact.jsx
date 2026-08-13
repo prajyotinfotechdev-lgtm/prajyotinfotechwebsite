@@ -1,6 +1,10 @@
 import React, { useMemo, useState } from "react";
+import Seo from "../components/Seo.jsx";
+import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 
 const WHATSAPP_NUMBER = "917020708747"; // country code + number, no "+"
+const BRAND = "Prajyot Infotech";
+const SITE_URL = "https://prajyotinfotech.in";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", contact: "", message: "" });
@@ -47,7 +51,7 @@ ${(form.message || "Hi, I want to build a website/app.").trim()}`;
     setSubmittingEmail(true);
 
     const emailTo = "prajyot.infotech@gmail.com";
-    const subject = encodeURIComponent("New project enquiry — DigiShop");
+    const subject = encodeURIComponent("New project enquiry — Prajyot Infotech");
     const body = encodeURIComponent(buildMessage());
 
     const gmailWeb = `https://mail.google.com/mail/?view=cm&fs=1&to=${emailTo}&su=${subject}&body=${body}`;
@@ -96,10 +100,45 @@ ${(form.message || "Hi, I want to build a website/app.").trim()}`;
     if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) submitWhatsApp();
   };
 
+  const contactPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Prajyot Infotech",
+    "url": `${SITE_URL}/contact`,
+    "description": "Contact Prajyot Infotech for website development, mobile app development, custom software, CRM, ERP, and business digitalization services.",
+    "isPartOf": { "@id": `${SITE_URL}/#website` },
+  };
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": BRAND,
+    "@id": `${SITE_URL}/#organization`,
+    "url": SITE_URL,
+    "telephone": "+917020708747",
+    "email": "prajyot.infotech@gmail.com",
+    "areaServed": ["Maharashtra", "India"],
+    "availableLanguage": ["English", "Hindi", "Marathi"],
+    "priceRange": "₹₹",
+    "openingHours": "Mo-Sa 09:00-19:00",
+  };
+
   return (
-    <main className="mx-auto max-w-3xl px-4 py-14" onKeyDown={onKeyDown}>
-      <h1 className="text-4xl md:text-5xl font-black text-slate-900">Start a project</h1>
-      <p className="mt-3 text-slate-600">Tell us your details. We’ll reply within 48 hours.</p>
+    <>
+      <BreadcrumbsLd items={[
+        { name: "Home", url: `${SITE_URL}/` },
+        { name: "Contact", url: `${SITE_URL}/contact` },
+      ]} />
+      <Seo
+        title="Contact Prajyot Infotech — Get a Free Consultation"
+        description="Contact Prajyot Infotech for website development, mobile apps, custom software, CRM, ERP, inventory management, billing software, and business digitalization. Reply within 48 hours."
+        keywords="contact Prajyot Infotech, website development enquiry, software development India, get a quote"
+        path="/contact"
+        schema={[contactPageSchema, localBusinessSchema]}
+      />
+      <main className="mx-auto max-w-3xl px-4 py-14" onKeyDown={onKeyDown}>
+      <h1 className="text-4xl md:text-5xl font-black text-slate-900">Contact Prajyot Infotech</h1>
+      <p className="mt-2 text-slate-500 text-sm font-medium">Website Development · Mobile Apps · CRM · ERP · Business Automation</p>
+      <p className="mt-3 text-slate-600">Tell us about your project. We'll reply within 48 hours with a free consultation.</p>
 
       <form className="mt-8 grid gap-3" noValidate>
         <div>
@@ -190,5 +229,6 @@ ${(form.message || "Hi, I want to build a website/app.").trim()}`;
         </div>
       </form>
     </main>
+    </>
   );
 }

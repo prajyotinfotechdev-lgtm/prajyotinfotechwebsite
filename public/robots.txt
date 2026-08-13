@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /admin
-Sitemap: https://yourdomain.com/sitemap.xml
+Disallow: /api/
+Sitemap: https://prajyotinfotech.in/sitemap.xml

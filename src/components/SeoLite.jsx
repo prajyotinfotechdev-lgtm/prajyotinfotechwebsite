@@ -26,10 +26,11 @@ function upsertLink(rel, href) {
 export default function SeoLite({
   title = "",
   description = "",
+  keywords = "",
   path = "",
   image = "",
-  siteName = "DigiShop",
-  baseUrl = "https://digishop.co.in",
+  siteName = "Prajyot Infotech",
+  baseUrl = "https://prajyotinfotech.in",
 }) {
   useEffect(() => {
     // Title
@@ -43,6 +44,9 @@ export default function SeoLite({
     // Basic meta
     if (description) {
       upsertMeta('meta[name="description"]', { name: "description", content: description });
+    }
+    if (keywords) {
+      upsertMeta('meta[name="keywords"]', { name: "keywords", content: keywords });
     }
 
     // Open Graph

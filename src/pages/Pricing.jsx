@@ -1,5 +1,6 @@
 import React from "react";
 import Seo from "../components/Seo.jsx";
+import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 
 const WHATSAPP_NUMBER = "917020708747";
 const wa = (text) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
@@ -60,20 +61,23 @@ export default function Pricing() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-14">
       <Seo
-        title="Pricing"
-        description="Simple, transparent pricing for websites, apps, and SaaS. Pick a plan or talk to us for a custom quote."
+        title="Transparent Pricing for Website & Software Development — Prajyot Infotech"
+        description="Simple, transparent pricing for website development, mobile apps, and custom software. Starter plans from ₹29,999. Fixed pricing with no hidden costs. View all plans."
+        keywords="website development pricing India, software development cost, mobile app cost, Prajyot Infotech pricing, business website price"
+        path="/pricing"
         schema={{
           "@context": "https://schema.org",
           "@type": "Service",
-          name: "Web & App Development",
-          provider: { "@type": "Organization", name: "DigiShop" },
-          areaServed: "India",
-          offers: tiers.map((t) => ({
+          "name": "Web, App & Software Development Services",
+          "provider": { "@type": "Organization", "name": "Prajyot Infotech", "@id": "https://prajyotinfotech.in/#organization" },
+          "areaServed": "India",
+          "url": "https://prajyotinfotech.in/pricing",
+          "offers": tiers.map((t) => ({
             "@type": "Offer",
-            name: t.name,
-            price: t.price.replace(/[^\d]/g, "") || undefined,
-            priceCurrency: "INR",
-            url: "https://yourdomain.com/pricing",
+            "name": t.name,
+            "price": t.price.replace(/[^\d]/g, "") || undefined,
+            "priceCurrency": "INR",
+            "url": "https://prajyotinfotech.in/pricing",
           })),
         }}
       />

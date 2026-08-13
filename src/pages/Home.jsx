@@ -27,14 +27,37 @@ export default function Home() {
   return (
     <>
       {/* JSON-LD only (doesn't render visible text) */}
-      <BreadcrumbsLd items={[{ name: "Home", url: "https://digishop.co.in/" }]} />
+      <BreadcrumbsLd items={[{ name: "Home", url: "https://prajyotinfotech.in/" }]} />
 
       {/* Single SEO entry point (handles title/og/twitter/canonical) */}
       <Seo
-        title="Premium Websites & Apps"
-        description="Clean, fast websites and apps that help your business grow. Fixed pricing, quick delivery, friendly support."
+        title="Website, App & Software Development Company in India"
+        description="Prajyot Infotech provides professional website development, mobile apps, custom software, CRM, ERP, inventory management, billing software, and WhatsApp automation for businesses across India. Fixed pricing, full ownership."
+        keywords="website development company India, software development company, mobile app development India, CRM software, ERP development, business digitalization"
         path="/"
         image="/og/og-default.jpg"
+        schema={[
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "@id": "https://prajyotinfotech.in/#website",
+            "name": "Prajyot Infotech",
+            "url": "https://prajyotinfotech.in"
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "@id": "https://prajyotinfotech.in/#organization",
+            "name": "Prajyot Infotech",
+            "url": "https://prajyotinfotech.in",
+            "logo": "https://prajyotinfotech.in/videos/Logo.jpg",
+            "description": "Professional software and web development company in India. Custom websites, mobile apps, CRM, ERP, inventory management, billing software, and WhatsApp automation.",
+            "sameAs": [
+              "https://www.instagram.com/prajyot.infotech",
+              "https://www.linkedin.com/company/prajyotinfotech"
+            ]
+          }
+        ]}
       />
 
       <div id="top" />
@@ -44,7 +67,7 @@ export default function Home() {
         <ConsultBanner />
       </Suspense>
 
-      <main role="main" aria-label="DigiShop home">
+      <main role="main" aria-label="Prajyot Infotech — Website, App & Software Development">
         <Suspense
           fallback={
             <div className="bg-slate-50">

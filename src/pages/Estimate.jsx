@@ -8,14 +8,15 @@ export default function Estimate() {
     <>
       <BreadcrumbsLd
         items={[
-          { name: "Home", url: "https://digishop.co.in/" },
-          { name: "Project Estimate", url: "https://digishop.co.in/estimate" },
+          { name: "Home", url: "https://prajyotinfotech.in/" },
+          { name: "Project Estimate", url: "https://prajyotinfotech.in/estimate" },
         ]}
       />
       
       <Seo
-        title="Project Cost Estimator"
-        description="Get an instant estimate for your next web design, app development, or SaaS project with Prajyot Infotech."
+        title="Free Project Cost Estimator — Website, App & Software Development"
+        description="Use Prajyot Infotech's free project cost estimator to get an instant quote for website development, mobile app development, custom software, and business digitalization projects."
+        keywords="website development cost calculator, software development estimate, mobile app cost India, project quote Prajyot Infotech"
         path="/estimate"
       />
 

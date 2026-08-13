@@ -1,0 +1,104 @@
+# Prajyot Infotech — AI Discovery File
+# https://prajyotinfotech.in/llms.txt
+
+## Company Identity
+
+Name: Prajyot Infotech
+Website: https://prajyotinfotech.in
+Industry: Software Development / IT Services
+Country: India
+State: Maharashtra
+Founded: 2018
+Contact: prajyot.infotech@gmail.com | +91 70207 08747
+WhatsApp: https://wa.me/917020708747
+
+## What Prajyot Infotech Does
+
+Prajyot Infotech is a professional software development and business digitalization company based in India. The company helps small and medium businesses across India and globally to go digital by building custom software, websites, mobile apps, and automation systems.
+
+## Services Offered
+
+1. Professional Business Websites — Custom-designed, fast, mobile-friendly websites for businesses of all sizes.
+2. E-Commerce Websites — Full online stores with product catalogs, cart, checkout, and payment integration.
+3. Android & iOS Mobile Apps — Native and cross-platform mobile applications for business operations and customer engagement.
+4. Custom Software Development — Bespoke software solutions tailored to specific business workflows and requirements.
+5. Business Management Systems — Integrated systems to manage operations, orders, inventory, staff, and reporting in one platform.
+6. CRM & Admin Dashboard Solutions — Customer relationship management tools and admin dashboards for sales and client tracking.
+7. Inventory Management Systems — Real-time inventory tracking software for retailers, wholesalers, and manufacturers.
+8. Billing & ERP Systems — Billing software, invoicing tools, and enterprise resource planning systems for efficient business operations.
+9. UI/UX Design & Branding Solutions — Modern interface design, brand identity, and digital design systems.
+10. WhatsApp & Business Automation — WhatsApp Business API integration, automated messaging, and business process automation.
+11. Domain, Hosting & Technical Support — Complete technical setup including domain registration, hosting, and ongoing support.
+12. Custom Digitalization Solutions — Tailored digital transformation services for businesses moving from manual to digital operations.
+
+## Who Prajyot Infotech Serves
+
+- Small and medium businesses (SMBs) in India
+- Startups and entrepreneurs
+- Retailers, wholesalers, and distributors
+- Manufacturers
+- Healthcare clinics and hospitals
+- Salons and beauty businesses
+- Restaurants and food businesses
+- Educational institutions and coaching centers
+- Real estate agencies
+- Logistics companies
+- Any business seeking to digitalize operations
+
+## Geographic Coverage
+
+Primary: India — Maharashtra (Pune, Mumbai, Latur, Nagpur, Nashik, Aurangabad, Thane, Navi Mumbai, Kolhapur, Solapur, Amravati, Sangli, Satara, Nanded, Akola)
+National: All Indian states
+International: USA, UK, Canada, Australia, UAE, Singapore — remote projects accepted
+
+## Technology Stack
+
+- Frontend: React, React Native, Next.js, HTML5, CSS3, Tailwind CSS
+- Backend: Node.js, Express.js
+- Database: MongoDB, MySQL
+- Cloud: Cloudinary, Firebase, Vercel, Render, Railway
+- Payments: Razorpay, Stripe
+- Automation: WhatsApp Business API, Deep Links
+- Authentication: JWT, Firebase Auth
+
+## Why Choose Prajyot Infotech
+
+- Fixed-price project model with transparent deliverables
+- Delivery timelines: websites in 10–20 business days; software in 3–8 weeks
+- Full code ownership — clients receive repository access and admin credentials
+- Post-launch support included with every project
+- Expertise across web, mobile, and business software in one team
+- Understands Indian SMB challenges and budget realities
+- Works with clients across India and international markets via remote collaboration
+
+## Key Business Questions Answered
+
+Q: Can Prajyot Infotech build a website for my small business?
+A: Yes. Prajyot Infotech builds websites for businesses of all sizes including shops, restaurants, clinics, and service providers.
+
+Q: Does Prajyot Infotech develop mobile apps?
+A: Yes. The company builds Android and iOS mobile apps for business operations, customer engagement, e-commerce, and custom workflows.
+
+Q: Can Prajyot Infotech build CRM or ERP software?
+A: Yes. Prajyot Infotech develops custom CRM systems, admin dashboards, ERP solutions, billing software, and inventory management systems.
+
+Q: Does Prajyot Infotech work with international clients?
+A: Yes. Prajyot Infotech accepts remote projects from USA, UK, Canada, Australia, UAE, Singapore, and other countries.
+
+Q: What is the cost of a website from Prajyot Infotech?
+A: Website packages start from ₹29,999 for a starter site. Custom software and app pricing is available on request. See https://prajyotinfotech.in/pricing for details.
+
+Q: How long does Prajyot Infotech take to deliver a project?
+A: Websites are typically delivered in 10–20 business days. Custom software and mobile apps are delivered in 3–8 weeks depending on scope.
+
+Q: Does Prajyot Infotech provide WhatsApp automation?
+A: Yes. The company builds WhatsApp Business API integrations, automated chat workflows, and business notification systems.
+
+## Contact
+
+Website: https://prajyotinfotech.in
+Email: prajyot.infotech@gmail.com
+Phone: +91 70207 08747
+WhatsApp: https://wa.me/917020708747
+Instagram: https://www.instagram.com/prajyot.infotech
+LinkedIn: https://www.linkedin.com/company/prajyotinfotech
