@@ -210,12 +210,42 @@ const faqs = [
 ];
 
 const PRINCIPLES = [
-  { icon: "⚡", label: "Speed First", desc: "Sub-2s loads on mobile. Performance is a feature." },
-  { icon: "🎯", icon2: null, label: "Clarity Over Complexity", desc: "Clean architecture, no unnecessary bloat." },
-  { icon: "🔐", label: "You Own It All", desc: "Full code ownership — repo, domain, credentials." },
-  { icon: "📅", label: "Reliable Timelines", desc: "We commit to deadlines and proactively communicate." },
-  { icon: "🎨", label: "Premium Design", desc: "Every pixel intentional. Design that converts." },
-  { icon: "🌏", label: "Local + Global", desc: "Serving Indian SMBs and international clients remotely." },
+  {
+    icon: <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8" aria-hidden><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+    label: "Speed First",
+    desc: "Sub-2s loads on mobile. Performance is a feature.",
+    accent: "from-yellow-500 to-orange-500"
+  },
+  {
+    icon: <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8" aria-hidden><circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.8"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>,
+    label: "Clarity Over Complexity",
+    desc: "Clean architecture, no unnecessary bloat.",
+    accent: "from-brand-500 to-violet-500"
+  },
+  {
+    icon: <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8" aria-hidden><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/><circle cx="12" cy="16" r="1.5" fill="currentColor"/></svg>,
+    label: "You Own It All",
+    desc: "Full code ownership — repo, domain, credentials.",
+    accent: "from-emerald-500 to-teal-500"
+  },
+  {
+    icon: <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8" aria-hidden><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>,
+    label: "Reliable Timelines",
+    desc: "We commit to deadlines and proactively communicate.",
+    accent: "from-cyan-500 to-blue-500"
+  },
+  {
+    icon: <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8" aria-hidden><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Z" stroke="currentColor" strokeWidth="1.8"/><path d="M8 12l3 3 5-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+    label: "Premium Design",
+    desc: "Every pixel intentional. Design that converts.",
+    accent: "from-pink-500 to-rose-500"
+  },
+  {
+    icon: <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8" aria-hidden><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.8"/><path d="M2 12h20" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/><path d="M12 2c-2.8 3.3-4 6.3-4 10s1.2 6.7 4 10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/><path d="M12 2c2.8 3.3 4 6.3 4 10s-1.2 6.7-4 10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>,
+    label: "Local + Global",
+    desc: "Serving Indian SMBs and international clients remotely.",
+    accent: "from-indigo-500 to-brand-500"
+  },
 ];
 
 const STEPS = [
@@ -411,10 +441,18 @@ export default function About() {
             <Reveal>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {[
-                  { v: 50, s: "+", l: "Projects Shipped", icon: "🚀" },
-                  { v: 6, s: "+", l: "Years of Expertise", icon: "📅" },
-                  { v: 8, s: "+", l: "Industries Served", icon: "🏭" },
-                  { v: 100, s: "%", l: "Code Ownership", icon: "🔐" },
+                  { v: 50, s: "+", l: "Projects Shipped",
+                    icon: <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden><path d="M12 2L2 7l10 5 10-5-10-5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/><path d="M2 17l10 5 10-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M2 12l10 5 10-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  },
+                  { v: 6, s: "+", l: "Years of Expertise",
+                    icon: <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
+                  },
+                  { v: 8, s: "+", l: "Industries Served",
+                    icon: <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden><path d="M3 21V9l9-6 9 6v12" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/><path d="M9 21v-6h6v6" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/></svg>
+                  },
+                  { v: 100, s: "%", l: "Code Ownership",
+                    icon: <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/><circle cx="12" cy="16" r="1.5" fill="currentColor"/></svg>
+                  },
                 ].map((stat, i) => (
                   <TiltCard key={stat.l}>
                     <motion.div
@@ -425,7 +463,7 @@ export default function About() {
                       className="group relative overflow-hidden rounded-3xl border border-slate-200/60 bg-white p-8 shadow-lg shadow-brand-500/5 hover:shadow-xl hover:shadow-brand-500/10 transition-all"
                     >
                       <div aria-hidden className="absolute -right-6 -top-6 size-24 rounded-full bg-brand-500/5 group-hover:bg-brand-500/10 transition-colors" />
-                      <div className="text-3xl mb-3">{stat.icon}</div>
+                      <div className="text-brand-600 mb-3">{stat.icon}</div>
                       <div className="text-4xl md:text-5xl font-black bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent">
                         <AnimatedCounter target={stat.v} suffix={stat.s} />
                       </div>
@@ -498,13 +536,17 @@ export default function About() {
               </p>
               <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
-                  { role: "Client Success Lead", dept: "Sales & Onboarding", icon: "🎯", desc: "Your first point of contact — from discovery to onboarding. Clear timelines, smooth communication." },
-                  { role: "Product & Engineering", dept: "Architecture & Delivery", icon: "⚙️", desc: "Leads architecture, API, and frontend execution. Speed, UX quality, and scalable code." },
+                  { role: "Client Success Lead", dept: "Sales & Onboarding",
+                    icon: <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" aria-hidden><circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.8"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>,
+                    desc: "Your first point of contact — from discovery to onboarding. Clear timelines, smooth communication." },
+                  { role: "Product & Engineering", dept: "Architecture & Delivery",
+                    icon: <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" aria-hidden><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4-6.2-4.5-6.2 4.5 2.4-7.4L2 9.4h7.6L12 2Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/></svg>,
+                    desc: "Leads architecture, API, and frontend execution. Speed, UX quality, and scalable code." },
                 ].map(c => (
                   <TiltCard key={c.role}>
                     <div className="rounded-2xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-5 shadow-md hover:shadow-lg transition-all h-full">
                       <div className="flex items-center gap-3 mb-3">
-                        <div className="size-12 rounded-xl bg-gradient-to-br from-brand-100 to-brand-50 flex items-center justify-center text-2xl shadow-sm">
+                        <div className="size-12 rounded-xl bg-gradient-to-br from-brand-100 to-brand-50 flex items-center justify-center text-brand-600 shadow-sm">
                           {c.icon}
                         </div>
                         <div>
@@ -589,8 +631,11 @@ export default function About() {
                 <Reveal key={p.label} delay={i * 0.1}>
                   <TiltCard className="h-full">
                     <div className="group relative overflow-hidden h-full rounded-3xl border border-slate-100 bg-gradient-to-br from-slate-50 to-white p-7 shadow-md hover:shadow-xl hover:shadow-brand-500/10 transition-all">
-                      <div aria-hidden className="absolute -right-8 -bottom-8 size-32 rounded-full bg-brand-500/5 group-hover:bg-brand-500/10 transition-colors" />
-                      <div className="text-4xl mb-4">{p.icon}</div>
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-br ${p.accent || 'from-brand-500 to-violet-500'} opacity-0 group-hover:opacity-5 rounded-3xl transition-opacity`}
+                        aria-hidden
+                      />
+                      <div className="text-brand-600 group-hover:text-brand-700 transition-colors mb-4 flex-shrink-0">{p.icon}</div>
                       <h3 className="font-bold text-navy-800 text-lg mb-2">{p.label}</h3>
                       <p className="text-sm text-slate-600 leading-relaxed">{p.desc}</p>
                       {/* Accent line */}

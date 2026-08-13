@@ -309,7 +309,14 @@ const ARTICLES = [
     id: "ecommerce-vs-whatsapp-ordering",
     category: "E-Commerce",
     categoryColor: "from-amber-400 to-orange-500",
-    icon: "🛒",
+    icon: (
+      <svg viewBox="0 0 40 40" fill="none" className="w-full h-full" aria-hidden>
+        <path d="M10 14h20l-2 12H12L10 14Z" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round"/>
+        <path d="M16 14v-2a4 4 0 0 1 8 0v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <circle cx="16" cy="28" r="2" fill="currentColor" />
+        <circle cx="24" cy="28" r="2" fill="currentColor" />
+      </svg>
+    ),
     title: "E-Commerce Website vs. WhatsApp Ordering: Which Is Right for Your Business?",
     excerpt: "Many retailers want to sell online but aren't sure if they need a full e-commerce site or WhatsApp-based ordering. The answer depends on your business type, volume, and customers.",
     readTime: "5 min read",
@@ -327,7 +334,15 @@ const ARTICLES = [
     id: "crm-for-small-business-india",
     category: "CRM & Management",
     categoryColor: "from-rose-400 to-pink-500",
-    icon: "👥",
+    icon: (
+      <svg viewBox="0 0 40 40" fill="none" className="w-full h-full" aria-hidden>
+        <circle cx="14" cy="13" r="5" stroke="currentColor" strokeWidth="2"/>
+        <path d="M6 30c0-5 3.6-8 8-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <circle cx="26" cy="13" r="5" stroke="currentColor" strokeWidth="2"/>
+        <path d="M34 30c0-5-3.6-8-8-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <path d="M14 30c0-5 2.686-8 6-8s6 3 6 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      </svg>
+    ),
     title: "Why Small Businesses in India Need a CRM (And It Doesn't Have to Be Expensive)",
     excerpt: "Most Indian business owners think CRM is for big companies. It's not. A simple CRM can increase repeat business by 30–50% — and it can be custom-built for under ₹40,000.",
     readTime: "4 min read",

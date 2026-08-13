@@ -167,7 +167,13 @@ export default function ConsultBanner({
             <div className="mx-auto max-w-7xl px-4 pt-[env(safe-area-inset-top)]">
               <div className="mt-0 rounded-b-xl bg-gradient-to-r from-brand-600 via-brand-700 to-navy-800 text-white shadow-lg shadow-brand-500/20">
                 <div className="flex items-center gap-3 px-5 py-2.5">
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/15 text-sm">📅</span>
+                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/15">
+                    <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4" aria-hidden>
+                      <rect x="2" y="3" width="16" height="16" rx="2" stroke="white" strokeWidth="1.5"/>
+                      <path d="M13 1v4M7 1v4M2 8h16" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                      <path d="M6 12h.01M10 12h.01M14 12h.01M6 15h.01M10 15h.01" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  </span>
                   <p className="text-sm md:text-[15px]">
                     <strong className="font-semibold">Free 15-minute consultation.</strong>{" "}
                     Plan your website/app with {BRAND} experts—no pressure, just clarity.
@@ -201,7 +207,9 @@ export default function ConsultBanner({
                       aria-label="Dismiss consultation banner"
                       className="ml-1 inline-flex h-8 w-8 items-center justify-center rounded-lg hover:bg-white/10 transition"
                     >
-                      ✕
+                      <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4" aria-hidden>
+                        <path d="M6 6l8 8M14 6l-8 8" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+                      </svg>
                     </button>
                   </div>
                 </div>
@@ -225,7 +233,13 @@ export default function ConsultBanner({
             <div className="mx-auto max-w-7xl px-3 pb-[env(safe-area-inset-bottom)]">
               <div className="mb-3 rounded-xl bg-gradient-to-r from-brand-600 via-brand-700 to-navy-800 px-4 py-3 text-white shadow-lg shadow-brand-500/20">
                 <div className="flex items-center gap-2">
-                  <span className="text-lg">📅</span>
+                  <span className="flex-shrink-0">
+                    <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5" aria-hidden>
+                      <rect x="2" y="3" width="16" height="16" rx="2" stroke="white" strokeWidth="1.5"/>
+                      <path d="M13 1v4M7 1v4M2 8h16" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                      <path d="M6 12h.01M10 12h.01M6 15h.01" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  </span>
                   <p className="text-sm">
                     <strong className="font-semibold">Free 15-min call</strong> — plan your project.
                   </p>
@@ -234,7 +248,9 @@ export default function ConsultBanner({
                     aria-label="Dismiss consultation banner"
                     className="ml-auto -mr-1 inline-flex h-7 w-7 items-center justify-center rounded-lg hover:bg-white/10 transition"
                   >
-                    ✕
+                    <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4" aria-hidden>
+                      <path d="M6 6l8 8M14 6l-8 8" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+                    </svg>
                   </button>
                 </div>
                 <div className="mt-3 grid grid-cols-2 gap-2">

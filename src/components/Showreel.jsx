@@ -73,12 +73,63 @@ const STEPS = [
 ];
 
 const WHY_US = [
-  { label: "Fixed price quoted upfront", icon: "₹" },
-  { label: "No lock-in — you own all code", icon: "🔓" },
-  { label: "Delivered in 10–45 days", icon: "⚡" },
-  { label: "WhatsApp support always available", icon: "💬" },
-  { label: "Works in English, Hindi & Marathi", icon: "🗣️" },
-  { label: "Understands Indian business needs", icon: "🇮🇳" },
+  {
+    label: "Fixed price quoted upfront",
+    icon: (
+      <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5" aria-hidden>
+        <circle cx="10" cy="10" r="9" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M10 5v1.5M10 13.5V15M7.5 8.5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5c0 1.38-2.5 2.5-2.5 2.5s-2.5 1.12-2.5 2.5 1.12 2.5 2.5 2.5 2.5-1.12 2.5-2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    )
+  },
+  {
+    label: "No lock-in — you own all code",
+    icon: (
+      <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5" aria-hidden>
+        <rect x="4" y="9" width="12" height="9" rx="2" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M7 9V7a3 3 0 0 1 6 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <circle cx="10" cy="13.5" r="1.5" fill="currentColor"/>
+      </svg>
+    )
+  },
+  {
+    label: "Delivered in 10–45 days",
+    icon: (
+      <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5" aria-hidden>
+        <path d="M10 2L3 7v6l7 4 7-4V7L10 2Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+        <path d="M10 12V8M10 6V5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    )
+  },
+  {
+    label: "WhatsApp support always available",
+    icon: (
+      <svg viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5" aria-hidden>
+        <path d="M10 1C5.03 1 1 5.03 1 10c0 1.63.46 3.14 1.25 4.43L1 19l4.73-1.24A8.98 8.98 0 0 0 10 19c4.97 0 9-4.03 9-9s-4.03-9-9-9Zm4.43 12.67c-.19.52-1.09.98-1.52 1.01-.39.03-.76.17-2.58-.54-2.16-.86-3.54-3.07-3.65-3.21-.11-.14-.9-1.2-.9-2.29 0-1.09.57-1.62.77-1.84.2-.22.44-.28.59-.28h.43c.13 0 .31-.05.48.37l.69 1.73c.05.13.09.28.01.44l-.24.44-.28.29c-.1.1-.21.21-.09.41.12.2.53.87 1.13 1.41.78.7 1.43.92 1.63 1.02.2.1.32.08.44-.05l.4-.46c.14-.17.28-.14.47-.08l1.5.71c.18.09.3.14.34.21.04.07.04.41-.15.93Z"/>
+      </svg>
+    )
+  },
+  {
+    label: "Works in English, Hindi & Marathi",
+    icon: (
+      <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5" aria-hidden>
+        <circle cx="10" cy="10" r="9" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M10 1C10 1 7 5 7 10s3 9 3 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <path d="M10 1c0 0 3 4 3 9s-3 9-3 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <path d="M1 10h18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <path d="M2 7h16M2 13h16" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" opacity=".5"/>
+      </svg>
+    )
+  },
+  {
+    label: "Understands Indian business needs",
+    icon: (
+      <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5" aria-hidden>
+        <path d="M10 2a8 8 0 1 0 0 16A8 8 0 0 0 10 2Z" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M10 6v4l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    )
+  },
 ];
 
 export default function Showreel() {
@@ -149,8 +200,8 @@ export default function Showreel() {
         </h3>
         <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {WHY_US.map((w) => (
-            <li key={w.label} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm hover:shadow-md transition-shadow">
-              <span className="text-xl" aria-hidden>{w.icon}</span>
+            <li key={w.label} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm hover:shadow-md hover:border-brand-200 transition-all group">
+              <span className="flex-shrink-0 text-brand-600 group-hover:text-brand-700 transition-colors" aria-hidden>{w.icon}</span>
               <span className="text-sm font-medium text-navy-800">{w.label}</span>
             </li>
           ))}
