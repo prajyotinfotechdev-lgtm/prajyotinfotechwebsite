@@ -80,6 +80,7 @@ export default function HelpBot({
   );
   const [messages, setMessages] = useState(() => safeGet("helpbot:messages_txt", []));
   const [unread, setUnread] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
 
   const listRef = useRef(null);
   const panelRef = useRef(null);
@@ -130,9 +131,11 @@ export default function HelpBot({
 
       // seed first prompt once
       if (messages.length === 0) {
-        botSay("Great — let’s get a few details. What’s your name?", { meta: "ask:name" });
+        const hour = new Date().getHours();
+        const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+        botSayAsync(`${greeting}! Let’s get a few details to help you out. What’s your name?`, { meta: "ask:name" }, 600);
       } else if (step === STEPS.NAME && !messages.some((m) => m.meta === "ask:name")) {
-        botSay("What’s your name?", { meta: "ask:name" });
+        botSayAsync("What’s your name?", { meta: "ask:name" }, 500);
       }
       // focus input
       setTimeout(() => inputRef.current?.focus(), 0);
@@ -178,6 +181,22 @@ export default function HelpBot({
     setMessages((m) => [...m, msg]);
     if (!open) setUnread((u) => u + 1);
   };
+  const botSayAsync = (text, opts = {}, delay = 1000) => {
+    setIsTyping(true);
+    // Extra scroll when typing indicator appears
+    setTimeout(() => {
+      const el = listRef.current;
+      if (el) {
+        const last = el.querySelector("ul > li:last-child");
+        last?.scrollIntoView({ behavior: "smooth", block: "end" });
+      }
+    }, 50);
+
+    setTimeout(() => {
+      botSay(text, opts);
+      setIsTyping(false);
+    }, delay);
+  };
   const userSay = (text) => {
     const msg = { id: uid(), role: "user", text: String(text).trim(), ts: Date.now() };
     setMessages((m) => [...m, msg]);
@@ -203,38 +222,38 @@ Notes: ${notes || "-"}`;
     userSay(clean);
 
     if (step === STEPS.NAME) {
-      if (clean.length < 2) return botSay("Please enter at least 2 characters for your name.");
+      if (clean.length < 2) return botSayAsync("Please enter at least 2 characters for your name.", {}, 500);
       const nextForm = { ...form, name: clean };
       setForm(nextForm);
       goto(STEPS.CONTACT);
-      return botSay("Nice to meet you! What’s your email or WhatsApp number?");
+      return botSayAsync(`Nice to meet you, ${clean.split(' ')[0]}! What’s your email or WhatsApp number?`, {}, 800);
     }
 
     if (step === STEPS.CONTACT) {
-      if (!isEmail(clean) && !isPhone(clean)) return botSay("Enter a valid email or phone number.");
+      if (!isEmail(clean) && !isPhone(clean)) return botSayAsync("Please enter a valid email or phone number.", {}, 500);
       const nextForm = { ...form, contact: clean };
       setForm(nextForm);
       goto(STEPS.PROJECT);
-      return botSay("Got it. What kind of project is this? (Pick an option below)");
+      return botSayAsync("Got it. What kind of project are we building? (Pick an option below)", {}, 1000);
     }
 
     if (step === STEPS.PROJECT) {
       const nextForm = { ...form, project: clean };
       setForm(nextForm);
       goto(STEPS.BUDGET);
-      return botSay("Thanks. What’s your rough budget? (Pick an option below)");
+      return botSayAsync("Awesome. What’s your rough budget? (Pick an option below)", {}, 800);
     }
 
     if (step === STEPS.BUDGET) {
       const nextForm = { ...form, budget: clean };
       setForm(nextForm);
       goto(STEPS.SUMMARY);
-      return botSay("Here’s your summary below. Type any extra details and send via WhatsApp/Email.");
+      return botSayAsync("Perfect! Here’s your summary. Feel free to type any extra details and send it via WhatsApp/Email.", {}, 1200);
     }
 
     if (step === STEPS.SUMMARY) {
       setForm((f) => ({ ...f, notes: (f.notes ? f.notes + "\n" : "") + clean }));
-      return botSay("Noted. You can press WhatsApp or Email to send now.");
+      return botSayAsync("Noted. You can press WhatsApp or Email to send it to our team now.", {}, 800);
     }
   };
 
@@ -257,7 +276,9 @@ Notes: ${notes || "-"}`;
     setForm({ name: "", contact: "", project: "", budget: "", notes: "" });
     setStep(STEPS.NAME);
     setMessages([]);
-    if (open) botSay("Great — let’s get a few details. What’s your name?", { meta: "ask:name" });
+    const hour = new Date().getHours();
+    const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+    if (open) botSayAsync(`${greeting}! Let’s get a few details. What’s your name?`, { meta: "ask:name" }, 600);
     inputRef.current?.focus();
   };
 
@@ -431,12 +452,33 @@ Notes: ${notes || "-"}`;
                       </div>
                     </motion.li>
                   ))}
+                  
+                  {/* Typing Indicator */}
+                  {isTyping && (
+                    <motion.li
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      className="flex justify-start"
+                    >
+                      <div className="mr-2 mt-1 flex-shrink-0">
+                        <div className="grid size-6 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-violet-500 text-white shadow-sm">
+                          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" aria-hidden><path fill="currentColor" d="M12 2L4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/></svg>
+                        </div>
+                      </div>
+                      <div className="inline-flex items-center gap-1 rounded-2xl bg-white/10 border border-white/10 rounded-tl-sm backdrop-blur-md px-4 py-3 shadow-sm">
+                        <motion.div className="h-1.5 w-1.5 rounded-full bg-white/60" animate={{ y: [0, -3, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0 }} />
+                        <motion.div className="h-1.5 w-1.5 rounded-full bg-white/60" animate={{ y: [0, -3, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }} />
+                        <motion.div className="h-1.5 w-1.5 rounded-full bg-white/60" animate={{ y: [0, -3, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }} />
+                      </div>
+                    </motion.li>
+                  )}
                 </AnimatePresence>
               </ul>
 
             {/* Inline choices */}
             <AnimatePresence>
-              {step === STEPS.PROJECT && (
+              {step === STEPS.PROJECT && !isTyping && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, height: 0 }}
                   className="mt-4 flex flex-wrap gap-2 pl-10"
@@ -454,7 +496,7 @@ Notes: ${notes || "-"}`;
                 </motion.div>
               )}
 
-              {step === STEPS.BUDGET && (
+              {step === STEPS.BUDGET && !isTyping && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, height: 0 }}
                   className="mt-4 pl-10"
@@ -477,7 +519,7 @@ Notes: ${notes || "-"}`;
                 </motion.div>
               )}
 
-              {step === STEPS.SUMMARY && (
+              {step === STEPS.SUMMARY && !isTyping && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
                   className="mt-5 ml-10 rounded-2xl border border-white/10 bg-white/5 p-4 text-[13px] text-white/90 backdrop-blur-sm shadow-inner"
