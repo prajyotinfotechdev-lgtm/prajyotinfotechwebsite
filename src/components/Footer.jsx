@@ -144,6 +144,7 @@ export default function Footer() {
               <li><Link to="/about" className="hover:text-brand-700 transition-colors">About Us</Link></li>
               <li><Link to="/work" className="hover:text-brand-700 transition-colors">Our Work</Link></li>
               <li><Link to="/services" className="hover:text-brand-700 transition-colors">Services</Link></li>
+              <li><Link to="/articles" className="hover:text-brand-700 transition-colors">Articles</Link></li>
               <li><Link to="/pricing" className="hover:text-brand-700 transition-colors">Pricing</Link></li>
               <li><Link to="/contact" className="hover:text-brand-700 transition-colors">Contact</Link></li>
             </ul>
