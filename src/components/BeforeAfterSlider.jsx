@@ -3,8 +3,8 @@ import React, { useState, useRef, useEffect } from 'react';
 export default function BeforeAfterSlider({ 
   beforeImage = "/images/before.png", 
   afterImage = "/images/after.png",
-  beforeLabel = "Generic Template",
-  afterLabel = "Prajyot Infotech Custom"
+  beforeLabel = "Prajyot Infotech Custom",
+  afterLabel = "Generic Template"
 }) {
   const containerRef = useRef(null);
   const [sliderPos, setSliderPos] = useState(50);
