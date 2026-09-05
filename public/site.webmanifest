@@ -1,0 +1,21 @@
+{
+  "name": "Prajyot Infotech — Software & Web Development Company",
+  "short_name": "Prajyot Infotech",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e2756",
+  "description": "Professional software, web, and mobile app development company in India.",
+  "icons": [
+    {
+      "src": "/icons/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/apple-touch-icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

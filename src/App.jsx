@@ -19,6 +19,8 @@ const Estimate = lazy(() => import("./pages/Estimate.jsx"));
 const CityLandingPage = lazy(() => import("./pages/CityLandingPage.jsx"));
 const Articles = lazy(() => import("./pages/Articles.jsx"));
 const TechGlossary = lazy(() => import("./pages/TechGlossary.jsx"));
+const Careers = lazy(() => import("./pages/Careers.jsx"));
+const CareerManager = lazy(() => import("./pages/CareerManager.jsx"));
 
 import HelpBot from "./components/HelpBot.jsx";
 import FloatingWhatsApp from "./components/FloatingWhatsApp.jsx";
@@ -73,6 +75,8 @@ export default function App() {
             <Route path="/software-company-in-:city" element={<PageWrapper><CityLandingPage /></PageWrapper>} />
             <Route path="/articles" element={<PageWrapper><Articles /></PageWrapper>} />
             <Route path="/glossary" element={<PageWrapper><TechGlossary /></PageWrapper>} />
+            <Route path="/careers" element={<PageWrapper><Careers /></PageWrapper>} />
+            <Route path="/careers/manage" element={<PageWrapper><CareerManager /></PageWrapper>} />
             <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
           </Routes>
         </AnimatePresence>

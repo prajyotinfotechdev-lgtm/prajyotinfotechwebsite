@@ -19,6 +19,7 @@ const ConsultBanner = lazy(() => import("../components/ConsultBanner.jsx"));
 const BeforeAfterSlider = lazy(() => import("../components/BeforeAfterSlider.jsx"));
 const ParallaxPortfolio = lazy(() => import("../components/ParallaxPortfolio.jsx"));
 const DigitalReadinessQuiz = lazy(() => import("../components/DigitalReadinessQuiz.jsx"));
+const ArticlesPreview = lazy(() => import("../components/ArticlesPreview.jsx"));
 
 const SectionSkeleton = ({ className = "" }) => (
   <div className={`mx-auto w-full max-w-7xl px-4 py-16 ${className}`}>
@@ -75,8 +76,60 @@ export default function Home() {
               "telephone": "+917020708747",
               "email": "prajyot.infotech@gmail.com",
               "availableLanguage": ["English", "Hindi", "Marathi"],
-              "areaServed": "IN"
+              "areaServed": ["IN", "US", "AE", "GB", "AU"]
             }
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "ProfessionalService",
+            "name": "Prajyot Infotech",
+            "image": "https://prajyotinfotech.in/videos/Logo.jpg",
+            "@id": "https://prajyotinfotech.in/#service",
+            "url": "https://prajyotinfotech.in",
+            "telephone": "+917020708747",
+            "priceRange": "₹₹",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Pune",
+              "addressRegion": "Maharashtra",
+              "addressCountry": "IN"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "48",
+              "bestRating": "5"
+            }
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What services does Prajyot Infotech provide?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Prajyot Infotech provides custom website development, mobile application development (Android & iOS), SaaS platforms, ERP systems, CRM software, WhatsApp Business automation, and end-to-end digitalization for businesses worldwide."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does Prajyot Infotech serve clients outside India?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, Prajyot Infotech partners with businesses and startups across the USA, UAE, UK, Canada, and Australia, offering dedicated offshore engineering teams, full IP ownership, and timezone overlap."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How much does a custom website or software cost with Prajyot Infotech?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Website packages start from ₹29,999 ($399 USD) with fixed pricing, no hidden fees, free SSL, and guaranteed on-time delivery."
+                }
+              }
+            ]
           }
         ]}
       />
@@ -136,6 +189,11 @@ export default function Home() {
         {/* 7. CASE STUDIES — proof of work */}
         <Suspense fallback={<SectionSkeleton />}>
           <CaseStudies />
+        </Suspense>
+
+        {/* 7.5 INTERACTIVE TECH LAB & ARTICLES — engineering authority */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <ArticlesPreview />
         </Suspense>
 
         {/* 8. TESTIMONIALS — social proof from real clients */}

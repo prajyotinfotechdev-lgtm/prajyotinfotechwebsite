@@ -125,15 +125,27 @@ export default function AuroraHero() {
           </Link>
         </motion.div>
 
-        {/* Trust line */}
-        <motion.p
+        {/* Trust line with global footprint */}
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          className="mt-8 text-sm font-medium text-slate-500/80"
+          className="mt-8 inline-flex flex-wrap items-center justify-center gap-2 text-xs md:text-sm font-semibold text-slate-600 bg-slate-100/80 border border-slate-200/80 backdrop-blur-md px-4 py-2 rounded-full shadow-sm"
         >
-          Trusted by top retailers, clinics, and startups across India.
-        </motion.p>
+          <span className="flex items-center gap-1.5 text-slate-900 font-bold">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Trusted Globally:
+          </span>
+          <span>India 🇮🇳</span>
+          <span className="text-slate-300">•</span>
+          <span>USA 🇺🇸</span>
+          <span className="text-slate-300">•</span>
+          <span>UAE 🇦🇪</span>
+          <span className="text-slate-300">•</span>
+          <span>UK 🇬🇧</span>
+          <span className="text-slate-300">•</span>
+          <span>Singapore 🇸🇬</span>
+        </motion.div>
       </motion.div>
 
       {/* Stats bar */}

@@ -85,6 +85,7 @@ export default function Nav() {
       { to: "/", label: "Home" },
       { to: "/work", label: "Work" },
       { to: "/services", label: "Services" },
+      { to: "/careers", label: "Careers" },
       { to: "/articles", label: "Articles" },
       { to: "/pricing", label: "Pricing" },
       { to: "/about", label: "About" },

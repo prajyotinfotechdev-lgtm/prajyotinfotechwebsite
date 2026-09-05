@@ -53,6 +53,36 @@ const cityData = {
     businessContext: "Navi Mumbai's planned infrastructure and growing commercial zones attract businesses that need modern, scalable digital systems to manage growth.",
     callout: "Serving Navi Mumbai businesses with custom websites, apps, and software.",
   },
+  bangalore: {
+    industries: ["SaaS & FinTech", "AI & DeepTech", "E-Commerce", "HealthTech", "Enterprise Software"],
+    businessContext: "As India's Silicon Valley, Bangalore businesses demand world-class engineering, high-throughput APIs, and scalable mobile & cloud architectures.",
+    callout: "Partnering with Bangalore tech companies and enterprise clients for custom software development.",
+  },
+  hyderabad: {
+    industries: ["Pharma & Healthcare", "IT Services", "E-Commerce", "Real Estate", "EdTech"],
+    businessContext: "Hyderabad's rapidly expanding HITEC City and Cyberabad demand enterprise-grade CRM/ERP systems, mobile applications, and cloud-native solutions.",
+    callout: "Delivering top-tier software and mobile app engineering to Hyderabad enterprises.",
+  },
+  delhi: {
+    industries: ["E-Commerce & D2C", "Government & Enterprise", "Logistics", "Retail", "Finance"],
+    businessContext: "Delhi NCR's massive commercial footprint requires robust custom software, WhatsApp business automation, and high-converting web portals.",
+    callout: "Empowering Delhi NCR businesses with custom digital platforms and mobile apps.",
+  },
+  usa: {
+    industries: ["SaaS & Cloud Platforms", "FinTech & Banking", "Healthcare & Telehealth", "E-Commerce", "AI Startups"],
+    businessContext: "Prajyot Infotech offers US startups and enterprises dedicated offshore engineering teams, cost-effective full-stack web & mobile app development, and round-the-clock delivery.",
+    callout: "Offshore software engineering partner for United States startups and enterprises.",
+  },
+  uae: {
+    industries: ["Real Estate & Property", "E-Commerce & Retail", "Hospitality & Tourism", "Logistics", "Trading"],
+    businessContext: "Serving clients across Dubai, Abu Dhabi, and Sharjah with high-end bilingual web apps, custom CRMs, mobile applications, and digital business systems.",
+    callout: "Premium software development partner for UAE & Middle East businesses.",
+  },
+  uk: {
+    industries: ["FinTech", "HealthTech", "Professional Services", "E-Commerce", "Property Management"],
+    businessContext: "Delivering high-performance software engineering, GDPR-compliant web portals, and mobile app development for UK businesses and tech firms.",
+    callout: "Trusted software development outsourcing partner for UK businesses.",
+  },
 };
 
 // Services relevant for local pages
@@ -280,6 +310,32 @@ export default function CityLandingPage() {
               </p>
             </div>
             <QuoteEstimator />
+          </div>
+        </section>
+
+        {/* OTHER LOCATIONS CROSS-LINKING */}
+        <section className="py-10 px-4 bg-slate-100/70 border-t border-slate-200">
+          <div className="max-w-5xl mx-auto text-center">
+            <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">
+              Explore Other Locations & Global Software Hubs
+            </h3>
+            <div className="flex flex-wrap justify-center gap-2">
+              {Object.keys(cityData).map((cKey) => (
+                <Link
+                  key={cKey}
+                  to={`/software-company-in-${cKey}`}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                    city === cKey
+                      ? "bg-brand-600 text-white shadow-sm"
+                      : "bg-white text-slate-700 hover:bg-slate-200 border border-slate-200"
+                  }`}
+                >
+                  {cKey.toUpperCase() === "USA" || cKey.toUpperCase() === "UAE" || cKey.toUpperCase() === "UK"
+                    ? `${cKey.toUpperCase()} Hub`
+                    : cKey.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
 

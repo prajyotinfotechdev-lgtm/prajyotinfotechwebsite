@@ -146,6 +146,7 @@ export default function Footer() {
               <li><Link to="/services" className="hover:text-brand-700 transition-colors">Services</Link></li>
               <li><Link to="/articles" className="hover:text-brand-700 transition-colors">Articles</Link></li>
               <li><Link to="/pricing" className="hover:text-brand-700 transition-colors">Pricing</Link></li>
+              <li><Link to="/careers" className="hover:text-brand-700 transition-colors font-medium text-brand-600">Careers <span className="text-[10px] px-1.5 py-0.5 rounded bg-brand-100 text-brand-700 font-bold ml-1">We're Hiring</span></Link></li>
               <li><Link to="/contact" className="hover:text-brand-700 transition-colors">Contact</Link></li>
             </ul>
           </div>
@@ -216,6 +217,38 @@ export default function Footer() {
             </ul>
           </div>
         </nav>
+      </div>
+
+      {/* Global & Indian Regional Hubs Links for SEO */}
+      <div className="border-t border-slate-200/80 bg-white/40 py-6 px-4">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500">
+            <span className="font-bold text-slate-700 uppercase tracking-wider text-[11px]">Regional & Global Hubs:</span>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 font-medium">
+              <Link to="/software-company-in-pune" className="hover:text-brand-600 transition-colors">Pune</Link>
+              <span>•</span>
+              <Link to="/software-company-in-mumbai" className="hover:text-brand-600 transition-colors">Mumbai</Link>
+              <span>•</span>
+              <Link to="/software-company-in-bangalore" className="hover:text-brand-600 transition-colors">Bangalore</Link>
+              <span>•</span>
+              <Link to="/software-company-in-hyderabad" className="hover:text-brand-600 transition-colors">Hyderabad</Link>
+              <span>•</span>
+              <Link to="/software-company-in-delhi" className="hover:text-brand-600 transition-colors">Delhi NCR</Link>
+              <span>•</span>
+              <Link to="/software-company-in-latur" className="hover:text-brand-600 transition-colors">Latur</Link>
+              <span>•</span>
+              <Link to="/software-company-in-nagpur" className="hover:text-brand-600 transition-colors">Nagpur</Link>
+              <span>•</span>
+              <Link to="/software-company-in-nashik" className="hover:text-brand-600 transition-colors">Nashik</Link>
+              <span>•</span>
+              <Link to="/software-company-in-usa" className="hover:text-brand-600 font-bold text-slate-800 transition-colors">USA 🇺🇸</Link>
+              <span>•</span>
+              <Link to="/software-company-in-uae" className="hover:text-brand-600 font-bold text-slate-800 transition-colors">UAE 🇦🇪</Link>
+              <span>•</span>
+              <Link to="/software-company-in-uk" className="hover:text-brand-600 font-bold text-slate-800 transition-colors">UK 🇬🇧</Link>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Bottom bar */}

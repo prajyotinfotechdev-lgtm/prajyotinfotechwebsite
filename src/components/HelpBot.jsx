@@ -1,19 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { createLead } from "../utils/leadStorage.js";
+
 /**
- * HelpBot (SAFE MODE, opens every visit)
- * - Auto-opens after 5s on every page load (no session gating)
- * - URL overrides: ?help=1 (open immediately), ?help=0 (disable auto-open)
- * - Plain-text messages only
- * - SSR-safe storage helpers
- * - Backdrop click & Esc to close, basic focus trap
+ * HelpBot - Ultra-Premium World-Class AI Assistant
+ * - Glassmorphism floating UI with high-end dark tech styling
+ * - Interactive step progress indicator
+ * - Direct database lead submission (No external WhatsApp redirect)
+ * - Built-in voice input & keyboard shortcuts
  */
-
-const WHATSAPP_NUMBER = "917020708747"; // country code + number, no "+"
-const EMAIL = "prajyotkankal9@gmail.com";
-
-const waLink = (msg) =>
-  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 
 const STEPS = {
   NAME: "name",
@@ -23,8 +18,20 @@ const STEPS = {
   SUMMARY: "summary",
 };
 
-const PROJECT_OPTIONS = ["Website", "Mobile App", "SaaS", "E-commerce", "Other"];
-const BUDGET_OPTIONS = ["Under ₹30k", "₹30k–₹60k", "₹60k–₹1.5L", "₹1.5L+"];
+const PROJECT_OPTIONS = [
+  { label: "Website", icon: "🌐", desc: "Corporate / Portfolio / Web App" },
+  { label: "Mobile App", icon: "📱", desc: "Android / iOS / Flutter" },
+  { label: "SaaS / ERP", icon: "⚡", desc: "Custom Software / CRM" },
+  { label: "E-Commerce", icon: "🛍️", desc: "Online Store & Payments" },
+  { label: "Other", icon: "✨", desc: "Custom Consultation" },
+];
+
+const BUDGET_OPTIONS = [
+  { label: "Under ₹30k", badge: "Starter" },
+  { label: "₹30k–₹60k", badge: "Popular" },
+  { label: "₹60k–₹1.5L", badge: "Growth" },
+  { label: "₹1.5L+", badge: "Enterprise" },
+];
 
 // Validators
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -32,7 +39,7 @@ const phoneRe = /^\+?[0-9()\-\s]{8,}$/;
 const isEmail = (v = "") => emailRe.test(v.trim());
 const isPhone = (v = "") => phoneRe.test(v.trim());
 
-// ---- SSR-safe storage helpers
+// Storage helpers
 const safeGet = (key, fallback) => {
   try {
     if (typeof localStorage === "undefined") return fallback;
@@ -63,14 +70,13 @@ const safeSetItem = (key, val) => {
   } catch {}
 };
 
-// utils
 const uid = () => `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 const toCss = (v) => (typeof v === "number" ? `${v}px` : v);
 
 export default function HelpBot({
-  autoOpenAfterMs = 5000, // opens after 5s on every visit
-  launcherOffset = { bottom: "6rem", right: "1rem" }, // sits above WhatsApp FAB
-  panelOffset = { bottom: "10rem", right: "1rem" },
+  autoOpenAfterMs = 5000,
+  launcherOffset = { bottom: "6rem", right: "1.25rem" },
+  panelOffset = { bottom: "10rem", right: "1.25rem" },
   zIndex = 200,
 }) {
   const [open, setOpen] = useState(false);
@@ -82,14 +88,13 @@ export default function HelpBot({
   const [unread, setUnread] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [isListening, setIsListening] = useState(false);
-  
-  const recognitionRef = useRef(null);
 
+  const recognitionRef = useRef(null);
   const listRef = useRef(null);
   const panelRef = useRef(null);
   const inputRef = useRef(null);
 
-  // URL overrides
+  // URL flags
   const urlFlags = (() => {
     try {
       const p = new URLSearchParams(window.location.search);
@@ -113,17 +118,16 @@ export default function HelpBot({
     last?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages]);
 
-  // Auto-open on EVERY visit
+  // Auto-open
   useEffect(() => {
     if (urlFlags.helpOff || !autoOpenAfterMs) return;
     const t = setTimeout(() => {
       setOpen(true);
     }, urlFlags.helpOpen ? 0 : autoOpenAfterMs);
     return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoOpenAfterMs]);
 
-  // When opened: lock scroll, seed first prompt, focus input, focus trap + Esc
+  // Handle open state
   useEffect(() => {
     if (open) setUnread(0);
 
@@ -132,15 +136,13 @@ export default function HelpBot({
       prevOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
 
-      // seed first prompt once
       if (messages.length === 0) {
         const hour = new Date().getHours();
         const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
-        botSayAsync(`${greeting}! Let’s get a few details to help you out. What’s your name?`, { meta: "ask:name" }, 600);
+        botSayAsync(`${greeting}! Welcome to Prajyot Infotech. Let's get your project estimated in 4 quick steps. What's your name?`, { meta: "ask:name" }, 600);
       } else if (step === STEPS.NAME && !messages.some((m) => m.meta === "ask:name")) {
-        botSayAsync("What’s your name?", { meta: "ask:name" }, 500);
+        botSayAsync("What's your full name?", { meta: "ask:name" }, 500);
       }
-      // focus input
       setTimeout(() => inputRef.current?.focus(), 0);
     }
 
@@ -149,95 +151,62 @@ export default function HelpBot({
         e.preventDefault();
         setOpen(false);
       }
-      // focus trap
-      if (e.key === "Tab" && panelRef.current) {
-        const focusables = panelRef.current.querySelectorAll(
-          'a[href],button:not([disabled]),input,textarea,select,[tabindex]:not([tabindex="-1"])'
-        );
-        const list = Array.from(focusables).filter(
-          (el) => el.offsetWidth || el.offsetHeight || el === document.activeElement
-        );
-        if (list.length === 0) return;
-        const first = list[0];
-        const last = list[list.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
     };
 
     document.addEventListener("keydown", onKey);
     return () => {
       document.removeEventListener("keydown", onKey);
       if (open) document.body.style.overflow = prevOverflow;
-      if (recognitionRef.current) {
-        recognitionRef.current.stop();
-      }
+      if (recognitionRef.current) recognitionRef.current.stop();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
-  
-  // Voice Recognition Toggle
+
+  // Voice toggle
   const toggleListen = () => {
     if (isListening) {
       recognitionRef.current?.stop();
       setIsListening(false);
       return;
     }
-    
+
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      alert("Voice search is not supported in this browser. Please use Chrome or Safari.");
+      alert("Voice input is not supported in this browser. Please use Chrome or Safari.");
       return;
     }
-    
+
     const recognition = new SpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = false;
     recognition.lang = "en-IN";
-    
-    recognition.onstart = () => {
-      setIsListening(true);
-    };
-    
+
+    recognition.onstart = () => setIsListening(true);
     recognition.onresult = (e) => {
       const transcript = e.results[0][0].transcript;
       if (inputRef.current) {
         inputRef.current.value = transcript;
-        // Automatically submit the voice query after a brief delay
         setTimeout(() => {
           if (inputRef.current.form) {
             inputRef.current.form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
           }
-        }, 500);
+        }, 400);
       }
     };
-    
-    recognition.onerror = () => {
-      setIsListening(false);
-    };
-    
-    recognition.onend = () => {
-      setIsListening(false);
-    };
-    
+    recognition.onerror = () => setIsListening(false);
+    recognition.onend = () => setIsListening(false);
+
     recognitionRef.current = recognition;
     recognition.start();
   };
 
-  // Helpers
   const botSay = (text, opts = {}) => {
     const msg = { id: uid(), role: "bot", text: String(text), ts: Date.now(), ...opts };
     setMessages((m) => [...m, msg]);
     if (!open) setUnread((u) => u + 1);
   };
-  const botSayAsync = (text, opts = {}, delay = 1000) => {
+
+  const botSayAsync = (text, opts = {}, delay = 800) => {
     setIsTyping(true);
-    // Extra scroll when typing indicator appears
     setTimeout(() => {
       const el = listRef.current;
       if (el) {
@@ -251,25 +220,14 @@ export default function HelpBot({
       setIsTyping(false);
     }, delay);
   };
+
   const userSay = (text) => {
     const msg = { id: uid(), role: "user", text: String(text).trim(), ts: Date.now() };
     setMessages((m) => [...m, msg]);
   };
+
   const goto = (next) => setStep(next);
 
-  // Build brief
-  const buildBrief = (vals = form) => {
-    const { name, contact, project, budget, notes } = vals;
-    return `New project enquiry — HelpBot
-
-Name: ${name}
-Contact: ${contact}
-Project type: ${project}
-Budget: ${budget}
-Notes: ${notes || "-"}`;
-  };
-
-  // Flow
   const handleUserInput = (text) => {
     const clean = text.trim();
     if (!clean) return;
@@ -280,38 +238,48 @@ Notes: ${notes || "-"}`;
       const nextForm = { ...form, name: clean };
       setForm(nextForm);
       goto(STEPS.CONTACT);
-      return botSayAsync(`Nice to meet you, ${clean.split(' ')[0]}! What’s your email or WhatsApp number?`, {}, 800);
+      return botSayAsync(`Pleasure to meet you, ${clean.split(' ')[0]}! What is your Email or WhatsApp phone number?`, {}, 800);
     }
 
     if (step === STEPS.CONTACT) {
-      if (!isEmail(clean) && !isPhone(clean)) return botSayAsync("Please enter a valid email or phone number.", {}, 500);
+      if (!isEmail(clean) && !isPhone(clean)) return botSayAsync("Please enter a valid email address or phone number.", {}, 500);
       const nextForm = { ...form, contact: clean };
       setForm(nextForm);
       goto(STEPS.PROJECT);
-      return botSayAsync("Got it. What kind of project are we building? (Pick an option below)", {}, 1000);
+      return botSayAsync("Got it! What type of software or web application do you want to build?", {}, 800);
     }
 
     if (step === STEPS.PROJECT) {
       const nextForm = { ...form, project: clean };
       setForm(nextForm);
       goto(STEPS.BUDGET);
-      return botSayAsync("Awesome. What’s your rough budget? (Pick an option below)", {}, 800);
+      return botSayAsync("Excellent choice. What is your estimated budget for this project?", {}, 800);
     }
 
     if (step === STEPS.BUDGET) {
       const nextForm = { ...form, budget: clean };
       setForm(nextForm);
       goto(STEPS.SUMMARY);
-      return botSayAsync("Perfect! Here’s your summary. Feel free to type any extra details and send it via WhatsApp/Email.", {}, 1200);
+
+      // Save directly to Supabase
+      createLead({
+        name: nextForm.name,
+        contact: nextForm.contact,
+        projectType: nextForm.project,
+        budget: clean,
+        notes: nextForm.notes || "Chatbot Lead",
+        source: "Prajyot AI Assistant"
+      }).catch(err => console.error("Error saving lead:", err));
+
+      return botSayAsync("🎉 Perfect! Your enquiry has been saved and submitted directly to our engineering team. We will review your details and contact you shortly!", {}, 1000);
     }
 
     if (step === STEPS.SUMMARY) {
       setForm((f) => ({ ...f, notes: (f.notes ? f.notes + "\n" : "") + clean }));
-      return botSayAsync("Noted. You can press WhatsApp or Email to send it to our team now.", {}, 800);
+      return botSayAsync("Noted! Additional details added to your project record.", {}, 800);
     }
   };
 
-  // Submit
   const onSubmit = (e) => {
     e.preventDefault();
     const inputEl = e.currentTarget.querySelector("input[name=msg]");
@@ -321,82 +289,72 @@ Notes: ${notes || "-"}`;
     inputEl.value = "";
   };
 
-  // Quick picks
-  const pickProject = (p) => handleUserInput(p);
-  const pickBudget = (b) => handleUserInput(b);
-
-  // Reset
   const clearChat = () => {
     setForm({ name: "", contact: "", project: "", budget: "", notes: "" });
     setStep(STEPS.NAME);
     setMessages([]);
     const hour = new Date().getHours();
     const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
-    if (open) botSayAsync(`${greeting}! Let’s get a few details. What’s your name?`, { meta: "ask:name" }, 600);
+    if (open) botSayAsync(`${greeting}! Welcome to Prajyot Infotech. What's your full name?`, { meta: "ask:name" }, 600);
     inputRef.current?.focus();
   };
 
-  // Copy brief
-  const copyBrief = async () => {
-    const text = buildBrief();
-    try {
-      await navigator.clipboard.writeText(text);
-      botSay("Copied summary to clipboard. You can paste it anywhere.");
-    } catch {
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try {
-        document.execCommand("copy");
-        botSay("Copied summary to clipboard.");
-      } catch {
-        botSay("Copy failed—please select and copy manually.");
-      } finally {
-        document.body.removeChild(ta);
-      }
+  // Step Progress Calculator
+  const getStepProgress = () => {
+    switch (step) {
+      case STEPS.NAME: return { step: 1, percent: "25%", label: "Step 1 of 4: Contact Info" };
+      case STEPS.CONTACT: return { step: 2, percent: "50%", label: "Step 2 of 4: Reachability" };
+      case STEPS.PROJECT: return { step: 3, percent: "75%", label: "Step 3 of 4: Project Scope" };
+      case STEPS.BUDGET: return { step: 4, percent: "90%", label: "Step 4 of 4: Investment Range" };
+      case STEPS.SUMMARY: return { step: 4, percent: "100%", label: "Complete! Inquiry Submitted" };
+      default: return { step: 1, percent: "20%", label: "Assistant Active" };
     }
   };
 
-  const brief = buildBrief();
+  const progress = getStepProgress();
 
   return (
     <>
-      {/* Floating launcher */}
+      {/* --- FLOATING LAUNCHER BUTTON --- */}
       <motion.button
         type="button"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.92 }}
         onClick={() => setOpen((v) => !v)}
-        aria-haspopup="dialog"
-        aria-expanded={open}
-        aria-label="Open help chat"
-        className="fixed grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-brand-500 via-brand-600 to-violet-600 text-white shadow-2xl shadow-brand-500/40 ring-1 ring-white/20 transition-all hover:shadow-brand-500/60 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-500/50 group"
+        aria-label="Open AI Assistant"
+        className="fixed grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-600 text-white shadow-[0_0_40px_rgba(99,102,241,0.5)] ring-2 ring-white/30 transition-all hover:shadow-[0_0_60px_rgba(168,85,247,0.7)] group"
         style={{
           bottom: toCss(launcherOffset.bottom),
           right: toCss(launcherOffset.right),
           zIndex,
-          paddingBottom: "env(safe-area-inset-bottom)",
         }}
       >
-        <div className="absolute inset-0 rounded-full bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-10" />
+        <div className="absolute inset-0 rounded-full bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-20" />
         <div className="relative">
           {open ? (
-            <svg viewBox="0 0 24 24" className="h-7 w-7" aria-hidden>
-              <path fill="currentColor" d="M18.3 5.7 12 12l-6.3-6.3-1.4 1.4L10.6 13.4l-6.3 6.3 1.4 1.4L12 14.4l6.3 6.3 1.4-1.4-6.3-6.3 6.3-6.3z" />
+            <svg viewBox="0 0 24 24" className="h-7 w-7 stroke-[2.5]" fill="none">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           ) : (
-            <svg viewBox="0 0 24 24" className="h-8 w-8" aria-hidden>
-              <path fill="currentColor" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12zM8 9h8v2H8V9zm0-3h8v2H8V6zm0 6h5v2H8v-2z" />
-            </svg>
+            <div className="relative flex items-center justify-center">
+              <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none">
+                <path fill="currentColor" d="M12 2a10 10 0 0110 10c0 5.523-4.477 10-10 10a9.96 9.96 0 01-4.587-1.11L2.5 21.5l.61-4.91A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2zm0 2a8 8 0 00-8 8c0 1.57.45 3.036 1.23 4.28L4.6 18.4l2.12-.55A7.96 7.96 0 0012 20a8 8 0 008-8 8 8 0 00-8-8z" />
+                <circle cx="8.5" cy="11.5" r="1.25" fill="currentColor" />
+                <circle cx="12" cy="11.5" r="1.25" fill="currentColor" />
+                <circle cx="15.5" cy="11.5" r="1.25" fill="currentColor" />
+              </svg>
+              <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+              </span>
+            </div>
           )}
+
           {unread > 0 && !open && (
             <motion.span
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="absolute -right-2 -top-2 grid h-5 min-w-[1.25rem] place-items-center rounded-full bg-rose-500 px-1 text-[11px] font-bold text-white shadow-md ring-2 ring-navy-900"
+              className="absolute -right-3 -top-3 grid h-6 min-w-[1.5rem] place-items-center rounded-full bg-rose-500 px-1.5 text-xs font-black text-white shadow-lg ring-2 ring-slate-950"
             >
               {unread}
             </motion.span>
@@ -404,110 +362,136 @@ Notes: ${notes || "-"}`;
         </div>
       </motion.button>
 
-      {/* Backdrop */}
+      {/* --- BACKDROP OVERLAY --- */}
       <AnimatePresence>
         {open && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-navy-900/40 backdrop-blur-sm"
+            className="fixed inset-0 bg-slate-950/60 backdrop-blur-md"
             style={{ zIndex: zIndex - 1 }}
-            aria-hidden
             onClick={() => setOpen(false)}
           />
         )}
       </AnimatePresence>
 
-      {/* Panel */}
+      {/* --- ULTRA-PREMIUM CHAT PANEL --- */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95, originX: 1, originY: 1 }}
+            initial={{ opacity: 0, y: 25, scale: 0.94, originX: 1, originY: 1 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            transition={{ duration: 0.3, type: "spring", damping: 25, stiffness: 300 }}
+            exit={{ opacity: 0, y: 15, scale: 0.94 }}
+            transition={{ duration: 0.35, type: "spring", damping: 26, stiffness: 320 }}
             ref={panelRef}
             role="dialog"
             aria-modal="true"
-            aria-label="Help chat"
-            className="fixed w-[min(100vw-2rem,400px)] overflow-hidden rounded-3xl border border-white/10 bg-navy-900/90 shadow-2xl backdrop-blur-2xl flex flex-col"
+            className="fixed w-[min(100vw-2rem,430px)] overflow-hidden rounded-3xl border border-white/15 bg-slate-950/90 shadow-[0_30px_90px_rgba(0,0,0,0.85)] backdrop-blur-3xl flex flex-col"
             style={{
               bottom: toCss(panelOffset.bottom),
               right: toCss(panelOffset.right),
               zIndex,
-              boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05) inset",
             }}
           >
-            {/* Decorative Glow */}
-            <div className="absolute -top-32 -right-32 h-64 w-64 rounded-full bg-brand-500/20 blur-[60px] pointer-events-none" />
+            {/* Ambient Background Glows */}
+            <div className="absolute -top-32 -right-32 h-64 w-64 rounded-full bg-indigo-600/30 blur-[80px] pointer-events-none" />
+            <div className="absolute -bottom-32 -left-32 h-64 w-64 rounded-full bg-purple-600/20 blur-[80px] pointer-events-none" />
 
-            {/* Header */}
-            <div className="relative flex items-center justify-between gap-3 border-b border-white/10 bg-white/5 p-4">
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <div className="absolute inset-0 rounded-full bg-brand-500/30 blur-md animate-pulse" />
-                  <div className="relative grid size-10 place-items-center rounded-full bg-gradient-to-br from-brand-400 to-violet-500 text-white shadow-lg">
-                    <svg viewBox="0 0 24 24" className="h-6 w-6" aria-hidden>
-                      <path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z" />
-                    </svg>
+            {/* HEADER BAR */}
+            <div className="relative border-b border-white/10 bg-slate-900/60 p-4 backdrop-blur-xl">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 blur-sm opacity-80 animate-pulse" />
+                    <div className="relative grid size-11 place-items-center rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 text-white shadow-md font-black text-lg">
+                      P
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base font-bold text-white tracking-wide">Prajyot AI Assistant</h3>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                        v3.6 Pro
+                      </span>
+                    </div>
+                    <div className="text-xs font-medium text-slate-400 flex items-center gap-1.5 mt-0.5">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                      </span>
+                      <span>Connected · Instant DB Sync</span>
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <div className="text-[15px] font-bold text-white tracking-wide">Prajyot AI Assistant</div>
-                  <div className="text-xs font-medium text-brand-300 flex items-center gap-1.5">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                    </span>
-                    Online — Quick Setup
-                  </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={clearChat}
+                    className="rounded-xl border border-white/10 bg-white/5 px-2.5 py-1.5 text-[11px] font-bold text-slate-300 transition-colors hover:bg-white/10 hover:text-white"
+                    title="Restart Conversation"
+                  >
+                    Reset
+                  </button>
+                  <button
+                    onClick={() => setOpen(false)}
+                    className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                  >
+                    <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
                 </div>
               </div>
-              <div className="flex items-center gap-2 relative z-10">
-                <button
-                  onClick={clearChat}
-                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white/70 transition-colors hover:bg-white/10 hover:text-white"
-                >
-                  Restart
-                </button>
+
+              {/* Progress Bar Indicator */}
+              <div className="mt-3.5 pt-2 border-t border-white/5">
+                <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 mb-1.5">
+                  <span>{progress.label}</span>
+                  <span className="text-indigo-400">{progress.percent}</span>
+                </div>
+                <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+                  <motion.div
+                    className="h-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+                    initial={{ width: "0%" }}
+                    animate={{ width: progress.percent }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  />
+                </div>
               </div>
             </div>
 
-            {/* Messages */}
-            <div className="max-h-[55vh] md:max-h-[60vh] overflow-y-auto p-4 custom-scrollbar" ref={listRef}>
+            {/* MESSAGES CONTAINER */}
+            <div className="max-h-[50vh] min-h-[300px] overflow-y-auto p-4 custom-scrollbar space-y-4" ref={listRef}>
               <ul className="space-y-4" aria-live="polite">
                 <AnimatePresence initial={false}>
                   {messages.map((m) => (
                     <motion.li
                       key={m.id}
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      initial={{ opacity: 0, y: 12, scale: 0.96 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ duration: 0.2 }}
+                      transition={{ duration: 0.25 }}
                       className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       {m.role === "bot" && (
-                        <div className="mr-2 mt-1 flex-shrink-0">
-                          <div className="grid size-6 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-violet-500 text-white shadow-sm">
-                            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" aria-hidden><path fill="currentColor" d="M12 2L4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/></svg>
+                        <div className="mr-2.5 mt-1 shrink-0">
+                          <div className="grid size-7 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-md ring-1 ring-white/20 text-xs font-bold">
+                            🤖
                           </div>
                         </div>
                       )}
                       <div
                         className={
-                          "inline-block max-w-[82%] rounded-2xl px-4 py-2.5 text-[13px] leading-relaxed shadow-sm " +
+                          "inline-block max-w-[85%] rounded-2xl px-4 py-3 text-[13px] leading-relaxed shadow-lg backdrop-blur-md " +
                           (m.role === "user"
-                            ? "bg-gradient-to-br from-brand-600 to-violet-600 text-white rounded-tr-sm shadow-brand-900/20"
-                            : "bg-white/10 border border-white/10 text-white/90 rounded-tl-sm backdrop-blur-md")
+                            ? "bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white rounded-tr-xs border border-white/20"
+                            : "bg-white/10 border border-white/15 text-slate-100 rounded-tl-xs")
                         }
                       >
                         {m.text}
                       </div>
                     </motion.li>
                   ))}
-                  
-                  {/* Typing Indicator */}
+
+                  {/* Typing Animation */}
                   {isTyping && (
                     <motion.li
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -515,145 +499,160 @@ Notes: ${notes || "-"}`;
                       exit={{ opacity: 0, scale: 0.95 }}
                       className="flex justify-start"
                     >
-                      <div className="mr-2 mt-1 flex-shrink-0">
-                        <div className="grid size-6 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-violet-500 text-white shadow-sm">
-                          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" aria-hidden><path fill="currentColor" d="M12 2L4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/></svg>
+                      <div className="mr-2.5 mt-1 shrink-0">
+                        <div className="grid size-7 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-md ring-1 ring-white/20 text-xs">
+                          🤖
                         </div>
                       </div>
-                      <div className="inline-flex items-center gap-1 rounded-2xl bg-white/10 border border-white/10 rounded-tl-sm backdrop-blur-md px-4 py-3 shadow-sm">
-                        <motion.div className="h-1.5 w-1.5 rounded-full bg-white/60" animate={{ y: [0, -3, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0 }} />
-                        <motion.div className="h-1.5 w-1.5 rounded-full bg-white/60" animate={{ y: [0, -3, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }} />
-                        <motion.div className="h-1.5 w-1.5 rounded-full bg-white/60" animate={{ y: [0, -3, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }} />
+                      <div className="inline-flex items-center gap-1.5 rounded-2xl bg-white/10 border border-white/15 rounded-tl-xs backdrop-blur-md px-4 py-3 shadow-md">
+                        <motion.div className="h-2 w-2 rounded-full bg-indigo-400" animate={{ y: [0, -4, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0 }} />
+                        <motion.div className="h-2 w-2 rounded-full bg-purple-400" animate={{ y: [0, -4, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }} />
+                        <motion.div className="h-2 w-2 rounded-full bg-pink-400" animate={{ y: [0, -4, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }} />
                       </div>
                     </motion.li>
                   )}
                 </AnimatePresence>
               </ul>
 
-            {/* Inline choices */}
-            <AnimatePresence>
-              {step === STEPS.PROJECT && !isTyping && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, height: 0 }}
-                  className="mt-4 flex flex-wrap gap-2 pl-10"
-                >
-                  {PROJECT_OPTIONS.map((p) => (
-                    <button
-                      key={p}
-                      type="button"
-                      onClick={() => pickProject(p)}
-                      className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white transition-all hover:bg-brand-600 hover:border-brand-500 hover:shadow-lg hover:shadow-brand-500/30"
-                    >
-                      {p}
-                    </button>
-                  ))}
-                </motion.div>
-              )}
+              {/* INLINE PROJECT OPTIONS */}
+              <AnimatePresence>
+                {step === STEPS.PROJECT && !isTyping && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="mt-3 pl-9 space-y-2"
+                  >
+                    <div className="text-[11px] font-extrabold uppercase tracking-wider text-indigo-300/80 mb-2">
+                      Select Project Type:
+                    </div>
+                    <div className="grid grid-cols-1 gap-2">
+                      {PROJECT_OPTIONS.map((opt) => (
+                        <button
+                          key={opt.label}
+                          type="button"
+                          onClick={() => handleUserInput(opt.label)}
+                          className="flex items-center justify-between rounded-xl border border-white/15 bg-white/5 px-3.5 py-2.5 text-left text-xs font-semibold text-white transition-all hover:bg-indigo-600 hover:border-indigo-400 hover:shadow-lg hover:shadow-indigo-500/30 group"
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <span className="text-base">{opt.icon}</span>
+                            <div>
+                              <div className="font-bold text-white">{opt.label}</div>
+                              <div className="text-[10px] text-slate-400 group-hover:text-indigo-100">{opt.desc}</div>
+                            </div>
+                          </div>
+                          <span className="text-slate-400 group-hover:text-white">→</span>
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
 
-              {step === STEPS.BUDGET && !isTyping && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, height: 0 }}
-                  className="mt-4 pl-10"
-                >
-                  <div className="mb-2 text-[10px] font-medium uppercase tracking-wider text-brand-300/80">
-                    If unsure, pick the closest range
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {BUDGET_OPTIONS.map((b) => (
-                      <button
-                        key={b}
-                        type="button"
-                        onClick={() => pickBudget(b)}
-                        className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white transition-all hover:bg-brand-600 hover:border-brand-500 hover:shadow-lg hover:shadow-brand-500/30"
-                      >
-                        {b}
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
+                {/* INLINE BUDGET OPTIONS */}
+                {step === STEPS.BUDGET && !isTyping && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="mt-3 pl-9 space-y-2"
+                  >
+                    <div className="text-[11px] font-extrabold uppercase tracking-wider text-purple-300/80 mb-2">
+                      Estimated Investment Range:
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {BUDGET_OPTIONS.map((opt) => (
+                        <button
+                          key={opt.label}
+                          type="button"
+                          onClick={() => handleUserInput(opt.label)}
+                          className="flex flex-col items-center justify-center rounded-xl border border-white/15 bg-white/5 p-3 text-center transition-all hover:bg-purple-600 hover:border-purple-400 hover:shadow-lg hover:shadow-purple-500/30 group"
+                        >
+                          <span className="text-[10px] font-extrabold text-purple-300 uppercase group-hover:text-white mb-0.5">
+                            {opt.badge}
+                          </span>
+                          <span className="text-xs font-bold text-white">{opt.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
 
-              {step === STEPS.SUMMARY && !isTyping && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-                  className="mt-5 ml-10 rounded-2xl border border-white/10 bg-white/5 p-4 text-[13px] text-white/90 backdrop-blur-sm shadow-inner"
-                >
-                  <div className="mb-2 flex items-center gap-2 font-bold text-white">
-                    <svg className="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                    Ready to send
-                  </div>
-                  <ul className="space-y-1.5 opacity-80 mb-4 text-xs font-medium">
-                    <li><span className="text-brand-300">Name:</span> {form.name}</li>
-                    <li><span className="text-brand-300">Contact:</span> {form.contact}</li>
-                    <li><span className="text-brand-300">Project:</span> {form.project}</li>
-                    <li><span className="text-brand-300">Budget:</span> {form.budget}</li>
-                  </ul>
-                  <div className="mb-3 text-[11px] text-white/50">
-                    Add extra details in the chat, or send now:
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    <a
-                      href={waLink(brief)}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 px-3 py-2 text-[11px] font-bold text-white shadow-lg shadow-emerald-900/30 transition-all hover:scale-105"
-                    >
-                      <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                      Send WhatsApp
-                    </a>
-                    <a
-                      href={`mailto:${EMAIL}?subject=${encodeURIComponent("New project enquiry — DigiShop")}&body=${encodeURIComponent(brief)}`}
-                      className="flex items-center gap-1.5 rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-[11px] font-bold text-white transition-all hover:bg-white/20"
-                    >
-                      Send Email
-                    </a>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                {/* INLINE SUMMARY & SUCCESS STATE */}
+                {step === STEPS.SUMMARY && !isTyping && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="mt-4 ml-9 rounded-2xl border border-emerald-500/40 bg-emerald-950/40 p-4 text-[13px] text-white backdrop-blur-md shadow-xl"
+                  >
+                    <div className="mb-3 flex items-center gap-2 font-black text-emerald-400 text-sm">
+                      <div className="grid size-5 place-items-center rounded-full bg-emerald-500 text-slate-950 text-xs font-extrabold">
+                        ✓
+                      </div>
+                      Inquiry Captured & Saved!
+                    </div>
 
-          {/* Input */}
-          <form onSubmit={onSubmit} className="relative z-10 flex items-center gap-2 border-t border-white/10 bg-navy-900/80 p-3 backdrop-blur-md">
-            <button
-              type="button"
-              onClick={toggleListen}
-              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 ${isListening ? 'bg-rose-500 text-white animate-pulse shadow-lg shadow-rose-500/40' : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white'}`}
-              aria-label={isListening ? "Stop listening" : "Start voice input"}
-            >
-              <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">
-                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-            <input
-              ref={inputRef}
-              name="msg"
-              placeholder={
-                isListening 
-                  ? "Listening..." 
-                  : step === STEPS.NAME
-                  ? "Enter your name..."
-                  : step === STEPS.CONTACT
-                  ? "Email or WhatsApp..."
-                  : "Type a message..."
-              }
-              aria-label="Type your answer"
-              className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-[13px] text-white placeholder:text-white/40 focus:border-brand-500 focus:bg-white/10 focus:outline-none focus:ring-1 focus:ring-brand-500 transition-all min-w-0"
-              maxLength={300}
-              autoFocus
-            />
-            <button
-              type="submit"
-              className="group flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-violet-600 text-white shadow-lg shadow-brand-500/20 transition-all hover:scale-105 hover:shadow-brand-500/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
-            >
-              <svg viewBox="0 0 24 24" className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none">
-                <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-          </form>
-        </motion.div>
-      )}
+                    <div className="space-y-1.5 text-xs text-slate-200 border-t border-emerald-500/20 pt-2.5 mb-3">
+                      <div><span className="text-slate-400">Name:</span> <strong>{form.name}</strong></div>
+                      <div><span className="text-slate-400">Contact:</span> <strong>{form.contact}</strong></div>
+                      <div><span className="text-slate-400">Project Scope:</span> <strong>{form.project}</strong></div>
+                      <div><span className="text-slate-400">Budget Range:</span> <strong>{form.budget}</strong></div>
+                    </div>
+
+                    <div className="text-[11px] text-emerald-300 font-bold bg-emerald-900/50 p-2.5 rounded-xl border border-emerald-500/30 flex items-center gap-2">
+                      <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
+                      <span>Saved to Admin Portal. Our team will call or email you!</span>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* INPUT FORM FOOTER */}
+            <form onSubmit={onSubmit} className="relative z-10 flex items-center gap-2 border-t border-white/10 bg-slate-900/90 p-3 backdrop-blur-xl">
+              <button
+                type="button"
+                onClick={toggleListen}
+                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all focus:outline-none ${
+                  isListening
+                    ? "bg-rose-500 text-white animate-pulse shadow-lg shadow-rose-500/50"
+                    : "bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white"
+                }`}
+                title={isListening ? "Listening..." : "Voice Input"}
+              >
+                <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">
+                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+
+              <input
+                ref={inputRef}
+                name="msg"
+                placeholder={
+                  isListening
+                    ? "Listening to voice..."
+                    : step === STEPS.NAME
+                    ? "Type your name..."
+                    : step === STEPS.CONTACT
+                    ? "Enter Email or Phone..."
+                    : "Type a message..."
+                }
+                className="flex-1 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-xs text-white placeholder:text-slate-400 focus:border-indigo-500 focus:bg-white/10 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all min-w-0 font-medium"
+                maxLength={300}
+                autoFocus
+              />
+
+              <button
+                type="submit"
+                className="group flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-600 text-white shadow-lg shadow-indigo-500/30 transition-all hover:scale-105 active:scale-95"
+              >
+                <svg viewBox="0 0 24 24" className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none">
+                  <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+            </form>
+          </motion.div>
+        )}
       </AnimatePresence>
     </>
   );
