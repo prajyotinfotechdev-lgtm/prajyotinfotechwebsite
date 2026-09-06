@@ -59,7 +59,7 @@ export default function NotFound() {
               Go back
             </button>
             <a
-              href={`mailto:prajyotkankal9@gmail.com?subject=${encodeURIComponent(
+              href={`mailto:hr@prajyotinfotech.in?subject=${encodeURIComponent(
                 "Broken link on DigiShop"
               )}&body=${encodeURIComponent(
                 "Hi, I landed on a 404 page. The link that failed was: "

@@ -5,7 +5,7 @@ import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import ProcessRoadmap from "../components/ProcessRoadmap.jsx";
 
 const WA_NUMBER = "917020708747";
-const EMAIL = "prajyot.infotech@gmail.com";
+const EMAIL = "hr@prajyotinfotech.in";
 const CALENDLY_LINK = "";
 const SITE_URL = "https://prajyotinfotech.in";
 const LOGO_URL = "https://prajyotinfotech.in/videos/Logo.jpg";

@@ -62,7 +62,7 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
   };
 
   const openEmailDirect = () => {
-    const emailTo = "prajyot.infotech@gmail.com";
+    const emailTo = "hr@prajyotinfotech.in";
     const subject = encodeURIComponent("New project enquiry — Prajyot Infotech");
     const body = encodeURIComponent(buildMessage());
     window.open(`mailto:${emailTo}?subject=${subject}&body=${body}`, "_blank");
@@ -84,7 +84,7 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
     "@id": `${SITE_URL}/#organization`,
     "url": SITE_URL,
     "telephone": "+917020708747",
-    "email": "prajyot.infotech@gmail.com",
+    "email": "hr@prajyotinfotech.in",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Pune",
@@ -310,7 +310,7 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
                 </a>
 
                 <a
-                  href="mailto:prajyot.infotech@gmail.com"
+                  href="mailto:hr@prajyotinfotech.in"
                   className="flex items-center gap-3 p-3 rounded-2xl hover:bg-slate-50 transition-colors group"
                 >
                   <div className="size-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 group-hover:bg-purple-600 group-hover:text-white transition-colors">
@@ -318,7 +318,7 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
                   </div>
                   <div>
                     <div className="text-[10px] text-slate-400 uppercase font-bold">Direct Email</div>
-                    <div className="text-sm font-bold text-navy-900">prajyot.infotech@gmail.com</div>
+                    <div className="text-sm font-bold text-navy-900">hr@prajyotinfotech.in</div>
                   </div>
                 </a>
 

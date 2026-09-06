@@ -25,6 +25,27 @@ export async function getLeads() {
 }
 
 export async function createLead(leadData) {
+  // Client-side Rate Limiting (Max 3 leads per hour)
+  const now = Date.now();
+  const lastSubmitStr = localStorage.getItem('last_lead_submit');
+  const countStr = localStorage.getItem('lead_submit_count');
+  
+  if (lastSubmitStr && countStr) {
+    const lastSubmit = parseInt(lastSubmitStr, 10);
+    const count = parseInt(countStr, 10);
+    if (now - lastSubmit < 60 * 60 * 1000) {
+      if (count >= 3) {
+        throw new Error("You have submitted too many requests recently. Please try again later.");
+      }
+      localStorage.setItem('lead_submit_count', (count + 1).toString());
+    } else {
+      localStorage.setItem('last_lead_submit', now.toString());
+      localStorage.setItem('lead_submit_count', '1');
+    }
+  } else {
+    localStorage.setItem('last_lead_submit', now.toString());
+    localStorage.setItem('lead_submit_count', '1');
+  }
   const newLead = {
     id: `lead-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
     name: leadData.name || "Anonymous Lead",

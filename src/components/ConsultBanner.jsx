@@ -23,7 +23,7 @@ export default function ConsultBanner({
   waNumber = DEFAULT_WA_NUMBER,
   waText = DEFAULT_WA_TEXT,
   calendlyLink = "", // e.g. "https://calendly.com/yourname/15min"
-  emailTo = "prajyot.infotech@gmail.com",
+  emailTo = "hr@prajyotinfotech.in",
   cooldownDays = 7, // days to keep it dismissed
   zIndex = 200, // keep above headers/FABs
 }) {

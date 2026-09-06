@@ -25,3 +25,10 @@ dist-ssr
 
 .env
 .env.*
+
+# Database Setup Scripts
+setup-db.js
+setup-leads-db.js
+secure-db.js
+create-admin.js
+test-leads.js

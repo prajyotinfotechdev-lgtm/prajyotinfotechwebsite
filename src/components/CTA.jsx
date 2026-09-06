@@ -75,7 +75,7 @@ I'm interested in building a premium website/app for my business. Please share t
     setSubmitting(true);
     setStatus("Preparing email…");
 
-    const EMAIL = "prajyot.infotech@gmail.com";
+    const EMAIL = "hr@prajyotinfotech.in";
     const subject = encodeURIComponent(`New project enquiry — ${BRAND}`);
     const body = encodeURIComponent(buildMessage());
 

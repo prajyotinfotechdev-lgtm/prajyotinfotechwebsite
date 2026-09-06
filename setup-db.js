@@ -1,7 +1,14 @@
 import pkg from 'pg';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 const { Client } = pkg;
 
-const connectionString = "postgresql://postgres.ougwbrpjpkbymjagssyq:Consistent@Supabase@123@aws-0-ap-south-1.pooler.supabase.com:6543/postgres";
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  console.error("Missing DATABASE_URL in .env");
+  process.exit(1);
+}
 
 async function setupDatabase() {
   console.log("Connecting to Supabase PostgreSQL database...");

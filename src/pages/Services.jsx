@@ -7,7 +7,7 @@ import TechStackVisualizer from "../components/TechStackVisualizer.jsx";
 import BentoServices from "../components/BentoServices.jsx";
 
 const WA_NUMBER = "917020708747";
-const EMAIL = "prajyot.infotech@gmail.com";
+const EMAIL = "hr@prajyotinfotech.in";
 const BRAND = "Prajyot Infotech";
 const SITE_URL = "https://prajyotinfotech.in";
 const wa = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;

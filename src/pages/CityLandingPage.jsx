@@ -8,7 +8,7 @@ import QuoteEstimator from "../components/QuoteEstimator.jsx";
 const BRAND = "Prajyot Infotech";
 const SITE_URL = "https://prajyotinfotech.in";
 const WA_NUMBER = "917020708747";
-const EMAIL = "prajyot.infotech@gmail.com";
+const EMAIL = "hr@prajyotinfotech.in";
 const wa = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 
 // City-specific content for richer, unique local pages

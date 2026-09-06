@@ -74,7 +74,7 @@ export default function Home() {
               "@type": "ContactPoint",
               "contactType": "sales",
               "telephone": "+917020708747",
-              "email": "prajyot.infotech@gmail.com",
+              "email": "hr@prajyotinfotech.in",
               "availableLanguage": ["English", "Hindi", "Marathi"],
               "areaServed": ["IN", "US", "AE", "GB", "AU"]
             }

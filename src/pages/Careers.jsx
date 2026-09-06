@@ -533,7 +533,7 @@ export default function Careers() {
                 Send Us Your Resume
               </button>
               <a
-                href="mailto:prajyot.infotech@gmail.com?subject=Job%20Inquiry%20-%20Prajyot%20Infotech"
+                href="mailto:hr@prajyotinfotech.in?subject=Job%20Inquiry%20-%20Prajyot%20Infotech"
                 className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-sm transition-all border border-white/15"
               >
                 Email HR Directly

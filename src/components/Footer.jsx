@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Logo from "./Logo.jsx";
 
 const BRAND = "Prajyot Infotech";
-const EMAIL = "prajyot.infotech@gmail.com";
+const EMAIL = "hr@prajyotinfotech.in";
 const PHONE_DISPLAY = "+91 70207 08747";
 const PHONE_TEL = "+917020708747";
 const WHATSAPP = "917020708747";

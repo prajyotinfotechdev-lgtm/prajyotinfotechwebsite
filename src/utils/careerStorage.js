@@ -252,6 +252,27 @@ export async function getApplications() {
 }
 
 export async function submitApplication(appData) {
+  // Client-side Rate Limiting (Max 3 applications per hour)
+  const now = Date.now();
+  const lastSubmitStr = localStorage.getItem('last_app_submit');
+  const countStr = localStorage.getItem('app_submit_count');
+  
+  if (lastSubmitStr && countStr) {
+    const lastSubmit = parseInt(lastSubmitStr, 10);
+    const count = parseInt(countStr, 10);
+    if (now - lastSubmit < 60 * 60 * 1000) {
+      if (count >= 3) {
+        throw new Error("You have submitted too many applications recently. Please try again later.");
+      }
+      localStorage.setItem('app_submit_count', (count + 1).toString());
+    } else {
+      localStorage.setItem('last_app_submit', now.toString());
+      localStorage.setItem('app_submit_count', '1');
+    }
+  } else {
+    localStorage.setItem('last_app_submit', now.toString());
+    localStorage.setItem('app_submit_count', '1');
+  }
   const newApp = {
     id: `app-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
     job_id: appData.jobId || "general",

@@ -33,6 +33,7 @@ import {
   Layers
 } from "lucide-react";
 import Seo from "../components/Seo.jsx";
+import { supabase } from "../lib/supabase.js";
 import {
   getJobs,
   saveJob,
@@ -51,15 +52,14 @@ import {
   deleteLead
 } from "../utils/leadStorage.js";
 
-const DEFAULT_ADMIN_PIN = "admin123";
+
 
 export default function CareerManager() {
   // Authentication State
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem("prajyot_career_auth") === "true";
-  });
-  const [pinInput, setPinInput] = useState("");
-  const [pinError, setPinError] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [authError, setAuthError] = useState("");
 
   // Tabs: "jobs" | "applications" | "leads"
   const [activeTab, setActiveTab] = useState("jobs");
@@ -119,24 +119,35 @@ export default function CareerManager() {
   };
 
   useEffect(() => {
-    loadData();
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsAuthenticated(!!session);
+      if (session) loadData();
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session);
+      if (session) loadData();
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (pinInput.trim() === DEFAULT_ADMIN_PIN) {
-      setIsAuthenticated(true);
-      localStorage.setItem("prajyot_career_auth", "true");
-      setPinError("");
-      await loadData();
-    } else {
-      setPinError("Incorrect PIN. Use 'admin123' or enter your admin passcode.");
+    setAuthError("");
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) {
+      setAuthError(error.message);
     }
   };
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem("prajyot_career_auth");
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
   };
 
   // Open Add Job Modal
@@ -443,18 +454,27 @@ export default function CareerManager() {
             </p>
 
             <form onSubmit={handleLogin} className="space-y-4">
-              {pinError && (
+              {authError && (
                 <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium">
-                  {pinError}
+                  {authError}
                 </div>
               )}
 
               <input
-                type="password"
+                type="email"
                 autoFocus
-                value={pinInput}
-                onChange={(e) => setPinInput(e.target.value)}
-                placeholder="Enter Passcode (Default: admin123)"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email address"
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-center font-mono text-base focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500"
+              />
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
                 className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-center font-mono text-base tracking-widest focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500"
               />
 
@@ -465,18 +485,7 @@ export default function CareerManager() {
                 Unlock Management Portal
               </button>
 
-              <button
-                type="button"
-                onClick={async () => {
-                  setPinInput("admin123");
-                  setIsAuthenticated(true);
-                  localStorage.setItem("prajyot_career_auth", "true");
-                  await loadData();
-                }}
-                className="w-full py-2 text-xs font-semibold text-brand-600 hover:text-brand-800 transition-colors"
-              >
-                Or One-Click Quick Unlock (admin123)
-              </button>
+
             </form>
 
             <div className="mt-8 pt-6 border-t border-slate-100 flex items-center justify-center">
