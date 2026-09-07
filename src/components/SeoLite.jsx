@@ -33,8 +33,10 @@ export default function SeoLite({
   baseUrl = "https://www.prajyotinfotech.in",
 }) {
   useEffect(() => {
-    // Title
-    const pageTitle = title ? `${title} — ${siteName}` : siteName;
+    // Title (avoid duplicate brand suffix)
+    const pageTitle = title
+      ? (title.includes(siteName) ? title : `${title} — ${siteName}`)
+      : `${siteName} — Premier Software Engineering & Web Development Company`;
     document.title = pageTitle;
 
     // Canonical
