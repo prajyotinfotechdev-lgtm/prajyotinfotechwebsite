@@ -129,8 +129,8 @@ export default function PortfolioSpotlight({ onOpenDemo }) {
                       {/* Top KPIs */}
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                         <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                          <span className="text-[10px] text-slate-500 font-semibold block uppercase">Total Revenue Today</span>
-                          <span className="text-lg font-black text-emerald-400">₹84,320</span>
+                          <span className="text-[10px] text-slate-500 font-semibold block uppercase">Active End Users</span>
+                          <span className="text-lg font-black text-emerald-400">2,420</span>
                           <span className="text-[9px] text-emerald-500 block mt-0.5">+18% vs yesterday</span>
                         </div>
                         <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">

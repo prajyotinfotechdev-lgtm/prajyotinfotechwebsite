@@ -5,6 +5,9 @@ import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import PortfolioDemoModal from "../components/PortfolioDemoModal.jsx";
 import PortfolioSpotlight from "../components/PortfolioSpotlight.jsx";
+import ProjectEstimator from "../components/ProjectEstimator.jsx";
+import EngineeringProcess from "../components/EngineeringProcess.jsx";
+import TrustGuarantees from "../components/TrustGuarantees.jsx";
 import {
   Search,
   Grid,
@@ -128,6 +131,19 @@ const PROJECTS = [
     shortDesc: "Complete digital restaurant — QR table menus, live kitchen display screen (KDS), split billing, and automated WhatsApp receipts.",
     fullDesc: "A full-stack restaurant management platform that digitizes the entire dining experience. Guests scan a table QR code, browse high-res live menus, and place orders directly without waiting for waiters. Orders stream instantly to a chef KDS. Managers control item availability, real-time GST billing, and customer analytics from a central admin panel.",
     architecture: "Event-Driven WebSockets + PWA Client",
+    problem: {
+      title: "Wait Time Chaos & Lost Paper Tickets",
+      description: "During weekend rush hours, waitstaff was overwhelmed, handwriting handwritten KOT slips that frequently got lost or delayed by 25+ minutes.",
+      painQuote: "We were losing angry customers who waited 40 minutes just for drinks and starters."
+    },
+    solution: {
+      title: "Realtime QR Table Ordering + Live Chef KDS",
+      description: "Engineered zero-download PWA table ordering synchronized directly with kitchen display tablets via WebSockets and automated WhatsApp bill dispatch."
+    },
+    roi: {
+      title: "35% Faster Turnover & 0% Lost Tickets",
+      description: "Eliminated paper slips entirely, reduced waiter staffing overhead by 2 people per shift, and cut table turn time from 45 min down to 29 min."
+    },
     results: ["Order errors reduced to 0%", "Table turnover improved 35%", "Staff reduced by 2 per shift", "WhatsApp order receipts automated"],
     features: ["QR code table menus", "Live kitchen display screen", "WhatsApp order confirmations", "Admin panel with item toggle", "GST billing & reports", "Multi-branch support"],
     stack: ["React", "Node.js", "MongoDB", "WhatsApp Cloud API", "Razorpay", "TailwindCSS"],
@@ -148,6 +164,19 @@ const PROJECTS = [
     shortDesc: "End-to-end POS for electronics retailers — barcode/IMEI tracking, repair tracking job cards, GST billing, and WhatsApp follow-ups.",
     fullDesc: "A complete business management suite for mobile phone and electronics retailers. Handles new phone sales with serialized IMEI tracking, repair job cards with status alerts, GST billing with instant PDF export, inventory alerts, and customer follow-up via WhatsApp.",
     architecture: "Micro-Service REST API + Thermal Print Engine",
+    problem: {
+      title: "Manual IMEI Logging & Inventory Leakage",
+      description: "Handwriting 15-digit IMEI serial numbers on physical carbon-copy bills caused 10-minute queues and untracked inventory mismatch.",
+      painQuote: "Customer checkout lines stretched out the door during festive seasons, causing lost sales."
+    },
+    solution: {
+      title: "Instant Barcode/IMEI Scanner & Auto GST Generator",
+      description: "Deployed high-speed USB barcode scanner integration with instant thermal/PDF GST invoicing and automated WhatsApp PDF receipt delivery."
+    },
+    roi: {
+      title: "Billing Time Cut from 10m to 45s",
+      description: "Achieved 100% zero inventory discrepancies across 50,000+ units tracked and improved repeat repair service rate by 22%."
+    },
     results: ["Billing time cut from 10 min to 45 sec", "Zero inventory discrepancies", "Repair jobs tracked end-to-end", "Customer repeat rate improved 22%"],
     features: ["IMEI-based sales & stock tracking", "Repair job card management", "GST billing with PDF export", "Customer WhatsApp follow-ups", "Vendor & purchase management", "Dashboard with daily/monthly reports"],
     stack: ["React", "Node.js", "Express", "MongoDB", "Razorpay", "Cloudinary"],
@@ -156,7 +185,7 @@ const PROJECTS = [
     accent: "#6366f1",
     secondary: "#3b82f6",
     mockupType: "Phone",
-    scale: "50,000+ IMEIs Tracked • ₹4Cr+ Processed",
+    scale: "50,000+ IMEIs Tracked • High Volume POS",
   },
   {
     id: "jollybaba-ecommerce",
@@ -168,6 +197,19 @@ const PROJECTS = [
     shortDesc: "Electronics e-commerce with dual dealer/retail pricing, fuzzy search, cart drawer, and WhatsApp order fallback.",
     fullDesc: "A high-performance e-commerce storefront for an electronics retailer. Supports dual pricing (retail vs. dealer wholesale) toggled seamlessly based on authenticated user tier, typo-tolerant search, animated slide-out cart, Razorpay gateway, and a 1-click WhatsApp order fallback for regional buyers.",
     architecture: "Edge Cached Serverless + Fuzzy Search Engine",
+    problem: {
+      title: "Wholesale Dealers Calling Manually for Stock",
+      description: "Hundreds of regional dealers called phone lines daily just to ask for wholesale rates and stock availability.",
+      painQuote: "We spent 5 hours every single day answering repetitive price questions on phone calls."
+    },
+    solution: {
+      title: "Role-Authenticated Dynamic B2B/B2C Storefront",
+      description: "Built tiered role pricing with MOQ enforcement, instant typo-tolerant instant search, and automated 1-click WhatsApp ordering fallback."
+    },
+    roi: {
+      title: "28% Conversion Surge & 100% Automated Ordering",
+      description: "Wholesale dealers now order bulk stock directly through their VIP portal 24/7 without needing phone assistance."
+    },
     results: ["Search CTR up 28%", "Cart abandonment down 18%", "Dealer orders fully automated", "5,000+ SKUs searchable instantly"],
     features: ["Retail & dealer price toggle", "Fuzzy search with typo fix", "Animated cart with WhatsApp fallback", "Razorpay/UPI checkout", "Bulk CSV product import", "Cloudinary image hosting"],
     stack: ["React", "React Native", "Node.js", "MongoDB", "Razorpay", "TailwindCSS"],
@@ -176,7 +218,7 @@ const PROJECTS = [
     accent: "#10b981",
     secondary: "#14b8a6",
     mockupType: "Phone",
-    scale: "12,000+ Active Users • ₹8Cr+ Annual GMV",
+    scale: "12,000+ Active Users • 5,000+ Annual Orders",
   },
   {
     id: "clinic-management",
@@ -188,6 +230,19 @@ const PROJECTS = [
     shortDesc: "Electronic health records (EHR), token calendar booking, digital prescription generator, and automated WhatsApp appointment reminders.",
     fullDesc: "A HIPAA-compliant clinical management platform for outpatient clinics and medical practitioners. Manages patient registration, digital medical histories, appointment scheduling, digital prescription generation with PDF export, and automated WhatsApp appointment reminders.",
     architecture: "HIPAA-Aware PostgreSQL + Queue Worker",
+    problem: {
+      title: "30% Patient No-Shows & Paper Record Loss",
+      description: "Patients regularly forgot routine follow-ups, and physical paper prescription files were constantly misplaced in physical cabinets.",
+      painQuote: "Doctor time was wasted when booked slots went empty with zero advance notice."
+    },
+    solution: {
+      title: "Automated WhatsApp Token Bus & Digital EHR",
+      description: "Engineered automated 24-hour and 2-hour pre-appointment WhatsApp reminders with digital prescription PDF creation in under 60 seconds."
+    },
+    roi: {
+      title: "40% Drop in Missed Appointments",
+      description: "Eliminated clinic no-shows, transitioned to 100% paperless medical histories across 8 multispeciality branches."
+    },
     results: ["No-show rate reduced 40%", "Prescription time cut to 90 sec", "Patient records instantly searchable", "WhatsApp reminders automated"],
     features: ["Patient profile & medical history", "Appointment booking calendar", "Prescription generator with PDF", "Automated WhatsApp reminders", "Consultation & medicine billing", "Doctor-wise reports"],
     stack: ["React", "Node.js", "PostgreSQL", "WhatsApp Cloud API", "Firebase Auth"],
@@ -208,6 +263,19 @@ const PROJECTS = [
     shortDesc: "Multi-tenant B2B SaaS where wholesale sellers get their own branded catalog portal with custom subdomains, logo, and dealer pricing.",
     fullDesc: "A cloud platform where every registered merchant gets an isolated catalog website — complete with custom brand colors, product listings, wholesale pricing tiers, and custom subdomains. Merchants bulk-import products via CSV and manage lead enquiries.",
     architecture: "Multi-Tenant Isolated DB Schemas + S3",
+    problem: {
+      title: "High Development Costs for Small Wholesalers",
+      description: "Wholesale suppliers could not afford ₹2L+ to build custom e-commerce portals, keeping them offline and invisible to regional buyers.",
+      painQuote: "Suppliers wanted their own branded domain without having to manage servers or databases."
+    },
+    solution: {
+      title: "Multi-Tenant Cloud Engine with Isolated DBs",
+      description: "Built automated subdomain provisioning (`tenant.vyapaariyo.com`) with independent catalog isolation, bulk CSV upload, and automated lead capture."
+    },
+    roi: {
+      title: "50+ Merchants Live in 30 Days",
+      description: "Suppliers launch full custom catalog portals in under 3 minutes with zero cloud management overhead."
+    },
     results: ["50+ merchants onboarded in month 1", "Merchant setup time under 3 min", "Zero hosting overhead per tenant", "Bulk CSV import with images"],
     features: ["Multi-tenant architecture", "Per-seller custom catalog site", "CSV bulk product import", "Cloudinary image hosting", "Role-based admin & seller access", "Subscription billing"],
     stack: ["React", "Node.js", "Express", "MongoDB", "Razorpay", "TailwindCSS"],
@@ -228,6 +296,19 @@ const PROJECTS = [
     shortDesc: "High-volume wholesale order tracking with multi-warehouse inventory, GST billing, party ledgers, and delivery vehicle dispatch.",
     fullDesc: "A robust order management system for FMCG and wholesale distributors handling 500+ orders per day. Tracks orders from placement to dispatch, manages multi-warehouse stock, generates GST-compliant e-way bills, maintains party-wise ledgers, and sends delivery updates via WhatsApp.",
     architecture: "High-Throughput Ledger Engine + Redis Queue",
+    problem: {
+      title: "Multi-Warehouse Stock Mismatch & Dispatch Delay",
+      description: "Distributors with 12 warehouses suffered from phantom stockouts and manual calculation errors on party credit limits.",
+      painQuote: "Drivers often reached retail shops only to discover the ordered items were out of stock at that warehouse."
+    },
+    solution: {
+      title: "Centralized Real-Time ACID Ledger & Vehicle Dispatch",
+      description: "Created live multi-location stock synchronization with automated e-way bill generation and driver route confirmation."
+    },
+    roi: {
+      title: "500+ Daily Orders with 0% Calculation Error",
+      description: "Cut invoice turnaround from 4 minutes to under 25 seconds and eliminated cross-warehouse inventory discrepancies."
+    },
     results: ["500+ orders/day managed smoothly", "Invoice generation under 25 sec", "Zero ledger calculation discrepancies", "Delivery confirmation automated"],
     features: ["Party & vendor ledger management", "Multi-warehouse inventory", "GST invoice & e-way bill", "Delivery tracking & confirmation", "Daily sales & outstanding reports", "WhatsApp delivery alerts"],
     stack: ["React", "Node.js", "PostgreSQL", "WhatsApp API", "Redis", "Razorpay"],
@@ -236,7 +317,7 @@ const PROJECTS = [
     accent: "#f59e0b",
     secondary: "#eab308",
     mockupType: "Dashboard",
-    scale: "₹18Cr+ Annual Invoicing • 12 Warehouses",
+    scale: "Enterprise Wholesale Logistics • 12 Warehouses",
   },
   {
     id: "coaching-management",
@@ -248,6 +329,19 @@ const PROJECTS = [
     shortDesc: "Student enrollment portal, digital RFID attendance, automated fee collection reminders, and WhatsApp parent communication.",
     fullDesc: "A complete management system for coaching centers and educational institutes. Handles student admissions, batch scheduling, digital attendance tracking, fee collection with automated UPI links, exam marks entry, and report card generation.",
     architecture: "Realtime Parent Notification Bus + Cloud Storage",
+    problem: {
+      title: "Uncollected Student Fees & Parent Anxiety",
+      description: "Admin staff spent hundreds of hours manually calling parents for pending term fees, while attendance took 15 minutes of every lecture.",
+      painQuote: "Unpaid dues accumulated simply because parents forgot quarterly installment due dates."
+    },
+    solution: {
+      title: "Digital Attendance + 1-Click WhatsApp Fee Reminders",
+      description: "Automated instant arrival notifications to parents and delivered 1-click UPI payment links on WhatsApp with auto-reconciled receipts."
+    },
+    roi: {
+      title: "100% Timely Fee Collection & 0 Admin Delays",
+      description: "Recovered 100% of pending fee dues on time and freed teachers to focus purely on academic instruction."
+    },
     results: ["Fee collection automated 100%", "Attendance tracking real-time", "Parent communication automated", "Zero pending fee confusion"],
     features: ["Student enrollment & profiles", "Batch & faculty management", "Digital attendance system", "Fee collection with reminders", "Exam results & mark sheets", "WhatsApp parent updates"],
     stack: ["React", "Node.js", "MongoDB", "Firebase Auth", "WhatsApp API", "Cloudinary"],
@@ -268,6 +362,19 @@ const PROJECTS = [
     shortDesc: "Property showcase website, automated lead capture, follow-up CRM pipeline, and instant WhatsApp brochure dispatcher.",
     fullDesc: "A lead generation and deal pipeline platform for real estate developers and property consultants. The public-facing portal showcases residential & commercial properties with interactive floorplans and virtual tours. Inquiries feed directly into an automated CRM pipeline.",
     architecture: "Serverless Lead Ingestion + Webhook Triggers",
+    problem: {
+      title: "Cold Property Leads & Delayed Follow-Ups",
+      description: "Online buyer inquiries sat in email inboxes for hours. By the time sales reps called back, the buyer had already contacted rival builders.",
+      painQuote: "If you don't respond to a luxury property lead within 5 minutes, you've lost the buyer."
+    },
+    solution: {
+      title: "90-Second WhatsApp Brochure Dispatch & Lead Scoring",
+      description: "Built an automated webhook engine that dispatches floorplan PDF brochures to buyer WhatsApp immediately, alerting senior sales agents via push notifications."
+    },
+    roi: {
+      title: "+25% Increase in Scheduled Site Visits",
+      description: "Cut lead first-contact time from 4 hours down to under 90 seconds, dramatically improving buyer qualification and sales closure rates."
+    },
     results: ["Lead response time under 90 sec", "Follow-up rate 100% automated", "Property listings SEO-optimized", "Conversion rate improved 25%"],
     features: ["Property listing website", "Lead capture & CRM", "WhatsApp follow-up automation", "Lead scoring & priority tags", "Site visit scheduling", "Agent performance dashboard"],
     stack: ["React", "Node.js", "MongoDB", "WhatsApp Cloud API", "Cloudinary", "TailwindCSS"],
@@ -276,7 +383,7 @@ const PROJECTS = [
     accent: "#14b8a6",
     secondary: "#22c55e",
     mockupType: "Dashboard",
-    scale: "450+ Luxury Units Sold • ₹120Cr+ Inventory",
+    scale: "450+ Luxury Units Sold • Premium Inventory",
   },
 ];
 
@@ -499,165 +606,6 @@ function EnterpriseMatrixView({ projects, onOpenDemo }) {
   );
 }
 
-// ─── INTERACTIVE SOLUTION CONFIGURATOR ───────────────────────────────────────
-
-function InteractiveConfigurator() {
-  const [industry, setIndustry] = useState("Hospitality & Food");
-  const [selectedFeatures, setSelectedFeatures] = useState([
-    "WhatsApp Order & Receipt Automation",
-    "Real-time Kitchen Display (KDS)",
-    "GST Billing & Invoice Engine"
-  ]);
-
-  const featureOptions = [
-    "WhatsApp Order & Receipt Automation",
-    "Real-time Kitchen Display (KDS)",
-    "GST Billing & Invoice Engine",
-    "IMEI / Serialized Inventory POS",
-    "Dual B2B & B2C Pricing Switcher",
-    "Electronic Health Records (EHR)",
-    "Multi-Tenant Storefront SaaS",
-    "Offline-Capable Progressive Web App (PWA)",
-    "Payment Gateway (Razorpay/UPI) Direct Integration"
-  ];
-
-  const toggleFeature = (feat) => {
-    setSelectedFeatures((prev) =>
-      prev.includes(feat) ? prev.filter((f) => f !== feat) : [...prev, feat]
-    );
-  };
-
-  const estimatedWeeks = Math.max(2, Math.min(5, Math.ceil(selectedFeatures.length * 0.5) + 1));
-
-  const waBrief = `Hi Prajyot Infotech, I configured a custom project on your portfolio:
-Industry: ${industry}
-Selected Features: ${selectedFeatures.join(", ")}
-Target Timeline: ~${estimatedWeeks} weeks.
-Can we schedule a consultation to discuss budget and architecture?`;
-
-  return (
-    <div className="relative rounded-3xl border border-slate-700/80 bg-gradient-to-br from-slate-900 via-slate-950 to-brand-950/60 p-6 sm:p-10 shadow-2xl overflow-hidden">
-      <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-brand-600/20 blur-[120px] pointer-events-none" />
-
-      <div className="relative z-10 max-w-4xl mx-auto text-center mb-8">
-        <span className="inline-flex items-center gap-2 rounded-full border border-brand-400/30 bg-brand-500/10 px-4 py-1 text-xs font-bold text-brand-300 backdrop-blur-md mb-3">
-          <Sparkles className="w-3.5 h-3.5 text-brand-400" />
-          INTERACTIVE ARCHITECTURE BUILDER
-        </span>
-        <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-          Configure Your Custom Software Solution
-        </h2>
-        <p className="mt-2 text-slate-400 text-sm sm:text-base">
-          Select your industry and target feature modules. We will compute your estimated rollout timeline and prepare a tailored architectural recommendation.
-        </p>
-      </div>
-
-      <div className="relative z-10 max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Step 1 & 2 Controls */}
-        <div className="lg:col-span-7 space-y-6 text-xs">
-          {/* Industry Selection */}
-          <div>
-            <label className="text-slate-300 font-bold block mb-2 text-xs">
-              Step 1: Select Your Business Sector
-            </label>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {[
-                "Hospitality & Food",
-                "Electronics & Retail",
-                "Healthcare & Clinic",
-                "B2B Wholesale / FMCG",
-                "E-Commerce Multi-Vendor",
-                "Education & Academies"
-              ].map((ind) => (
-                <button
-                  key={ind}
-                  onClick={() => setIndustry(ind)}
-                  className={`p-2.5 rounded-xl border text-left font-medium transition cursor-pointer ${
-                    industry === ind
-                      ? "bg-brand-600 border-brand-400 text-white shadow-md shadow-brand-600/30"
-                      : "bg-slate-900/80 border-slate-800 text-slate-400 hover:text-slate-200"
-                  }`}
-                >
-                  {ind}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Module Capabilities */}
-          <div>
-            <label className="text-slate-300 font-bold block mb-2 text-xs">
-              Step 2: Choose Required Core Capabilities
-            </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {featureOptions.map((feat) => {
-                const active = selectedFeatures.includes(feat);
-                return (
-                  <button
-                    key={feat}
-                    onClick={() => toggleFeature(feat)}
-                    className={`flex items-start gap-2 p-2.5 rounded-xl border text-left transition cursor-pointer ${
-                      active
-                        ? "bg-slate-800 border-brand-500 text-white"
-                        : "bg-slate-950/60 border-slate-800 text-slate-400 hover:border-slate-700"
-                    }`}
-                  >
-                    <span className={`w-4 h-4 rounded mt-0.5 flex items-center justify-center shrink-0 ${active ? "bg-brand-500 text-white" : "border border-slate-700"}`}>
-                      {active && <Check className="w-3 h-3" />}
-                    </span>
-                    <span className="text-[11px] leading-snug">{feat}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* Live Estimate Card */}
-        <div className="lg:col-span-5 bg-slate-950 rounded-2xl p-6 border border-slate-800 shadow-2xl space-y-5 text-xs">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="font-mono text-slate-400 uppercase text-[10px] tracking-wider">Estimated Delivery</span>
-            <span className="bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full font-bold font-mono text-[11px]">
-              Ready in ~{estimatedWeeks} Weeks
-            </span>
-          </div>
-
-          <div>
-            <span className="text-[11px] text-slate-400 block mb-1">Architecture Recommendation:</span>
-            <div className="bg-slate-900 p-3 rounded-xl border border-slate-800 text-slate-300 space-y-1 font-mono text-[11px]">
-              <p>• <strong>Frontend:</strong> React 19 SPA with Tailwind CSS v4</p>
-              <p>• <strong>Backend:</strong> Node.js Microservices / Express</p>
-              <p>• <strong>Realtime:</strong> WebSockets + WhatsApp Cloud API</p>
-              <p>• <strong>Database:</strong> PostgreSQL / MongoDB with Redis Cache</p>
-            </div>
-          </div>
-
-          <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-800/80 text-[11px] text-slate-400 space-y-1">
-            <p className="flex items-center gap-1.5 text-slate-300 font-semibold">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              100% Client Code Ownership
-            </p>
-            <p className="flex items-center gap-1.5 text-slate-300 font-semibold">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-              Zero Monthly Vendor Lock-in
-            </p>
-          </div>
-
-          <a
-            href={WA(waBrief)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-500/20 transition cursor-pointer flex items-center justify-center gap-2 text-xs"
-          >
-            <MessageSquare className="w-4 h-4" />
-            Send Configured Brief to WhatsApp Lead Architect
-          </a>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ─── MAIN PORTFOLIO PAGE COMPONENT ───────────────────────────────────────────
 
 export default function Work() {
@@ -780,7 +728,7 @@ export default function Work() {
             className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
           >
             {[
-              { value: "₹12 Cr+", label: "Client Revenue Handled", sub: "across deployed systems" },
+              { value: "1 Million+", label: "Transactions Handled", sub: "across deployed systems" },
               { value: "50+", label: "Custom Deployments", sub: "in 8+ business sectors" },
               { value: "< 140ms", label: "Median API Latency", sub: "optimized edge endpoints" },
               { value: "100%", label: "Code Ownership", sub: "zero vendor lock-in" },
@@ -797,6 +745,26 @@ export default function Work() {
               </div>
             ))}
           </motion.div>
+
+          {/* Quick Anchor Navigation Dock */}
+          <div className="mt-8 flex flex-wrap justify-center gap-2 text-xs">
+            <a href="#showcase" className="bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-700/80 px-4 py-2 rounded-xl transition flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-brand-400" />
+              <span>Explore 8+ Live Demos</span>
+            </a>
+            <a href="#process" className="bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-700/80 px-4 py-2 rounded-xl transition flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-indigo-400" />
+              <span>4-Step Engineering Lifecycle</span>
+            </a>
+            <a href="#guarantees" className="bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-700/80 px-4 py-2 rounded-xl transition flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              <span>5 Enterprise Guarantees</span>
+            </a>
+            <a href="#estimator" className="bg-brand-600/20 hover:bg-brand-600/30 text-brand-300 border border-brand-500/40 px-4 py-2 rounded-xl transition flex items-center gap-1.5 font-bold">
+              <Cpu className="w-3.5 h-3.5 text-brand-400" />
+              <span>Scope & Sprint Calculator</span>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -804,7 +772,7 @@ export default function Work() {
       <PortfolioSpotlight onOpenDemo={handleOpenDemoById} />
 
       {/* CONTROLS & FILTERING DOCK */}
-      <section className="sticky top-16 z-30 border-y border-slate-800 bg-slate-950/85 backdrop-blur-2xl py-4 px-4">
+      <section id="showcase" className="sticky top-16 z-30 border-y border-slate-800 bg-slate-950/85 backdrop-blur-2xl py-4 px-4">
         <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Search Bar */}
           <div className="relative w-full md:w-72">
@@ -923,8 +891,16 @@ export default function Work() {
           />
         )}
 
-        {/* INTERACTIVE SOLUTION ESTIMATOR / BUILDER */}
-        <InteractiveConfigurator />
+        {/* 4-STEP TRANSPARENT ENGINEERING LIFECYCLE */}
+        <EngineeringProcess />
+
+        {/* 5 ENTERPRISE GUARANTEES & COMPARISON MATRIX */}
+        <div id="guarantees">
+          <TrustGuarantees />
+        </div>
+
+        {/* INTERACTIVE SCOPE & SPRINT ESTIMATOR */}
+        <ProjectEstimator />
 
         {/* BOTTOM ENTERPRISE CTA */}
         <div className="rounded-3xl border border-slate-700/80 bg-gradient-to-r from-brand-900/60 via-slate-950 to-indigo-950/60 p-8 sm:p-12 text-center relative shadow-2xl overflow-hidden">

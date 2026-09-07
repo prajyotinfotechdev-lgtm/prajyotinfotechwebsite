@@ -669,7 +669,7 @@ function SaasSimulator() {
       subdomain: "apex-industrial.vyapaariyo.com",
       accent: "#f59e0b",
       theme: "from-amber-500/20 to-orange-500/10",
-      stats: { products: 1420, ordersToday: 48, revenue: "₹3,42,000" },
+      stats: { products: 1420, ordersToday: 48, revenue: "12.4k Units" },
       catalog: ["Angle Grinder 850W", "Heavy Duty Drill 13mm", "Galvanized Bolts 100pk"]
     },
     zenith: {
@@ -677,7 +677,7 @@ function SaasSimulator() {
       subdomain: "zenith-textiles.vyapaariyo.com",
       accent: "#8b5cf6",
       theme: "from-violet-500/20 to-purple-500/10",
-      stats: { products: 890, ordersToday: 62, revenue: "₹5,18,500" },
+      stats: { products: 890, ordersToday: 62, revenue: "18.2k Units" },
       catalog: ["Mulberry Silk 60GSM", "Egyptian Cotton Yarn", "Linen Weave 40s"]
     },
     organics: {
@@ -685,7 +685,7 @@ function SaasSimulator() {
       subdomain: "sahyadri-farms.vyapaariyo.com",
       accent: "#10b981",
       theme: "from-emerald-500/20 to-teal-500/10",
-      stats: { products: 310, ordersToday: 89, revenue: "₹1,94,200" },
+      stats: { products: 310, ordersToday: 89, revenue: "8.5k Units" },
       catalog: ["Alphonso Pulp Drum 20kg", "A2 Gir Cow Ghee 5L", "Organic Turmeric Bulk"]
     }
   };
@@ -849,7 +849,7 @@ export default function PortfolioDemoModal({ project, onClose }) {
             <div className="flex gap-2">
               <button
                 onClick={() => setActiveTab("simulator")}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition cursor-pointer ${
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl font-bold transition cursor-pointer ${
                   activeTab === "simulator"
                     ? "bg-brand-600 text-white shadow-lg shadow-brand-600/30"
                     : "bg-slate-800/80 text-slate-400 hover:text-slate-200"
@@ -859,8 +859,19 @@ export default function PortfolioDemoModal({ project, onClose }) {
                 Live Interactive Simulator
               </button>
               <button
+                onClick={() => setActiveTab("casestudy")}
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl font-bold transition cursor-pointer ${
+                  activeTab === "casestudy"
+                    ? "bg-brand-600 text-white shadow-lg shadow-brand-600/30"
+                    : "bg-slate-800/80 text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                <FileText className="w-3.5 h-3.5 text-brand-300" />
+                Problem vs Solution Case Study
+              </button>
+              <button
                 onClick={() => setActiveTab("architecture")}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition cursor-pointer ${
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl font-bold transition cursor-pointer ${
                   activeTab === "architecture"
                     ? "bg-brand-600 text-white shadow-lg shadow-brand-600/30"
                     : "bg-slate-800/80 text-slate-400 hover:text-slate-200"
@@ -871,7 +882,7 @@ export default function PortfolioDemoModal({ project, onClose }) {
               </button>
               <button
                 onClick={() => setActiveTab("impact")}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition cursor-pointer ${
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl font-bold transition cursor-pointer ${
                   activeTab === "impact"
                     ? "bg-brand-600 text-white shadow-lg shadow-brand-600/30"
                     : "bg-slate-800/80 text-slate-400 hover:text-slate-200"
@@ -915,6 +926,124 @@ export default function PortfolioDemoModal({ project, onClose }) {
                 {!["restaurant-management", "mobile-shop-management", "jollybaba-ecommerce", "clinic-management", "vyapaariyo-saas"].includes(project.id) && (
                   <RestaurantSimulator />
                 )}
+              </motion.div>
+            )}
+
+            {activeTab === "casestudy" && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="space-y-6 text-xs text-slate-300"
+              >
+                {/* Client Profile & Project Meta */}
+                <div className="bg-slate-950/80 rounded-2xl p-5 border border-slate-800 flex flex-wrap items-center justify-between gap-4">
+                  <div>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase">Enterprise Client</span>
+                    <h3 className="text-base font-black text-white">{project.client}</h3>
+                    <p className="text-xs text-slate-400 mt-0.5">{project.scale}</p>
+                  </div>
+                  <div className="flex gap-2.5">
+                    <div className="bg-slate-900 px-3.5 py-2 rounded-xl border border-slate-800 text-right">
+                      <span className="text-[10px] text-slate-500 uppercase block">Delivery Duration</span>
+                      <strong className="text-white font-mono text-xs">3.5 Weeks</strong>
+                    </div>
+                    <div className="bg-slate-900 px-3.5 py-2 rounded-xl border border-slate-800 text-right">
+                      <span className="text-[10px] text-slate-500 uppercase block">IP Handover</span>
+                      <strong className="text-emerald-400 font-mono text-xs">100% Client Owned</strong>
+                    </div>
+                  </div>
+                </div>
+
+                {/* The 3-Pillar Breakdown: Problem -> Solution -> Business Outcome */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Pillar 1: The Business Challenge / Pain Point */}
+                  <div className="bg-slate-950/90 rounded-2xl p-5 border border-red-500/30 shadow-lg space-y-3">
+                    <div className="flex items-center gap-2 text-red-400 font-bold uppercase tracking-wider text-[11px]">
+                      <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                      1. The Business Bottleneck
+                    </div>
+                    <h4 className="font-bold text-white text-sm">
+                      {project.problem?.title || "Manual Delays & Discrepancies"}
+                    </h4>
+                    <p className="text-slate-300 leading-relaxed text-[11px]">
+                      {project.problem?.description || project.shortDesc}
+                    </p>
+                    <div className="pt-2 border-t border-slate-800/80">
+                      <span className="text-[10px] font-mono text-red-400/90 font-semibold block mb-1">Impact Before Prajyot Infotech:</span>
+                      <p className="text-slate-400 text-[11px] italic">
+                        "{project.problem?.painQuote || "High operational friction and delayed customer checkouts."}"
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Pillar 2: Engineered Solution */}
+                  <div className="bg-slate-950/90 rounded-2xl p-5 border border-indigo-500/30 shadow-lg space-y-3">
+                    <div className="flex items-center gap-2 text-indigo-400 font-bold uppercase tracking-wider text-[11px]">
+                      <span className="w-2 h-2 rounded-full bg-indigo-500" />
+                      2. Our Custom Architecture
+                    </div>
+                    <h4 className="font-bold text-white text-sm">
+                      {project.solution?.title || "Bespoke Full-Stack Deployment"}
+                    </h4>
+                    <p className="text-slate-300 leading-relaxed text-[11px]">
+                      {project.solution?.description || project.fullDesc}
+                    </p>
+                    <div className="pt-2 border-t border-slate-800/80">
+                      <span className="text-[10px] font-mono text-indigo-400 font-semibold block mb-1">Architecture Archetype:</span>
+                      <span className="text-slate-200 text-[11px] font-medium block">
+                        {project.architecture}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Pillar 3: Measured ROI */}
+                  <div className="bg-slate-950/90 rounded-2xl p-5 border border-emerald-500/30 shadow-lg space-y-3">
+                    <div className="flex items-center gap-2 text-emerald-400 font-bold uppercase tracking-wider text-[11px]">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      3. Quantifiable ROI Delivered
+                    </div>
+                    <h4 className="font-bold text-white text-sm">
+                      {project.roi?.title || "Measurable Efficiency Gains"}
+                    </h4>
+                    <p className="text-slate-300 leading-relaxed text-[11px]">
+                      {project.roi?.description || "Significant operational acceleration with zero runtime error rates."}
+                    </p>
+                    <div className="pt-2 border-t border-slate-800/80 space-y-1">
+                      {project.results.slice(0, 3).map((r, i) => (
+                        <div key={i} className="flex items-center gap-1.5 text-[11px] text-emerald-300">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                          <span>{r}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Key Deliverables Matrix */}
+                <div className="bg-slate-950/60 rounded-2xl p-5 border border-slate-800 space-y-3">
+                  <h4 className="font-bold text-white text-xs uppercase tracking-wider text-slate-400">
+                    Complete Handover Artifacts Included in this Engagement:
+                  </h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                      <span className="text-[10px] text-slate-500 block">Repository</span>
+                      <p className="font-bold text-slate-200 text-xs mt-0.5">100% Git Source Code</p>
+                    </div>
+                    <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                      <span className="text-[10px] text-slate-500 block">Infrastructure</span>
+                      <p className="font-bold text-slate-200 text-xs mt-0.5">Automated Cloud CI/CD</p>
+                    </div>
+                    <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                      <span className="text-[10px] text-slate-500 block">Warranty</span>
+                      <p className="font-bold text-emerald-400 text-xs mt-0.5">60-Day Bug Warranty</p>
+                    </div>
+                    <div className="bg-slate-900 p-3 rounded-xl border border-slate-800">
+                      <span className="text-[10px] text-slate-500 block">Licensing</span>
+                      <p className="font-bold text-brand-300 text-xs mt-0.5">₹0 Recurring Fees</p>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             )}
 
