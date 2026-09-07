@@ -121,13 +121,22 @@ export default function Nav() {
       </a>
 
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
-        <Link
-          to="/"
-          className="flex items-center gap-2 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
-          aria-label="Prajyot Infotech home"
-        >
-          <Logo size={36} />
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            to="/"
+            className="flex items-center gap-2 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+            aria-label="Prajyot Infotech home"
+          >
+            <Logo size={36} />
+          </Link>
+          <div className="hidden xl:inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[11px] font-semibold text-emerald-700">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span>All Systems Operational (99.98% SLA)</span>
+          </div>
+        </div>
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-6 text-sm md:flex" aria-label="Main">

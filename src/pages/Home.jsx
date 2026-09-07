@@ -21,6 +21,9 @@ const ParallaxPortfolio = lazy(() => import("../components/ParallaxPortfolio.jsx
 const DigitalReadinessQuiz = lazy(() => import("../components/DigitalReadinessQuiz.jsx"));
 const ArticlesPreview = lazy(() => import("../components/ArticlesPreview.jsx"));
 const PortfolioDemoModal = lazy(() => import("../components/PortfolioDemoModal.jsx"));
+const EngineeringProcess = lazy(() => import("../components/EngineeringProcess.jsx"));
+const ROICalculator = lazy(() => import("../components/ROICalculator.jsx"));
+const TrustGuarantees = lazy(() => import("../components/TrustGuarantees.jsx"));
 
 const SectionSkeleton = ({ className = "" }) => (
   <div className={`mx-auto w-full max-w-7xl px-4 py-16 ${className}`}>
@@ -131,6 +134,30 @@ export default function Home() {
                   "@type": "Answer",
                   "text": "Fixed-scope starter digital portals start from ₹29,999 ($399 USD), while custom enterprise ERPs, SaaS architectures, and bespoke platforms are custom-scoped with milestone deliverables and 100% intellectual property ownership."
                 }
+              },
+              {
+                "@type": "Question",
+                "name": "Do clients retain 100% full source code and intellectual property ownership?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Every software system engineered by Prajyot Infotech includes 100% full Git repository handover and complete IP ownership transfer. Clients own all source code with zero vendor lock-in and zero recurring seat licensing fees."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What post-launch warranty and SLA guarantees are provided?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Every production launch includes a contractually guaranteed 60-day post-launch bug warranty covering performance optimizations, edge cases, and adjustments, supported by our 99.98% cloud architecture uptime SLA."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does Prajyot Infotech execute Non-Disclosure Agreements (NDA)?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, Prajyot Infotech routinely signs mutual Non-Disclosure Agreements (NDA) prior to project discovery to safeguard proprietary business workflows, IP, and data schemas."
+                }
               }
             ]
           }
@@ -194,12 +221,31 @@ export default function Home() {
           <CaseStudies />
         </Suspense>
 
-        {/* 7.5 INTERACTIVE TECH LAB & ARTICLES — engineering authority */}
+        {/* 7.25 4-STEP TRANSPARENT ENGINEERING LIFECYCLE */}
+        <div className="bg-[#080d19] py-4 my-8 border-y border-slate-800/80">
+          <Suspense fallback={<SectionSkeleton />}>
+            <EngineeringProcess />
+          </Suspense>
+        </div>
+
+        {/* 7.5 INTERACTIVE ROI & AUTOMATION SAVINGS CALCULATOR */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <ROICalculator />
+        </Suspense>
+
+        {/* 7.75 5 ENTERPRISE GUARANTEES & COMPARISON MATRIX */}
+        <div className="bg-[#080d19] py-4 my-8 border-y border-slate-800/80">
+          <Suspense fallback={<SectionSkeleton />}>
+            <TrustGuarantees />
+          </Suspense>
+        </div>
+
+        {/* 8. INTERACTIVE TECH LAB & ARTICLES — engineering authority */}
         <Suspense fallback={<SectionSkeleton />}>
           <ArticlesPreview />
         </Suspense>
 
-        {/* 8. TESTIMONIALS — social proof from real clients */}
+        {/* 8.5 TESTIMONIALS — social proof from real clients */}
         <Suspense fallback={<SectionSkeleton />}>
           <Testimonials />
         </Suspense>

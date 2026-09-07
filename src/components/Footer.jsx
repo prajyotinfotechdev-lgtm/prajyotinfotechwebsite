@@ -206,14 +206,14 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-navy-800 font-semibold text-base">Services</h4>
+            <h4 className="text-navy-800 font-semibold text-base">Engineering Services</h4>
             <ul className="mt-4 space-y-3 text-slate-600 text-sm">
-              <li><Link to="/services#business-websites" className="hover:text-brand-700 transition-colors">Business Websites</Link></li>
-              <li><Link to="/services#ecommerce-development" className="hover:text-brand-700 transition-colors">E-Commerce</Link></li>
-              <li><Link to="/services#mobile-app-development" className="hover:text-brand-700 transition-colors">Mobile Apps</Link></li>
-              <li><Link to="/services#crm-development" className="hover:text-brand-700 transition-colors">CRM Software</Link></li>
-              <li><Link to="/services#billing-erp-software" className="hover:text-brand-700 transition-colors">ERP & Billing</Link></li>
-              <li><Link to="/services#whatsapp-automation" className="hover:text-brand-700 transition-colors">WhatsApp Automation</Link></li>
+              <li><Link to="/services#business-websites" className="hover:text-brand-700 transition-colors">Bespoke Web Applications</Link></li>
+              <li><Link to="/services#mobile-app-development" className="hover:text-brand-700 transition-colors">Mobile App Engineering (iOS &amp; Android)</Link></li>
+              <li><Link to="/services#crm-development" className="hover:text-brand-700 transition-colors">Custom Enterprise ERP &amp; CRM</Link></li>
+              <li><Link to="/services#billing-erp-software" className="hover:text-brand-700 transition-colors">Cloud SaaS &amp; Multi-Tenant Platforms</Link></li>
+              <li><Link to="/services#whatsapp-automation" className="hover:text-brand-700 transition-colors">Intelligent Workflow Automation</Link></li>
+              <li><Link to="/services#ecommerce-development" className="hover:text-brand-700 transition-colors">High-Throughput E-Commerce</Link></li>
             </ul>
           </div>
         </nav>
@@ -253,6 +253,25 @@ export default function Footer() {
               <span>•</span>
               <Link to="/software-company-in-uk" className="hover:text-brand-600 font-bold text-slate-800 transition-colors">UK 🇬🇧</Link>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Enterprise Assurance Badges */}
+      <div className="border-t border-slate-200/80 bg-slate-50/70 py-4 px-4 text-center">
+        <div className="flex flex-wrap items-center justify-center gap-3 text-xs">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-800 font-semibold text-[11px]">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            <span>99.98% Cloud Uptime SLA Guaranteed</span>
+          </div>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-800 font-semibold text-[11px]">
+            <span>100% Full IP &amp; Git Codebase Ownership</span>
+          </div>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-800 font-semibold text-[11px]">
+            <span>60-Day Post-Launch Bug Warranty Included</span>
+          </div>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-200/80 border border-slate-300 text-slate-700 font-semibold text-[11px]">
+            <span>Mutual NDA on Day 1</span>
           </div>
         </div>
       </div>
