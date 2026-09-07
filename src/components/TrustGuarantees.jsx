@@ -154,21 +154,25 @@ export default function TrustGuarantees() {
         </div>
 
         {/* Comparison Matrix Table */}
-        <div className="bg-slate-900/90 rounded-3xl p-6 sm:p-8 border border-slate-700/80 shadow-2xl backdrop-blur-xl">
-          <div className="text-center max-w-2xl mx-auto mb-8">
+        <div className="bg-slate-900/90 rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-700/80 shadow-2xl backdrop-blur-xl">
+          <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
             <span className="text-xs font-mono text-brand-400 uppercase tracking-widest font-bold block mb-1">
               THE STRATEGIC ADVANTAGE
             </span>
-            <h3 className="text-2xl sm:text-3xl font-black text-white">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-white">
               Why Custom Build Beats Generic SaaS
             </h3>
-            <p className="text-xs sm:text-sm text-slate-400 mt-2">
+            <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
               See how partnering with Prajyot Infotech compares to renting off-the-shelf software or hiring bloated legacy agencies.
             </p>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs border-collapse">
+          <div className="md:hidden text-center text-[10px] sm:text-[11px] font-mono text-cyan-300 bg-cyan-950/40 border border-cyan-800/40 py-1.5 px-3 rounded-xl mb-3 flex items-center justify-center gap-1.5">
+            <span>← Swipe horizontally to view full matrix →</span>
+          </div>
+
+          <div className="overflow-x-auto -mx-2 sm:mx-0 px-2 sm:px-0">
+            <table className="w-full min-w-[620px] text-left text-xs border-collapse">
               <thead>
                 <tr className="border-b border-slate-800 text-slate-400 font-mono">
                   <th className="py-3 px-4 font-semibold">DECISION CRITERIA</th>

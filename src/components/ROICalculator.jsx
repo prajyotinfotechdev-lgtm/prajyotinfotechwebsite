@@ -82,21 +82,21 @@ export default function ROICalculator() {
         </div>
 
         {/* Interactive Calculator Body */}
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-stretch bg-slate-900/80 backdrop-blur-2xl border border-slate-800/80 rounded-3xl p-6 sm:p-10 shadow-2xl">
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-stretch bg-slate-900/80 backdrop-blur-2xl border border-slate-800/80 rounded-2xl sm:rounded-3xl p-4 sm:p-8 lg:p-10 shadow-2xl">
           
           {/* Sliders Column */}
-          <div className="space-y-8 flex flex-col justify-center">
+          <div className="space-y-6 sm:space-y-8 flex flex-col justify-center">
             {/* Slider 1: Hours */}
-            <div className="bg-slate-950/60 rounded-2xl p-6 border border-slate-800/60">
-              <div className="flex justify-between items-baseline mb-3">
-                <label className="text-white font-bold text-sm sm:text-base">
+            <div className="bg-slate-950/60 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-slate-800/60">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-1 mb-2.5 sm:mb-3">
+                <label className="text-white font-bold text-xs sm:text-base">
                   Manual Team Hours Spent Weekly
                 </label>
-                <span className="text-2xl font-mono font-black text-brand-400">
+                <span className="text-xl sm:text-2xl font-mono font-black text-brand-400">
                   {hoursPerWeek} hrs/wk
                 </span>
               </div>
-              <p className="text-slate-400 text-xs mb-4">
+              <p className="text-slate-400 text-xs mb-3 sm:mb-4 leading-relaxed">
                 Spreadsheet reconciliation, manual invoices, WhatsApp follow-ups, and repetitive data entry.
               </p>
               <input 
@@ -105,26 +105,26 @@ export default function ROICalculator() {
                 max="60" 
                 value={hoursPerWeek} 
                 onChange={(e) => setHoursPerWeek(Number(e.target.value))}
-                className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-400"
+                className="w-full h-3 sm:h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-500 focus:outline-none"
               />
               <div className="flex justify-between text-[10px] font-mono text-slate-500 mt-2">
                 <span>2 hrs (Light)</span>
                 <span>30 hrs (Moderate)</span>
-                <span>60 hrs (Heavy Ops)</span>
+                <span>60 hrs (Heavy)</span>
               </div>
             </div>
 
             {/* Slider 2: Hourly Rate */}
-            <div className="bg-slate-950/60 rounded-2xl p-6 border border-slate-800/60">
-              <div className="flex justify-between items-baseline mb-3">
-                <label className="text-white font-bold text-sm sm:text-base">
+            <div className="bg-slate-950/60 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-slate-800/60">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-1 mb-2.5 sm:mb-3">
+                <label className="text-white font-bold text-xs sm:text-base">
                   Effective Hourly Team Cost
                 </label>
-                <span className="text-2xl font-mono font-black text-cyan-400">
+                <span className="text-xl sm:text-2xl font-mono font-black text-cyan-400">
                   {symbol}{hourlyValue}/hr
                 </span>
               </div>
-              <p className="text-slate-400 text-xs mb-4">
+              <p className="text-slate-400 text-xs mb-3 sm:mb-4 leading-relaxed">
                 Average compensation or value of time for managers and operational staff.
               </p>
               <input 
@@ -134,36 +134,36 @@ export default function ROICalculator() {
                 step={currency === "INR" ? 50 : 5}
                 value={hourlyValue} 
                 onChange={(e) => setHourlyValue(Number(e.target.value))}
-                className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                className="w-full h-3 sm:h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400 focus:outline-none"
               />
               <div className="flex justify-between text-[10px] font-mono text-slate-500 mt-2">
                 <span>{symbol}{currency === "INR" ? "200" : "15"}</span>
-                <span>{symbol}{currency === "INR" ? "1,500" : "80"}</span>
+                <span>{symbol}{currency === "INR" ? "1,500" : "75"}</span>
                 <span>{symbol}{currency === "INR" ? "3,000" : "150"}</span>
               </div>
             </div>
           </div>
 
           {/* Results Summary Card */}
-          <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950/40 rounded-2xl p-6 sm:p-8 border border-slate-700/80 shadow-2xl flex flex-col justify-between">
+          <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950/40 rounded-xl sm:rounded-2xl p-5 sm:p-8 border border-slate-700/80 shadow-2xl flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
-                <span className="text-xs font-mono text-emerald-400 uppercase font-bold tracking-wider flex items-center gap-1.5">
-                  <TrendingUp className="w-4 h-4" />
+              <div className="flex items-center justify-between border-b border-slate-800 pb-3 sm:pb-4 mb-4 sm:mb-6">
+                <span className="text-[11px] sm:text-xs font-mono text-emerald-400 uppercase font-bold tracking-wider flex items-center gap-1.5">
+                  <TrendingUp className="w-4 h-4 shrink-0" />
                   PROJECTED VALUE RECOVERY
                 </span>
-                <span className="text-[11px] font-mono text-slate-400">80% Automation Factor</span>
+                <span className="text-[10px] sm:text-[11px] font-mono text-slate-400">80% Efficiency</span>
               </div>
 
               {/* Annual Savings */}
-              <div className="mb-6">
-                <div className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-1.5">
+              <div className="mb-4 sm:mb-6">
+                <div className="text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-widest mb-1">
                   Annual Capital Reclaimed
                 </div>
-                <div className="text-4xl sm:text-5xl font-mono font-black text-emerald-400 tracking-tight">
+                <div className="text-3xl sm:text-4xl md:text-5xl font-mono font-black text-emerald-400 tracking-tight">
                   {formattedSaved}
                 </div>
-                <p className="text-xs text-slate-400 mt-1.5">
+                <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">
                   Direct payroll and lost-productivity savings captured back into your profit margins.
                 </p>
               </div>

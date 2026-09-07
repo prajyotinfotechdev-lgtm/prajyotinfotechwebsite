@@ -385,12 +385,10 @@ export default function HelpBot({
             exit={{ opacity: 0, y: 15, scale: 0.94 }}
             transition={{ duration: 0.35, type: "spring", damping: 26, stiffness: 320 }}
             ref={panelRef}
-            role="dialog"
-            aria-modal="true"
-            className="fixed w-[min(100vw-2rem,430px)] overflow-hidden rounded-3xl border border-white/15 bg-slate-950/90 shadow-[0_30px_90px_rgba(0,0,0,0.85)] backdrop-blur-3xl flex flex-col"
+            className="fixed inset-x-3 bottom-3 sm:inset-x-auto w-auto sm:w-[430px] max-h-[calc(100dvh-1.5rem)] overflow-hidden rounded-2xl sm:rounded-3xl border border-white/15 bg-slate-950/95 shadow-[0_30px_90px_rgba(0,0,0,0.9)] backdrop-blur-3xl flex flex-col"
             style={{
-              bottom: toCss(panelOffset.bottom),
-              right: toCss(panelOffset.right),
+              bottom: typeof window !== "undefined" && window.innerWidth >= 640 ? toCss(panelOffset.bottom) : undefined,
+              right: typeof window !== "undefined" && window.innerWidth >= 640 ? toCss(panelOffset.right) : undefined,
               zIndex,
             }}
           >

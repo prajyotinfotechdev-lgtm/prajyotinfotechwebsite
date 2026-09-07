@@ -147,7 +147,7 @@ export default function ArchitectureBlueprint() {
         </div>
 
         {/* Layer Selection Tabs */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-5xl mx-auto mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 max-w-5xl mx-auto mb-6 sm:mb-8">
           {ARCH_LAYERS.map((layer) => {
             const Icon = layer.icon;
             const isActive = activeLayer === layer.id;
@@ -156,28 +156,28 @@ export default function ArchitectureBlueprint() {
                 key={layer.id}
                 type="button"
                 onClick={() => setActiveLayer(layer.id)}
-                className={`p-4 rounded-2xl border text-left transition-all duration-300 cursor-pointer flex flex-col justify-between ${
+                className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl border text-left transition-all duration-300 cursor-pointer flex flex-col justify-between ${
                   isActive
                     ? "bg-slate-900 border-cyan-500/70 shadow-xl shadow-cyan-950/40 scale-[1.02]"
                     : "bg-slate-950/60 border-slate-800 hover:border-slate-700 hover:bg-slate-900/60"
                 }`}
               >
-                <div className="flex items-center justify-between mb-3">
-                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${isActive ? "bg-cyan-500/20 text-cyan-400" : "bg-slate-800 text-slate-400"}`}>
-                    <Icon className="w-4 h-4" />
+                <div className="flex items-center justify-between mb-2 sm:mb-3">
+                  <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl flex items-center justify-center ${isActive ? "bg-cyan-500/20 text-cyan-400" : "bg-slate-800 text-slate-400"}`}>
+                    <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </div>
-                  <span className="text-[10px] font-mono font-bold text-slate-500 uppercase">
+                  <span className="text-[9px] sm:text-[10px] font-mono font-bold text-slate-500 uppercase">
                     {layer.id}
                   </span>
                 </div>
-                <div className="font-bold text-white text-xs sm:text-sm">{layer.name.split(":")[1]}</div>
+                <div className="font-bold text-white text-[11px] sm:text-xs md:text-sm leading-snug">{layer.name.split(":")[1]}</div>
               </button>
             );
           })}
         </div>
 
         {/* Active Layer Detail Card */}
-        <div className="bg-slate-900/80 rounded-3xl border border-slate-700/80 shadow-2xl p-6 sm:p-10 max-w-5xl mx-auto backdrop-blur-xl">
+        <div className="bg-slate-900/80 rounded-2xl sm:rounded-3xl border border-slate-700/80 shadow-2xl p-4 sm:p-8 lg:p-10 max-w-5xl mx-auto backdrop-blur-xl">
           <AnimatePresence mode="wait">
             <motion.div
               key={current.id}
@@ -185,27 +185,27 @@ export default function ArchitectureBlueprint() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.25 }}
-              className="grid lg:grid-cols-12 gap-8 items-start"
+              className="grid lg:grid-cols-12 gap-6 sm:gap-8 items-start"
             >
               {/* Left Column: Specs & Overview (7 cols) */}
-              <div className="lg:col-span-7 space-y-6">
+              <div className="lg:col-span-7 space-y-4 sm:space-y-6">
                 <div>
-                  <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono font-bold border mb-3 ${current.accent}`}>
+                  <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono font-bold border mb-2.5 sm:mb-3 ${current.accent}`}>
                     <IconComponent className="w-3.5 h-3.5" />
                     <span>{current.tagline}</span>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-black text-white">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-white">
                     {current.name}
                   </h3>
-                  <p className="mt-2 text-slate-300 text-sm leading-relaxed">
+                  <p className="mt-2 text-slate-300 text-xs sm:text-sm leading-relaxed">
                     {current.description}
                   </p>
                 </div>
 
                 {/* Specs Grid */}
-                <div className="grid sm:grid-cols-2 gap-3 pt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 pt-1 sm:pt-2">
                   {current.specs.map((spec, i) => (
-                    <div key={i} className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800">
+                    <div key={i} className="p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-slate-950/70 border border-slate-800">
                       <div className="text-[10px] font-mono uppercase text-slate-400 font-semibold">{spec.label}</div>
                       <div className="text-xs sm:text-sm font-bold text-white mt-1 flex items-center gap-1.5">
                         <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
@@ -217,13 +217,16 @@ export default function ArchitectureBlueprint() {
               </div>
 
               {/* Right Column: Code / Topology Mockup (5 cols) */}
-              <div className="lg:col-span-5 bg-slate-950 rounded-2xl border border-slate-800 p-4 font-mono text-xs overflow-hidden shadow-inner">
+              <div className="lg:col-span-5 bg-slate-950 rounded-2xl border border-slate-800 p-3 sm:p-4 font-mono text-xs overflow-hidden shadow-inner">
                 <div className="flex items-center justify-between border-b border-slate-800 pb-2 mb-3 text-slate-500 text-[11px]">
                   <span className="flex items-center gap-1.5 text-slate-400">
                     <Code2 className="w-3.5 h-3.5 text-brand-400" />
                     <span>production_spec.ts</span>
                   </span>
-                  <span className="text-emerald-400 font-semibold">Strict Typing</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] text-cyan-400/80 font-mono sm:hidden">← swipe code →</span>
+                    <span className="text-emerald-400 font-semibold text-[11px]">Strict Typing</span>
+                  </div>
                 </div>
                 <pre className="text-slate-300 overflow-x-auto text-[11px] leading-relaxed p-1 font-mono">
                   <code>{current.codeSnippet}</code>

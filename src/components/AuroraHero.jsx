@@ -59,14 +59,14 @@ export default function AuroraHero() {
 
       <motion.div
         style={prefersReducedMotion ? undefined : { y, opacity }}
-        className="relative z-10 mx-auto max-w-7xl px-4 pt-32 pb-16 flex-1 flex flex-col justify-center items-center text-center"
+        className="relative z-10 mx-auto max-w-7xl px-4 pt-20 sm:pt-28 md:pt-32 pb-12 sm:pb-16 flex-1 flex flex-col justify-center items-center text-center"
       >
         {/* Availability badge */}
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.5 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-black/5 bg-white/40 backdrop-blur-md px-4 py-1.5 text-xs font-semibold text-slate-800 shadow-sm"
+          className="mb-5 sm:mb-6 inline-flex items-center gap-2 rounded-full border border-black/5 bg-white/60 backdrop-blur-md px-3.5 py-1.5 text-[11px] sm:text-xs font-semibold text-slate-800 shadow-sm"
         >
           <span className="relative flex size-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -81,7 +81,7 @@ export default function AuroraHero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.65 }}
-          className="text-5xl/tight md:text-7xl/tight lg:text-[5.5rem]/tight font-black tracking-[-0.03em] text-slate-900 max-w-5xl"
+          className="text-3xl sm:text-5xl md:text-7xl lg:text-[5.5rem]/tight font-black tracking-tight text-slate-900 max-w-5xl"
         >
           Build software that{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-indigo-600 to-pink-500">defines the future.</span>
@@ -92,25 +92,25 @@ export default function AuroraHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="mt-6 max-w-3xl text-lg md:text-xl/relaxed text-slate-700 font-medium"
+          className="mt-4 sm:mt-6 max-w-3xl text-sm sm:text-lg md:text-xl/relaxed text-slate-700 font-medium px-2"
         >
           We build hyper-performant websites, mobile apps, CRM systems, and business automation software for companies that refuse to settle for average.
         </motion.p>
 
-        {/* CTAs */}
+        {/* CTAs - Mobile-Optimized Stack */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45, duration: 0.6 }}
-          className="mt-10 flex flex-wrap gap-4 justify-center items-center"
+          className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full max-w-xs sm:max-w-none"
         >
           <a
             href={wa("Hi Prajyot Infotech, I would like to schedule a technical architecture discussion for an upcoming project.")}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative px-7 py-3.5 rounded-full bg-slate-900 text-white font-bold shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 overflow-hidden"
+            className="w-full sm:w-auto group relative px-7 py-3.5 rounded-full bg-slate-900 text-white font-bold shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 overflow-hidden text-center justify-center flex items-center"
           >
-            <span className="relative z-10 flex items-center gap-2 text-sm sm:text-base">
+            <span className="relative z-10 flex items-center justify-center gap-2 text-sm sm:text-base">
               Book Discovery Call
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -119,13 +119,13 @@ export default function AuroraHero() {
           </a>
           <Link
             to="/estimate"
-            className="px-7 py-3.5 rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-bold shadow-md shadow-brand-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-brand-500/30 hover:scale-[1.02] focus:outline-none text-sm sm:text-base"
+            className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-bold shadow-md shadow-brand-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-brand-500/30 hover:scale-[1.02] focus:outline-none text-sm sm:text-base text-center justify-center flex items-center"
           >
-            Estimate Architecture
+            ⚡ Estimate Project Cost
           </Link>
           <Link
             to="/services"
-            className="px-7 py-3.5 rounded-full border-2 border-slate-900/10 bg-white/50 backdrop-blur-sm text-slate-900 font-bold transition-all duration-300 hover:bg-white/80 hover:border-slate-900/20 focus:outline-none text-sm sm:text-base"
+            className="w-full sm:w-auto px-7 py-3.5 rounded-full border-2 border-slate-900/10 bg-white/60 backdrop-blur-sm text-slate-900 font-bold transition-all duration-300 hover:bg-white/80 hover:border-slate-900/20 focus:outline-none text-sm sm:text-base text-center justify-center flex items-center"
           >
             Explore Services
           </Link>
@@ -136,11 +136,11 @@ export default function AuroraHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
-          className="mt-8 inline-flex flex-wrap items-center justify-center gap-2 text-xs md:text-sm font-semibold text-slate-600 bg-slate-100/80 border border-slate-200/80 backdrop-blur-md px-4 py-2 rounded-full shadow-sm"
+          className="mt-6 sm:mt-8 inline-flex flex-wrap items-center justify-center gap-2 text-xs md:text-sm font-semibold text-slate-600 bg-slate-100/80 border border-slate-200/80 backdrop-blur-md px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-sm"
         >
-          <span className="flex items-center gap-1.5 text-slate-900 font-bold">
+          <span className="flex items-center gap-1.5 text-slate-900 font-bold text-center">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            Trusted by growing businesses across India
+            Trusted by growing businesses across India &amp; Worldwide
           </span>
         </motion.div>
       </motion.div>
@@ -152,12 +152,12 @@ export default function AuroraHero() {
         transition={{ delay: 0.6, duration: 0.6 }}
         className="relative z-10 w-full"
       >
-        <div className="mx-auto max-w-6xl px-4 py-8 border-t border-slate-900/5 bg-white/40 backdrop-blur-xl rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.03)]">
-          <dl className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8 border-t border-slate-900/5 bg-white/40 backdrop-blur-xl rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.03)]">
+          <dl className="grid grid-cols-2 gap-4 sm:gap-8 md:grid-cols-4">
             {STATS.map((s) => (
-              <div key={s.label} className="flex flex-col items-center gap-1">
-                <dt className="text-3xl md:text-4xl font-black text-slate-900">{s.value}</dt>
-                <dd className="text-xs md:text-sm text-slate-500 font-bold tracking-wider uppercase">{s.label}</dd>
+              <div key={s.label} className="flex flex-col items-center gap-0.5 sm:gap-1 text-center">
+                <dt className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900">{s.value}</dt>
+                <dd className="text-[10px] sm:text-xs md:text-sm text-slate-500 font-bold tracking-wider uppercase">{s.label}</dd>
               </div>
             ))}
           </dl>

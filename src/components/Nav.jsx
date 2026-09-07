@@ -206,28 +206,76 @@ export default function Nav() {
               y: prefersReducedMotion ? 0 : -6,
               transition: { duration: 0.15 },
             }}
-            className="absolute inset-x-0 top-full z-40 border-t border-slate-200/50 bg-white/95 backdrop-blur-xl md:hidden"
+            className="absolute inset-x-0 top-full z-40 border-t border-slate-200/80 bg-white/98 shadow-2xl backdrop-blur-2xl md:hidden overflow-hidden"
           >
             <div
               ref={panelRef}
-              className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 text-sm text-slate-700"
+              className="mx-auto flex max-w-7xl flex-col px-4 py-5 text-sm text-slate-700 max-h-[calc(100dvh-5rem)] overflow-y-auto pb-[max(1.5rem,env(safe-area-inset-bottom))]"
             >
               <h2 id="mobileMenuTitle" className="sr-only">Menu</h2>
 
-              {navLinks.map(({ to, label }) => (
-                <NavLink key={`sheet:${to}`} to={to} onClick={() => setOpen(false)} className={activeClass} aria-label={label}>
-                  {label}
-                </NavLink>
-              ))}
+              {/* Mobile System Status Badge */}
+              <div className="mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs font-semibold text-emerald-800">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span>All Systems Operational (99.98% Cloud SLA)</span>
+              </div>
 
-              <Link
-                to="/estimate"
-                onClick={() => setOpen(false)}
-                aria-label="Estimate Project"
-                className="mt-3 w-fit rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 px-5 py-2.5 font-semibold text-white shadow-md transition-all hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
-              >
-                Estimate Project
-              </Link>
+              {/* Navigation Links Grid/List */}
+              <div className="flex flex-col gap-1 divide-y divide-slate-100">
+                {navLinks.map(({ to, label }) => (
+                  <NavLink
+                    key={`sheet:${to}`}
+                    to={to}
+                    onClick={() => setOpen(false)}
+                    className={({ isActive }) =>
+                      `flex items-center justify-between py-3 px-3 rounded-xl font-medium transition-all ${
+                        isActive
+                          ? "bg-brand-50 text-brand-700 font-bold"
+                          : "text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+                      }`
+                    }
+                    aria-label={label}
+                  >
+                    <span>{label}</span>
+                    <svg className="size-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </NavLink>
+                ))}
+              </div>
+
+              {/* Action Buttons & Direct Contact */}
+              <div className="mt-4 pt-4 border-t border-slate-200/80 space-y-3">
+                <Link
+                  to="/estimate"
+                  onClick={() => setOpen(false)}
+                  aria-label="Estimate Project"
+                  className="flex items-center justify-center gap-2 w-full rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 py-3 text-center font-bold text-white shadow-md shadow-brand-500/25 transition-all active:scale-[0.98]"
+                >
+                  <span>⚡ Instant Project Estimator</span>
+                </Link>
+
+                {/* Quick Touch Bar */}
+                <div className="grid grid-cols-2 gap-2 pt-1 text-xs font-semibold">
+                  <a
+                    href="https://wa.me/917020708747?text=Hi%20Prajyot%20Infotech,%20I'd%20like%20to%20discuss%20a%20project."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 active:bg-emerald-100 transition"
+                  >
+                    <span>WhatsApp Chat</span>
+                  </a>
+                  <a
+                    href="tel:+917020708747"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 active:bg-slate-200 transition"
+                  >
+                    <span>Call +91 70207</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </motion.div>
         )}
