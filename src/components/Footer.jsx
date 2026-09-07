@@ -262,6 +262,8 @@ export default function Footer() {
         <div className="flex flex-wrap items-center justify-center gap-3">
           <span>© {new Date().getFullYear()} {BRAND}. All rights reserved.</span>
           <span aria-hidden="true" className="text-brand-300">•</span>
+          <span>Official Domain: <strong className="text-slate-800 font-semibold">www.prajyotinfotech.in</strong></span>
+          <span aria-hidden="true" className="text-brand-300">•</span>
           <Link to="/privacy" className="hover:text-brand-700 transition-colors">Privacy</Link>
           <span aria-hidden="true" className="text-brand-300">•</span>
           <Link to="/terms" className="hover:text-brand-700 transition-colors">Terms</Link>

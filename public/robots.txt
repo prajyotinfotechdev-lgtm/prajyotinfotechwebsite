@@ -1,9 +1,27 @@
 User-agent: *
 Allow: /
+Allow: /assets/
+Allow: /images/
+Allow: /icons/
+Allow: /videos/
 
 # Exclude private admin portal from search crawlers
 Disallow: /careers/manage
 
-# Sitemaps
-Sitemap: https://www.prajyotinfotech.in/sitemap.xml
+# Major search crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /og/
+Allow: /videos/
+
+User-agent: Bingbot
+Allow: /
+
+# Canonical Host
+Host: https://www.prajyotinfotech.in
+
+# Official Sitemaps
 Sitemap: https://www.prajyotinfotech.in/sitemap.xml
