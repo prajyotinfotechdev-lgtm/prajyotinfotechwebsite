@@ -144,7 +144,9 @@ export default function Footer() {
               <li><Link to="/about" className="hover:text-brand-700 transition-colors">About Us</Link></li>
               <li><Link to="/work" className="hover:text-brand-700 transition-colors">Our Work</Link></li>
               <li><Link to="/services" className="hover:text-brand-700 transition-colors">Services</Link></li>
-              <li><Link to="/articles" className="hover:text-brand-700 transition-colors">Articles</Link></li>
+              <li><Link to="/articles" className="hover:text-brand-700 transition-colors">Tech Articles</Link></li>
+              <li><Link to="/glossary" className="hover:text-brand-700 transition-colors">Tech Glossary</Link></li>
+              <li><Link to="/estimate" className="hover:text-brand-700 transition-colors">Project Estimator</Link></li>
               <li><Link to="/pricing" className="hover:text-brand-700 transition-colors">Pricing</Link></li>
               <li><Link to="/careers" className="hover:text-brand-700 transition-colors font-medium text-brand-600">Careers <span className="text-[10px] px-1.5 py-0.5 rounded bg-brand-100 text-brand-700 font-bold ml-1">We're Hiring</span></Link></li>
               <li><Link to="/contact" className="hover:text-brand-700 transition-colors">Contact</Link></li>

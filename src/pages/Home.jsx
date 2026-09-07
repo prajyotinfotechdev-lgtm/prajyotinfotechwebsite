@@ -24,6 +24,8 @@ const PortfolioDemoModal = lazy(() => import("../components/PortfolioDemoModal.j
 const EngineeringProcess = lazy(() => import("../components/EngineeringProcess.jsx"));
 const ROICalculator = lazy(() => import("../components/ROICalculator.jsx"));
 const TrustGuarantees = lazy(() => import("../components/TrustGuarantees.jsx"));
+const ArchitectureBlueprint = lazy(() => import("../components/ArchitectureBlueprint.jsx"));
+const ClientExperienceSimulator = lazy(() => import("../components/ClientExperienceSimulator.jsx"));
 
 const SectionSkeleton = ({ className = "" }) => (
   <div className={`mx-auto w-full max-w-7xl px-4 py-16 ${className}`}>
@@ -211,6 +213,11 @@ export default function Home() {
           <TechStack />
         </Suspense>
 
+        {/* 6.25 ENTERPRISE ARCHITECTURE & SECURITY BLUEPRINT */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <ArchitectureBlueprint />
+        </Suspense>
+
         {/* 6.5 PARALLAX PORTFOLIO — Apple style scrolling */}
         <Suspense fallback={<SectionSkeleton />}>
           <ParallaxPortfolio onOpenDemo={(p) => setActiveDemo(p)} />
@@ -227,6 +234,11 @@ export default function Home() {
             <EngineeringProcess />
           </Suspense>
         </div>
+
+        {/* 7.35 INTERACTIVE CLIENT STAGING & SPRINT TRACKER SIMULATOR */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <ClientExperienceSimulator />
+        </Suspense>
 
         {/* 7.5 INTERACTIVE ROI & AUTOMATION SAVINGS CALCULATOR */}
         <Suspense fallback={<SectionSkeleton />}>
