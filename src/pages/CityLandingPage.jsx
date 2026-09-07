@@ -12,9 +12,9 @@ const WA_NUMBER = "917020708747";
 const EMAIL = "hr@prajyotinfotech.in";
 const wa = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 
-export default function CityLandingPage() {
+export default function CityLandingPage({ cityId }) {
   const { city } = useParams();
-  const cityKey = (city || "").toLowerCase();
+  const cityKey = (cityId || city || "").toLowerCase();
 
   // Retrieve rich city data or fallback gracefully
   const data = CITIES_DATA[cityKey] || {

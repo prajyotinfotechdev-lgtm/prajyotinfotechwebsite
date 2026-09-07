@@ -25,6 +25,8 @@ const CareerManager = lazy(() => import("./pages/CareerManager.jsx"));
 import HelpBot from "./components/HelpBot.jsx";
 import FloatingWhatsApp from "./components/FloatingWhatsApp.jsx";
 
+import { CITIES_DATA } from "./data/citiesData.js";
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
@@ -72,7 +74,13 @@ export default function App() {
             <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
             <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
             <Route path="/estimate" element={<PageWrapper><Estimate /></PageWrapper>} />
-            <Route path="/software-company-in-:city" element={<PageWrapper><CityLandingPage /></PageWrapper>} />
+            {Object.keys(CITIES_DATA).map((cityKey) => (
+              <Route
+                key={cityKey}
+                path={`/software-company-in-${cityKey}`}
+                element={<PageWrapper><CityLandingPage cityId={cityKey} /></PageWrapper>}
+              />
+            ))}
             <Route path="/articles" element={<PageWrapper><Articles /></PageWrapper>} />
             <Route path="/glossary" element={<PageWrapper><TechGlossary /></PageWrapper>} />
             <Route path="/careers" element={<PageWrapper><Careers /></PageWrapper>} />
