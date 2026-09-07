@@ -42,7 +42,7 @@ export default function Home() {
       <BreadcrumbsLd items={[{ name: "Home", url: "https://www.prajyotinfotech.in/" }]} />
 
       <Seo
-        title="Software Engineering & Web Development Company in India — Prajyot Infotech"
+        title="Prajyot Infotech — Software Engineering & Web Development Company | Official Website"
         description="Prajyot Infotech is a premier software engineering company building bespoke web applications, enterprise ERP/CRM suites, cross-platform mobile apps, and intelligent business workflows."
         keywords="software engineering company India, custom software development, enterprise web development, mobile app development, ERP CRM development, intelligent workflow automation"
         path="/"
