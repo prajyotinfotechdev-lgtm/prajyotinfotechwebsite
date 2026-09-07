@@ -13,7 +13,6 @@ const Industries   = lazy(() => import("../components/Industries.jsx"));
 const Showreel     = lazy(() => import("../components/Showreel.jsx"));
 const TechStack    = lazy(() => import("../components/TechStack.jsx"));
 const CaseStudies  = lazy(() => import("../components/CaseStudies.jsx"));
-const Testimonials = lazy(() => import("../components/Testimonials.jsx"));
 const CTA          = lazy(() => import("../components/CTA.jsx"));
 const ConsultBanner = lazy(() => import("../components/ConsultBanner.jsx"));
 const BeforeAfterSlider = lazy(() => import("../components/BeforeAfterSlider.jsx"));
@@ -255,11 +254,6 @@ export default function Home() {
         {/* 8. INTERACTIVE TECH LAB & ARTICLES — engineering authority */}
         <Suspense fallback={<SectionSkeleton />}>
           <ArticlesPreview />
-        </Suspense>
-
-        {/* 8.5 TESTIMONIALS — social proof from real clients */}
-        <Suspense fallback={<SectionSkeleton />}>
-          <Testimonials />
         </Suspense>
 
         {/* 9. CTA — final conversion point */}
