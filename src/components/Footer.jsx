@@ -224,7 +224,7 @@ export default function Footer() {
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500">
             <span className="font-bold text-slate-700 uppercase tracking-wider text-[11px]">Regional & Global Hubs:</span>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 font-medium">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 font-medium">
               <Link to="/software-company-in-pune" className="hover:text-brand-600 transition-colors">Pune</Link>
               <span>•</span>
               <Link to="/software-company-in-mumbai" className="hover:text-brand-600 transition-colors">Mumbai</Link>
@@ -240,6 +240,12 @@ export default function Footer() {
               <Link to="/software-company-in-nagpur" className="hover:text-brand-600 transition-colors">Nagpur</Link>
               <span>•</span>
               <Link to="/software-company-in-nashik" className="hover:text-brand-600 transition-colors">Nashik</Link>
+              <span>•</span>
+              <Link to="/software-company-in-aurangabad" className="hover:text-brand-600 transition-colors">Aurangabad</Link>
+              <span>•</span>
+              <Link to="/software-company-in-thane" className="hover:text-brand-600 transition-colors">Thane</Link>
+              <span>•</span>
+              <Link to="/software-company-in-navi-mumbai" className="hover:text-brand-600 transition-colors">Navi Mumbai</Link>
               <span>•</span>
               <Link to="/software-company-in-usa" className="hover:text-brand-600 font-bold text-slate-800 transition-colors">USA 🇺🇸</Link>
               <span>•</span>

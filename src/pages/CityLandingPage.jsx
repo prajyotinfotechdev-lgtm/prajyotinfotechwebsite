@@ -1,141 +1,86 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
-import { MapPin, CheckCircle2 } from "lucide-react";
+import { MapPin, CheckCircle2, ArrowRight, ShieldCheck, Zap, Globe, Sparkles } from "lucide-react";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import QuoteEstimator from "../components/QuoteEstimator.jsx";
+import { CITIES_DATA } from "../data/citiesData.js";
 
 const BRAND = "Prajyot Infotech";
-const SITE_URL = "https://prajyotinfotech.in";
+const SITE_URL = "https://www.prajyotinfotech.in";
 const WA_NUMBER = "917020708747";
 const EMAIL = "hr@prajyotinfotech.in";
 const wa = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 
-// City-specific content for richer, unique local pages
-const cityData = {
-  mumbai: {
-    industries: ["E-Commerce & Retail", "Finance & FinTech", "Real Estate", "Logistics", "Restaurants & Hospitality"],
-    businessContext: "Mumbai's competitive market demands fast, professional digital presence. Whether you're a retailer in Andheri, a restaurant in Bandra, or a startup in Lower Parel, a strong digital system sets you apart.",
-    callout: "Trusted by businesses across Mumbai for websites, apps, and custom software.",
-  },
-  pune: {
-    industries: ["IT & Tech Startups", "Manufacturing", "Education & Coaching", "Healthcare", "Real Estate"],
-    businessContext: "Pune's booming tech ecosystem and growing startup culture make digital systems essential. From Hinjewadi to Koregaon Park, businesses need professional software to compete.",
-    callout: "Serving Pune businesses with custom software, websites, and apps.",
-  },
-  latur: {
-    industries: ["Agriculture & Agri-tech", "Retail & Trading", "Education", "Healthcare & Clinics", "Manufacturing"],
-    businessContext: "Latur's growing business community is rapidly embracing digital solutions. Local retailers, schools, clinics, and trading businesses are digitizing operations to improve efficiency and reach.",
-    callout: "Helping Latur businesses go digital with affordable, effective solutions.",
-  },
-  nagpur: {
-    industries: ["Retail & Wholesale", "Healthcare", "Education", "Manufacturing", "Logistics"],
-    businessContext: "Nagpur is central India's commercial hub. Businesses here benefit from digital systems that streamline inventory, customer management, billing, and online presence.",
-    callout: "Delivering professional software and websites to Nagpur businesses.",
-  },
-  nashik: {
-    industries: ["Agri-business & Wineries", "Manufacturing", "Retail", "Education", "Healthcare"],
-    businessContext: "Nashik's diverse economy spans agriculture, wine production, manufacturing, and retail. Digital solutions help local businesses manage operations and grow their market reach.",
-    callout: "Supporting Nashik businesses with custom digital solutions.",
-  },
-  aurangabad: {
-    industries: ["Automotive & Manufacturing", "Tourism & Hospitality", "Retail", "Education", "Healthcare"],
-    businessContext: "Aurangabad (Chhatrapati Sambhajinagar) is a manufacturing and tourism hub. Businesses here need reliable software for operations, customer management, and digital presence.",
-    callout: "Serving Aurangabad businesses with professional web and software development.",
-  },
-  thane: {
-    industries: ["Real Estate", "Retail & E-Commerce", "Healthcare", "Education", "Logistics"],
-    businessContext: "Thane's rapidly growing residential and commercial base creates strong demand for digital business tools — from real estate CRMs to retail management systems.",
-    callout: "Helping Thane businesses build strong digital foundations.",
-  },
-  "navi-mumbai": {
-    industries: ["IT & Technology", "Healthcare", "Retail", "Logistics", "Real Estate"],
-    businessContext: "Navi Mumbai's planned infrastructure and growing commercial zones attract businesses that need modern, scalable digital systems to manage growth.",
-    callout: "Serving Navi Mumbai businesses with custom websites, apps, and software.",
-  },
-  bangalore: {
-    industries: ["SaaS & FinTech", "AI & DeepTech", "E-Commerce", "HealthTech", "Enterprise Software"],
-    businessContext: "As India's Silicon Valley, Bangalore businesses demand world-class engineering, high-throughput APIs, and scalable mobile & cloud architectures.",
-    callout: "Partnering with Bangalore tech companies and enterprise clients for custom software development.",
-  },
-  hyderabad: {
-    industries: ["Pharma & Healthcare", "IT Services", "E-Commerce", "Real Estate", "EdTech"],
-    businessContext: "Hyderabad's rapidly expanding HITEC City and Cyberabad demand enterprise-grade CRM/ERP systems, mobile applications, and cloud-native solutions.",
-    callout: "Delivering top-tier software and mobile app engineering to Hyderabad enterprises.",
-  },
-  delhi: {
-    industries: ["E-Commerce & D2C", "Government & Enterprise", "Logistics", "Retail", "Finance"],
-    businessContext: "Delhi NCR's massive commercial footprint requires robust custom software, WhatsApp business automation, and high-converting web portals.",
-    callout: "Empowering Delhi NCR businesses with custom digital platforms and mobile apps.",
-  },
-  usa: {
-    industries: ["SaaS & Cloud Platforms", "FinTech & Banking", "Healthcare & Telehealth", "E-Commerce", "AI Startups"],
-    businessContext: "Prajyot Infotech offers US startups and enterprises dedicated offshore engineering teams, cost-effective full-stack web & mobile app development, and round-the-clock delivery.",
-    callout: "Offshore software engineering partner for United States startups and enterprises.",
-  },
-  uae: {
-    industries: ["Real Estate & Property", "E-Commerce & Retail", "Hospitality & Tourism", "Logistics", "Trading"],
-    businessContext: "Serving clients across Dubai, Abu Dhabi, and Sharjah with high-end bilingual web apps, custom CRMs, mobile applications, and digital business systems.",
-    callout: "Premium software development partner for UAE & Middle East businesses.",
-  },
-  uk: {
-    industries: ["FinTech", "HealthTech", "Professional Services", "E-Commerce", "Property Management"],
-    businessContext: "Delivering high-performance software engineering, GDPR-compliant web portals, and mobile app development for UK businesses and tech firms.",
-    callout: "Trusted software development outsourcing partner for UK businesses.",
-  },
-};
-
-// Services relevant for local pages
-const localServices = [
-  { title: "Business Website", desc: "Professional, mobile-friendly website for your business." },
-  { title: "E-Commerce Store", desc: "Online store with product catalog, cart, and payment." },
-  { title: "Mobile App (Android/iOS)", desc: "Custom app for your customers or internal team." },
-  { title: "Custom Software", desc: "Tailored business management or workflow system." },
-  { title: "CRM & Dashboard", desc: "Customer and sales management system." },
-  { title: "Inventory & Billing", desc: "GST billing and inventory tracking software." },
-];
-
 export default function CityLandingPage() {
   const { city } = useParams();
+  const cityKey = (city || "").toLowerCase();
 
-  // Format city name (e.g., "navi-mumbai" -> "Navi Mumbai")
-  const formattedCity = city
-    ? city.split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
-    : "Your City";
-
-  const cityInfo = cityData[city?.toLowerCase()] || {
-    industries: ["Retail", "Healthcare", "Education", "Manufacturing", "Services"],
-    businessContext: `${formattedCity}'s businesses are increasingly adopting digital solutions to improve operations, reach more customers, and compete more effectively in today's market.`,
-    callout: `Serving ${formattedCity} businesses with professional web and software development.`,
+  // Retrieve rich city data or fallback gracefully
+  const data = CITIES_DATA[cityKey] || {
+    name: city ? city.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ") : "Your City",
+    state: "India",
+    country: "India",
+    currency: "INR",
+    heroBadge: "Digital Transformation Hub",
+    heroTitle: `Software & Website Development Company in ${city ? city.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ") : "Your City"}`,
+    heroSubtitle: `Helping businesses in ${city || "your region"} scale with modern web portals, mobile applications, custom ERPs, and automated workflows.`,
+    callout: `Serving businesses with custom software, websites, and high-performance digital systems.`,
+    marketOverview: [
+      `Businesses in this region are rapidly modernizing their operations to compete in an increasingly digital-first economy.`,
+      `From streamlining back-office paperwork to deploying high-converting customer portals, modern digital infrastructure is a necessity for sustainable growth.`,
+      `Prajyot Infotech partners with growing businesses to deliver high-performance software, websites, and automated workflows with transparent pricing and full code ownership.`,
+    ],
+    tailoredServices: [
+      { title: "Custom Web Applications", desc: "Fast, responsive web applications engineered for seamless customer engagement." },
+      { title: "Mobile Apps (Android & iOS)", desc: "Cross-platform mobile apps for your customers, staff, or field teams." },
+      { title: "Business ERP & Billing Systems", desc: "Automate inventory, customer billing, and daily bookkeeping." },
+      { title: "WhatsApp & Process Automation", desc: "Connect inquiries directly to your team with automated WhatsApp workflows." },
+    ],
+    keyIndustries: [
+      { name: "Retail & E-Commerce", detail: "Online storefronts, inventory tracking, UPI billing" },
+      { name: "Manufacturing & Distribution", detail: "Vendor portals, batch logs, warehouse dispatch" },
+      { name: "Healthcare & Clinics", detail: "Patient appointment booking, electronic records" },
+      { name: "Education & Academies", detail: "Student management, online fees, parent alerts" },
+    ],
+    whyChooseUs: [
+      "Transparent fixed-bid milestone pricing with no hidden costs.",
+      "100% source code ownership and intellectual property transferred upon completion.",
+      "Modern tech stack (React, Node.js, Python, PostgreSQL) ensuring ultra-fast load times.",
+      "Dedicated 15-day post-launch support and performance optimization included.",
+    ],
+    faqs: [
+      {
+        q: `Does Prajyot Infotech serve businesses in this region?`,
+        a: `Yes. We collaborate seamlessly via structured video consultations, Slack, WhatsApp, and GitHub, providing rapid project updates and dedicated support.`,
+      },
+      {
+        q: `How long does it take to deliver a custom business website?`,
+        a: `Standard professional websites launch in 10–14 business days. Custom ERP or mobile applications typically take 4–8 weeks depending on scope.`,
+      },
+      {
+        q: `Do we get full ownership of the intellectual property (IP)?`,
+        a: `Yes, you receive complete administrative access, GitHub repository ownership, and full commercial copyright upon final milestone handover.`,
+      },
+    ],
   };
 
-  const pageTitle = `Software & Website Development Company in ${formattedCity} — Prajyot Infotech`;
-  const pageDesc = `Prajyot Infotech provides professional website development, mobile apps, CRM, ERP, inventory management, billing software, and WhatsApp automation for businesses in ${formattedCity}. Get a free consultation.`;
+  const formattedCity = data.name;
+  const isInternational = data.country !== "India";
 
-  const localFaqs = [
-    {
-      q: `Does Prajyot Infotech serve businesses in ${formattedCity}?`,
-      a: `Yes. Prajyot Infotech works with businesses across ${formattedCity} and all of Maharashtra. Projects are handled remotely with dedicated support and communication.`,
-    },
-    {
-      q: `What types of businesses in ${formattedCity} does Prajyot Infotech work with?`,
-      a: `We work with retailers, restaurants, clinics, schools, manufacturers, distributors, real estate agencies, startups, and other SMBs in ${formattedCity} and across Maharashtra.`,
-    },
-    {
-      q: `How much does a website cost for a business in ${formattedCity}?`,
-      a: `A professional business website starts from ₹29,999. E-commerce stores and custom software are priced based on scope. We offer transparent, fixed pricing with no hidden costs.`,
-    },
-    {
-      q: `How does Prajyot Infotech work with clients in ${formattedCity}?`,
-      a: `We work remotely with video/voice consultations, WhatsApp communication, and regular updates. The development, design, and support process is fully managed online.`,
-    },
-  ];
+  const pageTitle = isInternational
+    ? `${data.heroTitle} — ${BRAND}`
+    : `Software & Website Development Company in ${formattedCity} — ${BRAND}`;
+
+  const pageDesc = isInternational
+    ? `Prajyot Infotech delivers senior full-stack software development, React/Node.js web engineering, and custom cloud applications for ${formattedCity} businesses. Schedule a consultation.`
+    : `Looking for the best software and website development company in ${formattedCity}? Prajyot Infotech builds high-converting websites, mobile apps, ERPs, and automated billing systems. Get a free quote.`;
 
   const schemaLD = [
     {
       "@context": "https://schema.org",
       "@type": "Service",
-      "name": `Website & Software Development Services in ${formattedCity}`,
+      "name": `Software & Web Development in ${formattedCity}`,
       "serviceType": "Software Development",
       "description": pageDesc,
       "provider": {
@@ -144,16 +89,22 @@ export default function CityLandingPage() {
         "@id": `${SITE_URL}/#organization`,
       },
       "areaServed": {
-        "@type": "City",
+        "@type": isInternational ? "Country" : "City",
         "name": formattedCity,
-        "containedInPlace": { "@type": "State", "name": "Maharashtra", "containedInPlace": { "@type": "Country", "name": "India" } },
+        ...(!isInternational && {
+          "containedInPlace": {
+            "@type": "State",
+            "name": data.state,
+            "containedInPlace": { "@type": "Country", "name": "India" },
+          },
+        }),
       },
-      "url": `${SITE_URL}/software-company-in-${city}`,
+      "url": `${SITE_URL}/software-company-in-${cityKey}`,
     },
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": localFaqs.map((f) => ({
+      "mainEntity": data.faqs.map((f) => ({
         "@type": "Question",
         "name": f.q,
         "acceptedAnswer": { "@type": "Answer", "text": f.a },
@@ -166,132 +117,175 @@ export default function CityLandingPage() {
       <BreadcrumbsLd
         items={[
           { name: "Home", url: `${SITE_URL}/` },
-          { name: `Software Development in ${formattedCity}`, url: `${SITE_URL}/software-company-in-${city}` },
+          { name: `Software Company in ${formattedCity}`, url: `${SITE_URL}/software-company-in-${cityKey}` },
         ]}
       />
 
       <Seo
         title={pageTitle}
         description={pageDesc}
-        keywords={`website development company ${formattedCity}, software development ${formattedCity}, mobile app development ${formattedCity}, CRM software ${formattedCity}, Prajyot Infotech ${formattedCity}`}
-        path={`/software-company-in-${city}`}
+        keywords={`software company in ${formattedCity}, website development ${formattedCity}, mobile app development ${formattedCity}, custom software development ${formattedCity}, Prajyot Infotech ${formattedCity}`}
+        path={`/software-company-in-${cityKey}`}
         schema={schemaLD}
       />
 
       <main className="bg-slate-50 min-h-[80vh]">
-        {/* HERO */}
-        <section className="py-16 px-4 bg-gradient-to-br from-brand-50 via-white to-slate-50 border-b border-slate-200">
+        {/* HERO SECTION */}
+        <section className="py-16 md:py-20 px-4 bg-gradient-to-br from-brand-50/60 via-white to-slate-50 border-b border-slate-200">
           <div className="max-w-5xl mx-auto">
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-brand-100 text-brand-700 font-semibold text-sm mb-6">
-              <MapPin className="w-4 h-4 mr-1.5" /> Serving {formattedCity} & across Maharashtra
+            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-brand-100/80 text-brand-800 font-semibold text-xs md:text-sm mb-6 border border-brand-200">
+              <MapPin className="w-4 h-4 mr-1.5 text-brand-600 shrink-0" />
+              {data.heroBadge}
             </div>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-navy-900 mb-6 tracking-tight leading-tight">
-              Software & Website Development Company in{" "}
-              <span className="text-brand-600">{formattedCity}</span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-navy-900 mb-6 tracking-tight leading-tight">
+              {data.heroTitle}
             </h1>
-            <p className="text-lg text-slate-600 mb-8 max-w-3xl">
-              {BRAND} helps businesses in {formattedCity} go digital with professional websites, mobile apps, custom software, CRM, ERP, inventory management, billing systems, and WhatsApp automation. Fixed pricing. Full ownership. Delivered on time.
+            <p className="text-base sm:text-lg text-slate-600 mb-8 max-w-3xl leading-relaxed">
+              {data.heroSubtitle}
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap items-center gap-4">
               <a
-                href={wa(`Hi ${BRAND}, I'm a business from ${formattedCity} and I'd like a free consultation.`)}
+                href={wa(`Hi ${BRAND}, I'm reaching out regarding software and web development services for ${formattedCity}.`)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 px-6 py-3 font-semibold text-white shadow-md transition-all hover:shadow-lg focus:outline-none"
+                className="rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 px-6 py-3 font-semibold text-white shadow-md transition-all hover:shadow-lg hover:from-brand-700 hover:to-brand-800 focus:outline-none"
               >
-                Get a Free Consultation
+                Discuss Your Project
               </a>
               <Link
                 to="/services"
-                className="rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-navy-800 shadow-sm transition-all hover:bg-slate-50 focus:outline-none"
+                className="rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-navy-800 shadow-sm transition-all hover:bg-slate-50 focus:outline-none inline-flex items-center gap-2"
               >
-                View All Services
+                <span>Browse All Services</span>
+                <ArrowRight className="w-4 h-4 text-slate-500" />
               </Link>
             </div>
-            <p className="mt-5 text-sm text-slate-500">{cityInfo.callout}</p>
-          </div>
-        </section>
-
-        {/* SERVICES FOR THIS CITY */}
-        <section className="py-14 px-4">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-navy-900 mb-4">
-              What We Build for {formattedCity} Businesses
-            </h2>
-            <p className="text-slate-600 mb-8">
-              From a simple business website to full-scale custom software — we handle every digital need.
+            <p className="mt-5 text-xs sm:text-sm text-slate-500 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-amber-500 shrink-0" />
+              <span>{data.callout}</span>
             </p>
-            <div className="grid md:grid-cols-3 gap-6">
-              {localServices.map((s) => (
-                <div key={s.title} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                  <h3 className="text-lg font-bold text-navy-900 mb-2">{s.title}</h3>
-                  <p className="text-slate-600 text-sm">{s.desc}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
-        {/* LOCAL BUSINESS CONTEXT */}
-        <section className="py-14 px-4 bg-white border-y border-slate-200">
+        {/* REGIONAL MARKET OVERVIEW */}
+        <section className="py-14 px-4 bg-white border-b border-slate-200">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-navy-900 mb-4">
-              Digitalization for {formattedCity} Businesses
-            </h2>
-            <p className="text-slate-600 leading-relaxed max-w-3xl mb-8">{cityInfo.businessContext}</p>
-            <div>
-              <h3 className="text-lg font-semibold text-navy-900 mb-4">Industries We Serve in {formattedCity}</h3>
-              <div className="flex flex-wrap gap-2">
-                {cityInfo.industries.map((ind) => (
-                  <span key={ind} className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm text-slate-700 shadow-sm">
-                    {ind}
-                  </span>
+            <div className="grid md:grid-cols-12 gap-8 items-start">
+              <div className="md:col-span-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-brand-600">Local Market Dynamics</span>
+                <h2 className="text-2xl md:text-3xl font-bold text-navy-900 mt-2 mb-4">
+                  Why {formattedCity} Businesses Are Modernizing Their Tech
+                </h2>
+                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-sm text-slate-600 space-y-2">
+                  <div className="font-semibold text-slate-800">Primary Focus:</div>
+                  <div className="flex items-center gap-2 text-brand-700 font-medium">
+                    <Zap className="w-4 h-4" /> Operational Automation
+                  </div>
+                  <div className="flex items-center gap-2 text-brand-700 font-medium">
+                    <ShieldCheck className="w-4 h-4" /> Cloud Data Security
+                  </div>
+                  <div className="flex items-center gap-2 text-brand-700 font-medium">
+                    <Globe className="w-4 h-4" /> Digital Market Expansion
+                  </div>
+                </div>
+              </div>
+              <div className="md:col-span-8 space-y-4 text-slate-600 leading-relaxed">
+                {data.marketOverview.map((p, idx) => (
+                  <p key={idx} className="text-base">
+                    {p}
+                  </p>
                 ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* WHY PRAJYOT INFOTECH */}
-        <section className="py-14 px-4">
+        {/* TAILORED SERVICES FOR THIS REGION */}
+        <section className="py-14 px-4 bg-slate-50">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-navy-900 mb-8">
-              Why Businesses in {formattedCity} Choose Prajyot Infotech
-            </h2>
-            <ul className="grid md:grid-cols-2 gap-4">
-              {[
-                `Remote-friendly collaboration — no need for in-person meetings`,
-                `Fixed-price projects — transparent cost before we begin`,
-                `Full code ownership at project completion`,
-                `Delivery in 10–45 days depending on complexity`,
-                `Single team for web, app, and software needs`,
-                `Works in English, Hindi, and Marathi`,
-                `15-day post-launch support included`,
-                `Understands Indian SMB needs, GST compliance, and local workflows`,
-              ].map((p) => (
-                <li key={p} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div className="text-left mb-10">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-600">Tailored Capabilities</span>
+              <h2 className="text-2xl md:text-3xl font-bold text-navy-900 mt-2">
+                Specialized Engineering Solutions for {formattedCity}
+              </h2>
+              <p className="text-slate-600 mt-2 max-w-2xl">
+                Bespoke systems built around the specific workflow and commercial requirements of this market.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-6">
+              {data.tailoredServices.map((service, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-brand-300 transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold text-sm mb-4 group-hover:bg-brand-600 group-hover:text-white transition-colors">
+                    0{idx + 1}
+                  </div>
+                  <h3 className="text-lg font-bold text-navy-900 mb-2">{service.title}</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">{service.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* KEY INDUSTRIES */}
+        <section className="py-14 px-4 bg-white border-y border-slate-200">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-left mb-8">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-600">Industry Expertise</span>
+              <h2 className="text-2xl md:text-3xl font-bold text-navy-900 mt-2">
+                Sectors We Empower in {formattedCity}
+              </h2>
+            </div>
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {data.keyIndustries.map((ind, idx) => (
+                <div key={idx} className="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+                  <div className="font-bold text-navy-900 text-base mb-1">{ind.name}</div>
+                  <div className="text-xs text-slate-600">{ind.detail}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* WHY CHOOSE PRAJYOT INFOTECH */}
+        <section className="py-14 px-4 bg-slate-50">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-left mb-8">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-600">The Prajyot Advantage</span>
+              <h2 className="text-2xl md:text-3xl font-bold text-navy-900 mt-2">
+                Why {formattedCity} Organizations Partner with Us
+              </h2>
+            </div>
+            <ul className="grid sm:grid-cols-2 gap-4">
+              {data.whyChooseUs.map((p, idx) => (
+                <li key={idx} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                   <CheckCircle2 className="w-5 h-5 text-brand-600 shrink-0 mt-0.5" />
-                  <span className="text-sm text-slate-700">{p}</span>
+                  <span className="text-sm text-slate-700 leading-relaxed">{p}</span>
                 </li>
               ))}
             </ul>
           </div>
         </section>
 
-        {/* FAQ */}
+        {/* FREQUENTLY ASKED QUESTIONS */}
         <section className="py-14 px-4 bg-white border-y border-slate-200">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-navy-900 mb-6">
-              Frequently Asked Questions
-            </h2>
+            <div className="text-center mb-8">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-600">Got Questions?</span>
+              <h2 className="text-2xl md:text-3xl font-bold text-navy-900 mt-2">
+                Frequently Asked Questions in {formattedCity}
+              </h2>
+            </div>
             <div className="divide-y divide-slate-200 rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-              {localFaqs.map((f, i) => (
-                <details key={i} className="group p-5 bg-white open:bg-brand-50/30">
-                  <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
-                    <span className="font-semibold text-slate-900">{f.q}</span>
-                    <span className="select-none text-slate-500 transition group-open:rotate-45">+</span>
+              {data.faqs.map((f, i) => (
+                <details key={i} className="group p-5 bg-white open:bg-brand-50/20 transition-colors">
+                  <summary className="flex cursor-pointer list-none items-start justify-between gap-4 font-semibold text-slate-900">
+                    <span>{f.q}</span>
+                    <span className="select-none text-slate-500 font-bold transition group-open:rotate-45 text-lg">+</span>
                   </summary>
-                  <p className="mt-3 text-sm leading-6 text-slate-700">{f.a}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-700">{f.a}</p>
                 </details>
               ))}
             </div>
@@ -299,14 +293,14 @@ export default function CityLandingPage() {
         </section>
 
         {/* COST ESTIMATOR */}
-        <section id="estimate" className="py-14 px-4">
+        <section id="estimate" className="py-14 px-4 bg-slate-50">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-navy-900 mb-4">
-                Calculate Your Project Cost
+              <h2 className="text-2xl md:text-3xl font-bold text-navy-900 mb-3">
+                Calculate Your Project Investment
               </h2>
-              <p className="text-slate-600">
-                Get an instant estimate for your {formattedCity} business digitalization project.
+              <p className="text-slate-600 text-sm max-w-xl mx-auto">
+                Get an instant estimate for your custom web development, mobile app, or software platform.
               </p>
             </div>
             <QuoteEstimator />
@@ -314,54 +308,56 @@ export default function CityLandingPage() {
         </section>
 
         {/* OTHER LOCATIONS CROSS-LINKING */}
-        <section className="py-10 px-4 bg-slate-100/70 border-t border-slate-200">
+        <section className="py-12 px-4 bg-slate-100/70 border-t border-slate-200">
           <div className="max-w-5xl mx-auto text-center">
-            <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">
-              Explore Other Locations & Global Software Hubs
+            <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">
+              Explore All Regional & Global Hubs
             </h3>
             <div className="flex flex-wrap justify-center gap-2">
-              {Object.keys(cityData).map((cKey) => (
-                <Link
-                  key={cKey}
-                  to={`/software-company-in-${cKey}`}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                    city === cKey
-                      ? "bg-brand-600 text-white shadow-sm"
-                      : "bg-white text-slate-700 hover:bg-slate-200 border border-slate-200"
-                  }`}
-                >
-                  {cKey.toUpperCase() === "USA" || cKey.toUpperCase() === "UAE" || cKey.toUpperCase() === "UK"
-                    ? `${cKey.toUpperCase()} Hub`
-                    : cKey.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}
-                </Link>
-              ))}
+              {Object.keys(CITIES_DATA).map((cKey) => {
+                const cItem = CITIES_DATA[cKey];
+                const isActive = cityKey === cKey;
+                return (
+                  <Link
+                    key={cKey}
+                    to={`/software-company-in-${cKey}`}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                      isActive
+                        ? "bg-brand-600 text-white shadow-sm"
+                        : "bg-white text-slate-700 hover:bg-slate-200 border border-slate-200"
+                    }`}
+                  >
+                    {cItem.name}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        {/* FINAL CTA */}
-        <section className="py-14 px-4 bg-gradient-to-br from-brand-600 to-navy-800">
-          <div className="max-w-3xl mx-auto text-center text-white">
-            <h2 className="text-2xl md:text-3xl font-extrabold mb-4">
-              Ready to Digitalize Your {formattedCity} Business?
+        {/* FINAL CALL TO ACTION */}
+        <section className="py-16 px-4 bg-gradient-to-br from-brand-700 via-brand-800 to-navy-900 text-white">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-2xl md:text-4xl font-extrabold mb-4 tracking-tight">
+              Ready to Build Software That Drives Real Growth in {formattedCity}?
             </h2>
-            <p className="text-white/90 mb-8">
-              Get a free consultation with {BRAND}. We'll understand your requirements, recommend the right solution, and give you a clear cost and timeline — no obligation.
+            <p className="text-white/80 text-base md:text-lg mb-8 leading-relaxed">
+              Schedule a direct consultation with our technical leadership. We will evaluate your technical requirements, outline an architectural plan, and provide a transparent, fixed-bid estimate with guaranteed delivery timelines.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a
-                href={wa(`Hi ${BRAND}, I'm from ${formattedCity} and want to discuss digitalization for my business.`)}
+                href={wa(`Hi ${BRAND}, I am interested in building a software/web solution for my business in ${formattedCity}.`)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-xl bg-white px-6 py-3 font-semibold text-brand-700 shadow-lg hover:bg-white/90 transition-all"
+                className="rounded-xl bg-white px-7 py-3.5 font-semibold text-brand-800 shadow-xl hover:bg-slate-100 transition-all focus:outline-none"
               >
-                WhatsApp Us Now
+                WhatsApp Technical Team
               </a>
               <a
-                href={`mailto:${EMAIL}?subject=Enquiry from ${formattedCity} — ${BRAND}`}
-                className="rounded-xl border border-white/70 px-6 py-3 font-semibold text-white hover:bg-white/10 transition"
+                href={`mailto:${EMAIL}?subject=Engineering Enquiry from ${formattedCity} — ${BRAND}`}
+                className="rounded-xl border border-white/40 bg-white/10 px-7 py-3.5 font-semibold text-white hover:bg-white/20 transition-all backdrop-blur-sm"
               >
-                Email Us
+                Send Email Specification
               </a>
             </div>
           </div>
@@ -370,3 +366,4 @@ export default function CityLandingPage() {
     </>
   );
 }
+
