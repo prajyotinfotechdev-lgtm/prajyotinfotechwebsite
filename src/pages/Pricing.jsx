@@ -111,7 +111,7 @@ export default function Pricing() {
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-14">
-      <BreadcrumbsLd items={[{ name: "Home", url: "https://prajyotinfotech.in/" }, { name: "Pricing", url: "https://prajyotinfotech.in/pricing" }]} />
+      <BreadcrumbsLd items={[{ name: "Home", url: "https://www.prajyotinfotech.in/" }, { name: "Pricing", url: "https://www.prajyotinfotech.in/pricing" }]} />
 
       <Seo
         title="Software & Web Development Pricing — Transparent Plans | Prajyot Infotech"
@@ -122,9 +122,9 @@ export default function Pricing() {
           "@context": "https://schema.org",
           "@type": "Service",
           "name": "Web, App & Software Development Pricing",
-          "provider": { "@type": "Organization", "name": "Prajyot Infotech", "@id": "https://prajyotinfotech.in/#organization" },
+          "provider": { "@type": "Organization", "name": "Prajyot Infotech", "@id": "https://www.prajyotinfotech.in/#organization" },
           "areaServed": ["India", "United States", "United Kingdom", "United Arab Emirates", "Australia"],
-          "url": "https://prajyotinfotech.in/pricing",
+          "url": "https://www.prajyotinfotech.in/pricing",
         }}
       />
 

@@ -7,8 +7,8 @@ import ProcessRoadmap from "../components/ProcessRoadmap.jsx";
 const WA_NUMBER = "917020708747";
 const EMAIL = "hr@prajyotinfotech.in";
 const CALENDLY_LINK = "";
-const SITE_URL = "https://prajyotinfotech.in";
-const LOGO_URL = "https://prajyotinfotech.in/videos/Logo.jpg";
+const SITE_URL = "https://www.prajyotinfotech.in";
+const LOGO_URL = "https://www.prajyotinfotech.in/videos/Logo.jpg";
 const BRAND = "Prajyot Infotech";
 const SOCIALS = ["https://www.linkedin.com/company/prajyotinfotech"];
 

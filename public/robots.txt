@@ -6,4 +6,4 @@ Disallow: /careers/manage
 
 # Sitemaps
 Sitemap: https://www.prajyotinfotech.in/sitemap.xml
-Sitemap: https://prajyotinfotech.in/sitemap.xml
+Sitemap: https://www.prajyotinfotech.in/sitemap.xml

@@ -30,7 +30,7 @@ export default function SeoLite({
   path = "",
   image = "",
   siteName = "Prajyot Infotech",
-  baseUrl = "https://prajyotinfotech.in",
+  baseUrl = "https://www.prajyotinfotech.in",
 }) {
   useEffect(() => {
     // Title

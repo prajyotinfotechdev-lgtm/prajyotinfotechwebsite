@@ -174,8 +174,8 @@ export default function Careers() {
       hiringOrganization: {
         "@type": "Organization",
         name: "Prajyot Infotech",
-        sameAs: "https://prajyotinfotech.in",
-        logo: "https://prajyotinfotech.in/videos/Logo.jpg"
+        sameAs: "https://www.prajyotinfotech.in",
+        logo: "https://www.prajyotinfotech.in/videos/Logo.jpg"
       },
       jobLocation: {
         "@type": "Place",

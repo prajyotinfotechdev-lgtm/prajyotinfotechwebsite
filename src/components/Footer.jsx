@@ -8,8 +8,8 @@ const PHONE_DISPLAY = "+91 70207 08747";
 const PHONE_TEL = "+917020708747";
 const WHATSAPP = "917020708747";
 
-const SITE_URL = "https://prajyotinfotech.in/";
-const LOGO_URL = "https://prajyotinfotech.in/videos/Logo.jpg";
+const SITE_URL = "https://www.prajyotinfotech.in/";
+const LOGO_URL = "https://www.prajyotinfotech.in/videos/Logo.jpg";
 
 const SOCIALS = {
   instagram: "https://www.instagram.com/prajyot.infotech",

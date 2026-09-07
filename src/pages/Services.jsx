@@ -9,7 +9,7 @@ import BentoServices from "../components/BentoServices.jsx";
 const WA_NUMBER = "917020708747";
 const EMAIL = "hr@prajyotinfotech.in";
 const BRAND = "Prajyot Infotech";
-const SITE_URL = "https://prajyotinfotech.in";
+const SITE_URL = "https://www.prajyotinfotech.in";
 const wa = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 
 export default function Services() {

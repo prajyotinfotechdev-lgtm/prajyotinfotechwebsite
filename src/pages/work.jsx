@@ -644,11 +644,11 @@ export default function Work() {
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://prajyotinfotech.in/work/#webpage",
-        "url": "https://prajyotinfotech.in/work",
+        "@id": "https://www.prajyotinfotech.in/work/#webpage",
+        "url": "https://www.prajyotinfotech.in/work",
         "name": "Enterprise Software Engineering Portfolio | Prajyot Infotech",
         "description": "Production software applications built by Prajyot Infotech — Restaurant QR & KDS, Mobile Shop POS Billing, Clinic EHR, E-Commerce, and Multi-tenant SaaS.",
-        "isPartOf": { "@id": "https://prajyotinfotech.in/#website" }
+        "isPartOf": { "@id": "https://www.prajyotinfotech.in/#website" }
       },
       {
         "@type": "ItemList",
@@ -659,7 +659,7 @@ export default function Work() {
           "position": i + 1,
           "name": p.title,
           "description": p.shortDesc,
-          "url": `https://prajyotinfotech.in/work#${p.id}`,
+          "url": `https://www.prajyotinfotech.in/work#${p.id}`,
         })),
       }
     ]
@@ -669,8 +669,8 @@ export default function Work() {
     <div className="bg-[#0b0f19] min-h-screen text-slate-100 selection:bg-brand-500/30 selection:text-white">
       <BreadcrumbsLd
         items={[
-          { name: "Home", url: "https://prajyotinfotech.in/" },
-          { name: "Portfolio & Engineering Work", url: "https://prajyotinfotech.in/work" },
+          { name: "Home", url: "https://www.prajyotinfotech.in/" },
+          { name: "Portfolio & Engineering Work", url: "https://www.prajyotinfotech.in/work" },
         ]}
       />
       <Seo

@@ -6,7 +6,7 @@ import { Mail, Phone, MapPin, Clock, ShieldCheck, CheckCircle2, Calendar, Messag
 
 const WHATSAPP_NUMBER = "917020708747";
 const BRAND = "Prajyot Infotech";
-const SITE_URL = "https://prajyotinfotech.in";
+const SITE_URL = "https://www.prajyotinfotech.in";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", contact: "", message: "", projectType: "Website / App Development" });

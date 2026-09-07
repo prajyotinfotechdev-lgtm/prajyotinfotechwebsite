@@ -8,8 +8,8 @@ export default function Estimate() {
     <>
       <BreadcrumbsLd
         items={[
-          { name: "Home", url: "https://prajyotinfotech.in/" },
-          { name: "Project Estimate", url: "https://prajyotinfotech.in/estimate" },
+          { name: "Home", url: "https://www.prajyotinfotech.in/" },
+          { name: "Project Estimate", url: "https://www.prajyotinfotech.in/estimate" },
         ]}
       />
       

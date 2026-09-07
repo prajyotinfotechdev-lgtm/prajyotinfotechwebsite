@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <>
       {/* Structured Data */}
-      <BreadcrumbsLd items={[{ name: "Home", url: "https://prajyotinfotech.in/" }]} />
+      <BreadcrumbsLd items={[{ name: "Home", url: "https://www.prajyotinfotech.in/" }]} />
 
       <Seo
         title="Software Engineering & Web Development Company in India — Prajyot Infotech"
@@ -48,22 +48,22 @@ export default function Home() {
           {
             "@context": "https://schema.org",
             "@type": "WebSite",
-            "@id": "https://prajyotinfotech.in/#website",
+            "@id": "https://www.prajyotinfotech.in/#website",
             "name": "Prajyot Infotech",
-            "url": "https://prajyotinfotech.in",
+            "url": "https://www.prajyotinfotech.in",
             "potentialAction": {
               "@type": "SearchAction",
-              "target": "https://prajyotinfotech.in/services?q={search_term_string}",
+              "target": "https://www.prajyotinfotech.in/services?q={search_term_string}",
               "query-input": "required name=search_term_string"
             }
           },
           {
             "@context": "https://schema.org",
             "@type": "Organization",
-            "@id": "https://prajyotinfotech.in/#organization",
+            "@id": "https://www.prajyotinfotech.in/#organization",
             "name": "Prajyot Infotech",
-            "url": "https://prajyotinfotech.in",
-            "logo": "https://prajyotinfotech.in/videos/Logo.jpg",
+            "url": "https://www.prajyotinfotech.in",
+            "logo": "https://www.prajyotinfotech.in/videos/Logo.jpg",
             "description": "Premier software engineering company specializing in high-performance web applications, enterprise SaaS, custom ERP & CRM solutions, and automated business operations systems.",
             "areaServed": { "@type": "Country", "name": "India" },
             "sameAs": [
@@ -83,9 +83,9 @@ export default function Home() {
             "@context": "https://schema.org",
             "@type": "ProfessionalService",
             "name": "Prajyot Infotech",
-            "image": "https://prajyotinfotech.in/videos/Logo.jpg",
-            "@id": "https://prajyotinfotech.in/#service",
-            "url": "https://prajyotinfotech.in",
+            "image": "https://www.prajyotinfotech.in/videos/Logo.jpg",
+            "@id": "https://www.prajyotinfotech.in/#service",
+            "url": "https://www.prajyotinfotech.in",
             "telephone": "+917020708747",
             "priceRange": "₹₹",
             "address": {
