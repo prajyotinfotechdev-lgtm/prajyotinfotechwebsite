@@ -1,5 +1,5 @@
 // src/pages/Home.jsx
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 
@@ -20,6 +20,7 @@ const BeforeAfterSlider = lazy(() => import("../components/BeforeAfterSlider.jsx
 const ParallaxPortfolio = lazy(() => import("../components/ParallaxPortfolio.jsx"));
 const DigitalReadinessQuiz = lazy(() => import("../components/DigitalReadinessQuiz.jsx"));
 const ArticlesPreview = lazy(() => import("../components/ArticlesPreview.jsx"));
+const PortfolioDemoModal = lazy(() => import("../components/PortfolioDemoModal.jsx"));
 
 const SectionSkeleton = ({ className = "" }) => (
   <div className={`mx-auto w-full max-w-7xl px-4 py-16 ${className}`}>
@@ -33,6 +34,8 @@ const SectionSkeleton = ({ className = "" }) => (
 );
 
 export default function Home() {
+  const [activeDemo, setActiveDemo] = useState(null);
+
   return (
     <>
       {/* Structured Data */}
@@ -183,7 +186,7 @@ export default function Home() {
 
         {/* 6.5 PARALLAX PORTFOLIO — Apple style scrolling */}
         <Suspense fallback={<SectionSkeleton />}>
-          <ParallaxPortfolio />
+          <ParallaxPortfolio onOpenDemo={(p) => setActiveDemo(p)} />
         </Suspense>
 
         {/* 7. CASE STUDIES — proof of work */}
@@ -207,6 +210,16 @@ export default function Home() {
         </Suspense>
 
       </main>
+
+      {/* Live Interactive Simulator Modal */}
+      {activeDemo && (
+        <Suspense fallback={null}>
+          <PortfolioDemoModal
+            project={activeDemo}
+            onClose={() => setActiveDemo(null)}
+          />
+        </Suspense>
+      )}
 
       <noscript>
         Please enable JavaScript to see animations and interactive sections. Visit{" "}
