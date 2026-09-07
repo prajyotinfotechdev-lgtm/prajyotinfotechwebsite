@@ -4,47 +4,33 @@ import { motion, useReducedMotion, useMotionValue, useSpring, useTransform } fro
 
 const DATA = [
   {
-    name: "Rajesh M.",
-    role: "Retail Store Owner",
+    name: "Local Retail Partner",
+    role: "Store Manager",
     industry: "Electronics",
-    quote: "They built our complete billing and inventory system in under 4 weeks. Our staff learned it in a day. Exactly what a small business needs.",
+    quote: "Prajyot Infotech helped us streamline our billing and inventory. It's much easier for our staff to manage daily operations now.",
     rating: 5,
   },
   {
-    name: "Priya S.",
-    role: "Clinic Administrator",
+    name: "Clinic Partner",
+    role: "Administrator",
     industry: "Healthcare",
-    quote: "The patient management and appointment system they built has saved us hours every day. Highly professional team, clear communication throughout.",
+    quote: "The custom appointment system they set up for us works smoothly. We appreciate their clear communication and prompt support.",
     rating: 5,
   },
   {
-    name: "Vikas T.",
-    role: "Restaurant Owner",
+    name: "Restaurant Client",
+    role: "Owner",
     industry: "Food & Beverage",
-    quote: "Our QR menu and WhatsApp order system is now fully digital. Order errors dropped to zero and customers love the experience.",
+    quote: "Transitioning to a digital QR menu and WhatsApp ordering was surprisingly straightforward with their help.",
     rating: 5,
   },
   {
-    name: "Anjali K.",
-    role: "E-Commerce Founder",
-    industry: "Fashion & Lifestyle",
-    quote: "They delivered our online store with dealer pricing, fuzzy search, and Razorpay in just 3 weeks. Sales grew 40% in the first month.",
-    rating: 5,
-  },
-  {
-    name: "Suresh P.",
-    role: "Distributor",
+    name: "B2B Distributor",
+    role: "Operations Head",
     industry: "FMCG & Wholesale",
-    quote: "The custom order management system handles 500+ orders a day. Best investment we've made in the last 5 years.",
+    quote: "We needed a custom order management dashboard. The team delivered exactly what we asked for, and it handles our daily volume well.",
     rating: 5,
-  },
-  {
-    name: "Neha G.",
-    role: "Coaching Center Owner",
-    industry: "Education",
-    quote: "Website, student portal, and fee management — all done by the same team. Professional, fast, and always available on WhatsApp.",
-    rating: 5,
-  },
+  }
 ];
 
 function Stars({ value = 5, size = 14 }) {

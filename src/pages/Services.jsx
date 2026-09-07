@@ -115,14 +115,14 @@ export default function Services() {
     },
     {
       id: "whatsapp-automation",
-      title: "WhatsApp & Business Automation",
+      title: "Intelligent Business & Communication Automation",
       pill: "Automate",
-      desc: "Automate customer communications, order notifications, lead follow-ups, and business workflows via WhatsApp.",
-      points: ["WhatsApp Business API", "Auto-reply workflows", "Order & lead notifications"],
-      deliverables: ["WhatsApp API integration", "Message templates & flows", "Trigger-based automation", "Chat history dashboard"],
+      desc: "Architect automated customer engagement engines, bidirectional webhook pipelines, transaction notifications, and scalable CRM workflows.",
+      points: ["Enterprise Cloud API Architectures", "Automated Trigger & Event Pipelines", "Bidirectional Lead & Order Sync"],
+      deliverables: ["Custom API Gateway Integration", "Transactional Event Webhooks", "Automated CRM Sync Triggers", "Real-Time Telemetry Dashboard"],
       eta: "2–4 weeks",
       from: "₹35,000+",
-      schema: "WhatsApp Automation",
+      schema: "Intelligent Workflow Automation",
     },
     {
       id: "domain-hosting-support",
@@ -197,9 +197,9 @@ export default function Services() {
         { name: "Services", url: `${SITE_URL}/services` },
       ]} />
       <Seo
-        title="Software & Web Development Services — Prajyot Infotech India"
-        description="Prajyot Infotech offers website development, mobile app development, custom software, CRM, ERP, inventory management, billing software, WhatsApp automation, and complete business digitalization services in India."
-        keywords="website development services India, mobile app development, custom software development, CRM development, ERP software, inventory management, billing software, WhatsApp automation, business digitalization"
+        title="Software Engineering & Digital Transformation Services — Prajyot Infotech"
+        description="Prajyot Infotech provides enterprise web development, cross-platform mobile apps, bespoke ERP/CRM suites, and intelligent workflow automation architectures for high-growth businesses."
+        keywords="custom software development, enterprise web development, mobile app engineering, ERP CRM solutions, business workflow automation, digital transformation"
         path="/services"
         schema={[...servicesSchemas, faqSchema]}
       />
@@ -209,11 +209,14 @@ export default function Services() {
         {/* HERO */}
         <section className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-br from-brand-50 via-white to-slate-50 p-8 md:p-12 shadow-lg shadow-brand-500/5">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-black tracking-tight text-navy-800">
-              Software & Digitalization Services for Indian Businesses
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-100 px-3.5 py-1 text-xs font-semibold text-brand-800 tracking-wide uppercase">
+              Engineering Capabilities
+            </span>
+            <h1 className="mt-4 text-4xl md:text-5xl font-black tracking-tight text-navy-800">
+              Bespoke Software Engineering & Digital Solutions
             </h1>
-            <p className="mt-3 text-lg text-slate-700">
-              From professional websites and mobile apps to CRM, ERP, inventory management, billing software, and WhatsApp automation — Prajyot Infotech provides complete digital solutions for businesses across India.
+            <p className="mt-4 text-lg text-slate-600 leading-relaxed">
+              From enterprise web platforms and mobile applications to custom ERP/CRM architectures and intelligent workflow automation — Prajyot Infotech engineers mission-critical digital systems built for scale, reliability, and speed.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a

@@ -7,9 +7,9 @@ const WA_NUMBER = "917020708747";
 const wa = (t) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`;
 
 const STATS = [
-  { value: "50+", label: "Projects Delivered" },
+  { value: "25+", label: "Projects Delivered" },
   { value: "6+",  label: "Years in Business" },
-  { value: "7+",  label: "Industries Served" },
+  { value: "4+",  label: "Industries Served" },
   { value: "100%", label: "Code Ownership" },
 ];
 
@@ -125,7 +125,7 @@ export default function AuroraHero() {
           </Link>
         </motion.div>
 
-        {/* Trust line with global footprint */}
+        {/* Trust line */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -134,17 +134,8 @@ export default function AuroraHero() {
         >
           <span className="flex items-center gap-1.5 text-slate-900 font-bold">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            Trusted Globally:
+            Trusted by growing businesses across India
           </span>
-          <span>India 🇮🇳</span>
-          <span className="text-slate-300">•</span>
-          <span>USA 🇺🇸</span>
-          <span className="text-slate-300">•</span>
-          <span>UAE 🇦🇪</span>
-          <span className="text-slate-300">•</span>
-          <span>UK 🇬🇧</span>
-          <span className="text-slate-300">•</span>
-          <span>Singapore 🇸🇬</span>
         </motion.div>
       </motion.div>
 

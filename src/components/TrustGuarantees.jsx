@@ -26,8 +26,8 @@ const GUARANTEES = [
   },
   {
     icon: Zap,
-    title: "Sub-150ms Edge API Latency",
-    desc: "Optimized PostgreSQL indexes, Redis caching, and edge-routed endpoints for near-instant load."
+    title: "Optimized Edge Performance",
+    desc: "We use modern architectures, optimized indexes, and efficient caching strategies for fast loads."
   },
   {
     icon: Headphones,

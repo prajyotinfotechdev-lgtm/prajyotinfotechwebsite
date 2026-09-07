@@ -77,8 +77,7 @@ export default function Hero() {
           transition={{ delay: 0.3, duration: 0.6 }}
           className="mt-6 max-w-2xl text-lg md:text-xl text-slate-600 leading-relaxed"
         >
-          We build websites, mobile apps, CRM systems, billing software, and complete
-          business automation — so you can focus on running your business, not chasing paperwork.
+          We engineer high-performance web applications, enterprise ERP/CRM suites, custom mobile platforms, and intelligent business workflows — built for speed, scale, and full data sovereignty.
         </motion.p>
 
         {/* Trust line */}

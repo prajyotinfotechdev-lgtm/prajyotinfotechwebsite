@@ -442,13 +442,13 @@ export default function About() {
             <Reveal>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {[
-                  { v: 50, s: "+", l: "Projects Shipped",
+                  { v: 25, s: "+", l: "Projects Shipped",
                     icon: <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden><path d="M12 2L2 7l10 5 10-5-10-5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/><path d="M2 17l10 5 10-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M2 12l10 5 10-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   },
                   { v: 6, s: "+", l: "Years of Expertise",
                     icon: <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
                   },
-                  { v: 8, s: "+", l: "Industries Served",
+                  { v: 4, s: "+", l: "Industries Served",
                     icon: <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden><path d="M3 21V9l9-6 9 6v12" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/><path d="M9 21v-6h6v6" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/></svg>
                   },
                   { v: 100, s: "%", l: "Code Ownership",

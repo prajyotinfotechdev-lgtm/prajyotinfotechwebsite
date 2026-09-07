@@ -110,7 +110,7 @@ export default function Footer() {
             {/* <span className="font-bold text-navy-800 text-lg">{BRAND}</span> */}
           </Link>
           <p className="mt-4 text-slate-600 leading-relaxed">
-            Professional website, app, and software development for Indian businesses. Custom CRM, ERP, inventory management, billing, and WhatsApp automation. Fixed pricing. Full ownership.
+            Premier software engineering and digital transformation studio. We build bespoke web applications, enterprise ERP/CRM systems, mobile platforms, and intelligent business workflows with guaranteed code ownership.
           </p>
 
           {/* Quick CTAs */}

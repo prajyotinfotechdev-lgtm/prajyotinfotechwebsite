@@ -39,9 +39,9 @@ export default function Home() {
       <BreadcrumbsLd items={[{ name: "Home", url: "https://prajyotinfotech.in/" }]} />
 
       <Seo
-        title="Website, App & Software Development Company in India — Prajyot Infotech"
-        description="Prajyot Infotech builds professional websites, mobile apps, CRM, ERP, billing software, inventory systems, and WhatsApp automation for businesses across India. Fixed pricing, full ownership, delivered in 10–45 days."
-        keywords="website development company India, software development company, mobile app development India, CRM software, ERP development, business digitalization, billing software, inventory management"
+        title="Software Engineering & Web Development Company in India — Prajyot Infotech"
+        description="Prajyot Infotech is a premier software engineering company building bespoke web applications, enterprise ERP/CRM suites, cross-platform mobile apps, and intelligent business workflows."
+        keywords="software engineering company India, custom software development, enterprise web development, mobile app development, ERP CRM development, intelligent workflow automation"
         path="/"
         image="/og/og-default.jpg"
         schema={[
@@ -64,7 +64,7 @@ export default function Home() {
             "name": "Prajyot Infotech",
             "url": "https://prajyotinfotech.in",
             "logo": "https://prajyotinfotech.in/videos/Logo.jpg",
-            "description": "Professional software and web development company in India. Custom websites, mobile apps, CRM, ERP, inventory management, billing software, and WhatsApp automation for Indian businesses.",
+            "description": "Premier software engineering company specializing in high-performance web applications, enterprise SaaS, custom ERP & CRM solutions, and automated business operations systems.",
             "areaServed": { "@type": "Country", "name": "India" },
             "sameAs": [
               "https://www.instagram.com/prajyot.infotech",

@@ -26,8 +26,8 @@ const PROJECT_TYPES = [
     id: "custom-web",
     name: "Custom Web Application",
     desc: "Bespoke portal, client dashboard or enterprise workflow system",
-    baseSprints: 2,
-    baseDays: 14,
+    baseSprints: 3,
+    baseDays: 21,
     recommendedStack: ["React 19", "Node.js / Express", "PostgreSQL", "TailwindCSS"],
     badge: "Most Popular"
   },
@@ -35,8 +35,8 @@ const PROJECT_TYPES = [
     id: "mobile-pwa",
     name: "Cross-Platform Mobile App (PWA / Hybrid)",
     desc: "High-performance app running seamlessly on Android, iOS & Desktop",
-    baseSprints: 3,
-    baseDays: 20,
+    baseSprints: 4,
+    baseDays: 30,
     recommendedStack: ["React PWA", "TailwindCSS", "Capacitor / Native API", "Redis Cache"],
     badge: "Fast Launch"
   },
@@ -44,8 +44,8 @@ const PROJECT_TYPES = [
     id: "multi-tenant-saas",
     name: "Multi-Tenant SaaS Platform",
     desc: "Isolated client databases, subscription billing & tenant admin portals",
-    baseSprints: 4,
-    baseDays: 28,
+    baseSprints: 6,
+    baseDays: 45,
     recommendedStack: ["React 19", "Node.js Microservices", "PostgreSQL Multi-DB", "Razorpay / Stripe"],
     badge: "Scalable"
   },
@@ -53,8 +53,8 @@ const PROJECT_TYPES = [
     id: "pos-erp",
     name: "Retail POS / Warehouse ERP",
     desc: "Realtime barcode/IMEI inventory, thermal receipt billing & GST engine",
-    baseSprints: 3,
-    baseDays: 21,
+    baseSprints: 5,
+    baseDays: 35,
     recommendedStack: ["React", "Express", "PostgreSQL Ledger", "Thermal Print Engine", "WebSockets"],
     badge: "Zero Discrepancy"
   },
@@ -62,8 +62,8 @@ const PROJECT_TYPES = [
     id: "clinic-hospital",
     name: "Healthcare & Clinic Suite",
     desc: "Doctor OPD appointments, digital prescriptions & automated WhatsApp queue",
-    baseSprints: 2,
-    baseDays: 16,
+    baseSprints: 4,
+    baseDays: 28,
     recommendedStack: ["React", "Node.js", "MongoDB", "Meta Cloud WhatsApp API"],
     badge: "HIPAA Ready"
   }
@@ -72,29 +72,29 @@ const PROJECT_TYPES = [
 const FEATURE_MODULES = [
   {
     id: "auth-rbac",
-    name: "Role-Based Access Control (RBAC)",
-    desc: "SuperAdmin, Manager, Staff and Client permission tiers",
+    name: "Role-Based Access & Security (RBAC)",
+    desc: "Granular multi-tier permissions, audit logs, and session management",
     addedDays: 3,
     tech: "JWT / Session Engine"
   },
   {
     id: "whatsapp-auto",
-    name: "WhatsApp Cloud API Automation",
-    desc: "Auto-send order confirmations, invoices, OTPs & reminders",
+    name: "Intelligent Workflow & Event Automation",
+    desc: "Trigger-based transactional alerts, customer engagement bots & webhooks",
     addedDays: 4,
-    tech: "Meta Graph API Webhooks"
+    tech: "Cloud API & Webhook Dispatcher"
   },
   {
     id: "realtime-kds",
-    name: "Realtime WebSockets / KDS Stream",
-    desc: "Instant live updates across staff tablets without page refresh",
+    name: "Realtime WebSocket Event Stream",
+    desc: "Sub-second bidirectional data synchronization across devices",
     addedDays: 4,
     tech: "Socket.io / Server-Sent Events"
   },
   {
     id: "payments-upi",
-    name: "Multi-Gateway UPI & Card Checkout",
-    desc: "Instant QR payment reconciliation & automated receipt generator",
+    name: "Automated Payment Reconciliation & Gateway",
+    desc: "Instant dynamic UPI QR, cards, webhooks & automated ledger settlement",
     addedDays: 3,
     tech: "Razorpay / Cashfree API"
   },
@@ -107,15 +107,15 @@ const FEATURE_MODULES = [
   },
   {
     id: "multi-warehouse",
-    name: "Multi-Location / Branch Sync",
-    desc: "Centralized stock ledger with inter-branch transfers",
+    name: "Distributed Multi-Node Stock Ledger",
+    desc: "Centralized real-time inventory ledger with inter-branch transfers",
     addedDays: 5,
     tech: "ACID Ledger Sync"
   },
   {
     id: "analytics-ai",
-    name: "Executive Analytics & AI Insights",
-    desc: "Automated daily WhatsApp summary, trend forecasts & CSV exports",
+    name: "Executive BI & Predictive Analytics",
+    desc: "Real-time KPI telemetry, automated scheduled briefs & data export pipelines",
     addedDays: 4,
     tech: "Recharts / Automated Cron"
   }

@@ -73,14 +73,14 @@ const DEFAULT_ITEMS = [
     bullets: ["Lead capture & assignment", "Follow-up reminders", "Sales pipeline view"],
   },
   {
-    title: "WhatsApp Automation",
-    desc: "Automated order confirmations, appointment reminders, and customer follow-ups via WhatsApp — without lifting a finger.",
+    title: "Intelligent Workflow Automation",
+    desc: "Seamlessly trigger customer alerts, transactional updates, follow-up sequences, and omnichannel notifications with custom event webhooks.",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
         <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" strokeWidth="2" fill="none" strokeLinejoin="round"/>
       </svg>
     ),
-    bullets: ["Order & booking alerts", "Auto-reply workflows", "Bulk campaign messaging"],
+    bullets: ["Instant transactional webhooks", "Omnichannel customer alerts", "Automated CRM drip workflows"],
   },
   {
     title: "You Own Everything",

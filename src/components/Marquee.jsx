@@ -11,16 +11,16 @@ import { useReducedMotion } from "framer-motion";
  */
 export default function Marquee({
   items = [
-    "Business Websites",
-    "E-Commerce Stores",
-    "Android & iOS Apps",
-    "CRM Software",
-    "Billing & ERP Systems",
-    "Inventory Management",
-    "WhatsApp Automation",
-    "Custom Software",
-    "UI/UX Design",
-    "Business Digitalization",
+    "Enterprise Web Applications",
+    "Bespoke ERP & CRM Systems",
+    "iOS & Android Mobile Apps",
+    "Real-Time Data & POS Engines",
+    "Intelligent Workflow Automation",
+    "High-Performance Cloud Architectures",
+    "Custom Software Engineering",
+    "Scalable SaaS Platforms",
+    "UI/UX Product Engineering",
+    "Digital Transformation",
   ],
   speed = 20,                 // seconds per full loop (min 6s)
   direction = "left",         // "left" | "right"
