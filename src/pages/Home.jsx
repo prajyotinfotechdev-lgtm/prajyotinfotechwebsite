@@ -123,10 +123,10 @@ export default function Home() {
               },
               {
                 "@type": "Question",
-                "name": "How much does a custom website or software cost with Prajyot Infotech?",
+                "name": "How much does custom software or web development cost?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Website packages start from ₹29,999 ($399 USD) with fixed pricing, no hidden fees, free SSL, and guaranteed on-time delivery."
+                  "text": "Fixed-scope starter digital portals start from ₹29,999 ($399 USD), while custom enterprise ERPs, SaaS architectures, and bespoke platforms are custom-scoped with milestone deliverables and 100% intellectual property ownership."
                 }
               }
             ]

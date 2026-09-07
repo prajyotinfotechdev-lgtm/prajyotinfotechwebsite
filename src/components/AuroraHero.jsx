@@ -102,24 +102,30 @@ export default function AuroraHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45, duration: 0.6 }}
-          className="mt-10 flex flex-wrap gap-4 justify-center"
+          className="mt-10 flex flex-wrap gap-4 justify-center items-center"
         >
           <a
-            href={wa("Hi Prajyot Infotech, I'd like to digitalize my business. Please help me get started.")}
+            href={wa("Hi Prajyot Infotech, I would like to schedule a technical architecture discussion for an upcoming project.")}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative px-8 py-4 rounded-full bg-slate-900 text-white font-bold shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 overflow-hidden"
+            className="group relative px-7 py-3.5 rounded-full bg-slate-900 text-white font-bold shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 overflow-hidden"
           >
-            <span className="relative z-10 flex items-center gap-2">
-              Start Your Project
+            <span className="relative z-10 flex items-center gap-2 text-sm sm:text-base">
+              Book Discovery Call
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </span>
           </a>
           <Link
+            to="/estimate"
+            className="px-7 py-3.5 rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-bold shadow-md shadow-brand-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-brand-500/30 hover:scale-[1.02] focus:outline-none text-sm sm:text-base"
+          >
+            Estimate Architecture
+          </Link>
+          <Link
             to="/services"
-            className="px-8 py-4 rounded-full border-2 border-slate-900/10 bg-white/50 backdrop-blur-sm text-slate-900 font-bold transition-all duration-300 hover:bg-white/80 hover:border-slate-900/20 focus:outline-none"
+            className="px-7 py-3.5 rounded-full border-2 border-slate-900/10 bg-white/50 backdrop-blur-sm text-slate-900 font-bold transition-all duration-300 hover:bg-white/80 hover:border-slate-900/20 focus:outline-none text-sm sm:text-base"
           >
             Explore Services
           </Link>
