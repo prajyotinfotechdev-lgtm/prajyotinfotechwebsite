@@ -23,7 +23,15 @@ import {
   RefreshCw,
   Plus,
   Trash2,
-  Check
+  Check,
+  Truck,
+  GraduationCap,
+  Building2,
+  Users,
+  MapPin,
+  CreditCard,
+  AlertCircle,
+  Send,
 } from "lucide-react";
 
 const WA = (text) =>
@@ -784,6 +792,659 @@ function SaasSimulator() {
   );
 }
 
+// ─── SIMULATOR: WHOLESALE DISTRIBUTION & LOGISTICS ERP ───────────────────────
+function WholesaleSimulator() {
+  const [warehouse, setWarehouse] = useState("pune");
+  const [party] = useState("Shree Ganesh Supermarket (GSTIN: 27AABCS1429B1Z8)");
+  const [items, setItems] = useState([
+    { id: 1, name: "Fortune Refined Oil (15L Tin)", rate: 1420, qty: 25, stock: 340 },
+    { id: 2, name: "Kohinoor Basmati Super (25kg Bag)", rate: 2150, qty: 15, stock: 180 },
+    { id: 3, name: "Tata Iodized Salt (50kg Case)", rate: 820, qty: 30, stock: 520 },
+  ]);
+  const [dispatched, setDispatched] = useState(false);
+
+  const warehouses = {
+    pune: { name: "Pune Central Hub (Wh-01)", capacity: "84% Loaded", vehicle: "MH-12-RN-8821", driver: "Ramesh Pawar (+91 98234 11204)" },
+    nagpur: { name: "Nagpur Logistics Depot (Wh-04)", capacity: "62% Loaded", vehicle: "MH-31-CB-4019", driver: "Satish More (+91 94220 55192)" },
+    mumbai: { name: "Bhiwandi Superhub (Wh-09)", capacity: "91% Loaded", vehicle: "MH-04-AZ-9932", driver: "Imran Khan (+91 98210 88310)" },
+  };
+
+  const updateQty = (id, delta) => {
+    setItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, qty: Math.max(1, item.qty + delta) } : item
+      )
+    );
+  };
+
+  const subtotal = items.reduce((acc, curr) => acc + curr.rate * curr.qty, 0);
+  const gst = Math.round(subtotal * 0.05);
+  const total = subtotal + gst;
+  const ewayRequired = total > 50000;
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 text-xs font-sans">
+      {/* Left: ERP Dispatch Console */}
+      <div className="lg:col-span-7 bg-slate-900/90 rounded-2xl p-4 border border-slate-700/60 shadow-xl space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+          <div className="flex items-center gap-2">
+            <Truck className="w-4 h-4 text-amber-400" />
+            <span className="font-bold text-slate-200">Wholesale B2B Dispatch & Ledger ERP</span>
+          </div>
+          <span className="bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded text-[10px] font-mono">
+            Multi-Warehouse Sync
+          </span>
+        </div>
+
+        {/* Warehouse Selector */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          {Object.entries(warehouses).map(([key, wh]) => (
+            <button
+              key={key}
+              onClick={() => setWarehouse(key)}
+              className={`p-2 rounded-xl text-left border transition cursor-pointer ${
+                warehouse === key
+                  ? "bg-amber-500/10 border-amber-500/80 text-white shadow-md shadow-amber-500/10"
+                  : "bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              <div className="text-[10px] font-mono text-amber-400 font-bold">{wh.name}</div>
+              <div className="text-[9px] text-slate-400 mt-0.5">Fleet: {wh.vehicle}</div>
+            </button>
+          ))}
+        </div>
+
+        {/* Retailer Party Header */}
+        <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <span className="text-[10px] text-slate-400 block font-mono">BILL TO RETAIL PARTY:</span>
+            <span className="font-bold text-slate-200 text-xs">{party}</span>
+          </div>
+          <div className="flex gap-3 text-[11px] font-mono">
+            <div>
+              <span className="text-slate-500 block text-[9px]">CREDIT LIMIT</span>
+              <span className="text-slate-300 font-bold">₹5,00,000</span>
+            </div>
+            <div>
+              <span className="text-slate-500 block text-[9px]">OUTSTANDING</span>
+              <span className="text-emerald-400 font-bold">₹1,85,000</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Wholesale Order Table */}
+        <div className="space-y-1.5">
+          <span className="text-[10px] font-mono text-slate-400 block uppercase tracking-wider">
+            Active Consignment Items ({items.reduce((a, b) => a + b.qty, 0)} Units):
+          </span>
+          <div className="space-y-2">
+            {items.map((item) => (
+              <div
+                key={item.id}
+                className="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 flex items-center justify-between"
+              >
+                <div>
+                  <p className="font-bold text-slate-200 text-xs">{item.name}</p>
+                  <p className="text-[10px] font-mono text-slate-400">
+                    Rate: ₹{item.rate.toLocaleString()} / Unit • Stock: {item.stock} Avail
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center bg-slate-900 rounded-lg border border-slate-700">
+                    <button
+                      onClick={() => updateQty(item.id, -5)}
+                      className="px-2 py-1 text-slate-300 hover:text-white font-bold cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <span className="px-2 font-mono font-bold text-amber-400 text-xs">
+                      {item.qty}
+                    </span>
+                    <button
+                      onClick={() => updateQty(item.id, 5)}
+                      className="px-2 py-1 text-slate-300 hover:text-white font-bold cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <div className="text-right min-w-[70px]">
+                    <span className="font-bold text-white text-xs">
+                      ₹{(item.rate * item.qty).toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Summary Footer */}
+        <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between">
+          <div className="text-[11px] font-mono">
+            <span className="text-slate-400">GST (5%): ₹{gst.toLocaleString()}</span>
+            <span className="text-slate-600 mx-2">•</span>
+            {ewayRequired ? (
+              <span className="text-emerald-400 font-bold">Auto e-Way Bill Active</span>
+            ) : (
+              <span className="text-slate-400">Below e-Way Threshold</span>
+            )}
+          </div>
+          <div className="text-right">
+            <span className="text-[10px] text-slate-400 block">TOTAL INVOICE VALUE</span>
+            <span className="text-base font-black text-amber-400 font-mono">
+              ₹{total.toLocaleString()}
+            </span>
+          </div>
+        </div>
+
+        <button
+          onClick={() => setDispatched(true)}
+          className="w-full bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-slate-950 font-black py-2.5 rounded-xl shadow-lg shadow-amber-500/20 transition cursor-pointer flex items-center justify-center gap-2"
+        >
+          <Truck className="w-4 h-4" />
+          Generate Verified e-Way Bill & Dispatch Vehicle
+        </button>
+      </div>
+
+      {/* Right: Live Truck Route & Simulated WhatsApp Confirmation */}
+      <div className="lg:col-span-5 bg-slate-900/90 rounded-2xl p-4 border border-slate-700/60 shadow-xl flex flex-col justify-between space-y-3">
+        <div>
+          <div className="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+            <span className="font-bold text-slate-200">Dispatch Logistics & Fleet Sync</span>
+            <span className="text-emerald-400 text-[10px] flex items-center gap-1 font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Live Telematics
+            </span>
+          </div>
+
+          <div className="bg-[#0b141a] p-3.5 rounded-xl border border-slate-800 space-y-2.5">
+            {/* Live Dispatch Badge */}
+            <div className="bg-[#202c33] p-3 rounded-lg border-l-4 border-amber-500 space-y-1">
+              <div className="flex items-center justify-between text-[10px] font-mono text-amber-400 font-bold">
+                <span>CONSIGNMENT #WD-8429</span>
+                <span>STATUS: {dispatched ? "IN TRANSIT" : "READY TO LOAD"}</span>
+              </div>
+              <p className="text-xs text-white font-semibold">
+                Vehicle: {warehouses[warehouse].vehicle} (14ft Eicher)
+              </p>
+              <p className="text-[10px] text-slate-300">
+                Driver: {warehouses[warehouse].driver}
+              </p>
+              <p className="text-[10px] text-slate-400">
+                Route: {warehouses[warehouse].name} ➔ {party.split(" ")[0]}
+              </p>
+              <div className="text-[9px] font-mono text-slate-400 pt-1 border-t border-slate-700 flex justify-between">
+                <span>e-Way Bill: 2819-4820-9182</span>
+                <span className="text-emerald-400">NIC Govt Verified</span>
+              </div>
+            </div>
+
+            {/* Simulated WhatsApp Notification to Retailer */}
+            <div className="bg-[#202c33] p-3 rounded-lg space-y-1.5 shadow">
+              <div className="flex items-center justify-between text-[10px] text-emerald-400 font-bold">
+                <span className="flex items-center gap-1">
+                  <MessageSquare className="w-3.5 h-3.5" /> Retailer WhatsApp Notification
+                </span>
+                <span>✓✓ Sent</span>
+              </div>
+              <p className="text-[11px] leading-relaxed text-slate-200">
+                Dear <strong>{party.split(" ")[0]}</strong>, your Wholesale Order <strong>#WD-8429</strong> of <strong>₹{total.toLocaleString()}</strong> has been dispatched from <strong>{warehouses[warehouse].name}</strong>.
+              </p>
+              <div className="p-2 rounded bg-slate-900/80 border border-slate-700/80 text-[10px] text-slate-300 flex items-center justify-between font-mono">
+                <span>📄 Tax_Invoice_eWay_8429.pdf</span>
+                <span className="text-cyan-400 font-bold">Download</span>
+              </div>
+            </div>
+
+            {dispatched && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="p-2.5 rounded-lg bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-[11px] font-mono flex items-center gap-2"
+              >
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Driver GPS active. Retailer notified with live ETA.</span>
+              </motion.div>
+            )}
+          </div>
+        </div>
+
+        <div className="pt-2 border-t border-slate-800 text-slate-400 flex items-center justify-between text-[11px] font-mono">
+          <span>⚡ Invoice Gen: <strong>&lt; 25 Sec</strong></span>
+          <span className="text-amber-400 font-bold">Zero Ledger Errors</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── SIMULATOR: EDUPULSE COACHING & STUDENT LMS ─────────────────────────────
+function CoachingSimulator() {
+  const [batch, setBatch] = useState("jee");
+  const [students, setStudents] = useState([
+    { id: 1, name: "Aditya Sharma", roll: "01", attendance: "Present", feeDue: 12000 },
+    { id: 2, name: "Rhea Deshmukh", roll: "04", attendance: "Present", feeDue: 0 },
+    { id: 3, name: "Tanmay Patil", roll: "09", attendance: "Absent", feeDue: 8500 },
+    { id: 4, name: "Ananya Joshi", roll: "15", attendance: "Present", feeDue: 15000 },
+  ]);
+  const [reminderSent, setReminderSent] = useState(false);
+  const [paidAditya, setPaidAditya] = useState(false);
+
+  const batches = {
+    jee: { name: "JEE Advanced 2026 (Batch Alpha)", timing: "08:00 AM - 12:30 PM", room: "Hall 02" },
+    neet: { name: "NEET Medical Super-30 (Batch Beta)", timing: "01:30 PM - 06:00 PM", room: "Hall 05" },
+    foundation: { name: "Class 10th Olympiad (Batch Spark)", timing: "04:30 PM - 07:30 PM", room: "Hall 01" },
+  };
+
+  const toggleAttendance = (id) => {
+    setStudents((prev) =>
+      prev.map((s) =>
+        s.id === id
+          ? { ...s, attendance: s.attendance === "Present" ? "Absent" : "Present" }
+          : s
+      )
+    );
+  };
+
+  const pendingCount = students.filter((s) => (s.id === 1 && paidAditya ? 0 : s.feeDue > 0)).length;
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 text-xs font-sans">
+      {/* Left: Academy Admin & Attendance View */}
+      <div className="lg:col-span-7 bg-slate-900/90 rounded-2xl p-4 border border-slate-700/60 shadow-xl space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+          <div className="flex items-center gap-2">
+            <GraduationCap className="w-4 h-4 text-sky-400" />
+            <span className="font-bold text-slate-200">EduPulse Institute Attendance & Fee LMS</span>
+          </div>
+          <span className="bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded text-[10px] font-mono">
+            RFID Synced
+          </span>
+        </div>
+
+        {/* Batch Selector */}
+        <div className="flex flex-wrap gap-2">
+          {Object.entries(batches).map(([key, b]) => (
+            <button
+              key={key}
+              onClick={() => setBatch(key)}
+              className={`px-3 py-1.5 rounded-xl text-left border transition cursor-pointer ${
+                batch === key
+                  ? "bg-sky-500/20 border-sky-500/80 text-white font-bold shadow"
+                  : "bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              <div className="text-[11px]">{b.name}</div>
+            </button>
+          ))}
+        </div>
+
+        {/* Student Roster Table */}
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 uppercase tracking-wider px-1">
+            <span>Student & Roll</span>
+            <span>Fee Status</span>
+            <span>Live Attendance</span>
+          </div>
+
+          <div className="space-y-2">
+            {students.map((st) => {
+              const effectiveDue = st.id === 1 && paidAditya ? 0 : st.feeDue;
+              return (
+                <div
+                  key={st.id}
+                  className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 flex items-center justify-between gap-2"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-slate-800 text-slate-300 font-mono font-bold flex items-center justify-center text-[10px]">
+                      {st.roll}
+                    </span>
+                    <div>
+                      <p className="font-bold text-white text-xs">{st.name}</p>
+                      <p className="text-[10px] text-slate-400">RFID: 9482-AD-{st.roll}</p>
+                    </div>
+                  </div>
+
+                  <div className="text-right">
+                    {effectiveDue > 0 ? (
+                      <span className="text-[11px] font-mono text-rose-400 font-bold">
+                        ₹{effectiveDue.toLocaleString()} Due
+                      </span>
+                    ) : (
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">
+                        ✓ Paid Full
+                      </span>
+                    )}
+                  </div>
+
+                  <button
+                    onClick={() => toggleAttendance(st.id)}
+                    className={`px-3 py-1.5 rounded-lg font-bold text-[11px] transition cursor-pointer ${
+                      st.attendance === "Present"
+                        ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30"
+                        : "bg-rose-500/20 text-rose-300 border border-rose-500/40 hover:bg-rose-500/30"
+                    }`}
+                  >
+                    {st.attendance === "Present" ? "● Present" : "○ Absent"}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Action Button */}
+        <button
+          onClick={() => setReminderSent(true)}
+          className="w-full bg-gradient-to-r from-sky-500 to-cyan-600 hover:from-sky-600 hover:to-cyan-700 text-white font-bold py-2.5 rounded-xl shadow-lg shadow-sky-500/20 transition cursor-pointer flex items-center justify-center gap-2"
+        >
+          <CreditCard className="w-4 h-4" />
+          Dispatch 1-Click WhatsApp UPI Link to {pendingCount} Pending Parents
+        </button>
+      </div>
+
+      {/* Right: Simulated Parent WhatsApp Screen */}
+      <div className="lg:col-span-5 bg-slate-900/90 rounded-2xl p-4 border border-slate-700/60 shadow-xl flex flex-col justify-between space-y-3">
+        <div>
+          <div className="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+            <span className="font-bold text-slate-200">Parent WhatsApp Notification Feed</span>
+            <span className="text-emerald-400 text-[10px] flex items-center gap-1 font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Meta Verified
+            </span>
+          </div>
+
+          <div className="bg-[#0b141a] p-3.5 rounded-xl border border-slate-800 space-y-2.5">
+            {/* RFID Attendance Notification */}
+            <div className="bg-[#202c33] p-3 rounded-lg shadow space-y-1">
+              <p className="text-[10px] font-bold text-sky-400 flex items-center justify-between">
+                <span>🎓 Pioneer Science Academy</span>
+                <span className="text-slate-400 font-mono">08:02 AM</span>
+              </p>
+              <p className="text-[11px] leading-relaxed text-slate-200">
+                Dear Parent, your child <strong>Aditya Sharma</strong> scanned in at campus at <strong className="text-amber-400">08:02 AM</strong> for <strong>{batches[batch].name}</strong>.
+              </p>
+              <div className="text-[9px] text-slate-400 pt-1 border-t border-slate-700/80 flex justify-between">
+                <span>Subject: Advanced Mechanics</span>
+                <span className="text-emerald-400">✓✓ Delivered</span>
+              </div>
+            </div>
+
+            {/* Simulated 1-Click UPI Payment Card */}
+            {reminderSent && (
+              <motion.div
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-[#202c33] p-3 rounded-lg border-l-4 border-sky-500 space-y-2 shadow"
+              >
+                <div className="text-[10px] font-bold text-emerald-400 flex items-center justify-between">
+                  <span>💳 Term-2 Tuition Fee Due</span>
+                  <span>Instant UPI Link</span>
+                </div>
+                <p className="text-[11px] text-slate-200 leading-snug">
+                  Installment of <strong>₹12,000</strong> due for <strong>Aditya Sharma</strong>. Pay securely below with zero extra charges:
+                </p>
+
+                {paidAditya ? (
+                  <div className="p-2 rounded bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 text-[10px] font-mono flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Payment Verified! Receipt #REC-8849 sent to WhatsApp.</span>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setPaidAditya(true)}
+                    className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-1.5 rounded-lg text-xs transition cursor-pointer flex items-center justify-center gap-1.5"
+                  >
+                    <span>Pay ₹12,000 via UPI (GPay/PhonePe)</span>
+                  </button>
+                )}
+              </motion.div>
+            )}
+          </div>
+        </div>
+
+        <div className="pt-2 border-t border-slate-800 text-slate-400 flex items-center justify-between text-[11px] font-mono">
+          <span>⚡ Fee Recovery: <strong>100% Timely</strong></span>
+          <span className="text-sky-400 font-bold">Zero Phone Calling</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── SIMULATOR: PRIMESTATE CRM & LUXURY PROPERTY PORTAL ──────────────────────
+function RealEstateSimulator() {
+  const [propertyKey, setPropertyKey] = useState("skycrest");
+  const [leadName, setLeadName] = useState("Vikram Singhania");
+  const [contact, setContact] = useState("+91 98220 11223");
+  const [stage, setStage] = useState("captured"); // captured | dispatched | assigned | booked
+  const [brochureDispatched, setBrochureDispatched] = useState(false);
+
+  const properties = {
+    skycrest: {
+      name: "The Skycrest Luxury Penthouses",
+      location: "Koregaon Park, Pune",
+      price: "₹2.85 Cr – ₹4.10 Cr",
+      carpet: "2,450 – 3,200 sq.ft",
+      status: "Under Construction (RERA Approved)",
+      units: "18 Units Remaining",
+    },
+    emerald: {
+      name: "Emerald Valley Smart Villas",
+      location: "Baner Hills, Pune",
+      price: "₹1.95 Cr – ₹2.80 Cr",
+      carpet: "1,980 – 2,400 sq.ft",
+      status: "Ready for Possession",
+      units: "6 Villas Remaining",
+    },
+    apextech: {
+      name: "Apex Signature Tech Park",
+      location: "Phase-1 Hinjawadi",
+      price: "₹1.20 Cr – ₹6.50 Cr",
+      carpet: "950 – 4,500 sq.ft",
+      status: "Pre-Leased Commercial Grade-A",
+      units: "12 Offices Remaining",
+    },
+  };
+
+  const current = properties[propertyKey];
+
+  const handleInquiry = () => {
+    setBrochureDispatched(true);
+    setStage("dispatched");
+    setTimeout(() => setStage("assigned"), 1500);
+  };
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 text-xs font-sans">
+      {/* Left: Luxury Property Showcase & Lead Ingestion */}
+      <div className="lg:col-span-7 bg-slate-900/90 rounded-2xl p-4 border border-slate-700/60 shadow-xl space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+          <div className="flex items-center gap-2">
+            <Building2 className="w-4 h-4 text-teal-400" />
+            <span className="font-bold text-slate-200">PrimeEstate High-Ticket CRM & Lead Engine</span>
+          </div>
+          <span className="bg-teal-500/20 text-teal-300 px-2 py-0.5 rounded text-[10px] font-mono">
+            90-Sec SLA Dispatch
+          </span>
+        </div>
+
+        {/* Project Selector */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          {Object.entries(properties).map(([key, prop]) => (
+            <button
+              key={key}
+              onClick={() => {
+                setPropertyKey(key);
+                setBrochureDispatched(false);
+                setStage("captured");
+              }}
+              className={`p-2.5 rounded-xl text-left border transition cursor-pointer ${
+                propertyKey === key
+                  ? "bg-teal-500/15 border-teal-500 text-white font-bold shadow"
+                  : "bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              <div className="text-[11px] font-bold text-teal-300 leading-tight">{prop.name}</div>
+              <div className="text-[9px] text-slate-400 mt-1">{prop.location}</div>
+            </button>
+          ))}
+        </div>
+
+        {/* Property Highlights Card */}
+        <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="font-bold text-white text-sm">{current.name}</span>
+            <span className="text-emerald-400 font-mono font-black text-sm">{current.price}</span>
+          </div>
+          <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-300 font-mono">
+            <div>
+              <span className="text-slate-500 block text-[9px]">CARPET AREA</span>
+              <span>{current.carpet}</span>
+            </div>
+            <div>
+              <span className="text-slate-500 block text-[9px]">INVENTORY STATUS</span>
+              <span className="text-amber-400">{current.units}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Simulated Lead Inquiry Form */}
+        <div className="space-y-2 bg-slate-950/50 p-3 rounded-xl border border-slate-800/80">
+          <span className="text-[10px] font-mono text-teal-400 font-bold block uppercase tracking-wider">
+            Simulate VIP Buyer Inquiry:
+          </span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div>
+              <label className="text-[10px] text-slate-400 block mb-0.5">Buyer Full Name</label>
+              <input
+                type="text"
+                value={leadName}
+                onChange={(e) => setLeadName(e.target.value)}
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white text-xs focus:outline-none focus:border-teal-500"
+              />
+            </div>
+            <div>
+              <label className="text-[10px] text-slate-400 block mb-0.5">WhatsApp Contact</label>
+              <input
+                type="text"
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white text-xs focus:outline-none focus:border-teal-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        <button
+          onClick={handleInquiry}
+          className="w-full bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white font-bold py-2.5 rounded-xl shadow-lg shadow-teal-500/20 transition cursor-pointer flex items-center justify-center gap-2"
+        >
+          <Send className="w-4 h-4" />
+          Capture Lead & Trigger Automated 90-Sec WhatsApp Brochure Delivery
+        </button>
+      </div>
+
+      {/* Right: CRM Sales Pipeline & Simulated WhatsApp Screen */}
+      <div className="lg:col-span-5 bg-slate-900/90 rounded-2xl p-4 border border-slate-700/60 shadow-xl flex flex-col justify-between space-y-3">
+        <div>
+          <div className="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+            <span className="font-bold text-slate-200">CRM Deal Pipeline & Auto-Dispatch</span>
+            <span className="text-emerald-400 text-[10px] flex items-center gap-1 font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Realtime Webhook
+            </span>
+          </div>
+
+          {/* Pipeline Tracker */}
+          <div className="grid grid-cols-4 gap-1 text-[9px] font-mono mb-3 text-center">
+            <div className="p-1 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
+              1. Captured
+            </div>
+            <div
+              className={`p-1 rounded font-bold border ${
+                stage === "dispatched" || stage === "assigned" || stage === "booked"
+                  ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
+                  : "bg-slate-950 text-slate-500 border-slate-800"
+              }`}
+            >
+              2. Brochure
+            </div>
+            <div
+              className={`p-1 rounded font-bold border ${
+                stage === "assigned" || stage === "booked"
+                  ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
+                  : "bg-slate-950 text-slate-500 border-slate-800"
+              }`}
+            >
+              3. Agent Call
+            </div>
+            <div
+              className={`p-1 rounded font-bold border ${
+                stage === "booked"
+                  ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
+                  : "bg-slate-950 text-slate-500 border-slate-800"
+              }`}
+            >
+              4. Site Visit
+            </div>
+          </div>
+
+          {/* Simulated WhatsApp Phone View */}
+          <div className="bg-[#0b141a] p-3.5 rounded-xl border border-slate-800 space-y-2.5">
+            <div className="bg-[#202c33] p-3 rounded-lg shadow space-y-1.5">
+              <div className="flex items-center justify-between text-[10px] text-teal-400 font-bold">
+                <span>🏢 Apex Realty VIP Concierge</span>
+                <span className="text-slate-400 font-mono">Just Now</span>
+              </div>
+              <p className="text-[11px] leading-relaxed text-slate-200">
+                Dear <strong>{leadName}</strong>, thank you for inquiring about <strong>{current.name}</strong>!
+              </p>
+              <div className="p-2 rounded bg-slate-900/90 border border-slate-700/80 text-[10px] text-slate-200 flex items-center justify-between font-mono">
+                <span className="truncate">📄 {current.name.replace(/ /g, "_")}_Brochure.pdf</span>
+                <span className="text-emerald-400 font-bold shrink-0 ml-1">4.2 MB</span>
+              </div>
+              <p className="text-[10px] text-slate-400">
+                Assigned Senior Consultant <strong>Rajesh Mehta</strong> is reviewing your slot.
+              </p>
+            </div>
+
+            {brochureDispatched && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-[#202c33] p-2.5 rounded-lg border-l-4 border-emerald-500 space-y-2 shadow"
+              >
+                <p className="text-[10px] text-slate-300">
+                  Ready for private site walkthrough? Confirm your preferred timing:
+                </p>
+                {stage === "booked" ? (
+                  <div className="text-[10px] text-emerald-300 font-mono font-bold flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>VIP Site Walkthrough Booked: Saturday 11:00 AM!</span>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setStage("booked")}
+                    className="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-1.5 rounded-lg text-[11px] transition cursor-pointer"
+                  >
+                    Confirm Private VIP Site Walkthrough (Saturday 11:00 AM)
+                  </button>
+                )}
+              </motion.div>
+            )}
+          </div>
+        </div>
+
+        <div className="pt-2 border-t border-slate-800 text-slate-400 flex items-center justify-between text-[11px] font-mono">
+          <span>⚡ First Contact SLA: <strong>&lt; 90 Seconds</strong></span>
+          <span className="text-teal-400 font-bold">+25% Site Visits</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── MAIN MODAL EXPORT ───────────────────────────────────────────────────────
 export default function PortfolioDemoModal({ project, onClose }) {
   const [activeTab, setActiveTab] = useState("simulator"); // simulator | architecture | impact
@@ -922,8 +1583,18 @@ export default function PortfolioDemoModal({ project, onClose }) {
                 {project.id === "jollybaba-ecommerce" && <EcommerceSimulator />}
                 {project.id === "clinic-management" && <ClinicSimulator />}
                 {project.id === "vyapaariyo-saas" && <SaasSimulator />}
-                {/* Fallback for other projects */}
-                {!["restaurant-management", "mobile-shop-management", "jollybaba-ecommerce", "clinic-management", "vyapaariyo-saas"].includes(project.id) && (
+                {project.id === "wholesale-order-management" && <WholesaleSimulator />}
+                {project.id === "coaching-management" && <CoachingSimulator />}
+                {project.id === "real-estate-crm" && <RealEstateSimulator />}
+                {/* Fallback based on project category or default */}
+                {!["restaurant-management", "mobile-shop-management", "jollybaba-ecommerce", "clinic-management", "vyapaariyo-saas", "wholesale-order-management", "coaching-management", "real-estate-crm"].includes(project.id) && (
+                  project.tag === "Wholesale" ? <WholesaleSimulator /> :
+                  project.tag === "Education" ? <CoachingSimulator /> :
+                  project.tag === "Real Estate" ? <RealEstateSimulator /> :
+                  project.tag === "Healthcare" ? <ClinicSimulator /> :
+                  project.tag === "Retail" ? <MobileShopSimulator /> :
+                  project.tag === "E-Commerce" ? <EcommerceSimulator /> :
+                  project.tag === "SaaS" ? <SaasSimulator /> :
                   <RestaurantSimulator />
                 )}
               </motion.div>
