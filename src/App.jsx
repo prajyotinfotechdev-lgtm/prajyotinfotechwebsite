@@ -25,6 +25,9 @@ const CareerManager = lazy(() => import("./pages/CareerManager.jsx"));
 import HelpBot from "./components/HelpBot.jsx";
 import FloatingWhatsApp from "./components/FloatingWhatsApp.jsx";
 
+import { LeadModalProvider } from "./context/LeadModalContext.jsx";
+import LeadModal from "./components/LeadModal.jsx";
+
 import { CITIES_DATA } from "./data/citiesData.js";
 
 function ScrollToTop() {
@@ -59,52 +62,57 @@ export default function App() {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-brand-50/20 text-navy-800 antialiased selection:bg-brand-200/50 selection:text-navy-900 overflow-clip">
-      {/* ↑ overflow-clip prevents mobile sideways scroll without breaking position: sticky */}
-      <ScrollToTop />
-      <Nav />
+    <LeadModalProvider>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-brand-50/20 text-navy-800 antialiased selection:bg-brand-200/50 selection:text-navy-900 overflow-clip">
+        {/* ↑ overflow-clip prevents mobile sideways scroll without breaking position: sticky */}
+        <ScrollToTop />
+        <Nav />
 
-      <Suspense fallback={<div className="flex h-screen items-center justify-center text-brand-500">Loading...</div>}>
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
-            <Route path="/pricing" element={<PageWrapper><Pricing /></PageWrapper>} />
-            <Route path="/work" element={<PageWrapper><Work /></PageWrapper>} />
-            <Route path="/services" element={<PageWrapper><Services /></PageWrapper>} />
-            <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
-            <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
-            <Route path="/estimate" element={<PageWrapper><Estimate /></PageWrapper>} />
-            {Object.keys(CITIES_DATA).map((cityKey) => (
-              <Route
-                key={cityKey}
-                path={`/software-company-in-${cityKey}`}
-                element={<PageWrapper><CityLandingPage cityId={cityKey} /></PageWrapper>}
-              />
-            ))}
-            <Route path="/articles" element={<PageWrapper><Articles /></PageWrapper>} />
-            <Route path="/glossary" element={<PageWrapper><TechGlossary /></PageWrapper>} />
-            <Route path="/careers" element={<PageWrapper><Careers /></PageWrapper>} />
-            <Route path="/careers/manage" element={<PageWrapper><CareerManager /></PageWrapper>} />
-            <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
-          </Routes>
-        </AnimatePresence>
-      </Suspense>
+        <Suspense fallback={<div className="flex h-screen items-center justify-center text-brand-500">Loading...</div>}>
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+              <Route path="/pricing" element={<PageWrapper><Pricing /></PageWrapper>} />
+              <Route path="/work" element={<PageWrapper><Work /></PageWrapper>} />
+              <Route path="/services" element={<PageWrapper><Services /></PageWrapper>} />
+              <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
+              <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+              <Route path="/estimate" element={<PageWrapper><Estimate /></PageWrapper>} />
+              {Object.keys(CITIES_DATA).map((cityKey) => (
+                <Route
+                  key={cityKey}
+                  path={`/software-company-in-${cityKey}`}
+                  element={<PageWrapper><CityLandingPage cityId={cityKey} /></PageWrapper>}
+                />
+              ))}
+              <Route path="/articles" element={<PageWrapper><Articles /></PageWrapper>} />
+              <Route path="/glossary" element={<PageWrapper><TechGlossary /></PageWrapper>} />
+              <Route path="/careers" element={<PageWrapper><Careers /></PageWrapper>} />
+              <Route path="/careers/manage" element={<PageWrapper><CareerManager /></PageWrapper>} />
+              <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
+            </Routes>
+          </AnimatePresence>
+        </Suspense>
 
-      {showChats && (
-        <>
-          {/* Chat bot at bottom-right */}
-          <HelpBot
-            launcherOffset={{ bottom: "6rem", right: "1rem" }} // chat button sits above WA
-            panelOffset={{ bottom: "10rem", right: "1rem" }}   // chat panel above its button
-            zIndex={50}
-          />
+        {showChats && (
+          <>
+            {/* Chat bot at bottom-right */}
+            <HelpBot
+              launcherOffset={{ bottom: "6rem", right: "1rem" }} // chat button sits above WA
+              panelOffset={{ bottom: "10rem", right: "1rem" }}   // chat panel above its button
+              zIndex={50}
+            />
 
-          {/* WhatsApp directly under the bot */}
-          <FloatingWhatsApp bottom="1rem" right="1rem" zIndex={40} />
-        </>
-      )}
+            {/* WhatsApp directly under the bot */}
+            <FloatingWhatsApp bottom="1rem" right="1rem" zIndex={40} />
+          </>
+        )}
 
-      <Footer />
-    </div>
+        <Footer />
+
+        {/* Global Lead Capture Modal */}
+        <LeadModal />
+      </div>
+    </LeadModalProvider>
   );
 }

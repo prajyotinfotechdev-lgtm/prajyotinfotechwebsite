@@ -1,13 +1,31 @@
+// src/components/HelpBot.jsx
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createLead } from "../utils/leadStorage.js";
+import {
+  Bot,
+  Sparkles,
+  Terminal,
+  Send,
+  Mic,
+  RotateCcw,
+  X,
+  ShieldCheck,
+  CheckCircle2,
+  Zap,
+  Lock,
+  Cpu,
+  Radio,
+  ArrowRight,
+  MessageSquare,
+} from "lucide-react";
 
 /**
- * HelpBot - Ultra-Premium World-Class AI Assistant
- * - Glassmorphism floating UI with high-end dark tech styling
- * - Interactive step progress indicator
- * - Direct database lead submission (No external WhatsApp redirect)
- * - Built-in voice input & keyboard shortcuts
+ * HelpBot - Next-Gen Futuristic Cyber AI Scoping Engine
+ * - Futuristic HUD Glassmorphism UI
+ * - Cybernetic pulse lighting & terminal status indicators
+ * - Voice Input + Frequency Spectrum Visualizer
+ * - Direct Supabase Lead Capture + Optional Instant WhatsApp Handshake
  */
 
 const STEPS = {
@@ -19,18 +37,18 @@ const STEPS = {
 };
 
 const PROJECT_OPTIONS = [
-  { label: "Website", icon: "🌐", desc: "Corporate / Portfolio / Web App" },
-  { label: "Mobile App", icon: "📱", desc: "Android / iOS / Flutter" },
-  { label: "SaaS / ERP", icon: "⚡", desc: "Custom Software / CRM" },
-  { label: "E-Commerce", icon: "🛍️", desc: "Online Store & Payments" },
-  { label: "Other", icon: "✨", desc: "Custom Consultation" },
+  { label: "Website / Web App", icon: "🌐", desc: "Corporate / SaaS / Custom Portal", badge: "High Speed" },
+  { label: "Mobile Application", icon: "📱", desc: "Android / iOS / Flutter", badge: "Native UI" },
+  { label: "Enterprise ERP / CRM", icon: "⚡", desc: "Automated Workflows & Billing", badge: "Custom" },
+  { label: "AI & WhatsApp Bot", icon: "🤖", desc: "Intelligent Customer Automation", badge: "New" },
+  { label: "UI/UX & Prototyping", icon: "🎨", desc: "Figma Design System & Design", badge: "Design" },
 ];
 
 const BUDGET_OPTIONS = [
-  { label: "Under ₹30k", badge: "Starter" },
-  { label: "₹30k–₹60k", badge: "Popular" },
-  { label: "₹60k–₹1.5L", badge: "Growth" },
-  { label: "₹1.5L+", badge: "Enterprise" },
+  { label: "₹29,999 - ₹75k", badge: "Starter Tier", desc: "$399 - $999 USD" },
+  { label: "₹75k - ₹2.0 Lakhs", badge: "Popular Growth", desc: "$1,000 - $2,500 USD" },
+  { label: "₹2.0L - ₹5.0 Lakhs", badge: "Scale Enterprise", desc: "$2,500 - $6,500 USD" },
+  { label: "₹5.0 Lakhs+", badge: "Bespoke Suite", desc: "$6,500+ USD" },
 ];
 
 // Validators
@@ -72,6 +90,7 @@ const safeSetItem = (key, val) => {
 
 const uid = () => `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 const toCss = (v) => (typeof v === "number" ? `${v}px` : v);
+const WHATSAPP_NUMBER = "917020708747";
 
 export default function HelpBot({
   autoOpenAfterMs = 5000,
@@ -139,9 +158,13 @@ export default function HelpBot({
       if (messages.length === 0) {
         const hour = new Date().getHours();
         const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
-        botSayAsync(`${greeting}! Welcome to Prajyot Infotech. Let's get your project estimated in 4 quick steps. What's your name?`, { meta: "ask:name" }, 600);
+        botSayAsync(
+          `${greeting}! I'm the Prajyot Cyber-Architect AI. Let's scope your custom software project in 4 quick steps. What's your name?`,
+          { meta: "ask:name" },
+          600
+        );
       } else if (step === STEPS.NAME && !messages.some((m) => m.meta === "ask:name")) {
-        botSayAsync("What's your full name?", { meta: "ask:name" }, 500);
+        botSayAsync("What's your full name to start project scoping?", { meta: "ask:name" }, 500);
       }
       setTimeout(() => inputRef.current?.focus(), 0);
     }
@@ -238,22 +261,27 @@ export default function HelpBot({
       const nextForm = { ...form, name: clean };
       setForm(nextForm);
       goto(STEPS.CONTACT);
-      return botSayAsync(`Pleasure to meet you, ${clean.split(' ')[0]}! What is your Email or WhatsApp phone number?`, {}, 800);
+      return botSayAsync(
+        `Pleasure to meet you, ${clean.split(" ")[0]}! What is your Phone Number or Email address?`,
+        {},
+        700
+      );
     }
 
     if (step === STEPS.CONTACT) {
-      if (!isEmail(clean) && !isPhone(clean)) return botSayAsync("Please enter a valid email address or phone number.", {}, 500);
+      if (!isEmail(clean) && !isPhone(clean))
+        return botSayAsync("Please enter a valid phone number (e.g. +91 9876543210) or email address.", {}, 500);
       const nextForm = { ...form, contact: clean };
       setForm(nextForm);
       goto(STEPS.PROJECT);
-      return botSayAsync("Got it! What type of software or web application do you want to build?", {}, 800);
+      return botSayAsync("Got it! What type of software or web architecture do you want to build?", {}, 700);
     }
 
     if (step === STEPS.PROJECT) {
       const nextForm = { ...form, project: clean };
       setForm(nextForm);
       goto(STEPS.BUDGET);
-      return botSayAsync("Excellent choice. What is your estimated budget for this project?", {}, 800);
+      return botSayAsync("Excellent choice. What is your estimated investment range for this project?", {}, 700);
     }
 
     if (step === STEPS.BUDGET) {
@@ -267,16 +295,20 @@ export default function HelpBot({
         contact: nextForm.contact,
         projectType: nextForm.project,
         budget: clean,
-        notes: nextForm.notes || "Chatbot Lead",
-        source: "Prajyot AI Assistant"
-      }).catch(err => console.error("Error saving lead:", err));
+        notes: nextForm.notes || "Cyber-AI Assistant Lead",
+        source: "Prajyot Cyber-AI Scoping Engine",
+      }).catch((err) => console.error("Error saving lead:", err));
 
-      return botSayAsync("🎉 Perfect! Your enquiry has been saved and submitted directly to our engineering team. We will review your details and contact you shortly!", {}, 1000);
+      return botSayAsync(
+        "🚀 ACCESS GRANTED! Your project inquiry has been encrypted and logged directly into our engineering dashboard. Our technical team will reach out within 2 hours!",
+        {},
+        900
+      );
     }
 
     if (step === STEPS.SUMMARY) {
       setForm((f) => ({ ...f, notes: (f.notes ? f.notes + "\n" : "") + clean }));
-      return botSayAsync("Noted! Additional details added to your project record.", {}, 800);
+      return botSayAsync("Noted! Additional requirement added to your encrypted project record.", {}, 600);
     }
   };
 
@@ -295,57 +327,71 @@ export default function HelpBot({
     setMessages([]);
     const hour = new Date().getHours();
     const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
-    if (open) botSayAsync(`${greeting}! Welcome to Prajyot Infotech. What's your full name?`, { meta: "ask:name" }, 600);
+    if (open)
+      botSayAsync(
+        `${greeting}! I'm the Prajyot Cyber-Architect AI. What's your full name to start scoping?`,
+        { meta: "ask:name" },
+        600
+      );
     inputRef.current?.focus();
   };
 
-  // Step Progress Calculator
   const getStepProgress = () => {
     switch (step) {
-      case STEPS.NAME: return { step: 1, percent: "25%", label: "Step 1 of 4: Contact Info" };
-      case STEPS.CONTACT: return { step: 2, percent: "50%", label: "Step 2 of 4: Reachability" };
-      case STEPS.PROJECT: return { step: 3, percent: "75%", label: "Step 3 of 4: Project Scope" };
-      case STEPS.BUDGET: return { step: 4, percent: "90%", label: "Step 4 of 4: Investment Range" };
-      case STEPS.SUMMARY: return { step: 4, percent: "100%", label: "Complete! Inquiry Submitted" };
-      default: return { step: 1, percent: "20%", label: "Assistant Active" };
+      case STEPS.NAME:
+        return { step: 1, percent: "25%", label: "STEP 01 // CONTACT IDENTIFIER" };
+      case STEPS.CONTACT:
+        return { step: 2, percent: "50%", label: "STEP 02 // REACHABILITY PROTOCOL" };
+      case STEPS.PROJECT:
+        return { step: 3, percent: "75%", label: "STEP 03 // ARCHITECTURE SPEC" };
+      case STEPS.BUDGET:
+        return { step: 4, percent: "90%", label: "STEP 04 // INVESTMENT ALLOCATION" };
+      case STEPS.SUMMARY:
+        return { step: 4, percent: "100%", label: "STATUS // ENCRYPTED & SAVED TO CRM" };
+      default:
+        return { step: 1, percent: "20%", label: "AI ENGINE ACTIVE" };
     }
   };
 
   const progress = getStepProgress();
 
+  const openWhatsAppNow = () => {
+    const waText = encodeURIComponent(
+      `Hi Prajyot Infotech! I scoped a project on your website AI Chatbot:\n\n` +
+        `👤 Name: ${form.name}\n` +
+        `📞 Contact: ${form.contact}\n` +
+        `🚀 Project: ${form.project}\n` +
+        `💰 Budget: ${form.budget}`
+    );
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waText}`, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <>
-      {/* --- FLOATING LAUNCHER BUTTON --- */}
+      {/* --- FUTURISTIC FLOATING LAUNCHER BUTTON --- */}
       <motion.button
         type="button"
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.92 }}
         onClick={() => setOpen((v) => !v)}
-        aria-label="Open AI Assistant"
-        className="fixed grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-600 text-white shadow-[0_0_40px_rgba(99,102,241,0.5)] ring-2 ring-white/30 transition-all hover:shadow-[0_0_60px_rgba(168,85,247,0.7)] group"
+        aria-label="Open AI Architect"
+        className="fixed grid h-16 w-16 place-items-center rounded-full bg-gradient-to-tr from-cyan-600 via-brand-600 to-indigo-600 text-white shadow-[0_0_50px_rgba(6,182,212,0.4)] ring-2 ring-cyan-400/40 transition-all hover:shadow-[0_0_70px_rgba(99,102,241,0.7)] group cursor-pointer"
         style={{
           bottom: toCss(launcherOffset.bottom),
           right: toCss(launcherOffset.right),
           zIndex,
         }}
       >
-        <div className="absolute inset-0 rounded-full bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-20" />
-        <div className="relative">
+        <div className="absolute inset-0 rounded-full bg-cyan-400/20 blur-md animate-pulse" />
+        <div className="relative z-10">
           {open ? (
-            <svg viewBox="0 0 24 24" className="h-7 w-7 stroke-[2.5]" fill="none">
-              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <X className="h-7 w-7 stroke-[2.5]" />
           ) : (
             <div className="relative flex items-center justify-center">
-              <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none">
-                <path fill="currentColor" d="M12 2a10 10 0 0110 10c0 5.523-4.477 10-10 10a9.96 9.96 0 01-4.587-1.11L2.5 21.5l.61-4.91A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2zm0 2a8 8 0 00-8 8c0 1.57.45 3.036 1.23 4.28L4.6 18.4l2.12-.55A7.96 7.96 0 0012 20a8 8 0 008-8 8 8 0 00-8-8z" />
-                <circle cx="8.5" cy="11.5" r="1.25" fill="currentColor" />
-                <circle cx="12" cy="11.5" r="1.25" fill="currentColor" />
-                <circle cx="15.5" cy="11.5" r="1.25" fill="currentColor" />
-              </svg>
-              <span className="absolute -top-1 -right-1 flex h-3 w-3">
+              <Bot className="h-8 w-8 text-cyan-300" />
+              <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border border-slate-950"></span>
               </span>
             </div>
           )}
@@ -369,14 +415,14 @@ export default function HelpBot({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-950/60 backdrop-blur-md"
+            className="fixed inset-0 bg-slate-950/70 backdrop-blur-md"
             style={{ zIndex: zIndex - 1 }}
             onClick={() => setOpen(false)}
           />
         )}
       </AnimatePresence>
 
-      {/* --- ULTRA-PREMIUM CHAT PANEL --- */}
+      {/* --- CYBER HUD CHAT PANEL --- */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -385,40 +431,45 @@ export default function HelpBot({
             exit={{ opacity: 0, y: 15, scale: 0.94 }}
             transition={{ duration: 0.35, type: "spring", damping: 26, stiffness: 320 }}
             ref={panelRef}
-            className="fixed inset-x-3 bottom-3 sm:inset-x-auto w-auto sm:w-[430px] max-h-[calc(100dvh-1.5rem)] overflow-hidden rounded-2xl sm:rounded-3xl border border-white/15 bg-slate-950/95 shadow-[0_30px_90px_rgba(0,0,0,0.9)] backdrop-blur-3xl flex flex-col"
+            className="fixed inset-x-3 bottom-3 sm:inset-x-auto w-auto sm:w-[440px] max-h-[calc(100dvh-1.5rem)] overflow-hidden rounded-2xl sm:rounded-3xl border border-cyan-500/30 bg-slate-950/95 shadow-[0_30px_90px_rgba(0,0,0,0.95)] backdrop-blur-3xl flex flex-col font-sans"
             style={{
               bottom: typeof window !== "undefined" && window.innerWidth >= 640 ? toCss(panelOffset.bottom) : undefined,
               right: typeof window !== "undefined" && window.innerWidth >= 640 ? toCss(panelOffset.right) : undefined,
               zIndex,
             }}
           >
-            {/* Ambient Background Glows */}
-            <div className="absolute -top-32 -right-32 h-64 w-64 rounded-full bg-indigo-600/30 blur-[80px] pointer-events-none" />
-            <div className="absolute -bottom-32 -left-32 h-64 w-64 rounded-full bg-purple-600/20 blur-[80px] pointer-events-none" />
+            {/* Ambient Cyber Lighting */}
+            <div className="absolute -top-32 -right-32 h-64 w-64 rounded-full bg-cyan-500/20 blur-[90px] pointer-events-none" />
+            <div className="absolute -bottom-32 -left-32 h-64 w-64 rounded-full bg-indigo-600/20 blur-[90px] pointer-events-none" />
 
-            {/* HEADER BAR */}
-            <div className="relative border-b border-white/10 bg-slate-900/60 p-4 backdrop-blur-xl">
+            {/* CYBER HUD HEADER BAR */}
+            <div className="relative border-b border-cyan-500/20 bg-slate-900/80 p-4 backdrop-blur-xl">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="relative">
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 blur-sm opacity-80 animate-pulse" />
-                    <div className="relative grid size-11 place-items-center rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 text-white shadow-md font-black text-lg">
-                      P
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500 to-indigo-600 blur-sm opacity-80 animate-pulse" />
+                    <div className="relative grid size-11 place-items-center rounded-2xl bg-slate-900 text-cyan-400 border border-cyan-500/40 shadow-inner font-black text-lg">
+                      <Cpu className="w-6 h-6 animate-pulse" />
                     </div>
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="text-base font-bold text-white tracking-wide">Prajyot AI Assistant</h3>
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                        v3.6 Pro
+                      <h3 className="text-sm sm:text-base font-bold text-white tracking-tight flex items-center gap-1.5">
+                        <span>Prajyot AI Architect</span>
+                        <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                      </h3>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-extrabold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                        v4.2 PRO
                       </span>
                     </div>
-                    <div className="text-xs font-medium text-slate-400 flex items-center gap-1.5 mt-0.5">
+                    <div className="text-[11px] font-mono text-slate-400 flex items-center gap-1.5 mt-0.5">
                       <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                       </span>
-                      <span>Connected · Instant DB Sync</span>
+                      <span className="text-emerald-400 font-semibold">SYSTEM ONLINE</span>
+                      <span>·</span>
+                      <span className="text-slate-400">DB ACTIVE</span>
                     </div>
                   </div>
                 </div>
@@ -426,29 +477,32 @@ export default function HelpBot({
                 <div className="flex items-center gap-2">
                   <button
                     onClick={clearChat}
-                    className="rounded-xl border border-white/10 bg-white/5 px-2.5 py-1.5 text-[11px] font-bold text-slate-300 transition-colors hover:bg-white/10 hover:text-white"
-                    title="Restart Conversation"
+                    className="p-1.5 rounded-xl border border-slate-800 bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition"
+                    title="Reset Scoping Session"
                   >
-                    Reset
+                    <RotateCcw className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => setOpen(false)}
-                    className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                    className="p-1.5 rounded-xl border border-slate-800 bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 transition"
                   >
-                    <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none"><path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                    <X className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
               {/* Progress Bar Indicator */}
-              <div className="mt-3.5 pt-2 border-t border-white/5">
-                <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 mb-1.5">
-                  <span>{progress.label}</span>
-                  <span className="text-indigo-400">{progress.percent}</span>
+              <div className="mt-3.5 pt-2.5 border-t border-slate-800">
+                <div className="flex items-center justify-between text-[10px] font-mono font-bold text-slate-400 mb-1.5">
+                  <span className="flex items-center gap-1">
+                    <Terminal className="w-3 h-3 text-cyan-400" />
+                    <span>{progress.label}</span>
+                  </span>
+                  <span className="text-cyan-400">{progress.percent}</span>
                 </div>
-                <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+                <div className="h-1.5 w-full rounded-full bg-slate-900 overflow-hidden border border-slate-800">
                   <motion.div
-                    className="h-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+                    className="h-full rounded-full bg-gradient-to-r from-cyan-500 via-brand-500 to-indigo-500"
                     initial={{ width: "0%" }}
                     animate={{ width: progress.percent }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
@@ -458,7 +512,7 @@ export default function HelpBot({
             </div>
 
             {/* MESSAGES CONTAINER */}
-            <div className="max-h-[50vh] min-h-[300px] overflow-y-auto p-4 custom-scrollbar space-y-4" ref={listRef}>
+            <div className="max-h-[50vh] min-h-[290px] overflow-y-auto p-4 custom-scrollbar space-y-4" ref={listRef}>
               <ul className="space-y-4" aria-live="polite">
                 <AnimatePresence initial={false}>
                   {messages.map((m) => (
@@ -471,8 +525,8 @@ export default function HelpBot({
                     >
                       {m.role === "bot" && (
                         <div className="mr-2.5 mt-1 shrink-0">
-                          <div className="grid size-7 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-md ring-1 ring-white/20 text-xs font-bold">
-                            🤖
+                          <div className="grid size-7 place-items-center rounded-xl bg-slate-900 border border-cyan-500/40 text-cyan-400 shadow-md text-xs font-bold font-mono">
+                            AI
                           </div>
                         </div>
                       )}
@@ -480,8 +534,8 @@ export default function HelpBot({
                         className={
                           "inline-block max-w-[85%] rounded-2xl px-4 py-3 text-[13px] leading-relaxed shadow-lg backdrop-blur-md " +
                           (m.role === "user"
-                            ? "bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white rounded-tr-xs border border-white/20"
-                            : "bg-white/10 border border-white/15 text-slate-100 rounded-tl-xs")
+                            ? "bg-gradient-to-r from-brand-600 via-indigo-600 to-indigo-700 text-white rounded-tr-xs border border-brand-400/30"
+                            : "bg-slate-900/90 border border-slate-800 text-slate-100 rounded-tl-xs")
                         }
                       >
                         {m.text}
@@ -489,7 +543,7 @@ export default function HelpBot({
                     </motion.li>
                   ))}
 
-                  {/* Typing Animation */}
+                  {/* Cyber Typing Animation */}
                   {isTyping && (
                     <motion.li
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -498,14 +552,13 @@ export default function HelpBot({
                       className="flex justify-start"
                     >
                       <div className="mr-2.5 mt-1 shrink-0">
-                        <div className="grid size-7 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-md ring-1 ring-white/20 text-xs">
-                          🤖
+                        <div className="grid size-7 place-items-center rounded-xl bg-slate-900 border border-cyan-500/40 text-cyan-400 shadow-md text-xs">
+                          AI
                         </div>
                       </div>
-                      <div className="inline-flex items-center gap-1.5 rounded-2xl bg-white/10 border border-white/15 rounded-tl-xs backdrop-blur-md px-4 py-3 shadow-md">
-                        <motion.div className="h-2 w-2 rounded-full bg-indigo-400" animate={{ y: [0, -4, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0 }} />
-                        <motion.div className="h-2 w-2 rounded-full bg-purple-400" animate={{ y: [0, -4, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }} />
-                        <motion.div className="h-2 w-2 rounded-full bg-pink-400" animate={{ y: [0, -4, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }} />
+                      <div className="inline-flex items-center gap-2 rounded-2xl bg-slate-900/90 border border-slate-800 rounded-tl-xs backdrop-blur-md px-4 py-3 text-xs text-cyan-400 font-mono">
+                        <Radio className="w-3.5 h-3.5 animate-spin" />
+                        <span>AI ARCHITECT IS PROCESSING...</span>
                       </div>
                     </motion.li>
                   )}
@@ -521,8 +574,8 @@ export default function HelpBot({
                     exit={{ opacity: 0, height: 0 }}
                     className="mt-3 pl-9 space-y-2"
                   >
-                    <div className="text-[11px] font-extrabold uppercase tracking-wider text-indigo-300/80 mb-2">
-                      Select Project Type:
+                    <div className="text-[10px] font-mono font-extrabold uppercase tracking-wider text-cyan-400/90 mb-2">
+                      SELECT ARCHITECTURE SPEC:
                     </div>
                     <div className="grid grid-cols-1 gap-2">
                       {PROJECT_OPTIONS.map((opt) => (
@@ -530,16 +583,20 @@ export default function HelpBot({
                           key={opt.label}
                           type="button"
                           onClick={() => handleUserInput(opt.label)}
-                          className="flex items-center justify-between rounded-xl border border-white/15 bg-white/5 px-3.5 py-2.5 text-left text-xs font-semibold text-white transition-all hover:bg-indigo-600 hover:border-indigo-400 hover:shadow-lg hover:shadow-indigo-500/30 group"
+                          className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900/80 px-3.5 py-2.5 text-left text-xs font-semibold text-white transition-all hover:bg-slate-850 hover:border-cyan-500 hover:shadow-lg hover:shadow-cyan-500/20 group cursor-pointer"
                         >
                           <div className="flex items-center gap-2.5">
                             <span className="text-base">{opt.icon}</span>
                             <div>
-                              <div className="font-bold text-white">{opt.label}</div>
-                              <div className="text-[10px] text-slate-400 group-hover:text-indigo-100">{opt.desc}</div>
+                              <div className="font-bold text-white group-hover:text-cyan-300 transition">
+                                {opt.label}
+                              </div>
+                              <div className="text-[10px] text-slate-400">{opt.desc}</div>
                             </div>
                           </div>
-                          <span className="text-slate-400 group-hover:text-white">→</span>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-slate-950 font-bold transition">
+                            {opt.badge}
+                          </span>
                         </button>
                       ))}
                     </div>
@@ -554,8 +611,8 @@ export default function HelpBot({
                     exit={{ opacity: 0, height: 0 }}
                     className="mt-3 pl-9 space-y-2"
                   >
-                    <div className="text-[11px] font-extrabold uppercase tracking-wider text-purple-300/80 mb-2">
-                      Estimated Investment Range:
+                    <div className="text-[10px] font-mono font-extrabold uppercase tracking-wider text-indigo-400/90 mb-2">
+                      SELECT INVESTMENT ALLOCATION:
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       {BUDGET_OPTIONS.map((opt) => (
@@ -563,12 +620,15 @@ export default function HelpBot({
                           key={opt.label}
                           type="button"
                           onClick={() => handleUserInput(opt.label)}
-                          className="flex flex-col items-center justify-center rounded-xl border border-white/15 bg-white/5 p-3 text-center transition-all hover:bg-purple-600 hover:border-purple-400 hover:shadow-lg hover:shadow-purple-500/30 group"
+                          className="flex flex-col items-start rounded-xl border border-slate-800 bg-slate-900/80 p-3 transition-all hover:bg-slate-850 hover:border-indigo-500 hover:shadow-lg hover:shadow-indigo-500/20 group cursor-pointer"
                         >
-                          <span className="text-[10px] font-extrabold text-purple-300 uppercase group-hover:text-white mb-0.5">
+                          <span className="text-[10px] font-mono font-extrabold text-indigo-400 uppercase mb-0.5">
                             {opt.badge}
                           </span>
-                          <span className="text-xs font-bold text-white">{opt.label}</span>
+                          <span className="text-xs font-bold text-white group-hover:text-indigo-300">
+                            {opt.label}
+                          </span>
+                          <span className="text-[9px] text-slate-400 font-mono mt-0.5">{opt.desc}</span>
                         </button>
                       ))}
                     </div>
@@ -580,47 +640,50 @@ export default function HelpBot({
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="mt-4 ml-9 rounded-2xl border border-emerald-500/40 bg-emerald-950/40 p-4 text-[13px] text-white backdrop-blur-md shadow-xl"
+                    className="mt-4 ml-9 rounded-2xl border border-emerald-500/40 bg-emerald-950/40 p-4 text-[13px] text-white backdrop-blur-md shadow-xl space-y-3"
                   >
-                    <div className="mb-3 flex items-center gap-2 font-black text-emerald-400 text-sm">
-                      <div className="grid size-5 place-items-center rounded-full bg-emerald-500 text-slate-950 text-xs font-extrabold">
-                        ✓
-                      </div>
-                      Inquiry Captured & Saved!
+                    <div className="flex items-center gap-2 font-black text-emerald-400 text-sm">
+                      <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                      <span>INQUIRY ENCRYPTED & SAVED!</span>
                     </div>
 
-                    <div className="space-y-1.5 text-xs text-slate-200 border-t border-emerald-500/20 pt-2.5 mb-3">
-                      <div><span className="text-slate-400">Name:</span> <strong>{form.name}</strong></div>
-                      <div><span className="text-slate-400">Contact:</span> <strong>{form.contact}</strong></div>
-                      <div><span className="text-slate-400">Project Scope:</span> <strong>{form.project}</strong></div>
-                      <div><span className="text-slate-400">Budget Range:</span> <strong>{form.budget}</strong></div>
+                    <div className="space-y-1.5 text-xs text-slate-200 border-t border-emerald-500/20 pt-2.5 font-mono">
+                      <div><span className="text-slate-400">Name:</span> <strong className="text-white">{form.name}</strong></div>
+                      <div><span className="text-slate-400">Contact:</span> <strong className="text-white">{form.contact}</strong></div>
+                      <div><span className="text-slate-400">Scope:</span> <strong className="text-white">{form.project}</strong></div>
+                      <div><span className="text-slate-400">Investment:</span> <strong className="text-white">{form.budget}</strong></div>
                     </div>
 
                     <div className="text-[11px] text-emerald-300 font-bold bg-emerald-900/50 p-2.5 rounded-xl border border-emerald-500/30 flex items-center gap-2">
-                      <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
-                      <span>Saved to Admin Portal. Our team will call or email you!</span>
+                      <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <span>Logged into Admin Portal. Response in &lt; 2 hrs.</span>
                     </div>
+
+                    <button
+                      onClick={openWhatsAppNow}
+                      className="w-full mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-teal-500 hover:bg-teal-600 text-white py-2.5 px-4 font-semibold text-xs transition-all shadow-md shadow-teal-500/20 cursor-pointer"
+                    >
+                      <MessageSquare className="w-4 h-4" />
+                      <span>Chat Directly on WhatsApp Now</span>
+                    </button>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
             {/* INPUT FORM FOOTER */}
-            <form onSubmit={onSubmit} className="relative z-10 flex items-center gap-2 border-t border-white/10 bg-slate-900/90 p-3 backdrop-blur-xl">
+            <form onSubmit={onSubmit} className="relative z-10 flex items-center gap-2 border-t border-slate-800 bg-slate-900/90 p-3 backdrop-blur-xl">
               <button
                 type="button"
                 onClick={toggleListen}
-                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all focus:outline-none ${
+                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all focus:outline-none cursor-pointer ${
                   isListening
                     ? "bg-rose-500 text-white animate-pulse shadow-lg shadow-rose-500/50"
-                    : "bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white"
+                    : "bg-slate-800 text-slate-400 hover:bg-slate-750 hover:text-white border border-slate-700"
                 }`}
                 title={isListening ? "Listening..." : "Voice Input"}
               >
-                <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">
-                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                <Mic className="w-4 h-4" />
               </button>
 
               <input
@@ -628,25 +691,23 @@ export default function HelpBot({
                 name="msg"
                 placeholder={
                   isListening
-                    ? "Listening to voice..."
+                    ? "Listening to voice input..."
                     : step === STEPS.NAME
                     ? "Type your name..."
                     : step === STEPS.CONTACT
                     ? "Enter Email or Phone..."
-                    : "Type a message..."
+                    : "Type custom project detail..."
                 }
-                className="flex-1 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-xs text-white placeholder:text-slate-400 focus:border-indigo-500 focus:bg-white/10 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all min-w-0 font-medium"
+                className="flex-1 rounded-xl border border-slate-800 bg-slate-950 px-4 py-2.5 text-xs text-white placeholder:text-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 transition-all min-w-0 font-medium"
                 maxLength={300}
                 autoFocus
               />
 
               <button
                 type="submit"
-                className="group flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-600 text-white shadow-lg shadow-indigo-500/30 transition-all hover:scale-105 active:scale-95"
+                className="group flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-r from-cyan-500 via-brand-600 to-indigo-600 text-white shadow-lg shadow-cyan-500/20 transition-all hover:scale-105 active:scale-95 cursor-pointer"
               >
-                <svg viewBox="0 0 24 24" className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none">
-                  <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                <Send className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </button>
             </form>
           </motion.div>

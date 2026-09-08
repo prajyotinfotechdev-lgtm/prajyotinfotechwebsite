@@ -4,6 +4,7 @@ import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import ROICalculator from "../components/ROICalculator.jsx";
 import { ShieldCheck, Lock, Clock, Globe, Award, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import { createLead } from "../utils/leadStorage.js";
+import { useLeadModal } from "../context/LeadModalContext.jsx";
 
 const WHATSAPP_NUMBER = "917020708747";
 const wa = (text) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
@@ -17,6 +18,7 @@ const CURRENCIES = {
 };
 
 export default function Pricing() {
+  const { openLeadModal } = useLeadModal();
   const [currency, setCurrency] = useState("INR");
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState("");
@@ -204,7 +206,13 @@ export default function Pricing() {
 
             <div className="mt-8 space-y-2">
               <button
-                onClick={() => handleOpenProposal(t.name)}
+                onClick={() => openLeadModal({
+                  source: `Pricing Page - ${t.name}`,
+                  projectType: t.name,
+                  budget: t.price,
+                  title: `Select ${t.name} Plan (${t.price})`,
+                  subtitle: `Submit your details to reserve your project spot for the ${t.name} package.`
+                })}
                 className={`w-full py-3 px-4 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md flex items-center justify-center gap-2 ${
                   t.popular
                     ? "bg-brand-600 text-white hover:bg-brand-700 shadow-brand-500/30 hover:scale-[1.02]"
@@ -215,14 +223,19 @@ export default function Pricing() {
                 <ArrowRight className="w-4 h-4" />
               </button>
 
-              <a
-                href={wa(`Hi Prajyot Infotech, I am interested in the ${t.name} (${t.price}).`)}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={() => openLeadModal({
+                  source: `Pricing Page - ${t.name} (Custom Request)`,
+                  projectType: t.name,
+                  budget: t.price,
+                  title: `Inquire About ${t.name}`,
+                  subtitle: `Have custom requirements for the ${t.name} package? Let's discuss.`
+                })}
                 className="w-full py-2 px-3 rounded-xl text-center text-xs font-semibold text-slate-600 hover:text-brand-600 hover:bg-slate-50 transition-colors block"
               >
-                Or Chat on WhatsApp →
-              </a>
+                Or Request Plan Consultation →
+              </button>
             </div>
           </article>
         ))}

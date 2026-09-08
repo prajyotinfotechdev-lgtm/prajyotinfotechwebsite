@@ -12,6 +12,7 @@ import {
   Sparkles,
   Server
 } from "lucide-react";
+import { useLeadModal } from "../context/LeadModalContext.jsx";
 
 const GUARANTEES = [
   {
@@ -81,6 +82,7 @@ const COMPARISON_ROWS = [
 ];
 
 export default function TrustGuarantees() {
+  const { openLeadModal } = useLeadModal();
   return (
     <section className="relative py-16 md:py-24 overflow-hidden">
       {/* Background ambient lighting */}
@@ -141,14 +143,21 @@ export default function TrustGuarantees() {
                   We sign standard mutual NDAs before any proprietary discovery call or workflow discussion.
                 </p>
               </div>
-              <a
-                href="https://wa.me/917020708747?text=Hi%20Prajyot%20Infotech,%20we%20want%20to%20discuss%20a%20confidential%20software%20project%20under%20NDA."
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={() =>
+                  openLeadModal({
+                    source: "Enterprise Trust & NDA Section",
+                    title: "Request NDA & Architecture Call",
+                    subtitle: "We sign mutual Non-Disclosure Agreements prior to project discovery to protect your IP.",
+                    projectType: "Enterprise ERP / CRM Suite",
+                    defaultMessage: "Requesting mutual Non-Disclosure Agreement (NDA) and confidential project discovery call.",
+                  })
+                }
                 className="mt-4 w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs text-center transition cursor-pointer"
               >
                 Request NDA & Architecture Call
-              </a>
+              </button>
             </div>
           </div>
         </div>

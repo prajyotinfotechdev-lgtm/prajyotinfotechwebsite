@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Building2, LineChart, Users, Laptop, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useLeadModal } from '../context/LeadModalContext.jsx';
 
 const questions = [
   {
@@ -26,6 +27,7 @@ const questions = [
 ];
 
 export default function DigitalReadinessQuiz() {
+  const { openLeadModal } = useLeadModal();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [isCalculated, setIsCalculated] = useState(false);
@@ -153,14 +155,21 @@ export default function DigitalReadinessQuiz() {
               </ul>
             </div>
 
-            <a
-              href={`https://wa.me/917020708747?text=${encodeURIComponent(`Hi Prajyot Infotech, I took the Digital Readiness Quiz. My result was: ${getRecommendation().title}. Can we discuss this?`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-navy-900 text-white font-bold hover:bg-brand-600 transition-colors shadow-lg hover:shadow-brand-500/25"
+            <button
+              type="button"
+              onClick={() =>
+                openLeadModal({
+                  source: "Digital Readiness Quiz",
+                  title: `Get ${getRecommendation().title} Plan`,
+                  subtitle: getRecommendation().desc,
+                  projectType: getRecommendation().title,
+                  defaultMessage: `Quiz Result: ${getRecommendation().title}. Challenge: ${answers.challenge || 'Not specified'}. Services needed: ${getRecommendation().services.join(', ')}.`,
+                })
+              }
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-navy-900 text-white font-bold hover:bg-brand-600 transition-colors shadow-lg hover:shadow-brand-500/25 cursor-pointer"
             >
               Discuss This Plan <ArrowRight className="w-5 h-5 ml-2" />
-            </a>
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

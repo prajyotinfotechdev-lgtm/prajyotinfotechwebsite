@@ -3,11 +3,13 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import Logo from "./Logo.jsx";
+import { useLeadModal } from "../context/LeadModalContext.jsx";
 
 const linkBase =
   "relative py-2 px-1 rounded transition-colors hover:text-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500";
 
 export default function Nav() {
+  const { openLeadModal } = useLeadModal();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
@@ -260,14 +262,20 @@ export default function Nav() {
 
                 {/* Quick Touch Bar */}
                 <div className="grid grid-cols-2 gap-2 pt-1 text-xs font-semibold">
-                  <a
-                    href="https://wa.me/917020708747?text=Hi%20Prajyot%20Infotech,%20I'd%20like%20to%20discuss%20a%20project."
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpen(false);
+                      openLeadModal({
+                        source: "Header Navigation (Mobile)",
+                        title: "Book Technical Consultation",
+                        subtitle: "Connect with Prajyot Infotech leads directly — fast response guaranteed."
+                      });
+                    }}
                     className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 active:bg-emerald-100 transition"
                   >
-                    <span>WhatsApp Chat</span>
-                  </a>
+                    <span>Request Consultation</span>
+                  </button>
                   <a
                     href="tel:+917020708747"
                     className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-100 text-slate-800 border border-slate-200 active:bg-slate-200 transition"

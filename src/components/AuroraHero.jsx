@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import "../styles/aurora.css"; // We will create this
+import { useLeadModal } from "../context/LeadModalContext.jsx";
 
 const WA_NUMBER = "917020708747";
 const wa = (t) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`;
@@ -14,6 +15,7 @@ const STATS = [
 ];
 
 export default function AuroraHero() {
+  const { openLeadModal } = useLeadModal();
   useEffect(() => {
     document.documentElement.classList.add("loaded");
   }, []);
@@ -104,11 +106,17 @@ export default function AuroraHero() {
           transition={{ delay: 0.45, duration: 0.6 }}
           className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full max-w-xs sm:max-w-none"
         >
-          <a
-            href={wa("Hi Prajyot Infotech, I would like to schedule a technical architecture discussion for an upcoming project.")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto group relative px-7 py-3.5 rounded-full bg-slate-900 text-white font-bold shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 overflow-hidden text-center justify-center flex items-center"
+          <button
+            type="button"
+            onClick={() =>
+              openLeadModal({
+                source: "Hero Section - Book Discovery Call",
+                title: "Book Technical Discovery Call",
+                subtitle: "Schedule a 15-min project scoping session with Prajyot Infotech leads.",
+                projectType: "Website / Web App Development",
+              })
+            }
+            className="w-full sm:w-auto group relative px-7 py-3.5 rounded-full bg-slate-900 text-white font-bold shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 overflow-hidden text-center justify-center flex items-center cursor-pointer"
           >
             <span className="relative z-10 flex items-center justify-center gap-2 text-sm sm:text-base">
               Book Discovery Call
@@ -116,7 +124,7 @@ export default function AuroraHero() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </span>
-          </a>
+          </button>
           <Link
             to="/estimate"
             className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-bold shadow-md shadow-brand-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-brand-500/30 hover:scale-[1.02] focus:outline-none text-sm sm:text-base text-center justify-center flex items-center"

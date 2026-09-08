@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLeadModal } from "../context/LeadModalContext.jsx";
 import {
   Layers,
   CheckCircle2,
@@ -26,6 +27,7 @@ const SPRINT_TABS = [
 ];
 
 export default function ClientExperienceSimulator() {
+  const { openLeadModal } = useLeadModal();
   const [activeTab, setActiveTab] = useState("milestones");
 
   return (
@@ -397,15 +399,21 @@ export default function ClientExperienceSimulator() {
               <span>Experience this exact transparent engineering flow on your project.</span>
             </div>
 
-            <a
-              href="https://wa.me/917020708747?text=Hi%20Prajyot%20Infotech,%20I%20saw%20your%20Client%20Experience%20Console.%20I%20want%20to%20schedule%20an%20Architecture%20Discovery%20Session."
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={() =>
+                openLeadModal({
+                  source: "Client Experience Console",
+                  title: "Schedule Architecture Discovery Session",
+                  subtitle: "Experience our transparent engineering lifecycle on your project.",
+                  projectType: "Enterprise ERP / CRM Suite",
+                })
+              }
               className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-bold text-xs hover:brightness-110 transition shadow-lg cursor-pointer"
             >
               <span>Schedule Architecture Discovery Session</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </a>
+            </button>
           </div>
         </div>
       </div>

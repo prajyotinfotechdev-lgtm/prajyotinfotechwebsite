@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Calculator, ArrowRight, ShieldCheck, Clock, TrendingUp, Sparkles } from "lucide-react";
+import { useLeadModal } from "../context/LeadModalContext.jsx";
 
 export default function ROICalculator() {
+  const { openLeadModal } = useLeadModal();
   const [currency, setCurrency] = useState("INR"); // 'INR' | 'USD'
   const [hoursPerWeek, setHoursPerWeek] = useState(18);
   const [hourlyValue, setHourlyValue] = useState(currency === "INR" ? 600 : 35);
@@ -194,15 +196,22 @@ export default function ROICalculator() {
 
             {/* CTAs */}
             <div className="mt-8 pt-4 space-y-3">
-              <a
-                href={`https://wa.me/917020708747?text=${encodeURIComponent(`Hi Prajyot Infotech, based on your ROI calculator, our company is losing ~${formattedSaved}/year in manual ops. We want to discuss custom software automation.`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={() =>
+                  openLeadModal({
+                    source: "Interactive ROI Calculator",
+                    title: "Get Custom Automation Scope & Proposal",
+                    subtitle: `Based on your ROI calculation, you can save ~${formattedSaved}/year and ${timeSavedPerMonth} hrs/mo.`,
+                    projectType: "WhatsApp & Workflow Automation",
+                    defaultMessage: `ROI Audit Results: Estimated annual savings ~${formattedSaved}. Reclaiming ~${timeSavedPerMonth} hours/month. Ready to automate manual workflows.`,
+                  })
+                }
                 className="flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-brand-600 text-white font-bold text-xs sm:text-sm hover:brightness-110 transition shadow-lg shadow-emerald-900/30 cursor-pointer"
               >
                 <span>Automate With Prajyot Infotech</span>
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </button>
               <div className="text-center">
                 <a
                   href="/estimate"

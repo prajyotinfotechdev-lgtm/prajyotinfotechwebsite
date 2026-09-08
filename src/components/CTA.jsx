@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
+import { createLead } from "../utils/leadStorage.js";
+
 const WHATSAPP_NUMBER = "917020708747"; // country code + number, no "+"
 const BRAND = "Prajyot Infotech";
 
@@ -53,20 +55,32 @@ Contact: ${form.contact.trim()}
 Message:
 I'm interested in building a premium website/app for my business. Please share timeline & fixed price.`.trim();
 
-  // Primary: WhatsApp
-  const handleWhatsApp = () => {
+  // Primary: WhatsApp (with Database Save)
+  const handleWhatsApp = async () => {
     if (!isValid || submitting) return;
     setSubmitting(true);
-    setStatus("Opening WhatsApp…");
+    setStatus("Recording lead & connecting...");
+
+    // Store in Supabase first
+    try {
+      await createLead({
+        name: form.name.trim(),
+        contact: form.contact.trim(),
+        projectType: "Website / App Project",
+        message: "I'm interested in building a premium website/app for my business. Please share timeline & fixed price.",
+        source: "Footer CTA Form"
+      });
+    } catch (err) {
+      console.error("Failed to store lead:", err);
+    }
+
     const text = encodeURIComponent(buildMessage());
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
-    // best effort: open in new tab to avoid popup blockers
     window.open(url, "_blank", "noopener,noreferrer");
-    setTimeout(() => {
-      setSubmitting(false);
-      setStatus("WhatsApp opened in a new tab.");
-      statusRef.current?.focus();
-    }, 300);
+    
+    setSubmitting(false);
+    setStatus("Lead recorded & WhatsApp opened!");
+    statusRef.current?.focus();
   };
 
   // Secondary: Gmail-first with robust fallbacks
