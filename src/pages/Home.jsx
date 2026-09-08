@@ -14,7 +14,7 @@ const Showreel     = lazy(() => import("../components/Showreel.jsx"));
 const TechStack    = lazy(() => import("../components/TechStack.jsx"));
 const CaseStudies  = lazy(() => import("../components/CaseStudies.jsx"));
 const CTA          = lazy(() => import("../components/CTA.jsx"));
-const ConsultBanner = lazy(() => import("../components/ConsultBanner.jsx"));
+
 const BeforeAfterSlider = lazy(() => import("../components/BeforeAfterSlider.jsx"));
 const ParallaxPortfolio = lazy(() => import("../components/ParallaxPortfolio.jsx"));
 const DigitalReadinessQuiz = lazy(() => import("../components/DigitalReadinessQuiz.jsx"));
@@ -167,10 +167,7 @@ export default function Home() {
 
       <div id="top" />
 
-      {/* Free Consultation Banner — fixed top/bottom */}
-      <Suspense fallback={null}>
-        <ConsultBanner />
-      </Suspense>
+
 
       <main role="main" aria-label="Prajyot Infotech — Website, App & Software Development">
 
