@@ -18,6 +18,13 @@ import {
   Radio,
   ArrowRight,
   MessageSquare,
+  Clock,
+  Copy,
+  CheckCheck,
+  User,
+  Phone,
+  Layers,
+  FileCode,
 } from "lucide-react";
 
 /**
@@ -33,14 +40,15 @@ const STEPS = {
   CONTACT: "contact",
   PROJECT: "project",
   BUDGET: "budget",
+  TIMELINE: "timeline",
   SUMMARY: "summary",
 };
 
 const PROJECT_OPTIONS = [
   { label: "Website / Web App", icon: "🌐", desc: "Corporate / SaaS / Custom Portal", badge: "High Speed" },
   { label: "Mobile Application", icon: "📱", desc: "Android / iOS / Flutter", badge: "Native UI" },
-  { label: "Enterprise ERP / CRM", icon: "⚡", desc: "Automated Workflows & Billing", badge: "Custom" },
-  { label: "AI & WhatsApp Bot", icon: "🤖", desc: "Intelligent Customer Automation", badge: "New" },
+  { label: "Enterprise ERP / CRM", icon: "⚡", desc: "Automated Workflows & Billing", badge: "Enterprise" },
+  { label: "AI & WhatsApp Bot", icon: "🤖", desc: "Intelligent Customer Automation", badge: "AI Automation" },
   { label: "UI/UX & Prototyping", icon: "🎨", desc: "Figma Design System & Design", badge: "Design" },
 ];
 
@@ -50,6 +58,22 @@ const BUDGET_OPTIONS = [
   { label: "₹2.0L - ₹5.0 Lakhs", badge: "Scale Enterprise", desc: "$2,500 - $6,500 USD" },
   { label: "₹5.0 Lakhs+", badge: "Bespoke Suite", desc: "$6,500+ USD" },
 ];
+
+const TIMELINE_OPTIONS = [
+  { label: "⚡ ASAP (< 2 Weeks)", badge: "Rush Sprint", desc: "Priority fast-track engineering sprint" },
+  { label: "🚀 3 - 6 Weeks", badge: "Standard Build", desc: "Full architectural design & QA cycle" },
+  { label: "🗓️ Flexible / Planning", badge: "Consultation", desc: "Roadmap, wireframes & scoping" },
+];
+
+const getScopeTechTags = (project) => {
+  const p = (project || "").toLowerCase();
+  if (p.includes("web") || p.includes("site")) return ["Next.js 14", "React", "Cloud CDN", "Tailwind CSS"];
+  if (p.includes("mobile") || p.includes("app")) return ["React Native", "Flutter", "iOS & Android", "Offline Sync"];
+  if (p.includes("erp") || p.includes("crm")) return ["Microservices", "PostgreSQL", "Role Auth", "Workflows"];
+  if (p.includes("ai") || p.includes("bot")) return ["LLM Pipelines", "WhatsApp API", "Vector Search", "Automation"];
+  if (p.includes("ui") || p.includes("ux") || p.includes("design")) return ["Figma Design", "Interactive Prototypes", "Design System"];
+  return ["Custom Architecture", "High Performance", "Cloud Native"];
+};
 
 // Validators
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -101,12 +125,13 @@ export default function HelpBot({
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState(() => safeGetItem("helpbot:step") || STEPS.NAME);
   const [form, setForm] = useState(() =>
-    safeGet("helpbot:form", { name: "", contact: "", project: "", budget: "", notes: "" })
+    safeGet("helpbot:form", { name: "", contact: "", project: "", budget: "", timeline: "", notes: "" })
   );
   const [messages, setMessages] = useState(() => safeGet("helpbot:messages_txt", []));
   const [unread, setUnread] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const recognitionRef = useRef(null);
   const listRef = useRef(null);
@@ -262,7 +287,7 @@ export default function HelpBot({
       setForm(nextForm);
       goto(STEPS.CONTACT);
       return botSayAsync(
-        `Pleasure to meet you, ${clean.split(" ")[0]}! What is your Phone Number or Email address?`,
+        `Pleasure to meet you, ${clean.split(" ")[0]}! What is your Phone Number or Email address so our lead architect can send your custom blueprint?`,
         {},
         700
       );
@@ -281,11 +306,18 @@ export default function HelpBot({
       const nextForm = { ...form, project: clean };
       setForm(nextForm);
       goto(STEPS.BUDGET);
-      return botSayAsync("Excellent choice. What is your estimated investment range for this project?", {}, 700);
+      return botSayAsync("Excellent choice! What is your estimated investment allocation for this build?", {}, 700);
     }
 
     if (step === STEPS.BUDGET) {
       const nextForm = { ...form, budget: clean };
+      setForm(nextForm);
+      goto(STEPS.TIMELINE);
+      return botSayAsync("Almost done! What is your target deployment timeline?", {}, 700);
+    }
+
+    if (step === STEPS.TIMELINE) {
+      const nextForm = { ...form, timeline: clean };
       setForm(nextForm);
       goto(STEPS.SUMMARY);
 
@@ -294,21 +326,21 @@ export default function HelpBot({
         name: nextForm.name,
         contact: nextForm.contact,
         projectType: nextForm.project,
-        budget: clean,
-        notes: nextForm.notes || "Cyber-AI Assistant Lead",
+        budget: nextForm.budget,
+        notes: `Timeline: ${clean} | ${nextForm.notes || "Cyber-AI Assistant Lead"}`,
         source: "Prajyot Cyber-AI Scoping Engine",
       }).catch((err) => console.error("Error saving lead:", err));
 
       return botSayAsync(
-        "🚀 ACCESS GRANTED! Your project inquiry has been encrypted and logged directly into our engineering dashboard. Our technical team will reach out within 2 hours!",
+        "🎉 SPECIFICATION VERIFIED! Your custom architecture blueprint has been generated and dispatched with VIP priority to our Chief Solutions Architect. We will reach out within 2 hours!",
         {},
-        900
+        850
       );
     }
 
     if (step === STEPS.SUMMARY) {
       setForm((f) => ({ ...f, notes: (f.notes ? f.notes + "\n" : "") + clean }));
-      return botSayAsync("Noted! Additional requirement added to your encrypted project record.", {}, 600);
+      return botSayAsync("Noted! Added your custom requirement to your project specification.", {}, 600);
     }
   };
 
@@ -322,7 +354,7 @@ export default function HelpBot({
   };
 
   const clearChat = () => {
-    setForm({ name: "", contact: "", project: "", budget: "", notes: "" });
+    setForm({ name: "", contact: "", project: "", budget: "", timeline: "", notes: "" });
     setStep(STEPS.NAME);
     setMessages([]);
     const hour = new Date().getHours();
@@ -339,15 +371,17 @@ export default function HelpBot({
   const getStepProgress = () => {
     switch (step) {
       case STEPS.NAME:
-        return { step: 1, percent: "25%", label: "STEP 01 // CONTACT IDENTIFIER" };
+        return { step: 1, percent: "20%", label: "STEP 01 // CLIENT IDENTIFIER" };
       case STEPS.CONTACT:
-        return { step: 2, percent: "50%", label: "STEP 02 // REACHABILITY PROTOCOL" };
+        return { step: 2, percent: "40%", label: "STEP 02 // SECURE CONTACT CHANNEL" };
       case STEPS.PROJECT:
-        return { step: 3, percent: "75%", label: "STEP 03 // ARCHITECTURE SPEC" };
+        return { step: 3, percent: "60%", label: "STEP 03 // ARCHITECTURE SPEC" };
       case STEPS.BUDGET:
-        return { step: 4, percent: "90%", label: "STEP 04 // INVESTMENT ALLOCATION" };
+        return { step: 4, percent: "80%", label: "STEP 04 // INVESTMENT ALLOCATION" };
+      case STEPS.TIMELINE:
+        return { step: 5, percent: "95%", label: "STEP 05 // SPRINT TIMELINE" };
       case STEPS.SUMMARY:
-        return { step: 4, percent: "100%", label: "STATUS // ENCRYPTED & SAVED TO CRM" };
+        return { step: 5, percent: "100%", label: "STATUS // SPECIFICATION DISPATCHED" };
       default:
         return { step: 1, percent: "20%", label: "AI ENGINE ACTIVE" };
     }
@@ -361,9 +395,30 @@ export default function HelpBot({
         `👤 Name: ${form.name}\n` +
         `📞 Contact: ${form.contact}\n` +
         `🚀 Project: ${form.project}\n` +
-        `💰 Budget: ${form.budget}`
+        `💰 Investment: ${form.budget}\n` +
+        (form.timeline ? `⏱️ Timeline: ${form.timeline}\n` : "") +
+        `\nCould we discuss this project blueprint?`
     );
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waText}`, "_blank", "noopener,noreferrer");
+  };
+
+  const copyDossier = () => {
+    const summaryText =
+      `PRAJYOT INFOTECH - PROJECT ARCHITECTURE SPECIFICATION\n` +
+      `===================================================\n` +
+      `👤 Client: ${form.name}\n` +
+      `📞 Contact: ${form.contact}\n` +
+      `🚀 Scope: ${form.project}\n` +
+      `💎 Investment: ${form.budget}\n` +
+      (form.timeline ? `⏱️ Timeline: ${form.timeline}\n` : "") +
+      `🔒 Security: Verified 256-Bit TLS\n` +
+      `⚡ SLA: Direct review within 2 business hours\n` +
+      `🌐 https://prajyotinfotech.com | WhatsApp: +91 7020708747`;
+
+    navigator.clipboard?.writeText(summaryText).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    });
   };
 
   return (
@@ -635,37 +690,200 @@ export default function HelpBot({
                   </motion.div>
                 )}
 
-                {/* INLINE SUMMARY & SUCCESS STATE */}
+                {/* INLINE TIMELINE OPTIONS */}
+                {step === STEPS.TIMELINE && !isTyping && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="mt-3 pl-9 space-y-2"
+                  >
+                    <div className="text-[10px] font-mono font-extrabold uppercase tracking-wider text-amber-400/90 mb-2">
+                      SELECT TARGET SPRINT TIMELINE:
+                    </div>
+                    <div className="grid grid-cols-1 gap-2">
+                      {TIMELINE_OPTIONS.map((opt) => (
+                        <button
+                          key={opt.label}
+                          type="button"
+                          onClick={() => handleUserInput(opt.label)}
+                          className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900/80 px-3.5 py-2.5 text-left text-xs font-semibold text-white transition-all hover:bg-slate-850 hover:border-amber-500 hover:shadow-lg hover:shadow-amber-500/20 group cursor-pointer"
+                        >
+                          <div>
+                            <div className="font-bold text-white group-hover:text-amber-300 transition">
+                              {opt.label}
+                            </div>
+                            <div className="text-[10px] text-slate-400">{opt.desc}</div>
+                          </div>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-950 font-bold transition">
+                            {opt.badge}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* INLINE SUMMARY & SUCCESS GRAPHIC DOSSIER */}
                 {step === STEPS.SUMMARY && !isTyping && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="mt-4 ml-9 rounded-2xl border border-emerald-500/40 bg-emerald-950/40 p-4 text-[13px] text-white backdrop-blur-md shadow-xl space-y-3"
+                    className="mt-4 ml-6 sm:ml-9 overflow-hidden rounded-2xl border border-cyan-500/40 bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-slate-900/95 p-4 sm:p-5 text-white backdrop-blur-xl shadow-2xl shadow-cyan-950/60 space-y-3.5 relative group"
                   >
-                    <div className="flex items-center gap-2 font-black text-emerald-400 text-sm">
-                      <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                      <span>INQUIRY ENCRYPTED & SAVED!</span>
+                    {/* Ambient Cyber Lighting */}
+                    <div className="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-cyan-500/15 blur-2xl pointer-events-none" />
+                    <div className="absolute -bottom-12 -left-12 h-32 w-32 rounded-full bg-emerald-500/15 blur-2xl pointer-events-none" />
+
+                    {/* Dossier Header */}
+                    <div className="flex items-center justify-between border-b border-slate-800/80 pb-2.5">
+                      <div className="flex items-center gap-2">
+                        <span className="relative flex h-2.5 w-2.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                        </span>
+                        <span className="text-[11px] font-mono font-bold tracking-wider text-emerald-400 uppercase">
+                          Specification Dispatched
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-slate-900 border border-slate-800 text-[10px] font-mono text-cyan-300">
+                        <ShieldCheck className="w-3 h-3 text-cyan-400" />
+                        <span>#PI-SPEC-{Math.abs(((form.name?.length || 7) * 941) % 8999 + 1000)}</span>
+                      </div>
                     </div>
 
-                    <div className="space-y-1.5 text-xs text-slate-200 border-t border-emerald-500/20 pt-2.5 font-mono">
-                      <div><span className="text-slate-400">Name:</span> <strong className="text-white">{form.name}</strong></div>
-                      <div><span className="text-slate-400">Contact:</span> <strong className="text-white">{form.contact}</strong></div>
-                      <div><span className="text-slate-400">Scope:</span> <strong className="text-white">{form.project}</strong></div>
-                      <div><span className="text-slate-400">Investment:</span> <strong className="text-white">{form.budget}</strong></div>
+                    {/* Graphic Holographic Spec Grid */}
+                    <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                      {/* Client */}
+                      <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/90 flex flex-col justify-between">
+                        <span className="text-[10px] text-slate-400 flex items-center gap-1 uppercase">
+                          <User className="w-3 h-3 text-slate-500" /> Client
+                        </span>
+                        <span className="text-white font-bold truncate mt-1 text-[12px]">{form.name}</span>
+                      </div>
+
+                      {/* Contact */}
+                      <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/90 flex flex-col justify-between">
+                        <span className="text-[10px] text-slate-400 flex items-center gap-1 uppercase">
+                          <Phone className="w-3 h-3 text-slate-500" /> Direct Reach
+                        </span>
+                        <span className="text-emerald-300 font-bold truncate mt-1 text-[12px]">{form.contact}</span>
+                      </div>
+
+                      {/* Scope */}
+                      <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/90 flex flex-col justify-between">
+                        <span className="text-[10px] text-slate-400 flex items-center gap-1 uppercase">
+                          <Layers className="w-3 h-3 text-cyan-400" /> Project Scope
+                        </span>
+                        <span className="text-cyan-300 font-bold truncate mt-1 text-[12px]">{form.project}</span>
+                      </div>
+
+                      {/* Investment */}
+                      <div className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/90 flex flex-col justify-between">
+                        <span className="text-[10px] text-slate-400 flex items-center gap-1 uppercase">
+                          <Zap className="w-3 h-3 text-indigo-400" /> Investment
+                        </span>
+                        <span className="text-indigo-300 font-bold truncate mt-1 text-[12px]">{form.budget}</span>
+                      </div>
+
+                      {form.timeline && (
+                        <div className="p-2 rounded-xl bg-slate-900/80 border border-slate-800/90 flex items-center justify-between col-span-2 text-[11px]">
+                          <span className="text-[10px] text-slate-400 flex items-center gap-1 uppercase">
+                            <Clock className="w-3 h-3 text-amber-400" /> Launch Target:
+                          </span>
+                          <span className="text-amber-300 font-bold">{form.timeline}</span>
+                        </div>
+                      )}
                     </div>
 
-                    <div className="text-[11px] text-emerald-300 font-bold bg-emerald-900/50 p-2.5 rounded-xl border border-emerald-500/30 flex items-center gap-2">
-                      <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                      <span>Logged into Admin Portal. Response in &lt; 2 hrs.</span>
+                    {/* Architecture Recommended Tags */}
+                    <div className="p-2.5 rounded-xl bg-slate-900/50 border border-slate-800/80 space-y-1.5">
+                      <div className="text-[9px] font-mono text-slate-400 uppercase tracking-wider flex items-center gap-1">
+                        <Cpu className="w-3 h-3 text-cyan-400" /> Recommended Stack Preview:
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {getScopeTechTags(form.project).map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className="px-2 py-0.5 rounded-md bg-slate-800/90 text-[10px] font-mono text-cyan-300 border border-cyan-500/20"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
+                    {/* SLA Response Guarantee Box (NO ADMIN PORTAL JARGON) */}
+                    <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-r from-cyan-950/40 via-slate-900/80 to-slate-900/80 p-2.5 flex items-start gap-2.5">
+                      <div className="p-1.5 rounded-lg bg-cyan-500/20 text-cyan-300 shrink-0 mt-0.5">
+                        <Clock className="w-4 h-4" />
+                      </div>
+                      <div className="text-xs">
+                        <div className="font-bold text-white flex items-center gap-1.5">
+                          Priority Response Guarantee
+                          <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
+                            &lt; 2 Hours
+                          </span>
+                        </div>
+                        <div className="text-[11px] text-slate-300 mt-0.5">
+                          Assigned to Senior Solutions Architect for roadmap review.
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* VIP Inclusions Badges */}
+                    <div className="grid grid-cols-2 gap-2 text-[10px] font-mono text-slate-300">
+                      <div className="flex items-center gap-1.5 p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span>Free Architecture Wireframe</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+                        <ShieldCheck className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                        <span>100% NDA & IP Protected</span>
+                      </div>
+                    </div>
+
+                    {/* WhatsApp VIP Button */}
                     <button
                       onClick={openWhatsAppNow}
-                      className="w-full mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-teal-500 hover:bg-teal-600 text-white py-2.5 px-4 font-semibold text-xs transition-all shadow-md shadow-teal-500/20 cursor-pointer"
+                      className="relative w-full group overflow-hidden rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 p-[1px] shadow-lg shadow-emerald-500/25 transition-all hover:shadow-emerald-500/40 cursor-pointer"
                     >
-                      <MessageSquare className="w-4 h-4" />
-                      <span>Chat Directly on WhatsApp Now</span>
+                      <div className="relative flex items-center justify-between rounded-xl bg-slate-950/40 px-3.5 py-2.5 text-white transition group-hover:bg-transparent">
+                        <div className="flex items-center gap-2.5">
+                          <div className="p-1.5 rounded-lg bg-emerald-500 text-slate-950">
+                            <MessageSquare className="w-4 h-4 fill-current" />
+                          </div>
+                          <div className="text-left">
+                            <div className="text-xs font-bold tracking-wide">Chat Directly on WhatsApp</div>
+                            <div className="text-[10px] text-emerald-200/90 font-mono">Bypass queue • Instant architect response</div>
+                          </div>
+                        </div>
+                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 text-emerald-300" />
+                      </div>
                     </button>
+
+                    {/* Copy Blueprint Button */}
+                    <button
+                      type="button"
+                      onClick={copyDossier}
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900/80 hover:bg-slate-850 border border-slate-800 text-slate-300 hover:text-white py-2 px-3 text-[11px] font-mono transition cursor-pointer"
+                    >
+                      {copied ? (
+                        <>
+                          <CheckCheck className="w-3.5 h-3.5 text-emerald-400" />
+                          <span className="text-emerald-400 font-bold">Dossier Copied to Clipboard!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3.5 h-3.5 text-slate-400" />
+                          <span>Copy Specification Summary</span>
+                        </>
+                      )}
+                    </button>
+
+                    <div className="text-center text-[10px] text-slate-500 font-mono">
+                      Want to add custom features? Type in the box below anytime.
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -696,7 +914,13 @@ export default function HelpBot({
                     ? "Type your name..."
                     : step === STEPS.CONTACT
                     ? "Enter Email or Phone..."
-                    : "Type custom project detail..."
+                    : step === STEPS.PROJECT
+                    ? "Type custom project detail..."
+                    : step === STEPS.BUDGET
+                    ? "Type custom investment detail..."
+                    : step === STEPS.TIMELINE
+                    ? "Select or type timeline..."
+                    : "Type additional requirements or questions..."
                 }
                 className="flex-1 rounded-xl border border-slate-800 bg-slate-950 px-4 py-2.5 text-xs text-white placeholder:text-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500 transition-all min-w-0 font-medium"
                 maxLength={300}

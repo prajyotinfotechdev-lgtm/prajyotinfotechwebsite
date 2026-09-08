@@ -184,13 +184,13 @@ export default function LeadModal() {
 
                 <div className="space-y-2">
                   <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 inline-block mb-1">
-                    STATUS // CONFIRMED & LOGGED TO CRM
+                    STATUS // SPECIFICATION VERIFIED & DISPATCHED
                   </span>
                   <h4 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                     Inquiry Recorded Successfully!
                   </h4>
                   <p className="text-xs sm:text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-                    Thank you, <strong className="text-white">{form.name}</strong>. Your project specification has been encrypted and saved directly to our lead engineering team. We will reach out within <span className="text-cyan-400 font-bold">2 business hours</span>.
+                    Thank you, <strong className="text-white">{form.name}</strong>. Your project specification has been encrypted and securely routed to our senior engineering team. We will reach out within <span className="text-cyan-400 font-bold">2 business hours</span>.
                   </p>
                 </div>
 
@@ -199,7 +199,7 @@ export default function LeadModal() {
                   <div className="flex items-center justify-between border-b border-slate-800 pb-2 text-[11px] text-emerald-400">
                     <span className="flex items-center gap-1.5 font-bold">
                       <ShieldCheck className="w-4 h-4" />
-                      <span>CRM RECORD #PI-{Math.floor(100000 + Math.random() * 900000)}</span>
+                      <span>SPECIFICATION DOSSIER #PI-{Math.floor(100000 + Math.random() * 900000)}</span>
                     </span>
                     <span className="text-slate-400">256-BIT TLS</span>
                   </div>
