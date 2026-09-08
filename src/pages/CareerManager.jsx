@@ -30,7 +30,11 @@ import {
   MapPin,
   Clock,
   IndianRupee,
-  Layers
+  Layers,
+  Zap,
+  PhoneCall,
+  MessageSquare,
+  Terminal
 } from "lucide-react";
 import Seo from "../components/Seo.jsx";
 import { supabase } from "../lib/supabase.js";
@@ -889,155 +893,193 @@ export default function CareerManager() {
             </div>
           )}
 
-          {/* TAB 3: CUSTOMER LEADS MANAGEMENT */}
+          {/* TAB 3: CYBER CRM LEADS HUB */}
           {activeTab === "leads" && (
-            <div className="mt-6 space-y-6">
-              {/* Action Toolbar */}
-              <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div className="relative flex-1 max-w-md">
-                  <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    value={searchLeadQuery}
-                    onChange={(e) => setSearchLeadQuery(e.target.value)}
-                    placeholder="Search leads by name, contact, project..."
-                    className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 bg-slate-50 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500"
-                  />
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6 bg-slate-950 rounded-3xl border border-cyan-500/30 shadow-[0_0_40px_rgba(6,182,212,0.15)] overflow-hidden relative"
+            >
+              {/* Ambient Grid Background */}
+              <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiM2YjcyODAiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')] opacity-50" />
+              <div className="absolute -top-32 -left-32 w-64 h-64 bg-cyan-500/20 rounded-full blur-[100px] pointer-events-none" />
+              <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-indigo-500/20 rounded-full blur-[100px] pointer-events-none" />
+              
+              <div className="relative p-6 sm:p-8 space-y-8 z-10">
+                {/* Header & Stats */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-cyan-500/20 pb-6">
+                  <div>
+                    <div className="flex items-center gap-2 text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider mb-2">
+                      <Zap className="w-4 h-4 animate-pulse" />
+                      <span>Architecture Division CRM</span>
+                    </div>
+                    <h2 className="text-3xl font-black text-white tracking-tight">Active Client Leads</h2>
+                    <p className="text-slate-400 text-sm mt-1 max-w-lg">
+                      Encrypted pipeline of all incoming inquiries from the architecture portal and website CTAs.
+                    </p>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 min-w-[120px]">
+                      <span className="text-xs font-mono text-slate-500 uppercase">Total Volume</span>
+                      <div className="text-3xl font-black text-white mt-1">{leads.length}</div>
+                    </div>
+                    <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-2xl p-4 min-w-[120px]">
+                      <span className="text-xs font-mono text-cyan-400 uppercase">New Inquiries</span>
+                      <div className="text-3xl font-black text-cyan-300 mt-1">{newLeads}</div>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Status Filter Buttons */}
-                <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
-                  {["All", "New", "Contacted", "Qualified", "Converted", "Archived"].map((st) => (
-                    <button
-                      key={st}
-                      onClick={() => setSelectedLeadStatus(st)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                        selectedLeadStatus === st
-                          ? "bg-violet-600 text-white shadow-sm"
-                          : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                      }`}
-                    >
-                      {st}
-                    </button>
-                  ))}
-                </div>
-              </div>
+                {/* Filters */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="relative flex-1 max-w-md group">
+                    <Search className="w-5 h-5 text-cyan-500/50 absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-cyan-400 transition-colors" />
+                    <input
+                      type="text"
+                      value={searchLeadQuery}
+                      onChange={(e) => setSearchLeadQuery(e.target.value)}
+                      placeholder="Search leads by name, contact, project..."
+                      className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-800 bg-slate-900/50 text-white placeholder-slate-500 text-sm focus:bg-slate-900 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all font-mono"
+                    />
+                  </div>
 
-              {/* Leads List */}
-              <div className="space-y-3">
-                {filteredLeads.length > 0 ? (
-                  filteredLeads.map((lead) => {
-                    const cleanContact = lead.contact.replace(/[^\d+]/g, "");
-                    const isPhoneNum = /^\+?\d{8,15}$/.test(cleanContact);
-                    const waUrl = isPhoneNum
-                      ? `https://wa.me/${cleanContact}?text=${encodeURIComponent(`Hi ${lead.name}, thank you for contacting Prajyot Infotech! We received your enquiry for ${lead.projectType || 'services'}.`)}`
-                      : null;
-
-                    return (
-                      <div
-                        key={lead.id}
-                        className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row md:items-center justify-between gap-4"
+                  <div className="flex flex-wrap items-center gap-2">
+                    {["All", "New", "Contacted", "Qualified", "Converted", "Archived"].map((st) => (
+                      <button
+                        key={st}
+                        onClick={() => setSelectedLeadStatus(st)}
+                        className={`px-4 py-2 rounded-lg text-xs font-mono font-bold transition-all border ${
+                          selectedLeadStatus === st
+                            ? "bg-cyan-500/20 text-cyan-300 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+                            : "bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800 hover:text-slate-300"
+                        }`}
                       >
-                        <div className="flex-1 space-y-2">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <span
-                              className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
-                                lead.status === "New"
-                                  ? "bg-rose-100 text-rose-800 animate-pulse"
-                                  : lead.status === "Contacted"
-                                  ? "bg-amber-100 text-amber-800"
-                                  : lead.status === "Qualified"
-                                  ? "bg-blue-100 text-blue-800"
-                                  : lead.status === "Converted"
-                                  ? "bg-emerald-100 text-emerald-800"
-                                  : "bg-slate-100 text-slate-600"
-                              }`}
-                            >
-                              {lead.status}
-                            </span>
+                        {st}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-                            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-violet-50 text-violet-700 border border-violet-200/50">
-                              Source: {lead.source || "Website"}
-                            </span>
+                {/* Leads Grid */}
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                  {filteredLeads.length > 0 ? (
+                    filteredLeads.map((lead) => {
+                      const cleanContact = lead.contact.replace(/[^\d+]/g, "");
+                      const isPhoneNum = /^\+?\d{8,15}$/.test(cleanContact);
+                      const waUrl = isPhoneNum
+                        ? `https://wa.me/${cleanContact}?text=${encodeURIComponent(`Hi ${lead.name}, thank you for contacting Prajyot Infotech! We received your enquiry for ${lead.projectType || 'services'}.`)}`
+                        : null;
 
-                            <span className="text-xs text-slate-400">
-                              {new Date(lead.createdAt || lead.created_at).toLocaleString()}
-                            </span>
+                      return (
+                        <div
+                          key={lead.id}
+                          className="group relative bg-slate-900/60 backdrop-blur-sm border border-slate-800 rounded-2xl p-5 sm:p-6 hover:border-cyan-500/50 transition-all duration-300 flex flex-col"
+                        >
+                          <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-cyan-500 to-indigo-600 rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                          
+                          <div className="flex justify-between items-start mb-4">
+                            <div>
+                              <div className="flex items-center gap-3 mb-2">
+                                <span className={`px-2.5 py-1 rounded-md text-[10px] font-mono font-bold uppercase tracking-wider ${
+                                  lead.status === "New" ? "bg-rose-500/20 text-rose-400 border border-rose-500/30 animate-pulse" :
+                                  lead.status === "Contacted" ? "bg-amber-500/20 text-amber-400 border border-amber-500/30" :
+                                  lead.status === "Qualified" ? "bg-indigo-500/20 text-indigo-400 border border-indigo-500/30" :
+                                  lead.status === "Converted" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" :
+                                  "bg-slate-800 text-slate-400 border border-slate-700"
+                                }`}>
+                                  {lead.status}
+                                </span>
+                                <span className="text-[10px] font-mono text-slate-500 flex items-center gap-1">
+                                  <Clock className="w-3 h-3" />
+                                  {new Date(lead.createdAt || lead.created_at).toLocaleString()}
+                                </span>
+                              </div>
+                              <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">{lead.name}</h3>
+                            </div>
+                            
+                            <div className="text-right">
+                              <span className="inline-block px-2 py-1 rounded bg-slate-800/80 border border-slate-700 text-[10px] font-mono text-slate-400 uppercase tracking-wider mb-1">
+                                Source: {lead.source || "Website"}
+                              </span>
+                              <div className="flex items-center justify-end gap-1 text-slate-300 font-mono text-sm">
+                                <PhoneCall className="w-3.5 h-3.5 text-cyan-500" />
+                                <span>{lead.contact}</span>
+                              </div>
+                            </div>
                           </div>
 
-                          <h3 className="text-lg font-bold text-navy-900">{lead.name}</h3>
-
-                          <div className="flex flex-wrap items-center gap-4 text-xs text-slate-600 font-medium">
-                            <span className="flex items-center gap-1">
-                              <Phone className="w-3.5 h-3.5 text-slate-400" />
-                              <strong className="text-navy-900">{lead.contact}</strong>
-                            </span>
+                          <div className="grid grid-cols-2 gap-3 mb-4 flex-1">
                             {lead.projectType && (
-                              <span className="bg-slate-100 px-2 py-0.5 rounded-md text-slate-700">
-                                Project: <strong>{lead.projectType}</strong>
-                              </span>
+                              <div className="bg-slate-950/50 border border-slate-800 rounded-xl p-3">
+                                <div className="text-[10px] font-mono text-slate-500 uppercase mb-1">Architecture Type</div>
+                                <div className="text-sm text-slate-200 font-medium line-clamp-1" title={lead.projectType}>{lead.projectType}</div>
+                              </div>
                             )}
                             {lead.budget && (
-                              <span className="bg-slate-100 px-2 py-0.5 rounded-md text-slate-700">
-                                Budget: <strong>{lead.budget}</strong>
-                              </span>
+                              <div className="bg-slate-950/50 border border-slate-800 rounded-xl p-3">
+                                <div className="text-[10px] font-mono text-slate-500 uppercase mb-1">Est. Investment</div>
+                                <div className="text-sm text-emerald-400 font-mono font-bold line-clamp-1" title={lead.budget}>{lead.budget}</div>
+                              </div>
                             )}
                           </div>
 
                           {lead.message && (
-                            <p className="text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 italic">
+                            <div className="mb-5 bg-slate-950/80 border border-slate-800 rounded-xl p-3 text-sm text-slate-400 italic">
+                              <MessageSquare className="w-4 h-4 inline-block mr-2 text-slate-600" />
                               "{lead.message}"
-                            </p>
-                          )}
-                        </div>
-
-                        {/* Action Buttons */}
-                        <div className="flex flex-wrap items-center gap-2.5 shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-slate-100">
-                          {waUrl && (
-                            <a
-                              href={waUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-transform active:scale-95"
-                            >
-                              <span>WhatsApp</span>
-                              <ExternalLink className="w-3.5 h-3.5" />
-                            </a>
+                            </div>
                           )}
 
-                          <div>
-                            <select
-                              value={lead.status}
-                              onChange={(e) => handleLeadStatusChange(lead.id, e.target.value)}
-                              className="bg-slate-50 border border-slate-200 text-xs rounded-xl px-2.5 py-2 font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-violet-500"
-                            >
-                              {["New", "Contacted", "Qualified", "Converted", "Archived"].map((st) => (
-                                <option key={st} value={st}>
-                                  {st}
-                                </option>
-                              ))}
-                            </select>
+                          <div className="mt-auto pt-4 border-t border-slate-800 flex items-center justify-between gap-3">
+                            <div className="flex gap-2">
+                              {waUrl && (
+                                <a
+                                  href={waUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="px-4 py-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-mono font-bold flex items-center gap-2 transition-all hover:scale-105"
+                                >
+                                  <ExternalLink className="w-3.5 h-3.5" />
+                                  <span>INITIATE CHAT</span>
+                                </a>
+                              )}
+                            </div>
+                            
+                            <div className="flex items-center gap-2">
+                              <select
+                                value={lead.status}
+                                onChange={(e) => handleLeadStatusChange(lead.id, e.target.value)}
+                                className="bg-slate-900 border border-slate-700 text-xs font-mono rounded-lg px-3 py-2 text-slate-300 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+                              >
+                                {["New", "Contacted", "Qualified", "Converted", "Archived"].map((st) => (
+                                  <option key={st} value={st}>
+                                    {st}
+                                  </option>
+                                ))}
+                              </select>
+                              <button
+                                onClick={() => handleDeleteLead(lead.id, lead.name)}
+                                className="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:bg-rose-500/10 hover:border-rose-500/30 text-slate-500 hover:text-rose-400 transition-all"
+                                title="Purge Record"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
                           </div>
-
-                          <button
-                            onClick={() => handleDeleteLead(lead.id, lead.name)}
-                            className="p-2 rounded-xl hover:bg-rose-50 text-slate-400 hover:text-rose-600 transition-colors"
-                            title="Delete Lead"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
                         </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <div className="bg-white p-12 text-center rounded-2xl border border-slate-200">
-                    <Mail className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-                    <p className="text-slate-500 text-sm">No customer leads received yet matching this filter.</p>
-                  </div>
-                )}
+                      );
+                    })
+                  ) : (
+                    <div className="col-span-full bg-slate-900/50 border border-slate-800 border-dashed rounded-2xl p-12 text-center flex flex-col items-center">
+                      <Terminal className="w-12 h-12 text-slate-600 mb-4" />
+                      <h4 className="text-lg font-mono font-bold text-slate-300 mb-2">NO RECORDS FOUND</h4>
+                      <p className="text-slate-500 text-sm max-w-md">No architecture leads match the current filters. Waiting for incoming telemetry...</p>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            </motion.div>
           )}
 
           {/* --- CREATE / EDIT JOB MODAL --- */}
