@@ -217,6 +217,7 @@ export default function Footer() {
               Engineering &amp; Tools
             </h4>
             <ul className="space-y-3 text-slate-400 text-xs">
+              <li><Link to="/products/hrms" className="hover:text-amber-300 transition-colors flex items-center gap-1.5 font-semibold text-amber-400"><span className="text-amber-400">🏗️</span> Construction HRMS (Flagship)</Link></li>
               <li><Link to="/estimate" className="hover:text-cyan-300 transition-colors flex items-center gap-1.5 font-medium text-slate-300"><span className="text-cyan-400">⚡</span> Project Cost Estimator</Link></li>
               <li><Link to="/articles" className="hover:text-cyan-300 transition-colors">Tech Architecture Lab</Link></li>
               <li><Link to="/glossary" className="hover:text-cyan-300 transition-colors">Software Engineering Glossary</Link></li>

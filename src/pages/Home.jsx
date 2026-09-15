@@ -25,6 +25,7 @@ const ROICalculator = lazy(() => import("../components/ROICalculator.jsx"));
 const TrustGuarantees = lazy(() => import("../components/TrustGuarantees.jsx"));
 const ArchitectureBlueprint = lazy(() => import("../components/ArchitectureBlueprint.jsx"));
 const ClientExperienceSimulator = lazy(() => import("../components/ClientExperienceSimulator.jsx"));
+const HrmsSpotlight = lazy(() => import("../components/HrmsSpotlight.jsx"));
 
 const SectionSkeleton = ({ className = "" }) => (
   <div className={`mx-auto w-full max-w-7xl px-4 py-16 ${className}`}>
@@ -187,6 +188,11 @@ export default function Home() {
         {/* 2.5 BEFORE / AFTER SLIDER - educational quality contrast */}
         <Suspense fallback={<SectionSkeleton />}>
           <BeforeAfterSlider />
+        </Suspense>
+
+        {/* 2.75 FLAGSHIP PRODUCT SPOTLIGHT — PRAJYOT CONSTRUCTION HRMS */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <HrmsSpotlight />
         </Suspense>
 
         {/* 3. WHAT WE BUILD — service benefit cards (business outcomes) */}

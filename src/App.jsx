@@ -21,6 +21,7 @@ const Articles = lazy(() => import("./pages/Articles.jsx"));
 const TechGlossary = lazy(() => import("./pages/TechGlossary.jsx"));
 const Careers = lazy(() => import("./pages/Careers.jsx"));
 const CareerManager = lazy(() => import("./pages/CareerManager.jsx"));
+const ConstructionHrmsPage = lazy(() => import("./pages/ConstructionHrmsPage.jsx"));
 
 import HelpBot from "./components/HelpBot.jsx";
 import FloatingWhatsApp from "./components/FloatingWhatsApp.jsx";
@@ -78,6 +79,7 @@ export default function App() {
               <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
               <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
               <Route path="/estimate" element={<PageWrapper><Estimate /></PageWrapper>} />
+              <Route path="/products/hrms" element={<PageWrapper><ConstructionHrmsPage /></PageWrapper>} />
               {Object.keys(CITIES_DATA).map((cityKey) => (
                 <Route
                   key={cityKey}

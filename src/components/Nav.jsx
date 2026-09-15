@@ -85,6 +85,7 @@ export default function Nav() {
   const navLinks = useMemo(
     () => [
       { to: "/", label: "Home" },
+      { to: "/products/hrms", label: "Construction HRMS", badge: "Flagship" },
       { to: "/work", label: "Work" },
       { to: "/services", label: "Services" },
       { to: "/careers", label: "Careers" },
@@ -142,9 +143,16 @@ export default function Nav() {
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-6 text-sm md:flex" aria-label="Main">
-          {navLinks.map(({ to, label }) => (
+          {navLinks.map(({ to, label, badge }) => (
             <NavLink key={`desk:${to}`} to={to} className={activeClass} aria-label={label}>
-              {label}
+              <span className="flex items-center gap-1.5">
+                <span>{label}</span>
+                {badge && (
+                  <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/15 text-amber-700 border border-amber-500/30">
+                    {badge}
+                  </span>
+                )}
+              </span>
             </NavLink>
           ))}
           <Link
@@ -227,7 +235,7 @@ export default function Nav() {
 
               {/* Navigation Links Grid/List */}
               <div className="flex flex-col gap-1 divide-y divide-slate-100">
-                {navLinks.map(({ to, label }) => (
+                {navLinks.map(({ to, label, badge }) => (
                   <NavLink
                     key={`sheet:${to}`}
                     to={to}
@@ -241,7 +249,14 @@ export default function Nav() {
                     }
                     aria-label={label}
                   >
-                    <span>{label}</span>
+                    <span className="flex items-center gap-2">
+                      <span>{label}</span>
+                      {badge && (
+                        <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/15 text-amber-700 border border-amber-500/30">
+                          {badge}
+                        </span>
+                      )}
+                    </span>
                     <svg className="size-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
