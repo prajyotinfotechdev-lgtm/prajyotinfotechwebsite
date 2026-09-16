@@ -263,10 +263,10 @@ export default function Careers() {
             className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto"
           >
             {[
-              { label: "Delivered Projects", value: "50+" },
+              { label: "Engineering Stack", value: "Modern SaaS" },
               { label: "Active Roles", value: `${filteredJobs.length} Openings` },
               { label: "Work Culture", value: "Hybrid & Agile" },
-              { label: "Skill Growth", value: "100% Hands-on" }
+              { label: "Skill Growth", value: "Hands-on Ownership" }
             ].map((stat, idx) => (
               <div
                 key={idx}

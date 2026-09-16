@@ -180,19 +180,19 @@ export default function Home() {
           <Marquee />
         </Suspense>
 
-        {/* 2.25 DIGITAL READINESS QUIZ */}
+        {/* 2.25 HERO PRODUCT SPOTLIGHT — PRAJYOT CONSTRUCTION HRMS */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <HrmsSpotlight />
+        </Suspense>
+
+        {/* 2.5 DIGITAL READINESS QUIZ */}
         <Suspense fallback={<SectionSkeleton />}>
           <DigitalReadinessQuiz />
         </Suspense>
 
-        {/* 2.5 BEFORE / AFTER SLIDER - educational quality contrast */}
+        {/* 2.75 BEFORE / AFTER SLIDER - educational quality contrast */}
         <Suspense fallback={<SectionSkeleton />}>
           <BeforeAfterSlider />
-        </Suspense>
-
-        {/* 2.75 FLAGSHIP PRODUCT SPOTLIGHT — PRAJYOT CONSTRUCTION HRMS */}
-        <Suspense fallback={<SectionSkeleton />}>
-          <HrmsSpotlight />
         </Suspense>
 
         {/* 3. WHAT WE BUILD — service benefit cards (business outcomes) */}
@@ -231,7 +231,7 @@ export default function Home() {
         </Suspense>
 
         {/* 7.25 4-STEP TRANSPARENT ENGINEERING LIFECYCLE */}
-        <div className="bg-[#080d19] py-4 my-8 border-y border-slate-800/80">
+        <div className="bg-slate-50/50 py-4 my-8 border-y border-purple-100/60">
           <Suspense fallback={<SectionSkeleton />}>
             <EngineeringProcess />
           </Suspense>
@@ -248,7 +248,7 @@ export default function Home() {
         </Suspense>
 
         {/* 7.75 5 ENTERPRISE GUARANTEES & COMPARISON MATRIX */}
-        <div className="bg-[#080d19] py-4 my-8 border-y border-slate-800/80">
+        <div className="bg-slate-50/50 py-4 my-8 border-y border-purple-100/60">
           <Suspense fallback={<SectionSkeleton />}>
             <TrustGuarantees />
           </Suspense>

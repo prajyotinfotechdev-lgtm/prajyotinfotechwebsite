@@ -461,13 +461,13 @@ export default function ParallaxPortfolio({ onOpenDemo }) {
 
   // Smooth scroll mapping for the 3 slides
   const activeIndex = useTransform(scrollYProgress, (pos) => {
-    if (pos < 0.33) return 0;
-    if (pos < 0.66) return 1;
+    if (pos < 0.35) return 0;
+    if (pos < 0.7) return 1;
     return 2;
   });
 
-  // Translation of the screen reel inside the laptop
-  const reelY = useTransform(scrollYProgress, [0, 0.5, 1], ["0%", "-33.333%", "-66.666%"]);
+  // Translation of the screen reel inside the laptop (smooth transitions across scroll range)
+  const reelY = useTransform(scrollYProgress, [0.05, 0.45, 0.85], ["0%", "-33.333%", "-66.666%"]);
 
   const screens = [
     <RestaurantScreenPreview key="restaurant" />,
@@ -478,12 +478,12 @@ export default function ParallaxPortfolio({ onOpenDemo }) {
   return (
     <section ref={targetRef} className="relative h-[280vh] md:h-[300vh] bg-[#070b14]" aria-label="Flagship Engineering Works">
       {/* Sticky container that stays in view while scrolling */}
-      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-between py-8 px-4 overflow-hidden">
+      <div className="sticky top-0 min-h-screen h-[100dvh] w-full flex flex-col items-center justify-between py-6 sm:py-8 px-3 sm:px-4 overflow-hidden">
         
         {/* Dynamic Background Glow matching current active project */}
         <div className="absolute inset-0 flex items-center justify-center opacity-25 pointer-events-none">
           <motion.div
-            className="w-[700px] h-[700px] blur-[140px] rounded-full"
+            className="w-[700px] h-[700px] blur-[140px] rounded-full pointer-events-none"
             style={{
               background: useTransform(
                 activeIndex,
@@ -499,7 +499,7 @@ export default function ParallaxPortfolio({ onOpenDemo }) {
         </div>
 
         {/* Section Header */}
-        <div className="text-center relative z-10 max-w-3xl mx-auto pt-4 sm:pt-6">
+        <div className="text-center relative z-10 max-w-3xl mx-auto pt-2 sm:pt-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-3.5 py-1 text-xs font-bold text-brand-300 backdrop-blur-md mb-2">
             <Sparkles className="w-3.5 h-3.5 text-brand-400" />
             ENTERPRISE ARCHITECTURE SHOWCASE
@@ -517,48 +517,47 @@ export default function ParallaxPortfolio({ onOpenDemo }) {
           {/* Quick Tab Switcher Dock */}
           <div className="mt-3 flex items-center justify-center gap-2">
             {flagshipProjects.map((proj, idx) => (
-              <a
+              <button
                 key={proj.id}
-                href={`#${proj.id}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  // Smooth scroll to corresponding offset in container
+                type="button"
+                onClick={() => {
                   if (targetRef.current) {
                     const top = targetRef.current.offsetTop;
                     const height = targetRef.current.offsetHeight;
+                    const targetFactor = idx === 0 ? 0.05 : idx === 1 ? 0.45 : 0.85;
                     window.scrollTo({
-                      top: top + (idx / 2.5) * height,
+                      top: top + targetFactor * height,
                       behavior: "smooth"
                     });
                   }
                 }}
-                className="px-3 py-1 rounded-full text-[11px] font-bold transition flex items-center gap-1.5 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 text-slate-300 hover:text-white backdrop-blur-md"
+                className="px-3.5 py-1.5 rounded-full text-[11px] font-bold transition flex items-center gap-1.5 bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-slate-300 hover:text-white backdrop-blur-md cursor-pointer shadow-md"
               >
-                <span className={`w-1.5 h-1.5 rounded-full ${idx === 0 ? "bg-orange-400" : idx === 1 ? "bg-indigo-400" : "bg-purple-400"}`} />
+                <span className={`w-2 h-2 rounded-full ${idx === 0 ? "bg-orange-400" : idx === 1 ? "bg-indigo-400" : "bg-purple-400"}`} />
                 <span className="truncate max-w-[120px] sm:max-w-none">{proj.tag}</span>
-              </a>
+              </button>
             ))}
           </div>
         </div>
 
         {/* 3D Laptop Mockup Container */}
-        <div className="relative w-full max-w-4xl px-2 sm:px-4 perspective-1000 z-10 my-auto">
+        <div className="relative w-full max-w-4xl px-2 sm:px-4 perspective-1000 z-10 my-auto pointer-events-none select-none">
           <motion.div
-            className="relative transform-style-3d"
+            className="relative transform-style-3d pointer-events-none"
             style={{
               rotateX: useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [15, 0, 0, -15]),
               scale: useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0.92, 1, 1, 0.92])
             }}
           >
             {/* Laptop Screen Frame */}
-            <div className="relative w-full aspect-[16/10] bg-slate-900 rounded-t-2xl sm:rounded-t-3xl border-[8px] sm:border-[12px] border-slate-900 shadow-2xl shadow-black/80 overflow-hidden rounded-b-lg">
+            <div className="relative w-full aspect-[16/10] bg-slate-900 rounded-t-2xl sm:rounded-t-3xl border-[8px] sm:border-[12px] border-slate-900 shadow-2xl shadow-black/80 overflow-hidden rounded-b-lg pointer-events-none">
               {/* Web Reel (Moves up on scroll) */}
               <motion.div
-                className="absolute top-0 left-0 w-full h-[300%]"
+                className="absolute top-0 left-0 w-full h-[300%] pointer-events-none"
                 style={{ y: reelY }}
               >
                 {screens.map((screen, idx) => (
-                  <div key={idx} className="relative w-full h-1/3 overflow-hidden">
+                  <div key={idx} className="relative w-full h-1/3 overflow-hidden pointer-events-none">
                     {screen}
                   </div>
                 ))}
@@ -586,7 +585,7 @@ export default function ParallaxPortfolio({ onOpenDemo }) {
               <div>
                 <p className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
                   <span>Explore all 8+ Production Architectures</span>
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-mono">100% Code Ownership</span>
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-mono">Full Git Handover</span>
                 </p>
                 <p className="text-[11px] text-slate-400 mt-0.5">
                   Every system is shipped with zero vendor lock-in, source code repositories, and ACID guarantees.

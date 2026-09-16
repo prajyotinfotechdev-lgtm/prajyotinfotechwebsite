@@ -59,7 +59,7 @@ const COMPARISON_ROWS = [
     criteria: "Custom Business Logic",
     prajyot: { status: "yes", text: "100% Tailored to your exact workflow" },
     saas: { status: "no", text: "Rigid, generic off-the-shelf templates" },
-    agency: { status: "yes", text: "Custom built but takes 6+ months" }
+    agency: { status: "yes", text: "Custom built with lengthy development cycles" }
   },
   {
     criteria: "WhatsApp & Local Integrations",
@@ -86,23 +86,23 @@ export default function TrustGuarantees() {
   return (
     <section className="relative py-16 md:py-24 overflow-hidden">
       {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-6xl h-96 bg-gradient-to-r from-emerald-600/10 via-brand-600/10 to-indigo-600/10 blur-[140px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-6xl h-96 bg-gradient-to-r from-purple-200/40 via-white to-purple-100/40 blur-[140px] pointer-events-none rounded-full" />
 
       <div className="relative mx-auto max-w-7xl px-4 space-y-16">
         {/* 5 Guarantees Grid */}
         <div>
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-bold text-emerald-300 backdrop-blur-md mb-4">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-purple-200/60 bg-purple-50/80 px-4 py-1.5 text-xs font-bold text-purple-700 backdrop-blur-md mb-4 shadow-sm shadow-purple-500/5">
+              <ShieldCheck className="w-3.5 h-3.5 text-purple-500" />
               NON-NEGOTIABLE CLIENT ASSURANCES
             </div>
-            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">
               5 Enterprise Guarantees{" "}
-              <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple-600 via-brand-500 to-purple-400 bg-clip-text text-transparent">
                 Every Single Client Receives
               </span>
             </h2>
-            <p className="mt-3 text-slate-400 text-sm sm:text-base leading-relaxed">
+            <p className="mt-3 text-slate-600 text-sm sm:text-base leading-relaxed">
               We eliminate risk so you can modernize your business with total peace of mind.
             </p>
           </div>
@@ -113,16 +113,16 @@ export default function TrustGuarantees() {
               return (
                 <div
                   key={idx}
-                  className="bg-slate-900/80 rounded-3xl p-6 border border-slate-700/80 shadow-xl backdrop-blur-xl flex flex-col justify-between hover:border-emerald-500/50 transition-all duration-300"
+                  className="bg-white/80 rounded-3xl p-6 border border-purple-100 shadow-xl shadow-purple-500/5 backdrop-blur-xl flex flex-col justify-between hover:border-purple-300 hover:shadow-purple-500/10 transition-all duration-300"
                 >
                   <div className="space-y-3">
-                    <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <h3 className="font-bold text-white text-base">{item.title}</h3>
-                    <p className="text-xs text-slate-400 leading-relaxed">{item.desc}</p>
+                    <h3 className="font-bold text-slate-900 text-base">{item.title}</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
                   </div>
-                  <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center gap-1.5 text-[11px] text-emerald-400 font-mono font-semibold">
+                  <div className="mt-4 pt-3 border-t border-purple-100 flex items-center gap-1.5 text-[11px] text-purple-600 font-mono font-semibold">
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     <span>Contractually Guaranteed</span>
                   </div>
@@ -131,15 +131,15 @@ export default function TrustGuarantees() {
             })}
 
             {/* Direct WhatsApp Call Banner */}
-            <div className="bg-gradient-to-br from-emerald-950/60 via-slate-900 to-slate-950 rounded-3xl p-6 border border-emerald-500/40 shadow-xl backdrop-blur-xl flex flex-col justify-between">
+            <div className="bg-gradient-to-br from-purple-50 via-white to-purple-50 rounded-3xl p-6 border border-purple-200 shadow-xl shadow-purple-500/5 backdrop-blur-xl flex flex-col justify-between">
               <div>
-                <span className="text-[10px] font-mono text-emerald-400 uppercase font-bold tracking-wider">
+                <span className="text-[10px] font-mono text-purple-600 uppercase font-bold tracking-wider">
                   DIRECT ACCESS
                 </span>
-                <h3 className="font-black text-white text-lg mt-1 mb-2">
+                <h3 className="font-black text-slate-900 text-lg mt-1 mb-2">
                   Need a Non-Disclosure Agreement (NDA)?
                 </h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-slate-600 leading-relaxed">
                   We sign standard mutual NDAs before any proprietary discovery call or workflow discussion.
                 </p>
               </div>
@@ -154,7 +154,7 @@ export default function TrustGuarantees() {
                     defaultMessage: "Requesting mutual Non-Disclosure Agreement (NDA) and confidential project discovery call.",
                   })
                 }
-                className="mt-4 w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs text-center transition cursor-pointer"
+                className="mt-4 w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs text-center transition cursor-pointer shadow-md shadow-purple-500/20"
               >
                 Request NDA & Architecture Call
               </button>
@@ -163,57 +163,57 @@ export default function TrustGuarantees() {
         </div>
 
         {/* Comparison Matrix Table */}
-        <div className="bg-slate-900/90 rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-slate-700/80 shadow-2xl backdrop-blur-xl">
+        <div className="bg-white/95 rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-purple-100 shadow-2xl shadow-purple-900/5 backdrop-blur-xl">
           <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
-            <span className="text-xs font-mono text-brand-400 uppercase tracking-widest font-bold block mb-1">
+            <span className="text-xs font-mono text-purple-600 uppercase tracking-widest font-bold block mb-1">
               THE STRATEGIC ADVANTAGE
             </span>
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-white">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900">
               Why Custom Build Beats Generic SaaS
             </h3>
-            <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
               See how partnering with Prajyot Infotech compares to renting off-the-shelf software or hiring bloated legacy agencies.
             </p>
           </div>
 
-          <div className="md:hidden text-center text-[10px] sm:text-[11px] font-mono text-cyan-300 bg-cyan-950/40 border border-cyan-800/40 py-1.5 px-3 rounded-xl mb-3 flex items-center justify-center gap-1.5">
+          <div className="md:hidden text-center text-[10px] sm:text-[11px] font-mono text-purple-700 bg-purple-50 border border-purple-200 py-1.5 px-3 rounded-xl mb-3 flex items-center justify-center gap-1.5">
             <span>← Swipe horizontally to view full matrix →</span>
           </div>
 
           <div className="overflow-x-auto -mx-2 sm:mx-0 px-2 sm:px-0">
             <table className="w-full min-w-[620px] text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 font-mono">
+                <tr className="border-b border-purple-100 text-slate-500 font-mono">
                   <th className="py-3 px-4 font-semibold">DECISION CRITERIA</th>
-                  <th className="py-3 px-4 font-black text-brand-300 bg-brand-950/40 rounded-t-xl border-t border-l border-r border-brand-500/40">
+                  <th className="py-3 px-4 font-black text-purple-700 bg-purple-50/80 rounded-t-xl border-t border-l border-r border-purple-200">
                     PRAJYOT INFOTECH (CUSTOM)
                   </th>
-                  <th className="py-3 px-4 font-semibold text-slate-400">OFF-THE-SHELF SAAS</th>
-                  <th className="py-3 px-4 font-semibold text-slate-400">TRADITIONAL AGENCY</th>
+                  <th className="py-3 px-4 font-semibold text-slate-500">OFF-THE-SHELF SAAS</th>
+                  <th className="py-3 px-4 font-semibold text-slate-500">TRADITIONAL AGENCY</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/80">
+              <tbody className="divide-y divide-purple-100/60">
                 {COMPARISON_ROWS.map((row, idx) => (
-                  <tr key={idx} className="hover:bg-slate-800/30 transition">
-                    <td className="py-4 px-4 font-bold text-white whitespace-nowrap">
+                  <tr key={idx} className="hover:bg-purple-50/30 transition">
+                    <td className="py-4 px-4 font-bold text-slate-800 whitespace-nowrap">
                       {row.criteria}
                     </td>
 
                     {/* Prajyot Infotech column */}
-                    <td className="py-4 px-4 bg-brand-950/30 border-l border-r border-brand-500/20 text-slate-200">
+                    <td className="py-4 px-4 bg-purple-50/40 border-l border-r border-purple-200/50 text-slate-700">
                       <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                        <span className="font-semibold text-white">{row.prajyot.text}</span>
+                        <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                        <span className="font-semibold text-slate-900">{row.prajyot.text}</span>
                       </div>
                     </td>
 
                     {/* SaaS Column */}
-                    <td className="py-4 px-4 text-slate-400">
+                    <td className="py-4 px-4 text-slate-600">
                       <div className="flex items-center gap-2">
                         {row.saas.status === "no" ? (
-                          <XCircle className="w-4 h-4 text-red-400/80 shrink-0" />
+                          <XCircle className="w-4 h-4 text-red-500/80 shrink-0" />
                         ) : row.saas.status === "partial" ? (
-                          <HelpCircle className="w-4 h-4 text-amber-400/80 shrink-0" />
+                          <HelpCircle className="w-4 h-4 text-amber-500/80 shrink-0" />
                         ) : (
                           <CheckCircle2 className="w-4 h-4 text-slate-400 shrink-0" />
                         )}
@@ -222,12 +222,12 @@ export default function TrustGuarantees() {
                     </td>
 
                     {/* Traditional Agency Column */}
-                    <td className="py-4 px-4 text-slate-400">
+                    <td className="py-4 px-4 text-slate-600">
                       <div className="flex items-center gap-2">
                         {row.agency.status === "no" ? (
-                          <XCircle className="w-4 h-4 text-red-400/80 shrink-0" />
+                          <XCircle className="w-4 h-4 text-red-500/80 shrink-0" />
                         ) : row.agency.status === "partial" ? (
-                          <HelpCircle className="w-4 h-4 text-amber-400/80 shrink-0" />
+                          <HelpCircle className="w-4 h-4 text-amber-500/80 shrink-0" />
                         ) : (
                           <CheckCircle2 className="w-4 h-4 text-slate-400 shrink-0" />
                         )}

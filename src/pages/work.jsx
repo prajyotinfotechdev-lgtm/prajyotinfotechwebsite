@@ -464,32 +464,6 @@ export default function Work() {
             </p>
           </motion.div>
 
-          {/* Live Impact Metric Cards */}
-          <motion.div
-            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
-          >
-            {[
-              { value: "1 Million+", label: "Transactions Handled", sub: "across deployed systems" },
-              { value: "50+", label: "Custom Deployments", sub: "in 8+ business sectors" },
-              { value: "< 140ms", label: "Median API Latency", sub: "optimized edge endpoints" },
-              { value: "100%", label: "Code Ownership", sub: "zero vendor lock-in" },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="rounded-2xl border border-slate-800 bg-slate-900/80 backdrop-blur-xl p-5 shadow-xl hover:border-slate-700 transition"
-              >
-                <p className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
-                  {stat.value}
-                </p>
-                <p className="text-xs font-bold text-white mt-1 uppercase tracking-wide">{stat.label}</p>
-                <p className="text-[11px] text-slate-400 mt-0.5">{stat.sub}</p>
-              </div>
-            ))}
-          </motion.div>
-
           {/* Quick Anchor Navigation Dock */}
           <div className="mt-8 flex flex-wrap justify-center gap-2 text-xs">
             <a href="#showcase" className="bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-700/80 px-4 py-2 rounded-xl transition flex items-center gap-1.5">

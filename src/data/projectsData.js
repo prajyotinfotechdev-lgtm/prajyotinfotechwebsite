@@ -151,10 +151,10 @@ export const PROJECTS = [
       description: "Built automated subdomain provisioning (`tenant.vyapaariyo.com`) with independent catalog isolation, bulk CSV upload, and automated lead capture."
     },
     roi: {
-      title: "50+ Merchants Live in 30 Days",
+      title: "Rapid Multi-Tenant Scale in 30 Days",
       description: "Suppliers launch full custom catalog portals in under 3 minutes with zero cloud management overhead."
     },
-    results: ["50+ merchants onboarded in month 1", "Merchant setup time under 3 min", "Zero hosting overhead per tenant", "Bulk CSV import with images"],
+    results: ["Rapid multi-merchant onboarding in month 1", "Merchant setup time under 3 min", "Zero hosting overhead per tenant", "Bulk CSV import with images"],
     features: ["Multi-tenant architecture", "Per-seller custom catalog site", "CSV bulk product import", "Cloudinary image hosting", "Role-based admin & seller access", "Subscription billing"],
     stack: ["React", "Node.js", "Express", "MongoDB", "Razorpay", "TailwindCSS"],
     metrics: { label: "Tenant Onboarding Time", value: "< 3 min", sub: "from signup to live custom domain" },
@@ -162,7 +162,7 @@ export const PROJECTS = [
     accent: "#8b5cf6",
     secondary: "#a855f7",
     mockupType: "Dashboard",
-    scale: "60+ Merchant Portals • 180,000+ SKUs",
+    scale: "Multi-Tenant Portals • 180,000+ Active SKUs",
   },
   {
     id: "wholesale-order-management",

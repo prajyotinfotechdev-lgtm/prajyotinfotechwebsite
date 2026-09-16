@@ -408,9 +408,9 @@ export default function About() {
 
               {/* Floating stat chips */}
               {[
-                { label: "50+ Projects", top: "8%", left: "2%", color: "from-violet-600 to-brand-600" },
-                { label: "< 20 Days", bottom: "12%", right: "5%", color: "from-pink-600 to-rose-600" },
-                { label: "100% Ownership", bottom: "30%", left: "0%", color: "from-emerald-600 to-teal-600" },
+                { label: "Bespoke SaaS", top: "8%", left: "2%", color: "from-violet-600 to-brand-600" },
+                { label: "Milestone Handover", bottom: "12%", right: "5%", color: "from-pink-600 to-rose-600" },
+                { label: "Full Git Ownership", bottom: "30%", left: "0%", color: "from-emerald-600 to-teal-600" },
               ].map((chip) => (
                 <motion.div
                   key={chip.label}
@@ -442,20 +442,20 @@ export default function About() {
             <Reveal>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 {[
-                  { v: 25, s: "+", l: "Projects Shipped",
+                  { title: "Bespoke Software", desc: "Custom Cloud & Web Architecture",
                     icon: <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden><path d="M12 2L2 7l10 5 10-5-10-5Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/><path d="M2 17l10 5 10-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M2 12l10 5 10-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   },
-                  { v: 6, s: "+", l: "Years of Expertise",
-                    icon: <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
-                  },
-                  { v: 4, s: "+", l: "Industries Served",
-                    icon: <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden><path d="M3 21V9l9-6 9 6v12" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/><path d="M9 21v-6h6v6" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/></svg>
-                  },
-                  { v: 100, s: "%", l: "Code Ownership",
+                  { title: "Full Code Handover", desc: "100% IP & Git Ownership",
                     icon: <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" strokeWidth="1.8"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/><circle cx="12" cy="16" r="1.5" fill="currentColor"/></svg>
                   },
+                  { title: "Enterprise Security", desc: "Role-Based Access Governance",
+                    icon: <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  },
+                  { title: "Production Quality", desc: "High Performance Cloud Endpoints",
+                    icon: <svg viewBox="0 0 24 24" fill="none" className="w-7 h-7" aria-hidden><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  },
                 ].map((stat, i) => (
-                  <TiltCard key={stat.l}>
+                  <TiltCard key={stat.title}>
                     <motion.div
                       initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -465,10 +465,10 @@ export default function About() {
                     >
                       <div aria-hidden className="absolute -right-6 -top-6 size-24 rounded-full bg-brand-500/5 group-hover:bg-brand-500/10 transition-colors" />
                       <div className="text-brand-600 mb-3">{stat.icon}</div>
-                      <div className="text-4xl md:text-5xl font-black bg-gradient-to-r from-brand-600 to-violet-600 bg-clip-text text-transparent">
-                        <AnimatedCounter target={stat.v} suffix={stat.s} />
+                      <div className="text-xl font-bold text-navy-900">
+                        {stat.title}
                       </div>
-                      <div className="mt-2 text-sm font-semibold text-slate-500 uppercase tracking-wider">{stat.l}</div>
+                      <div className="mt-1 text-xs font-medium text-slate-500 leading-snug">{stat.desc}</div>
                     </motion.div>
                   </TiltCard>
                 ))}

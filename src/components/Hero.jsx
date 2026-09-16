@@ -5,13 +5,6 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 const WA_NUMBER = "917020708747";
 const wa = (t) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`;
 
-const STATS = [
-  { value: "50+", label: "Projects Delivered" },
-  { value: "6+",  label: "Years in Business" },
-  { value: "7+",  label: "Industries Served" },
-  { value: "100%", label: "Code Ownership" },
-];
-
 export default function Hero() {
   useEffect(() => {
     document.documentElement.classList.add("loaded");
@@ -133,25 +126,6 @@ export default function Hero() {
             <span>Scroll to explore</span>
           </motion.div>
         )}
-      </motion.div>
-
-      {/* Stats bar */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6, duration: 0.6 }}
-        className="border-t border-slate-200/60 bg-white/60 backdrop-blur-sm"
-      >
-        <div className="mx-auto max-w-7xl px-4 py-5">
-          <dl className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {STATS.map((s) => (
-              <div key={s.label} className="flex flex-col items-center md:items-start gap-0.5">
-                <dt className="text-2xl md:text-3xl font-black text-gradient">{s.value}</dt>
-                <dd className="text-xs text-slate-500 font-medium tracking-wide uppercase">{s.label}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
       </motion.div>
     </section>
   );
