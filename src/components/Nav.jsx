@@ -24,6 +24,7 @@ const navConfig = [
     label: "Company",
     dropdown: [
       { to: "/about", label: "About Us", desc: "Our story, vision, and the team." },
+      { to: "/site-visits", label: "Client Deliveries", desc: "Photos & videos from client site visits & training." },
       { to: "/careers", label: "Careers", desc: "Join our fast-growing engineering team." },
       { to: "/articles", label: "Articles", desc: "Engineering deep-dives and tech insights." },
       { to: "/pricing", label: "Pricing", desc: "Transparent, flexible engagement models." },

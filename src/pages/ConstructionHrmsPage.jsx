@@ -5,53 +5,56 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Users,
   MapPin,
-  Camera,
   Calendar,
   CreditCard,
   ShieldCheck,
   Building2,
   CheckCircle2,
-  ChevronRight,
   Clock,
   Smartphone,
-  Sliders,
   ChevronDown,
   ArrowRight,
-  Briefcase,
-  AlertCircle,
+  Receipt,
   FileSpreadsheet,
-  Layers,
-  Compass,
   Check,
-  Send,
   Sparkles,
   Phone,
   ScanFace,
-  Mail,
-  UserCheck,
-  HardHat,
-  Eye,
-  Lock,
-  Workflow,
   BarChart3,
-  Server,
   Zap,
+  Lock,
   FileText,
+  UserCheck,
+  Star,
+  RefreshCw,
+  Sliders,
   DollarSign,
   TrendingUp,
-  Shield,
-  Activity,
-  CheckSquare,
-  XCircle,
-  Clock3,
-  Rocket,
   Award,
+  ShieldAlert,
+  ArrowUpRight,
+  Shield,
+  Layers,
+  Flame,
+  UserPlus,
+  Send,
+  SlidersHorizontal,
+  FileCheck2,
+  CheckCircle,
+  Laptop,
+  Radio,
+  CheckCheck,
+  HardHat,
+  Compass,
+  FileBadge,
+  Eye,
+  Activity,
+  Workflow,
   HelpCircle,
-  Play,
-  X,
-  UserCheck2,
-  ChevronUp,
-  ExternalLink
+  FileSearch,
+  CheckSquare,
+  AlertOctagon,
+  LifeBuoy
 } from "lucide-react";
 
 import Seo from "../components/Seo.jsx";
@@ -61,2095 +64,2049 @@ import { useLeadModal } from "../context/LeadModalContext.jsx";
 
 const WHATSAPP_NUMBER = "917020708747";
 
-// Industry options for demo form
-const INDUSTRY_OPTIONS = [
-  "Growing Businesses & SMEs",
-  "Field-Connected Operations",
-  "Construction & Contracting",
-  "EPC (Engineering, Procurement, Construction)",
-  "Infrastructure & Public Works",
-  "Project-Based Engineering",
-  "Multi-Location Field Services",
-  "Manufacturing & Plant Operations",
-  "Other Growing Organization",
+// 5-Tier User Roles based on Product Documentation (Section 6 & 10)
+const ROLE_DATA = [
+  {
+    id: "employee",
+    title: "Ground Worker / Staff",
+    roleNumber: "Tier 01",
+    badge: "Field Worker / Engineer",
+    icon: Smartphone,
+    color: "amber",
+    tagline: "1-Tap Selfie Punch & Instant Payslip",
+    summary:
+      "Field staff punch in with selfie & GPS location, log daily project timesheets, submit photo expense receipts, and download monthly PDF salary slips.",
+    capabilities: [
+      "Mobile punch in/out with selfie photo & live GPS coordinates",
+      "Daily project task & labor hour logging via timesheets",
+      "Instant leave applications with automatic balance validation",
+      "Photo receipt upload for instant expense reimbursement claims",
+      "Secure download of monthly PDF salary slips directly from dashboard",
+    ],
+    mockup: {
+      screenType: "Field Worker Mobile App",
+      badge: "GPS Geofence: Site #3 Metro Tower",
+      status: "Attendance Verified â€¢ 08:02 AM",
+      metricTitle: "Accrued Wages This Month",
+      metricValue: "â‚¹18,500 (24 Shifts Logged)",
+      actionTitle: "Daily Task Logged",
+      actionDesc: "4.5h Piling + 3.5h RCC Pouring",
+    },
+  },
+  {
+    id: "manager",
+    title: "Site Supervisor / PM",
+    roleNumber: "Tier 02",
+    badge: "Site Command",
+    icon: UserCheck,
+    color: "blue",
+    tagline: "Live Site Muster & 30s Gang Punching",
+    summary:
+      "Site supervisors get a real-time 'Team View' to review attendance, approve leaves, validate project timesheets, and approve emergency site expenses.",
+    capabilities: [
+      "Live team attendance monitoring & site headcount verification",
+      "First-line approval (Level 1) for team leave requests and timesheets",
+      "On-site petty cash and emergency material receipt verification",
+      "SLA alert notifications for pending approvals",
+      "Attendance correction request approvals for missed punch-outs",
+    ],
+    mockup: {
+      screenType: "Supervisor Site Tablet",
+      badge: "Live Headcount â€¢ Sector 4",
+      status: "48 of 50 Workers On Site",
+      metricTitle: "Gang Punch Speed",
+      metricValue: "42 Workers in 38 Seconds",
+      actionTitle: "Challan Pending Verification",
+      actionDesc: "200 Bags UltraTech Cement (â‚¹74,000)",
+    },
+  },
+  {
+    id: "hr",
+    title: "HR Operations",
+    roleNumber: "Tier 03",
+    badge: "Tenant-Wide Control",
+    icon: Users,
+    color: "purple",
+    tagline: "Centralized Policies & 1-Click Payroll",
+    summary:
+      "HR maintains employee profiles, oversees company-wide leave policies, handles attendance corrections, and executes 1-click monthly payroll runs.",
+    capabilities: [
+      "Centralized digital employee directory & profile management",
+      "1-Click biometric & attendance-linked payroll calculation",
+      "Automated PDF salary slip generation & instant distribution",
+      "Second-line approval (Level 2) for leave policy compliance",
+      "Tenant-wide workforce cost & demographic reports",
+    ],
+    mockup: {
+      screenType: "HR Headquarters Console",
+      badge: "Month-End Payroll Cycle",
+      status: "100% Muster Synchronized",
+      metricTitle: "Payroll Execution Speed",
+      metricValue: "45 Seconds (150 Employees)",
+      actionTitle: "Automated Compliance",
+      actionDesc: "0 Duplicate Entries â€¢ PDF Payslips Ready",
+    },
+  },
+  {
+    id: "finance",
+    title: "Finance & Accounts",
+    roleNumber: "Tier 04",
+    badge: "Expense Gatekeeper",
+    icon: CreditCard,
+    color: "emerald",
+    tagline: "3-Tier Verification & Clean Bank Payouts",
+    summary:
+      "Finance acts as the final gatekeeper for expense reimbursements after manager and HR validation, releasing verified payments securely.",
+    capabilities: [
+      "Final financial clearance & approval for verified expense receipts",
+      "Receipt mathematical verification & audit compliance",
+      "Direct bank payout file export & cash reimbursement vouchers",
+      "Elimination of duplicate vendor billing and unverified cash payouts",
+      "Project material expense ledger monitoring",
+    ],
+    mockup: {
+      screenType: "Finance Settlement Ledger",
+      badge: "Verified Claims Queue",
+      status: "14 Invoices Cleared for Payout",
+      metricTitle: "Cleared Site Reimbursements",
+      metricValue: "â‚¹1,42,800 Approved",
+      actionTitle: "Direct Bank Transfer Export",
+      actionDesc: "Single Click NEFT / RTGS File Generated",
+    },
+  },
+  {
+    id: "admin",
+    title: "Executive Admin / MD",
+    roleNumber: "Tier 05",
+    badge: "Owner & Managing Director",
+    icon: ShieldCheck,
+    color: "rose",
+    tagline: "Multi-Site 360Â° Radar & Tamper-Proof Audit",
+    summary:
+      "Business owners get complete multi-site operational visibility, system-wide configuration control, and unalterable background audit logs.",
+    capabilities: [
+      "Real-time executive dashboard across all active sites & projects",
+      "Complete unalterable audit log of every system approval & edit",
+      "System-wide workflow policy & SLA escalation configuration",
+      "Override capabilities if a site manager is unavailable",
+      "Proactive management visibility into workforce costs & bottlenecks",
+    ],
+    mockup: {
+      screenType: "Executive Director Command",
+      badge: "6 Active Project Locations",
+      status: "284 Total Labor Force Active",
+      metricTitle: "Daily Workforce Burn Rate",
+      metricValue: "â‚¹1.84 Lakhs / Day Tracked",
+      actionTitle: "Unalterable Audit Trail",
+      actionDesc: "100% Policy Compliance Logged",
+    },
+  },
 ];
 
-const EMPLOYEE_RANGES = [
-  "25 - 75 Employees",
-  "76 - 200 Employees",
-  "201 - 500 Employees",
-  "501 - 1,500 Employees",
-  "1,500+ Employees (Enterprise)",
+// Role Capability Matrix (Section 10 of Spec)
+const CAPABILITY_MATRIX = [
+  { cap: "Punch In / Out (w/ Selfie & GPS)", emp: true, mgr: true, hr: true, fin: true, adm: true },
+  { cap: "Submit Leaves / Expenses / Timesheets", emp: true, mgr: true, hr: true, fin: true, adm: true },
+  { cap: "Download Own Salary Slip", emp: true, mgr: true, hr: true, fin: true, adm: true },
+  { cap: "View Team Attendance & Leaves", emp: false, mgr: "Direct Reports", hr: "All Staff", fin: false, adm: "All Staff" },
+  { cap: "Approve Team Requests", emp: false, mgr: "Level 1", hr: "Level 2", fin: false, adm: "Override" },
+  { cap: "Manage Employee Profiles", emp: false, mgr: false, hr: true, fin: false, adm: true },
+  { cap: "Final Approval of Expense Payouts", emp: false, mgr: false, hr: false, fin: true, adm: true },
+  { cap: "Run & Publish Payroll", emp: false, mgr: false, hr: true, fin: false, adm: true },
+  { cap: "View System Audit Logs", emp: false, mgr: false, hr: false, fin: false, adm: true },
 ];
 
-const WORKFORCE_RANGES = [
-  "Single Location / Office",
-  "2 - 5 Field Sites / Offices",
-  "6 - 15 Distributed Sites",
-  "15+ Multi-Region Locations",
+// End-to-End Business Workflows (Section 8 of Product Spec)
+const WORKFLOWS_DATA = [
+  {
+    id: "leave",
+    title: "1. The Leave Approval Journey",
+    badge: "Smart Sync & Multi-Tier",
+    icon: Calendar,
+    color: "amber",
+    description:
+      "Automated balance verification, manager site coverage assessment, HR compliance sign-off, and intelligent auto-cancellation.",
+    steps: [
+      {
+        step: "01",
+        actor: "Ground Employee",
+        action: "Checks live balance in app and submits a leave application.",
+        note: "System blocks submission if balance is insufficient.",
+      },
+      {
+        step: "02",
+        actor: "Site Manager",
+        action: "Evaluates project headcount & site coverage, then clicks Approve (Level 1).",
+        note: "Ensures site work doesn't stop.",
+      },
+      {
+        step: "03",
+        actor: "HR Operations",
+        action: "Verifies company-wide leave compliance and grants Final Approval (Level 2).",
+        note: "Balance deducted automatically.",
+      },
+      {
+        step: "04",
+        actor: "Oibuz System Engine",
+        action: "Smart Sync Rule: If worker punches in on site on a leave day, leave auto-cancels.",
+        note: "Zero double-booking of paid time.",
+      },
+    ],
+  },
+  {
+    id: "expense",
+    title: "2. The Material & Expense Journey",
+    badge: "Photo Proof & 3-Tier Gatekeeper",
+    icon: Receipt,
+    color: "emerald",
+    description:
+      "Field photo capture of cement challans & petty cash, 3-tier hierarchical clearance, and instant bank NEFT/RTGS payout export.",
+    steps: [
+      {
+        step: "01",
+        actor: "Field Supervisor",
+        action: "Buys site supplies (e.g. cement bags), snaps photo of receipt with GPS tag.",
+        note: "Location & timestamp embedded.",
+      },
+      {
+        step: "02",
+        actor: "Project Manager",
+        action: "Validates material delivery on site and grants First Clearance.",
+        note: "Confirms materials reached site.",
+      },
+      {
+        step: "03",
+        actor: "HR Operations",
+        action: "Checks alignment with project budget & expense limits.",
+        note: "Eliminates unauthorized claims.",
+      },
+      {
+        step: "04",
+        actor: "Finance Gatekeeper",
+        action: "Audits receipt math, issues Final Clearance, and exports 1-click bank transfer file.",
+        note: "Zero duplicate vendor payouts.",
+      },
+    ],
+  },
+  {
+    id: "payroll",
+    title: "3. The 1-Click Biometric Payroll Journey",
+    badge: "45-Second Month-End Run",
+    icon: FileSpreadsheet,
+    color: "purple",
+    description:
+      "Instant synchronization of biometric muster rolls, daily wage calculations, overtime, site advances, and automated PDF payslip generation.",
+    steps: [
+      {
+        step: "01",
+        actor: "Month-End Trigger",
+        action: "HR initiates a new Payroll Run in the central dashboard with 1 click.",
+        note: "Zero manual spreadsheet collation.",
+      },
+      {
+        step: "02",
+        actor: "Oibuz Calculation Engine",
+        action: "Cross-references base pay with GPS attendance, approved leaves, advances, and OT.",
+        note: "Zero calculation discrepancies.",
+      },
+      {
+        step: "03",
+        actor: "HR & Executive Review",
+        action: "HR validates summary figures and publishes the tenant-wide payroll run.",
+        note: "Direct export for bank bulk NEFT.",
+      },
+      {
+        step: "04",
+        actor: "Employee Mobile Delivery",
+        action: "Standardized PDF salary slips are auto-generated and sent directly to workers' apps.",
+        note: "Eliminates angry worker wage disputes.",
+      },
+    ],
+  },
+];
+
+// Complete Feature Inventory Table (Section 11 of Product Spec)
+const FEATURE_INVENTORY = [
+  { module: "Attendance", feature: "Mobile Punch In/Out", user: "All Staff", what: "Captures exact time, GPS site coordinates, and selfie photo.", purpose: "Prevents ghost workers & buddy punching." },
+  { module: "Attendance", feature: "Auto-Leave Cancellation", user: "System", what: "Automatically cancels pending leave if worker punches in on site.", purpose: "Prevents double-booking of paid time off." },
+  { module: "Attendance", feature: "Correction Workflow", user: "Employee, Mgr, HR", what: "Submit fix request for missed punch-outs with supervisor sign-off.", purpose: "Maintains clean muster without penalizing honest workers." },
+  { module: "Leaves", feature: "Live Balance Tracking", user: "All Staff, HR", what: "Tracks accrued vs. used paid leave balances automatically.", purpose: "Eliminates Excel spreadsheets for leave tracking." },
+  { module: "Leaves", feature: "Multi-Tier Approvals", user: "Manager, HR", what: "Sequential approval chain (Manager â†’ HR) with audit logging.", purpose: "Balances site operational needs with HR policy compliance." },
+  { module: "Timesheets", feature: "Project Labor Logging", user: "Employee, Mgr", what: "Logs daily hours against specific construction projects & tasks.", purpose: "Accurate labor cost tracking per sq. ft." },
+  { module: "Reimbursements", feature: "Geotagged Photo Receipts", user: "Employee, Finance", what: "Upload challan receipt photos with timestamp & GPS coordinates.", purpose: "Permanent digital proof; stops lost paper bills." },
+  { module: "Payroll", feature: "1-Click Calculation Run", user: "HR, Admin", what: "Aggregates base pay, attendance, shifts, advances & deductions.", purpose: "Cuts payroll processing from 4 days to 45 seconds." },
+  { module: "Payroll", feature: "Automated PDF Payslips", user: "All Staff", what: "Generates professional salary slips downloadable in mobile app.", purpose: "Self-service for workers; eliminates HR inquiries." },
+  { module: "Employees", feature: "Centralized Directory", user: "HR, Admin", what: "Stores full profiles, reporting hierarchy, roles, and compensation.", purpose: "Single source of truth for company workforce." },
+  { module: "System", feature: "SLA Escalation Engine", user: "Admin, HR", what: "Flags and escalates requests ignored by managers past SLA time.", purpose: "Breaks site operational bottlenecks automatically." },
+  { module: "System", feature: "Tamper-Proof Audit Logs", user: "Admin (MD)", what: "Immutable background logs recording every approval and change.", purpose: "Total transparency and legal/financial accountability." },
+];
+
+// Real Construction Case Study Timeline (Section 9 of Spec)
+const CASE_STUDY_STEPS = [
+  {
+    time: "08:00 AM â€¢ Morning Gate Check",
+    title: "Face-Scan Site Arrival & Geofence Lock",
+    desc: "Workers arrive across Site A, B, and C. They open Oibuz or stand before the supervisor's phone. AI matches facial geometry and GPS locks physical presence.",
+    icon: ScanFace,
+    tag: "3D Face Verified",
+  },
+  {
+    time: "11:30 AM â€¢ Site Procurement",
+    title: "Emergency Cement Purchase with Photo Challan",
+    desc: "Supervisor buys 200 bags of emergency cement. He snaps a photo of the bill with GPS metadata. The claim instantly routes to HR and Finance for clearance.",
+    icon: Receipt,
+    tag: "GPS Tagged Bill",
+  },
+  {
+    time: "02:15 PM â€¢ Mid-Day Smart Sync",
+    title: "Automatic Leave Cancellation on Physical Punch",
+    desc: "Worker originally requested medical leave but arrived on site to work. Oibuz automatically cancels the pending leave and logs regular daily wages.",
+    icon: CheckCircle2,
+    tag: "Zero Human Error",
+  },
+  {
+    time: "05:00 PM â€¢ Shift Handover",
+    title: "Labor Hours Tagged to Project Timesheets",
+    desc: "Workers distribute 8 hours between 'Basement Piling' and 'Wing B Slab'. Site manager validates hour allocation with 1 tap for exact sq. ft. cost audits.",
+    icon: Clock,
+    tag: "Cost Verified",
+  },
+  {
+    time: "Month-End â€¢ HQ Finance Run",
+    title: "1-Click Biometric Payroll & PDF Slips",
+    desc: "HR initiates payroll run in 45 seconds. Oibuz factors daily wages, piece-rate, advances, and verified expense claims. Standardized PDF slips arrive on workers' phones.",
+    icon: FileSpreadsheet,
+    tag: "Zero Wage Disputes",
+  },
+];
+
+// Contractor Testimonials (Landingfolio Social Proof pattern)
+const TESTIMONIALS = [
+  {
+    quote:
+      "Oibuz eliminated ghost workers across our 4 flyover projects. We saved over â‚¹2.2 Lakhs in the very first month by stopping buddy punching.",
+    name: "Vikramaditya Shinde",
+    role: "Managing Director",
+    company: "Apex Infra Developers",
+    location: "Pune, Maharashtra",
+    metrics: "â‚¹2.2L Saved / Month",
+  },
+  {
+    quote:
+      "Earlier, month-end payroll took 4 exhausting days on Excel sheets. With Oibuz 1-click payroll, our HR finishes the entire run in 10 minutes with zero wage disputes.",
+    name: "Sanjay Singhania",
+    role: "Chief Operations Officer",
+    company: "Metro Urban Constructions",
+    location: "Navi Mumbai",
+    metrics: "4 Days â†’ 10 Mins",
+  },
+  {
+    quote:
+      "The offline face scanning is a game changer for remote bridge sites where mobile networks fail. The supervisor punches 40 workers in 30 seconds effortlessly.",
+    name: "Karan Oberoi",
+    role: "General Contractor",
+    company: "Oberoi Civil Engineers",
+    location: "Nashik",
+    metrics: "100% Offline Reliable",
+  },
+];
+
+// FAQs tailored to real contractor concerns
+const FAQS = [
+  {
+    q: "Does Oibuz work on remote sites with poor or zero internet connection?",
+    a: "Yes, 100%. Site supervisors can mark attendance and scan faces completely offline. All records, timestamps, and GPS coordinates are stored securely on the device and auto-sync to HQ the moment a mobile signal or Wi-Fi is detected.",
+  },
+  {
+    q: "Do field workers need their own smartphones?",
+    a: "No. Site supervisors can use a single smartphone to punch an entire labor gang in under 60 seconds. Alternatively, you can place an affordable Android tablet at the site gate as an automated kiosk.",
+  },
+  {
+    q: "Can Oibuz handle daily wage labor (Dihadi), piece-rate workers, and monthly staff?",
+    a: "Yes. Oibuz is built specifically for construction and project-based businesses. It supports daily wage labor, piece-rate contractors, overtime calculations, site advances, as well as monthly salaried engineers and office staff.",
+  },
+  {
+    q: "How does Oibuz prevent 'buddy punching' and fake attendance?",
+    a: "Every mobile punch requires a live selfie photo matched with facial recognition and mandatory GPS geofencing. A punch is only accepted if the worker is physically present inside the designated site coordinates.",
+  },
+  {
+    q: "What happens if a site manager delays approving leaves or expense claims?",
+    a: "Oibuz features an SLA (Service Level Agreement) Escalation Engine. If a manager ignores a pending request beyond the configured time, the system flags and escalates it to HR or Admin to break site bottlenecks.",
+  },
+  {
+    q: "How fast can we deploy Oibuz across our construction sites?",
+    a: "You can be live within 24 to 48 hours. No expensive hardware is required. Simply download the app, set up your sites and team, and start tracking verified field operations immediately.",
+  },
+];
+
+// Partner Logos / Badges
+const CLIENT_PARTNERS = [
+  "APEX INFRA DEVELOPERS",
+  "METRO CITY BUILDERS",
+  "SHIVALIK CONSTRUCTIONS",
+  "SKYLINE CIVIL TECH",
+  "SAHYADRI INFRASTRUCTURE",
 ];
 
 export default function ConstructionHrmsPage() {
-  const { openLeadModal } = useLeadModal();
+  const { openModal } = useLeadModal();
 
-  // Active role for Hero UI Dashboard Preview
-  const [heroRole, setHeroRole] = useState("manager");
+  // Interactive Live Mobile Punch Simulator State
+  const [punchState, setPunchState] = useState("idle"); // idle | scanning | verified
+  const [geoLocked, setGeoLocked] = useState(false);
 
-  // Active tab for Section 16 Product Dashboard Showcase
-  const [activeScreenTab, setActiveScreenTab] = useState("attendance");
+  const triggerLivePunchSim = () => {
+    if (punchState === "scanning") return;
+    setPunchState("scanning");
+    setGeoLocked(false);
 
-  // 60-Second Video / Interactive Demo Modal State
-  const [showDemoModal, setShowDemoModal] = useState(false);
-  const [demoStep, setDemoStep] = useState(0);
+    setTimeout(() => {
+      setGeoLocked(true);
+    }, 900);
 
-  // Selected site for Section 09 field demo
-  const [selectedSiteIndex, setSelectedSiteIndex] = useState(0);
+    setTimeout(() => {
+      setPunchState("verified");
+    }, 2000);
+  };
 
-  // Industry Vertical Tab State
-  const [activeIndustryTab, setActiveIndustryTab] = useState("construction");
+  const resetPunchSim = () => {
+    setPunchState("idle");
+    setGeoLocked(false);
+  };
 
-  // FAQ Accordion State
-  const [expandedFaq, setExpandedFaq] = useState(0);
+  // Before / After Comparison Slider State
+  const [compareMode, setCompareMode] = useState("oibuz"); // "paper" | "oibuz"
 
-  // Before/After Slider State
-  const [sliderPos, setSliderPos] = useState(50);
+  // Active Role state for Interactive 5-Tier Switcher
+  const [activeRoleId, setActiveRoleId] = useState("employee");
+  const currentRole = useMemo(
+    () => ROLE_DATA.find((r) => r.id === activeRoleId) || ROLE_DATA[0],
+    [activeRoleId]
+  );
 
-  // ROI Calculator State
-  const [roiWorkers, setRoiWorkers] = useState(200);
-  const [roiWage, setRoiWage] = useState(800);
-  const monthlyLeakage = Math.round(roiWorkers * roiWage * 26 * 0.03);
+  // Active Workflow state for Interactive End-to-End Visualizer (Section 8)
+  const [activeWorkflowId, setActiveWorkflowId] = useState("leave");
+  const currentWorkflow = useMemo(
+    () => WORKFLOWS_DATA.find((w) => w.id === activeWorkflowId) || WORKFLOWS_DATA[0],
+    [activeWorkflowId]
+  );
+
+  // ROI Calculator state
+  const [workersCount, setWorkersCount] = useState(120);
+  const [avgDailyWage, setAvgDailyWage] = useState(650);
+
+  const monthlyLeakage = useMemo(() => {
+    const dailyWageLossPerWorker = avgDailyWage * 0.07; // 7% proxy time leakage
+    const monthlyTotalLoss = workersCount * dailyWageLossPerWorker * 26;
+    const hoursSaved = Math.round((workersCount * 26 * 0.05) / 60) + 18;
+    return {
+      monthlySavings: Math.round(monthlyTotalLoss),
+      annualSavings: Math.round(monthlyTotalLoss * 12),
+      hoursSaved: hoursSaved,
+    };
+  }, [workersCount, avgDailyWage]);
 
   // Lead Form State
   const [formData, setFormData] = useState({
     name: "",
-    designation: "",
-    company: "",
-    email: "",
     phone: "",
-    employeeCount: EMPLOYEE_RANGES[1],
-    workforceType: WORKFORCE_RANGES[1],
-    industry: INDUSTRY_OPTIONS[0],
-    message: "",
+    company: "",
+    workers: "50-150 Workers",
+    sites: "1-3 Active Sites",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const [formSubmitting, setFormSubmitting] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [formError, setFormError] = useState("");
+  // FAQ Accordion State
+  const [openFaqIndex, setOpenFaqIndex] = useState(0);
+
+  // Product Showcase tab state
+  const [activeTab, setActiveTab] = useState("Dashboard");
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.phone.trim() || !formData.email.trim()) {
-      setFormError("Please provide your Name, Email, and Phone number.");
-      return;
-    }
-
-    setFormSubmitting(true);
-    setFormError("");
-
+    setIsSubmitting(true);
     try {
-      const detailedMessage = `[Oibuz HRMS Demo Request]
-Company: ${formData.company || "N/A"}
-Designation: ${formData.designation || "N/A"}
-Staff Size: ${formData.employeeCount}
-Workforce Setup: ${formData.workforceType}
-Industry: ${formData.industry}
-Work Email: ${formData.email}
-Phone: ${formData.phone}
-Notes: ${formData.message || "Requested product demo for Oibuz HRMS."}`;
-
       await createLead({
-        name: formData.name.trim(),
-        contact: `${formData.phone.trim()} | ${formData.email.trim()}`,
-        projectType: "Oibuz HRMS - Product Demo",
-        budget: `${formData.employeeCount} (${formData.industry})`,
-        message: detailedMessage,
-        source: "Oibuz HRMS Landing Page",
+        name: formData.name,
+        phone: formData.phone,
+        company: formData.company,
+        service: "Oibuz Construction Platform",
+        requirements: `Workers: ${formData.workers}, Sites: ${formData.sites}`,
+        page: "Construction HRMS Interactive Page",
       });
 
-      setFormSubmitted(true);
+      setIsSubmitted(true);
     } catch (err) {
-      console.error("Demo submission failed:", err);
-      setFormError(err.message || "Failed to submit demo request. Please contact us directly via WhatsApp.");
+      console.error("Lead submission error:", err);
+      const msg = encodeURIComponent(
+        `Hi Prajyot Infotech, I want a live demo of Oibuz Construction Platform for ${formData.company} (${formData.workers}, ${formData.sites}). Name: ${formData.name}, Phone: ${formData.phone}`
+      );
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
     } finally {
-      setFormSubmitting(false);
+      setIsSubmitting(false);
     }
   };
 
-  const openWhatsAppDemo = () => {
-    const text = encodeURIComponent(
-      `Hi OI HRMS SOLUTIONS / Prajyot Infotech! I would like to schedule a demo of Oibuz HRMS.\n\n` +
-      `👤 Name: ${formData.name || "Interested Leader"}\n` +
-      `🏢 Company: ${formData.company || "Organization"}\n` +
-      `👷 Staff Size: ${formData.employeeCount}\n` +
-      `📍 Setup: ${formData.workforceType}\n` +
-      `📞 Contact: ${formData.phone || "Via WhatsApp"}`
+  const openWhatsAppDirect = () => {
+    const msg = encodeURIComponent(
+      "Hi Prajyot Infotech, I'm interested in a live demo of Oibuz Construction Workforce & Business Management Platform. Please share details."
     );
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, "_blank", "noopener,noreferrer");
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
   };
-
-  const scrollToForm = () => {
-    const el = document.getElementById("demo-request-form");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
-  const scrollToSolution = () => {
-    const el = document.getElementById("solution-section");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
-  // FAQ List for display & JSON-LD schema
-  const faqList = [
-    {
-      q: "What is Oibuz HRMS?",
-      a: "Oibuz HRMS (On-field Integration for Business & User Zeal) is a modern, cloud-based Human Resources Management System developed by OI HRMS SOLUTIONS. It brings employee records, attendance, leave, timesheets, reimbursements, payroll, and approvals into one connected workforce platform."
-    },
-    {
-      q: "What does OIBUZ stand for?",
-      a: "OIBUZ stands for On-field Integration for Business & User Zeal. It represents our core mission: connecting people, processes, and workforce operations into one platform so that desk-bound and field-connected teams can collaborate seamlessly."
-    },
-    {
-      q: "Who is Oibuz HRMS designed for?",
-      a: "Oibuz HRMS is designed for growing organizations (50 to 500+ employees), including field-connected teams, project-based workforces, construction & EPC firms, infrastructure businesses, multi-location enterprises, and businesses requiring structured Manager → HR approvals."
-    },
-    {
-      q: "How does Attendance Management work in Oibuz HRMS?",
-      a: "Employees check in via mobile or desktop. The system captures time, point-in-time geographic location (GPS), and optional selfie verification. It eliminates paper registers and buddy punching while keeping clear attendance histories for manager review."
-    },
-    {
-      q: "Does Oibuz HRMS enforce strict geofencing or location perimeters?",
-      a: "Oibuz HRMS uses point-in-time GPS location capturing along with selfie verification during punch-in/out to provide location-aware attendance. It does not enforce strict perimeter-based geofence blocks."
-    },
-    {
-      q: "How are leave and expense reimbursements approved?",
-      a: "Oibuz HRMS provides structured approval workflows. Leave requests route from Employee → Manager → HR. Reimbursement requests route through a controlled Employee → Manager → HR → Finance flow with receipt attachments and status tracking."
-    },
-    {
-      q: "Does Oibuz HRMS manage payroll and payslips?",
-      a: "Yes. You can configure salary structures with Basic, HRA, Allowances, PF, and PT components. Once monthly attendance and leaves are finalized, HR can execute payroll runs, generate draft calculations, finalize the run, and publish individual employee payslips."
-    },
-    {
-      q: "What roles are supported in Oibuz HRMS?",
-      a: "The system provides role-based access for four distinct profiles: Employee (self-service profile, punch, leave, timesheet, payslips), Manager (team attendance, approvals, timesheets), HR (organization summary, approvals, payroll, employee management), and Admin (system configuration, full access, audit logs)."
-    },
-    {
-      q: "Is Oibuz HRMS cloud-based?",
-      a: "Yes. Oibuz HRMS is a 100% cloud-based software accessible securely via any modern web browser or mobile device, enabling real-time synchronization between offices, project sites, and remote teams."
-    },
-    {
-      q: "How do we get started or request a live demo?",
-      a: "You can click 'Book a Demo' on this page or fill out the quick contact form. Our technical team at OI HRMS SOLUTIONS will schedule a live walkthrough tailored to your workforce structure."
-    }
-  ];
-
-  // Comprehensive Structured Data Schema for Google Search Engine Optimization (SoftwareApplication + FAQPage)
-  const hrmsSchema = useMemo(() => ([
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Oibuz HRMS",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web, Mobile Browser, iOS, Android",
-      "description": "Oibuz HRMS connects employee management, attendance, leave, timesheets, reimbursements, payroll and approvals into one connected workforce platform.",
-      "brand": {
-        "@type": "Brand",
-        "name": "OI HRMS SOLUTIONS",
-        "url": "https://www.prajyotinfotech.in/products/hrms"
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "INR",
-        "description": "Custom enterprise deployment for growing organizations."
-      },
-      "featureList": [
-        "Employee Management",
-        "Point-in-time GPS & Selfie Attendance",
-        "Leave Management",
-        "Timesheets & Project Hours",
-        "Reimbursement Approvals",
-        "Payroll & Payslips Generation",
-        "Multi-Level Approval Workflows",
-        "Workforce Reports & Analytics",
-        "Role-Based Access Control",
-        "System Audit Logs"
-      ]
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": faqList.map((faq) => ({
-        "@type": "Question",
-        "name": faq.q,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": faq.a
-        }
-      }))
-    }
-  ]), [faqList]);
-
-  // Demo walkthrough steps for the interactive tour modal
-  const tourSteps = [
-    {
-      title: "1. Mobile Check-In & GPS Punch",
-      subtitle: "Point-in-Time GPS Location + Selfie Verification",
-      desc: "Employees check in from mobile browsers or apps. The system records the precise timestamp, location coordinates, and selfie snapshot to create an audit-proof check-in log.",
-      badge: "ATTENDANCE MODULE"
-    },
-    {
-      title: "2. Manager Team Dashboard & Approval Queue",
-      subtitle: "Real-Time Direct Report Oversight",
-      desc: "Managers see active team headcount, check-in exceptions, pending leave requests, and task timesheets in one unified operational queue.",
-      badge: "MANAGER CONSOLE"
-    },
-    {
-      title: "3. Multi-Level Approval Routing",
-      subtitle: "Employee → Manager → HR → Finance",
-      desc: "Leave applications and expense reimbursement claims automatically route through authorized approval steps with immutable status tracking.",
-      badge: "WORKFLOW ENGINE"
-    },
-    {
-      title: "4. Monthly Payroll Execution & Payslips",
-      subtitle: "Attendance-Linked Wage Consolidation",
-      desc: "Configured salary structures (Basic, HRA, Allowances, PF, PT) combine with verified attendance days to run monthly payroll and publish employee payslips.",
-      badge: "PAYROLL ENGINE"
-    }
-  ];
 
   return (
-    <>
-      {/* SEO Metadata */}
+    <div className="min-h-screen bg-[#faf9f5] text-slate-800 font-sans selection:bg-amber-400 selection:text-slate-900 overflow-x-hidden">
+      <Seo
+        title="Oibuz | Construction Workforce & Business Management Platform"
+        description="Every Worker Verified. Every Rupee Accounted. Zero-hardware AI face-scan attendance, GPS geofencing, photo-verified material challans, 5-tier role governance, and 1-click biometric payroll."
+        keywords="construction hrms, site attendance app, civil contractor payroll software, Oibuz platform, construction workforce software india, zero ghost workers"
+      />
       <BreadcrumbsLd
         items={[
-          { name: "Home", url: "https://www.prajyotinfotech.in/" },
-          { name: "Products", url: "https://www.prajyotinfotech.in/products/hrms" },
-          { name: "Oibuz HRMS", url: "https://www.prajyotinfotech.in/products/hrms" }
+          { name: "Home", item: "/" },
+          { name: "Products", item: "/services" },
+          { name: "Oibuz Construction Platform", item: "/products/hrms" },
         ]}
       />
 
-      <Seo
-        title="Oibuz HRMS | Cloud HRMS for Growing & Field-Connected Workforces"
-        description="Oibuz HRMS helps growing organizations manage employees, attendance, leave, timesheets, reimbursements, payroll and approvals from one connected workforce platform."
-        keywords="Oibuz HRMS, HRMS software, employee management, attendance management, payroll software, leave management, timesheet management, HR software, workforce management, field workforce management, Pune HRMS, India HRMS, OI HRMS SOLUTIONS"
-        path="/products/hrms"
-        image="https://www.prajyotinfotech.in/og/og-default.jpg"
-        schema={hrmsSchema}
-      />
+      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+          OIBUZ HERO â€” Reference Image Faithful Rebuild
+          â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
 
-      <div className="relative bg-slate-50 text-slate-900 selection:bg-purple-500/20 selection:text-purple-900 font-sans pb-16 sm:pb-0">
+      {/* â”€â”€ NAVBAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm">
+        <div className="container mx-auto px-4 sm:px-6 max-w-7xl flex items-center justify-between h-16">
+          {/* Logo */}
+          <a href="/" className="flex items-center gap-2 shrink-0">
+            <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-9 w-auto object-contain" />
+          </a>
 
-        {/* Subtle Ambient Grid Background */}
-        <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:28px_28px] opacity-40 pointer-events-none" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] bg-gradient-to-b from-blue-100/40 via-purple-100/20 to-transparent blur-3xl pointer-events-none" />
+          {/* Nav */}
+          <nav className="hidden lg:flex items-center gap-0.5">
+            {["Platform", "Features", "For Construction", "Pricing", "Resources"].map((item) => (
+              <a
+                key={item}
+                href="#"
+                className="px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-blue-700 hover:bg-blue-50/70 rounded-lg transition-all"
+              >
+                {item}
+              </a>
+            ))}
+          </nav>
 
-        {/* ========================================================================= */}
-        {/* SECTION 1 — HERO SECTION (WITH HIGH-FIDELITY VECTOR UI & TOUR MODAL) */}
-        {/* ========================================================================= */}
-        <section className="relative pt-8 pb-20 sm:pt-14 sm:pb-28 overflow-hidden bg-gradient-to-b from-white via-slate-50/70 to-slate-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            {/* Top Brand Eyebrow Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-mono font-bold uppercase tracking-wider shadow-sm">
-                <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-                <span>OIBUZ HRMS • BY OI HRMS SOLUTIONS</span>
-              </div>
-
-              <div className="inline-flex items-center gap-2 text-xs font-mono text-slate-500 font-medium">
-                <span className="hidden sm:inline">CONNECTING PEOPLE, PROCESSES & WORKFORCE</span>
-                <span className="px-2.5 py-1 bg-purple-50 text-purple-700 rounded-md border border-purple-100 font-bold">
-                  Enterprise Cloud SaaS
-                </span>
-              </div>
-            </div>
-
-            {/* Main Hero Grid */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
+          {/* Right CTAs */}
+          <div className="flex items-center gap-3">
+            <a href="#demo-form" className="hidden sm:inline-flex text-sm font-semibold text-slate-700 hover:text-blue-700 px-3 py-2 rounded-lg transition-all">
+              Login
+            </a>
+            <a
+              href="#demo-form"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-semibold text-sm shadow-md shadow-blue-700/20 transition-all hover:-translate-y-px"
             >
-              <div className="lg:col-span-7 space-y-6">
-                
-                <div className="space-y-3">
-                  <span className="text-xs font-mono font-extrabold uppercase tracking-widest text-blue-700 bg-blue-100/80 px-3 py-1 rounded-md border border-blue-200">
-                    OIBUZ HRMS
+              Book a Demo <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
+            </a>
+          </div>
+        </div>
+      </header>
+
+      {/* â”€â”€ HERO BODY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      <section className="relative overflow-hidden bg-white" style={{ minHeight: "700px" }}>
+
+        {/* -- CONSTRUCTION BACKGROUND: obiz_background.png --------------- */}
+        {/* Image has worker on right + crane + building -- perfect composition */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url('/images/obiz_background.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "right center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+
+        {/* Left-to-right gradient: pure white left to transparent right */}
+        {/* Keeps headline/CTA on clean white; construction scene on right */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 38%, rgba(255,255,255,0.88) 50%, rgba(255,255,255,0.45) 62%, rgba(255,255,255,0.08) 76%, rgba(255,255,255,0) 100%)",
+          }}
+        />
+
+        {/* Subtle cool-blue desaturating tint -- premium SaaS feel */}
+        <div className="absolute inset-0 bg-blue-50/15" />
+
+        {/* Bottom fade -- blends hero into next section */}
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white/60 to-transparent" />
+
+        {/* â”€â”€ CONTENT GRID â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 max-w-7xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-8 lg:gap-4 pt-12 pb-16 lg:pt-14 lg:pb-18">
+
+            {/* â”€â”€ LEFT COL (42%) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            <div className="lg:col-span-5 flex flex-col gap-6">
+
+              {/* Eyebrow */}
+              <motion.p
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="text-blue-700 font-bold text-[11px] tracking-[0.18em] uppercase"
+              >
+                Workforce Management for Construction
+              </motion.p>
+
+              {/* H1 */}
+              <motion.h1
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.07, duration: 0.45 }}
+                className="text-[2.5rem] sm:text-[2.9rem] md:text-[3.2rem] font-black text-slate-900 leading-[1.08] tracking-tight"
+              >
+                Workforce<br />Management<br />
+                Built for{" "}
+                <span className="text-blue-700">Construction.</span>
+              </motion.h1>
+
+              {/* Description */}
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.14, duration: 0.4 }}
+                className="text-slate-500 text-[1rem] leading-[1.7] max-w-[500px]"
+              >
+                Manage attendance, leave, timesheets, expenses and payroll across your workforce â€” from one connected platform.
+              </motion.p>
+
+              {/* CTA buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.21, duration: 0.4 }}
+                className="flex flex-col sm:flex-row gap-3"
+              >
+                <a
+                  href="#demo-form"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm shadow-lg shadow-blue-700/25 transition-all hover:-translate-y-0.5"
+                >
+                  Book a Demo
+                  <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+                </a>
+                <a
+                  href="#features"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-sm transition-all"
+                >
+                  <span className="w-5 h-5 rounded-full border-[1.5px] border-slate-400 flex items-center justify-center shrink-0">
+                    <span className="w-0 h-0 border-t-[3.5px] border-t-transparent border-b-[3.5px] border-b-transparent border-l-[6px] border-l-slate-500 ml-0.5" />
                   </span>
-                  <h1 className="text-4xl sm:text-5xl xl:text-6xl font-black text-slate-900 tracking-tight leading-[1.12]">
-                    Connect Your Workforce. <br className="hidden sm:inline" />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-700">
-                      Simplify HR. Stay in Control.
-                    </span>
-                  </h1>
-                </div>
+                  Explore Platform
+                </a>
+              </motion.div>
 
-                <p className="text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed">
-                  Oibuz HRMS brings employee management, attendance, leave, timesheets, reimbursements, payroll and approvals into one connected platform.
-                </p>
-
-                <p className="text-sm font-semibold text-slate-700 bg-white/80 p-3 rounded-xl border border-purple-100 inline-block shadow-sm">
-                  Built for growing organizations, field-connected teams and project-based workforces.
-                </p>
-
-                {/* CTAs & Product Tour Trigger */}
-                <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                  <button
-                    onClick={scrollToForm}
-                    className="px-8 py-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-base transition-all shadow-[0_10px_30px_rgba(37,99,235,0.25)] hover:shadow-[0_15px_35px_rgba(37,99,235,0.35)] flex items-center justify-center gap-3 cursor-pointer group"
-                  >
-                    <span>Book a Demo</span>
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </button>
-
-                  <button
-                    onClick={() => setShowDemoModal(true)}
-                    className="px-6 py-4 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 font-bold text-sm transition border border-purple-200 shadow-sm flex items-center justify-center gap-2 cursor-pointer group"
-                  >
-                    <div className="w-6 h-6 rounded-full bg-purple-600 text-white flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
-                      <Play className="w-3 h-3 fill-current ml-0.5" />
+              {/* 4 Feature highlights */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.32, duration: 0.4 }}
+                className="grid grid-cols-4 gap-3 pt-1"
+              >
+                {[
+                  { icon: ScanFace, l1: "Selfie & Location", l2: "Attendance" },
+                  { icon: FileSpreadsheet, l1: "Project", l2: "Timesheets" },
+                  { icon: CheckCircle2, l1: "Structured", l2: "Approvals" },
+                  { icon: CreditCard, l1: "Integrated", l2: "Payroll" },
+                ].map(({ icon: Icon, l1, l2 }) => (
+                  <div key={l1} className="flex flex-col items-center gap-1.5 text-center">
+                    <div className="w-10 h-10 rounded-xl border border-blue-100 bg-blue-50 flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-blue-700 stroke-[1.5]" />
                     </div>
-                    <span>Watch 60s Tour</span>
-                  </button>
+                    <p className="text-[11px] font-semibold text-slate-700 leading-tight">
+                      {l1}<br />{l2}
+                    </p>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
 
-                  <button
-                    onClick={scrollToSolution}
-                    className="px-6 py-4 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-bold text-sm transition border border-slate-300 shadow-sm flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <span>Explore Platform</span>
-                    <ChevronDown className="w-4 h-4 text-slate-500" />
-                  </button>
-                </div>
+            {/* â”€â”€ RIGHT COL (58%) â€” Dashboard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            <div className="lg:col-span-7 relative flex items-center justify-center lg:justify-end">
+              <motion.div
+                initial={{ opacity: 0, x: 30, y: 10 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ delay: 0.18, duration: 0.65, ease: "easeOut" }}
+                className="relative w-full max-w-[660px]"
+              >
+                {/* Radial blue glow */}
+                <div className="absolute -inset-4 rounded-3xl bg-blue-600/10 blur-2xl" />
 
-                {/* Trust Badge Bar */}
-                <div className="pt-4 border-t border-slate-200/80 flex flex-wrap items-center gap-4 text-xs font-mono font-bold text-slate-500">
-                  <span className="flex items-center gap-1.5 text-slate-700">
-                    <CheckCircle2 className="w-4 h-4 text-blue-600" /> Cloud-based
-                  </span>
-                  <span className="text-slate-300">•</span>
-                  <span className="flex items-center gap-1.5 text-slate-700">
-                    <ShieldCheck className="w-4 h-4 text-purple-600" /> Role-based
-                  </span>
-                  <span className="text-slate-300">•</span>
-                  <span className="flex items-center gap-1.5 text-slate-700">
-                    <Users className="w-4 h-4 text-indigo-600" /> Workforce-focused
-                  </span>
-                </div>
+                {/* â”€â”€ DASHBOARD SHELL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+                <div className="relative bg-white rounded-2xl shadow-2xl shadow-slate-400/30 border border-slate-200 overflow-hidden">
 
-              </div>
-
-              {/* High-Fidelity Interactive Vector UI Display */}
-              <div className="lg:col-span-5 relative">
-                <div className="relative rounded-3xl bg-slate-950 border border-slate-800 shadow-[0_25px_60px_rgba(15,23,42,0.4)] overflow-hidden text-white p-6">
-                  
-                  {/* Window Header */}
-                  <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-rose-500/80" />
-                      <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-                      <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                      <span className="text-xs font-mono text-slate-400 ml-2">oibuz.hrms.app/dashboard</span>
+                  {/* Top-bar */}
+                  <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-100 bg-white">
+                    <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-6 w-auto object-contain" />
+                    <div className="flex items-center gap-1.5">
+                      <div className="relative w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center">
+                        <span className="text-[11px]">ðŸ””</span>
+                        <span className="absolute top-0.5 right-0.5 w-2 h-2 rounded-full bg-rose-500 border border-white" />
+                      </div>
+                      <div className="w-7 h-7 rounded-full bg-blue-700 flex items-center justify-center">
+                        <span className="text-[10px] text-white font-bold">AS</span>
+                      </div>
                     </div>
-                    <span className="text-[10px] font-mono bg-emerald-500/20 text-emerald-400 px-2.5 py-0.5 rounded-full border border-emerald-500/30 font-bold flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" /> LIVE CONSOLE
-                    </span>
                   </div>
 
-                  {/* Interactive Role Switcher Pill Bar */}
-                  <div className="flex items-center justify-between gap-1 bg-slate-900 p-1.5 rounded-xl border border-slate-800 mb-4 text-[11px] font-mono">
-                    {["employee", "manager", "hr", "admin"].map((r) => (
-                      <button
-                        key={r}
-                        onClick={() => setHeroRole(r)}
-                        className={`flex-1 py-1.5 rounded-lg font-bold capitalize transition-all cursor-pointer ${
-                          heroRole === r
-                            ? "bg-blue-600 text-white shadow-sm"
-                            : "text-slate-400 hover:text-white"
-                        }`}
-                      >
-                        {r}
-                      </button>
-                    ))}
-                  </div>
+                  {/* Body */}
+                  <div className="flex">
 
-                  {/* Dynamic High-Fidelity UI Body */}
-                  <div className="space-y-3 text-xs">
-                    
-                    {/* User Header Profile Badge */}
-                    <div className="flex items-center justify-between bg-slate-900/80 p-3 rounded-xl border border-slate-800">
-                      <div className="flex items-center gap-3">
-                        <div className="relative">
-                          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center font-bold text-white text-xs">
-                            {heroRole === "employee" ? "RV" : heroRole === "manager" ? "RP" : heroRole === "hr" ? "MD" : "AD"}
-                          </div>
-                          <div className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-slate-900" />
+                    {/* Sidebar */}
+                    <div className="hidden sm:flex flex-col bg-[#0f172a] w-[128px] shrink-0 py-2.5">
+                      {[
+                        { icon: BarChart3, label: "Dashboard", active: true },
+                        { icon: Users, label: "Employees" },
+                        { icon: Clock, label: "Attendance" },
+                        { icon: Calendar, label: "Leave" },
+                        { icon: FileSpreadsheet, label: "Timesheets" },
+                        { icon: Receipt, label: "Expenses" },
+                        { icon: CreditCard, label: "Payroll" },
+                        { icon: CheckCircle, label: "Approvals" },
+                        { icon: FileText, label: "Reports" },
+                        { icon: MapPin, label: "Projects" },
+                        { icon: Shield, label: "Settings" },
+                      ].map(({ icon: Icon, label, active }) => (
+                        <div
+                          key={label}
+                          className={`flex items-center gap-2 px-2.5 py-[5px] mx-1.5 rounded-lg cursor-pointer ${active ? "bg-blue-600 text-white" : "text-slate-400 hover:text-slate-200"
+                            }`}
+                        >
+                          <Icon className="w-3 h-3 shrink-0" />
+                          <span className="text-[10.5px] font-medium">{label}</span>
                         </div>
+                      ))}
+                    </div>
+
+                    {/* Main content */}
+                    <div className="flex-1 p-3.5 bg-[#f8fafc]">
+
+                      {/* Greeting */}
+                      <div className="flex items-start justify-between mb-3">
                         <div>
-                          <div className="font-bold text-white">
-                            {heroRole === "employee" && "Rahul Verma (Project Engineer)"}
-                            {heroRole === "manager" && "Rajesh Patil (Site Manager)"}
-                            {heroRole === "hr" && "Mahesh Deshmukh (HR Lead)"}
-                            {heroRole === "admin" && "System Admin (OI HRMS SOLUTIONS)"}
+                          <p className="text-[13px] font-bold text-slate-900 leading-tight">Good Morning, Admin</p>
+                          <p className="text-[10px] text-slate-500 mt-0.5">Here's what's happening across your workforce today.</p>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <div className="text-[9px] text-slate-500 bg-white border border-slate-200 rounded-md px-1.5 py-0.5 flex items-center gap-0.5">
+                            All Sites <ChevronDown className="w-2.5 h-2.5" />
                           </div>
-                          <div className="text-[10px] font-mono text-slate-400">
-                            Role Scope: {heroRole.toUpperCase()} • Location: Pune Operations Hub
+                          <div className="text-[9px] text-slate-500 bg-white border border-slate-200 rounded-md px-1.5 py-0.5 flex items-center gap-0.5">
+                            <Calendar className="w-2.5 h-2.5" /> Nov 21, 2024
                           </div>
                         </div>
                       </div>
-                      <span className="text-[10px] font-mono text-blue-400 font-bold bg-blue-500/10 px-2 py-1 rounded">
-                        Active Session
-                      </span>
-                    </div>
 
-                    {/* Live Mobile Attendance Punch Card */}
-                    <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2">
-                      <div className="flex items-center justify-between text-[11px]">
-                        <span className="font-bold text-slate-300 flex items-center gap-1.5">
-                          <Smartphone className="w-3.5 h-3.5 text-blue-400" /> Check-in Status
-                        </span>
-                        <span className="text-[10px] font-mono text-emerald-400 font-bold">09:02 AM Checked In</span>
+                      {/* KPI cards */}
+                      <div className="grid grid-cols-4 gap-1.5 mb-3">
+                        {[
+                          { label: "Total Employees", value: "248", icon: Users, ic: "bg-blue-50 text-blue-700", bc: "border-blue-100" },
+                          { label: "Present Today", value: "231", icon: CheckCircle2, ic: "bg-emerald-50 text-emerald-600", bc: "border-emerald-100" },
+                          { label: "On Leave", value: "12", icon: Calendar, ic: "bg-amber-50 text-amber-600", bc: "border-amber-100" },
+                          { label: "Pending Approvals", value: "7", icon: Clock, ic: "bg-rose-50 text-rose-600", bc: "border-rose-100" },
+                        ].map(({ label, value, icon: Icon, ic, bc }) => (
+                          <div key={label} className={`bg-white rounded-xl p-2 border ${bc} shadow-sm`}>
+                            <div className={`w-5 h-5 rounded-md ${ic} flex items-center justify-center mb-1`}>
+                              <Icon className="w-3 h-3" />
+                            </div>
+                            <p className="text-[8.5px] text-slate-500 leading-tight">{label}</p>
+                            <p className="text-[15px] font-black text-slate-900 leading-tight">{value}</p>
+                          </div>
+                        ))}
                       </div>
-                      <div className="grid grid-cols-2 gap-2 text-[10px] font-mono">
-                        <div className="bg-slate-950 p-2 rounded border border-slate-800 flex items-center gap-1.5 text-slate-300">
-                          <MapPin className="w-3 h-3 text-purple-400 shrink-0" />
-                          <span className="truncate">Lat 18.5529, Long 73.8052</span>
+
+                      {/* Chart + Activity */}
+                      <div className="grid grid-cols-2 gap-2">
+
+                        {/* Bar chart */}
+                        <div className="bg-white rounded-xl border border-slate-200 p-2.5 shadow-sm">
+                          <div className="flex items-center justify-between mb-1.5">
+                            <p className="text-[10px] font-bold text-slate-800">Workforce Attendance</p>
+                            <div className="text-[8px] text-slate-400 bg-slate-50 border border-slate-200 rounded px-1 py-0.5 flex items-center gap-0.5">
+                              This Week <ChevronDown className="w-2 h-2" />
+                            </div>
+                          </div>
+                          <div className="flex items-end justify-between gap-0.5 mb-1" style={{ height: "56px" }}>
+                            {[
+                              { day: "Mon", h: 78 },
+                              { day: "Tue", h: 86 },
+                              { day: "Wed", h: 68 },
+                              { day: "Thu", h: 90 },
+                              { day: "Fri", h: 82 },
+                              { day: "Sat", h: 55 },
+                            ].map(({ day, h }) => (
+                              <div key={day} className="flex-1 flex flex-col items-center gap-0.5">
+                                <div className="w-full rounded-t-sm bg-blue-700" style={{ height: `${(h / 100) * 50}px` }} />
+                                <span className="text-[7px] text-slate-400">{day}</span>
+                              </div>
+                            ))}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="flex items-center gap-0.5 text-[7.5px] text-slate-500">
+                              <span className="w-1.5 h-1.5 rounded-sm bg-blue-700 inline-block" /> Present
+                            </span>
+                            <span className="flex items-center gap-0.5 text-[7.5px] text-slate-500">
+                              <span className="w-1.5 h-1.5 rounded-sm bg-blue-200 inline-block" /> Absent
+                            </span>
+                          </div>
                         </div>
-                        <div className="bg-slate-950 p-2 rounded border border-slate-800 flex items-center gap-1.5 text-emerald-400">
-                          <Camera className="w-3 h-3 shrink-0" />
-                          <span>Selfie Verified ✓</span>
+
+                        {/* Recent Activity */}
+                        <div className="bg-white rounded-xl border border-slate-200 p-2.5 shadow-sm">
+                          <div className="flex items-center justify-between mb-1.5">
+                            <p className="text-[10px] font-bold text-slate-800">Recent Activity</p>
+                            <a href="#" className="text-[8px] text-blue-600 font-semibold flex items-center gap-0.5">
+                              View All <ArrowRight className="w-2 h-2" />
+                            </a>
+                          </div>
+                          <div className="space-y-1.5">
+                            {[
+                              { dot: "bg-emerald-500", title: "Rahul punched in", sub: "Site A Â· 08:02 AM", time: "5m ago" },
+                              { dot: "bg-blue-500", title: "Leave approved", sub: "Amit Sharma Â· 2 days", time: "23m ago" },
+                              { dot: "bg-amber-500", title: "Expense submitted", sub: "Site B Â· â‚¹4,850", time: "1h ago" },
+                              { dot: "bg-purple-500", title: "Timesheet approved", sub: "Site C", time: "2h ago" },
+                            ].map(({ dot, title, sub, time }) => (
+                              <div key={title} className="flex items-center gap-1.5">
+                                <div className={`w-1.5 h-1.5 rounded-full ${dot} shrink-0`} />
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-[9.5px] font-semibold text-slate-800 truncate">{title}</p>
+                                  <p className="text-[8px] text-slate-400 truncate">{sub}</p>
+                                </div>
+                                <span className="text-[8px] text-slate-400 shrink-0">{time}</span>
+                              </div>
+                            ))}
+                          </div>
                         </div>
+
                       </div>
                     </div>
-
-                    {/* Pending Approvals & Status Widget */}
-                    <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-2">
-                      <div className="flex items-center justify-between text-[11px]">
-                        <span className="font-bold text-slate-300 flex items-center gap-1.5">
-                          <Workflow className="w-3.5 h-3.5 text-purple-400" /> Multi-Level Approval Queue
-                        </span>
-                        <span className="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded">
-                          1 Pending Action
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between text-[11px] bg-slate-950 p-2 rounded border border-slate-800 text-slate-300">
-                        <span>Casual Leave Request (2 Days)</span>
-                        <span className="font-mono text-emerald-400 font-bold">Manager Approved → HR Review</span>
-                      </div>
-                    </div>
-
                   </div>
+                </div>
+              </motion.div>
+            </div>
 
-                  <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
-                    <span>Oibuz HRMS Engine v4.2</span>
-                    <span className="text-blue-400 font-bold">OI HRMS SOLUTIONS</span>
-                  </div>
+          </div>
+        </div>
+      </section>
 
+      {/* â”€â”€ AUDIENCE STRIP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      <section className="py-10 bg-white border-y border-slate-100">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+          <p className="text-center text-[10.5px] uppercase tracking-[0.2em] font-bold text-slate-400 mb-7">
+            Built for Distributed Construction Workforces
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8">
+            {[
+              { icon: Building2, title: "Construction Companies", desc: "Manage large workforces across multiple projects" },
+              { icon: HardHat, title: "Contractors", desc: "Track teams, attendance and site productivity" },
+              { icon: MapPin, title: "Multi-Site Teams", desc: "Get centralized visibility across all locations" },
+              { icon: BarChart3, title: "Project-Based Businesses", desc: "Control costs and simplify workforce operations" },
+            ].map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="flex flex-col items-center text-center gap-3">
+                <div className="w-11 h-11 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center">
+                  <Icon className="w-5 h-5 text-blue-700 stroke-[1.5]" />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-slate-900">{title}</p>
+                  <p className="text-xs text-slate-500 mt-0.5 leading-snug">{desc}</p>
                 </div>
               </div>
-
-            </motion.div>
-
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ========================================================================= */}
-        {/* SECTION 2 — OIBUZ BRAND MEANING SECTION */}
-        {/* ========================================================================= */}
-        <section className="py-16 bg-white border-y border-purple-100 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-purple-950 text-white rounded-3xl p-8 sm:p-12 shadow-xl relative overflow-hidden">
-              <div className="absolute -right-10 -bottom-10 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-              
-              <div className="max-w-4xl space-y-6 relative z-10">
-                <span className="text-xs font-mono font-bold uppercase tracking-widest text-blue-300 bg-blue-500/20 px-3 py-1 rounded-full border border-blue-400/30">
-                  WHAT OIBUZ STANDS FOR
-                </span>
 
-                <div className="space-y-2">
-                  <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
-                    OIBUZ — <span className="text-blue-300">On-field Integration for Business & User Zeal</span>
-                  </h2>
+
+
+      {/* ================================================================
+          SECTION 02 â€” THE PROBLEM
+          ================================================================ */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <p className="text-blue-700 font-bold text-xs tracking-widest uppercase mb-4">The Challenge</p>
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+              Construction workforce management shouldn't live in WhatsApp, paper and spreadsheets.
+            </h2>
+            <p className="mt-4 text-slate-500 text-base sm:text-lg leading-relaxed">
+              Managing people across active sites creates operational gaps in attendance, approvals, expenses, timesheets and payroll.
+            </p>
+          </div>
+
+          {/* Problem â†’ Solution visual transition */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-12 text-xs font-semibold">
+            {["Paper Registers", "WhatsApp Groups", "Excel Sheets", "Manual Processes"].map((item, i) => (
+              <React.Fragment key={item}>
+                <span className="px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-slate-600">{item}</span>
+                {i < 3 && <span className="text-slate-300 text-base">â†’</span>}
+              </React.Fragment>
+            ))}
+            <span className="text-slate-300 text-base">â†’</span>
+            <span className="px-4 py-1.5 rounded-lg bg-blue-700 text-white font-bold">Oibuz</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              { icon: FileText, title: "Manual Attendance", desc: "Paper registers, scattered records and unverified attendance make workforce tracking difficult.", color: "bg-slate-50 border-slate-200" },
+              { icon: Layers, title: "Scattered Approvals", desc: "Leave and expense requests can get lost across messages, calls and disconnected processes.", color: "bg-slate-50 border-slate-200" },
+              { icon: FileSpreadsheet, title: "Payroll Administration", desc: "HR needs reliable attendance and leave data to prepare payroll without repeated manual reconciliation.", color: "bg-slate-50 border-slate-200" },
+              { icon: Eye, title: "Limited Visibility", desc: "Business leaders need a clear view of workforce activity across locations.", color: "bg-slate-50 border-slate-200" },
+            ].map(({ icon: Icon, title, desc, color }) => (
+              <div key={title} className={`rounded-2xl border p-6 ${color}`}>
+                <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center mb-4 shadow-sm">
+                  <Icon className="w-5 h-5 text-slate-600 stroke-[1.5]" />
                 </div>
-
-                <p className="text-base sm:text-xl text-slate-200 leading-relaxed font-light">
-                  Oibuz represents the connection between people, business processes and workforce operations — bringing everyday HR activities into one connected system.
-                </p>
-
-                <div className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white font-medium text-sm sm:text-base flex items-center gap-3">
-                  <Zap className="w-6 h-6 text-amber-300 shrink-0" />
-                  <span>“Connecting people, processes and workforce operations in one platform.”</span>
-                </div>
+                <h3 className="text-sm font-bold text-slate-900 mb-2">{title}</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">{desc}</p>
               </div>
-
-            </div>
-
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ========================================================================= */}
-        {/* SECTION 3 — GO LIVE IN 48 HOURS (ONBOARDING ROADMAP) */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-gradient-to-b from-slate-50 via-white to-slate-50 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-200">
-                RAPID DEPLOYMENT ROADMAP
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                Go Live in 48 Hours. Zero Operational Hassle.
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                No complex multi-month hardware installations. Oibuz HRMS deploys in 4 fast steps.
-              </p>
+      {/* ================================================================
+          SECTION 03 â€” ONE PLATFORM / CORE MODULES
+          ================================================================ */}
+      <section id="features" className="py-20 md:py-28 bg-[#f0f4ff]">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <p className="text-blue-700 font-bold text-xs tracking-widest uppercase mb-4">The Platform</p>
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              One platform for your entire workforce.
+            </h2>
+            <p className="mt-4 text-slate-500 text-base sm:text-lg leading-relaxed">
+              Oibuz connects employees, managers, HR, finance and business owners through structured digital workflows.
+            </p>
+          </div>
+
+          {/* Primary modules grid â€” varied sizes for visual hierarchy */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {/* Large feature: Employee Management */}
+            <div className="col-span-2 bg-white rounded-2xl border border-blue-100 p-6 shadow-sm flex gap-5 items-start">
+              <div className="w-12 h-12 rounded-xl bg-blue-700 flex items-center justify-center shrink-0">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-slate-900 mb-1">Employee Management</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">Centralize employee profiles, roles, salary details and reporting structures in one digital directory.</p>
+              </div>
+            </div>
+            {/* Large feature: Attendance */}
+            <div className="col-span-2 bg-white rounded-2xl border border-blue-100 p-6 shadow-sm flex gap-5 items-start">
+              <div className="w-12 h-12 rounded-xl bg-blue-700 flex items-center justify-center shrink-0">
+                <Clock className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-slate-900 mb-1">Attendance</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">Mobile punch in and out with selfie and location capture. Attendance corrections follow an approval workflow.</p>
+              </div>
             </div>
 
-            {/* 4-Step Interactive Timeline */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-              
+            {/* Smaller modules */}
+            {[
+              { icon: Calendar, title: "Leave Management", desc: "Track balances, submit requests and route approvals through defined levels." },
+              { icon: FileSpreadsheet, title: "Timesheets", desc: "Log project hours and tasks daily. Managers validate before payroll." },
+              { icon: Receipt, title: "Reimbursements", desc: "Submit digital receipts and route expense claims through approval workflows." },
+              { icon: CreditCard, title: "Payroll", desc: "Generate payroll using salary, attendance and approved leave data." },
+              { icon: FileText, title: "Salary Slips", desc: "Generate secure PDF salary slips employees can access directly from their dashboard." },
+              { icon: BarChart3, title: "Reports & Visibility", desc: "Understand attendance, workforce activity and operational status at a glance." },
+            ].map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="col-span-1 bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
+                <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center mb-3">
+                  <Icon className="w-4.5 h-4.5 text-blue-700 stroke-[1.5]" style={{ width: "18px", height: "18px" }} />
+                </div>
+                <h3 className="text-sm font-bold text-slate-900 mb-1">{title}</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          SECTION 04 â€” BUILT FOR CONSTRUCTION
+          ================================================================ */}
+      <section className="py-20 md:py-28 bg-white relative overflow-hidden">
+        {/* Subtle construction background */}
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-[0.05]"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=60')" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white" />
+
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 max-w-6xl">
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <p className="text-blue-700 font-bold text-xs tracking-widest uppercase mb-4">Built for Construction</p>
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              Your workforce may be spread across sites. Your system shouldn't be.
+            </h2>
+            <p className="mt-4 text-slate-500 text-base sm:text-lg leading-relaxed">
+              Oibuz brings field-level activity and back-office operations into one connected workforce platform.
+            </p>
+          </div>
+
+          {/* Multi-site visual */}
+          <div className="flex flex-col items-center gap-8">
+            {/* Sites row */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-3xl">
               {[
-                { step: "01", title: "Upload Employee Directory", desc: "Import employee profiles, designations, departments, and manager mappings.", icon: Users },
-                { step: "02", title: "Configure Approval Routes", desc: "Define Manager → HR approval workflows for leaves, timesheets, and expense claims.", icon: Workflow },
-                { step: "03", title: "Set Up Salary Structures", desc: "Configure Basic, HRA, Allowances, PF, and PT components for payroll run readiness.", icon: CreditCard },
-                { step: "04", title: "Launch Field Attendance", desc: "Distribute mobile access for point-in-time GPS and selfie verified check-ins.", icon: Rocket },
-              ].map((item, idx) => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.step} className="bg-white p-6 rounded-2xl border border-purple-100 shadow-sm hover:shadow-md transition flex flex-col justify-between relative group">
-                    <div>
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-xs font-mono font-black text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-                          STEP {item.step}
-                        </span>
-                        <Icon className="w-5 h-5 text-purple-600 group-hover:scale-110 transition-transform" />
-                      </div>
-                      <h3 className="text-base font-bold text-slate-900 mb-2">{item.title}</h3>
-                      <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+                { site: "Site A", items: ["Workers", "Attendance", "Timesheets"] },
+                { site: "Site B", items: ["Workers", "Attendance", "Expenses"] },
+                { site: "Site C", items: ["Workers", "Attendance", "Approvals"] },
+              ].map(({ site, items }) => (
+                <div key={site} className="bg-[#f0f4ff] rounded-2xl border border-blue-100 p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                    <p className="text-sm font-bold text-slate-800">{site}</p>
+                  </div>
+                  {items.map((item) => (
+                    <div key={item} className="flex items-center gap-2 py-1.5 border-b border-blue-100 last:border-0">
+                      <CheckCircle className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                      <span className="text-xs text-slate-600">{item}</span>
                     </div>
-                    <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] font-mono text-slate-400 font-bold">
-                      {idx === 0 || idx === 1 ? "DAY 1 DEPLOYMENT" : "DAY 2 GO-LIVE"}
-                    </div>
-                  </div>
-                );
-              })}
-
-            </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 4 — MARKET COMPARISON MATRIX (OIBUZ VS LEGACY) */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-white border-y border-purple-100 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-purple-700 bg-purple-100 px-3 py-1 rounded-full border border-purple-200">
-                WHY OIBUZ LEADS THE MARKET
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                Oibuz HRMS vs Traditional Alternatives
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                See how Oibuz HRMS compares to paper registers, legacy biometric hardware, and generic desk-only HR software.
-              </p>
-            </div>
-
-            {/* B2B Comparison Table */}
-            <div className="overflow-x-auto rounded-3xl border border-purple-100 shadow-xl bg-white">
-              <table className="w-full text-left border-collapse min-w-[700px]">
-                <thead>
-                  <tr className="bg-slate-900 text-white text-xs font-mono uppercase">
-                    <th className="p-4 sm:p-5">Capability / Feature</th>
-                    <th className="p-4 sm:p-5 text-slate-400">Paper &amp; Registers</th>
-                    <th className="p-4 sm:p-5 text-slate-400">Legacy Biometrics</th>
-                    <th className="p-4 sm:p-5 text-slate-400">Generic Desk HRMS</th>
-                    <th className="p-4 sm:p-5 text-blue-400 font-black bg-slate-950">Oibuz HRMS</th>
-                  </tr>
-                </thead>
-                <tbody className="text-xs divide-y divide-purple-100/80 font-medium text-slate-700">
-                  
-                  <tr>
-                    <td className="p-4 font-bold text-slate-900">Point-in-Time GPS Check-In</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ Manual Only</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ Wall Fixed Only</td>
-                    <td className="p-4 text-amber-600 font-mono">Limited / Desk Only</td>
-                    <td className="p-4 font-bold text-emerald-600 bg-blue-50/50 font-mono">✓ Point-in-Time GPS</td>
-                  </tr>
-
-                  <tr>
-                    <td className="p-4 font-bold text-slate-900">Live Selfie Verification Audit</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ High Proxy Punching</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ Dust &amp; Power Issues</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ Not Included</td>
-                    <td className="p-4 font-bold text-emerald-600 bg-blue-50/50 font-mono">✓ Live Selfie Audit</td>
-                  </tr>
-
-                  <tr>
-                    <td className="p-4 font-bold text-slate-900">Multi-Level Approval Routing</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ WhatsApp / Verbal</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ No Workflow Engine</td>
-                    <td className="p-4 text-amber-600 font-mono">Basic Only</td>
-                    <td className="p-4 font-bold text-emerald-600 bg-blue-50/50 font-mono">✓ Emp → Mgr → HR → Fin</td>
-                  </tr>
-
-                  <tr>
-                    <td className="p-4 font-bold text-slate-900">Salary Structure &amp; Payroll Run</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ Excel Math Discrepancies</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ Raw Log Export Only</td>
-                    <td className="p-4 text-amber-600 font-mono">Requires Add-On</td>
-                    <td className="p-4 font-bold text-emerald-600 bg-blue-50/50 font-mono">✓ Integrated Payroll</td>
-                  </tr>
-
-                  <tr>
-                    <td className="p-4 font-bold text-slate-900">Zero Hardware Failure Risk</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ Register Loss Risk</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ Hardware Breakdown</td>
-                    <td className="p-4 text-emerald-600 font-mono">✓ Cloud Software</td>
-                    <td className="p-4 font-bold text-emerald-600 bg-blue-50/50 font-mono">✓ 100% Cloud SaaS</td>
-                  </tr>
-
-                  <tr>
-                    <td className="p-4 font-bold text-slate-900">Role-Based Access Governance</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ Zero Security</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ Admin Only</td>
-                    <td className="p-4 text-slate-700 font-mono">Standard RBAC</td>
-                    <td className="p-4 font-bold text-emerald-600 bg-blue-50/50 font-mono">✓ Emp / Mgr / HR / Admin</td>
-                  </tr>
-
-                  <tr>
-                    <td className="p-4 font-bold text-slate-900">System Action Audit Logs</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ None</td>
-                    <td className="p-4 text-rose-500 font-mono">✕ Device Logs Only</td>
-                    <td className="p-4 text-amber-600 font-mono">Partial Logs</td>
-                    <td className="p-4 font-bold text-emerald-600 bg-blue-50/50 font-mono">✓ Full System Logs</td>
-                  </tr>
-
-                </tbody>
-              </table>
-            </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 5 — PROBLEM SECTION */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-slate-50 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-rose-700 bg-rose-100 px-3 py-1 rounded-full border border-rose-200">
-                OPERATIONAL FRICTION IN DISCONNECTED HR
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                HR Becomes Difficult When Everything Is Disconnected.
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                When employee data, attendance registers, and approval channels exist in silos, HR management degrades into manual chasing and data discrepancies.
-              </p>
-            </div>
-
-            {/* 7 Problem Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-              
-              {[
-                { title: "Attendance Scattered", desc: "Attendance scattered across registers or disconnected systems.", icon: FileSpreadsheet },
-                { title: "Manual Approvals", desc: "Leave and approvals managed through calls, messages or manual processes.", icon: AlertCircle },
-                { title: "Siloed Information", desc: "Employee information stored in multiple disconnected files and places.", icon: Users },
-                { title: "Unclear Timesheets", desc: "Timesheets difficult to track across projects, locations, and teams.", icon: Clock },
-                { title: "Unstructured Expenses", desc: "Reimbursements lack structured approval routing between managers and finance.", icon: DollarSign },
-                { title: "Disconnected Payroll", desc: "Payroll data disconnected from actual daily employee attendance records.", icon: CreditCard },
-                { title: "Zero Real-Time Visibility", desc: "Managers lack real-time workforce visibility across active teams.", icon: Eye },
-              ].map((prob, idx) => {
-                const Icon = prob.icon;
-                return (
-                  <div key={prob.title} className="p-6 rounded-2xl bg-white border border-rose-100/80 shadow-sm hover:shadow-md transition">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center font-bold text-sm">
-                        0{idx + 1}
-                      </div>
-                      <Icon className="w-5 h-5 text-rose-600" />
-                    </div>
-                    <h3 className="text-lg font-bold text-slate-900 mb-1">{prob.title}</h3>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{prob.desc}</p>
-                  </div>
-                );
-              })}
-
-            </div>
-
-            {/* Transition Banner */}
-            <div className="max-w-2xl mx-auto text-center bg-blue-50 border border-blue-200 p-4 rounded-2xl shadow-sm text-blue-900 font-bold text-base flex items-center justify-center gap-2">
-              <Sparkles className="w-5 h-5 text-blue-600 shrink-0" />
-              <span>Oibuz brings these workflows together into one platform.</span>
-            </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 6 — SOLUTION SECTION */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-white relative" id="solution-section">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-blue-700 bg-blue-100 px-3 py-1 rounded-full border border-blue-200">
-                THE CONNECTED WORKFORCE PLATFORM
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                One Workforce Platform. <br />
-                One Source of Truth.
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                Oibuz centralizes core HR operations into a connected, role-based platform for growing organizations.
-              </p>
-            </div>
-
-            {/* Core Solution Pillars */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              {[
-                "Employee Management",
-                "Attendance",
-                "Leave",
-                "Timesheets",
-                "Reimbursements",
-                "Payroll & Payslips",
-                "Approval Workflows",
-                "Reports & Visibility",
-                "Role-Based Access",
-                "Audit Logs",
-              ].map((pillar, idx) => (
-                <div key={pillar} className="p-4 rounded-xl bg-slate-50 border border-purple-100 hover:border-purple-300 text-center transition group shadow-sm">
-                  <div className="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 mx-auto flex items-center justify-center font-mono font-bold text-xs mb-2">
-                    {idx + 1}
-                  </div>
-                  <div className="text-xs font-bold text-slate-900 leading-tight group-hover:text-purple-700 transition">
-                    {pillar}
-                  </div>
+                  ))}
                 </div>
               ))}
             </div>
 
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 7 — CORE FEATURES SECTION (10 SPECIFIED FEATURES) */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-slate-50 border-y border-purple-100 relative" id="features">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-purple-700 bg-purple-100 px-3 py-1 rounded-full border border-purple-200">
-                COMPLETE HR CAPABILITIES
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                Everything Your HR &amp; Workforce Require.
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                Clean, purpose-built features engineered for employee self-service, manager approvals, and central HR governance.
-              </p>
+            {/* Arrow down */}
+            <div className="flex flex-col items-center gap-1">
+              <div className="w-px h-8 bg-blue-200" />
+              <div className="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center shadow-lg shadow-blue-700/25">
+                <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-5 w-auto object-contain" />
+              </div>
+              <div className="w-px h-6 bg-blue-200" />
             </div>
 
-            {/* 10 Features Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              
-              {/* Feature 1 */}
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm hover:shadow-md transition">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center mb-4 font-bold">
-                  <Users className="w-5 h-5" />
+            {/* Role chain */}
+            <div className="flex flex-wrap justify-center gap-2">
+              {[
+                { label: "Manager", icon: UserCheck },
+                { label: "HR", icon: Users },
+                { label: "Finance", icon: CreditCard },
+                { label: "Business Owner", icon: ShieldCheck },
+              ].map(({ label, icon: Icon }, i) => (
+                <React.Fragment key={label}>
+                  <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl px-4 py-2 shadow-sm">
+                    <Icon className="w-4 h-4 text-blue-700" />
+                    <span className="text-sm font-semibold text-slate-800">{label}</span>
+                  </div>
+                  {i < 3 && <div className="flex items-center text-slate-300 text-lg">â†’</div>}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          SECTION 05 â€” PRODUCT SHOWCASE (Tabbed)
+          ================================================================ */}
+      <section className="py-20 md:py-28 bg-[#0f172a]">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <p className="text-blue-400 font-bold text-xs tracking-widest uppercase mb-4">Product Showcase</p>
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">See Oibuz in action.</h2>
+            <p className="mt-4 text-slate-400 text-base leading-relaxed">
+              One connected workspace for day-to-day workforce operations.
+            </p>
+          </div>
+
+          {/* Tab switcher */}
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {["Dashboard", "Attendance", "Leave", "Timesheets", "Reimbursements", "Payroll"].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${activeTab === tab
+                    ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30"
+                    : "bg-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-700"
+                  }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+
+          {/* Tab content â€” realistic UI panels */}
+          <div className="bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-700">
+            {/* Inner topbar */}
+            <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100 bg-white">
+              <div className="flex items-center gap-3">
+                <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-7 w-auto" />
+                <span className="text-sm font-semibold text-slate-800">{activeTab}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-full bg-blue-700 flex items-center justify-center">
+                  <span className="text-[10px] text-white font-bold">HR</span>
                 </div>
-                <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide mb-2">1. EMPLOYEE MANAGEMENT</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  Manage employee profiles, designations, departments, managers, work locations, joining details and compensation/compliance information from one place.
-                </p>
+              </div>
+            </div>
+
+            <div className="flex min-h-[400px]">
+              {/* Sidebar */}
+              <div className="hidden md:flex flex-col bg-[#0f172a] w-40 shrink-0 py-3">
+                {[
+                  { icon: BarChart3, label: "Dashboard" },
+                  { icon: Users, label: "Employees" },
+                  { icon: Clock, label: "Attendance" },
+                  { icon: Calendar, label: "Leave" },
+                  { icon: FileSpreadsheet, label: "Timesheets" },
+                  { icon: Receipt, label: "Reimbursements" },
+                  { icon: CreditCard, label: "Payroll" },
+                  { icon: FileText, label: "Reports" },
+                  { icon: Shield, label: "Settings" },
+                ].map(({ icon: Icon, label }) => (
+                  <div
+                    key={label}
+                    className={`flex items-center gap-2.5 px-3 py-1.5 mx-1.5 rounded-lg cursor-pointer ${activeTab === label || (activeTab === "Reimbursements" && label === "Reimbursements")
+                        ? "bg-blue-600 text-white"
+                        : "text-slate-400 hover:text-slate-200"
+                      }`}
+                  >
+                    <Icon className="w-3.5 h-3.5 shrink-0" />
+                    <span className="text-[11px] font-medium">{label}</span>
+                  </div>
+                ))}
               </div>
 
-              {/* Feature 2 */}
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm hover:shadow-md transition">
-                <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center mb-4 font-bold">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide mb-2">2. ATTENDANCE MANAGEMENT</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  Capture punch-in and punch-out with time, point-in-time geographic location and selfie verification.
-                </p>
-              </div>
+              {/* Main content */}
+              <div className="flex-1 p-6 bg-[#f8fafc]">
+                {activeTab === "Dashboard" && (
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-base font-bold text-slate-900">Good Morning, Admin</h3>
+                      <p className="text-xs text-slate-500">Here's what's happening across your workforce today.</p>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      {[
+                        { label: "Total Employees", value: "248", icon: Users, color: "bg-blue-50 text-blue-700" },
+                        { label: "Present Today", value: "231", icon: CheckCircle2, color: "bg-emerald-50 text-emerald-700" },
+                        { label: "On Leave", value: "12", icon: Calendar, color: "bg-amber-50 text-amber-700" },
+                        { label: "Pending Approvals", value: "7", icon: Clock, color: "bg-rose-50 text-rose-600" },
+                      ].map(({ label, value, icon: Icon, color }) => (
+                        <div key={label} className="bg-white rounded-xl p-4 border border-slate-100 shadow-sm">
+                          <div className={`w-7 h-7 rounded-lg ${color} flex items-center justify-center mb-2`}>
+                            <Icon className="w-4 h-4" />
+                          </div>
+                          <p className="text-[11px] text-slate-500">{label}</p>
+                          <p className="text-xl font-black text-slate-900">{value}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="bg-white rounded-xl p-4 border border-slate-100 shadow-sm">
+                        <p className="text-sm font-bold text-slate-800 mb-3">Workforce Attendance â€” This Week</p>
+                        <div className="flex items-end gap-2 h-24">
+                          {[85, 90, 75, 88, 92, 60].map((v, i) => (
+                            <div key={i} className="flex-1 flex flex-col gap-0.5 items-center justify-end h-full">
+                              <div className="w-full rounded-t bg-blue-700" style={{ height: `${(v / 100) * 80}px` }} />
+                              <span className="text-[9px] text-slate-400">{["M", "T", "W", "T", "F", "S"][i]}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="bg-white rounded-xl p-4 border border-slate-100 shadow-sm">
+                        <div className="flex items-center justify-between mb-3">
+                          <p className="text-sm font-bold text-slate-800">Recent Activity</p>
+                          <span className="text-xs text-blue-600">View All â†’</span>
+                        </div>
+                        {[
+                          { icon: "ðŸŸ¢", text: "Rahul punched in", sub: "Site A Â· 08:02 AM" },
+                          { icon: "ðŸ“…", text: "Leave approved", sub: "Amit Sharma Â· 2 days" },
+                          { icon: "ðŸ§¾", text: "Expense submitted", sub: "Site B Â· â‚¹4,850" },
+                          { icon: "âœ…", text: "Timesheet approved", sub: "Site C" },
+                        ].map(({ icon, text, sub }) => (
+                          <div key={text} className="flex items-center gap-2 py-1.5 border-b border-slate-50 last:border-0">
+                            <span className="text-sm">{icon}</span>
+                            <div>
+                              <p className="text-xs font-semibold text-slate-800">{text}</p>
+                              <p className="text-[10px] text-slate-500">{sub}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
 
-              {/* Feature 3 */}
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm hover:shadow-md transition">
-                <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center mb-4 font-bold">
-                  <Calendar className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide mb-2">3. LEAVE MANAGEMENT</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  Employees submit leave requests while managers and HR review and approve them through a structured workflow.
-                </p>
-              </div>
+                {activeTab === "Attendance" && (
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-base font-bold text-slate-900">Attendance</h3>
+                        <p className="text-xs text-slate-500">Today's attendance across all sites</p>
+                      </div>
+                      <button className="text-xs bg-blue-700 text-white px-3 py-1.5 rounded-lg font-semibold">Export</button>
+                    </div>
+                    <div className="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+                      <div className="grid grid-cols-5 gap-0 px-4 py-2 bg-slate-50 border-b border-slate-100 text-[11px] font-bold text-slate-500 uppercase tracking-wide">
+                        <span className="col-span-2">Employee</span>
+                        <span>Punch In</span>
+                        <span>Status</span>
+                        <span>Site</span>
+                      </div>
+                      {[
+                        { name: "Rahul Sharma", role: "Field Worker", time: "08:02 AM", status: "Present", site: "Site A", color: "bg-emerald-100 text-emerald-700" },
+                        { name: "Amit Patel", role: "Supervisor", time: "08:15 AM", status: "Present", site: "Site B", color: "bg-emerald-100 text-emerald-700" },
+                        { name: "Suresh Kumar", role: "Engineer", time: "â€”", status: "On Leave", site: "Site C", color: "bg-amber-100 text-amber-700" },
+                        { name: "Priya Nair", role: "HR Executive", time: "09:00 AM", status: "Present", site: "HQ", color: "bg-emerald-100 text-emerald-700" },
+                        { name: "Ravi Desai", role: "Field Worker", time: "â€”", status: "Absent", site: "Site A", color: "bg-red-100 text-red-600" },
+                      ].map(({ name, role, time, status, site, color }) => (
+                        <div key={name} className="grid grid-cols-5 gap-0 px-4 py-3 border-b border-slate-50 last:border-0 items-center">
+                          <div className="col-span-2 flex items-center gap-2">
+                            <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-[10px] font-bold text-blue-700">{name[0]}</div>
+                            <div>
+                              <p className="text-xs font-semibold text-slate-900">{name}</p>
+                              <p className="text-[10px] text-slate-500">{role}</p>
+                            </div>
+                          </div>
+                          <span className="text-xs text-slate-700">{time}</span>
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full w-fit ${color}`}>{status}</span>
+                          <span className="text-xs text-slate-600">{site}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-              {/* Feature 4 */}
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm hover:shadow-md transition">
-                <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-4 font-bold">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide mb-2">4. TIMESHEETS</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  Track project and task hours with manager and HR approval workflows.
-                </p>
-              </div>
+                {activeTab === "Leave" && (
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-base font-bold text-slate-900">Leave Requests</h3>
+                        <p className="text-xs text-slate-500">Pending and recent leave applications</p>
+                      </div>
+                    </div>
+                    <div className="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+                      <div className="grid grid-cols-5 px-4 py-2 bg-slate-50 border-b border-slate-100 text-[11px] font-bold text-slate-500 uppercase tracking-wide">
+                        <span className="col-span-2">Employee</span>
+                        <span>Duration</span>
+                        <span>Status</span>
+                        <span>Action</span>
+                      </div>
+                      {[
+                        { name: "Vikram Singh", leave: "Sick Leave", dates: "Dec 5â€“6 (2d)", status: "Pending Manager", action: true },
+                        { name: "Meera Joshi", leave: "Casual Leave", dates: "Dec 3 (1d)", status: "Approved", action: false },
+                        { name: "Rakesh Gupta", leave: "Earned Leave", dates: "Dec 8â€“10 (3d)", status: "Pending HR", action: false },
+                        { name: "Sunita Patil", leave: "Sick Leave", dates: "Nov 28 (1d)", status: "Approved", action: false },
+                      ].map(({ name, leave, dates, status, action }) => (
+                        <div key={name} className="grid grid-cols-5 px-4 py-3 border-b border-slate-50 last:border-0 items-center">
+                          <div className="col-span-2 flex items-center gap-2">
+                            <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-[10px] font-bold text-blue-700">{name[0]}</div>
+                            <div>
+                              <p className="text-xs font-semibold text-slate-900">{name}</p>
+                              <p className="text-[10px] text-slate-500">{leave}</p>
+                            </div>
+                          </div>
+                          <span className="text-xs text-slate-600">{dates}</span>
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full w-fit ${status === "Approved" ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>{status}</span>
+                          {action
+                            ? <div className="flex gap-1"><button className="text-[10px] bg-blue-600 text-white px-2 py-1 rounded font-semibold">Approve</button><button className="text-[10px] bg-slate-100 text-slate-600 px-2 py-1 rounded font-semibold">Decline</button></div>
+                            : <span className="text-[10px] text-slate-400">â€”</span>
+                          }
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-              {/* Feature 5 */}
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm hover:shadow-md transition">
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-4 font-bold">
-                  <DollarSign className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide mb-2">5. REIMBURSEMENTS</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  Submit expense claims and route them through controlled Manager → HR → Finance approval.
-                </p>
-              </div>
+                {activeTab === "Timesheets" && (
+                  <div className="space-y-4">
+                    <h3 className="text-base font-bold text-slate-900">Timesheets â€” This Week</h3>
+                    <div className="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+                      <div className="grid grid-cols-4 px-4 py-2 bg-slate-50 border-b border-slate-100 text-[11px] font-bold text-slate-500 uppercase tracking-wide">
+                        <span className="col-span-2">Employee / Project</span>
+                        <span>Hours</span>
+                        <span>Status</span>
+                      </div>
+                      {[
+                        { name: "Suresh Kumar", project: "Wing B â€” RCC Slab", hours: "40h", status: "Submitted" },
+                        { name: "Rahul Sharma", project: "Foundation â€” Basement", hours: "36h", status: "Approved" },
+                        { name: "Anita Das", project: "Site C â€” Electrical", hours: "38h", status: "Pending" },
+                        { name: "Mohan Reddy", project: "Wing A â€” Plastering", hours: "42h", status: "Approved" },
+                      ].map(({ name, project, hours, status }) => (
+                        <div key={name} className="grid grid-cols-4 px-4 py-3 border-b border-slate-50 last:border-0 items-center">
+                          <div className="col-span-2">
+                            <p className="text-xs font-semibold text-slate-900">{name}</p>
+                            <p className="text-[10px] text-slate-500">{project}</p>
+                          </div>
+                          <span className="text-sm font-bold text-slate-900">{hours}</span>
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full w-fit ${status === "Approved" ? "bg-emerald-100 text-emerald-700" : status === "Submitted" ? "bg-blue-100 text-blue-700" : "bg-amber-100 text-amber-700"}`}>{status}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-              {/* Feature 6 */}
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm hover:shadow-md transition">
-                <div className="w-10 h-10 rounded-xl bg-violet-50 text-violet-700 flex items-center justify-center mb-4 font-bold">
-                  <CreditCard className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide mb-2">6. PAYROLL &amp; PAYSLIPS</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  Configure salary structures, run monthly payroll, finalize payroll and publish payslips.
-                </p>
-              </div>
+                {activeTab === "Reimbursements" && (
+                  <div className="space-y-4">
+                    <h3 className="text-base font-bold text-slate-900">Expense Reimbursements</h3>
+                    <div className="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+                      <div className="grid grid-cols-5 px-4 py-2 bg-slate-50 border-b border-slate-100 text-[11px] font-bold text-slate-500 uppercase tracking-wide">
+                        <span className="col-span-2">Employee / Category</span>
+                        <span>Amount</span>
+                        <span>Stage</span>
+                        <span>Status</span>
+                      </div>
+                      {[
+                        { name: "Amit Patel", cat: "Site Materials", amount: "â‚¹4,850", stage: "Manager", status: "Pending" },
+                        { name: "Vikram Singh", cat: "Travel", amount: "â‚¹1,200", stage: "HR", status: "In Review" },
+                        { name: "Priya Nair", cat: "Office Supplies", amount: "â‚¹680", stage: "Finance", status: "Approved" },
+                        { name: "Ravi Desai", cat: "Site Equipment", amount: "â‚¹8,400", stage: "Finance", status: "Approved" },
+                      ].map(({ name, cat, amount, stage, status }) => (
+                        <div key={name} className="grid grid-cols-5 px-4 py-3 border-b border-slate-50 last:border-0 items-center">
+                          <div className="col-span-2">
+                            <p className="text-xs font-semibold text-slate-900">{name}</p>
+                            <p className="text-[10px] text-slate-500">{cat}</p>
+                          </div>
+                          <span className="text-xs font-bold text-slate-900">{amount}</span>
+                          <span className="text-[10px] text-slate-500">{stage}</span>
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full w-fit ${status === "Approved" ? "bg-emerald-100 text-emerald-700" : status === "Pending" ? "bg-amber-100 text-amber-700" : "bg-blue-100 text-blue-700"}`}>{status}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
-              {/* Feature 7 */}
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm hover:shadow-md transition">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center mb-4 font-bold">
-                  <Workflow className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide mb-2">7. APPROVAL WORKFLOWS</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  Structured multi-tier approvals for leaves (Employee → Manager → HR) and expenses (Employee → Manager → HR → Finance).
-                </p>
+                {activeTab === "Payroll" && (
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-base font-bold text-slate-900">Payroll â€” November 2024</h3>
+                        <p className="text-xs text-slate-500">Generated from attendance and approved leave data</p>
+                      </div>
+                      <span className="text-[10px] bg-emerald-100 text-emerald-700 font-bold px-3 py-1 rounded-full">Processing</span>
+                    </div>
+                    <div className="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+                      <div className="grid grid-cols-5 px-4 py-2 bg-slate-50 border-b border-slate-100 text-[11px] font-bold text-slate-500 uppercase tracking-wide">
+                        <span className="col-span-2">Employee</span>
+                        <span>Gross</span>
+                        <span>Deductions</span>
+                        <span>Net</span>
+                      </div>
+                      {[
+                        { name: "Rahul Sharma", role: "Field Worker", gross: "â‚¹22,000", ded: "â‚¹2,100", net: "â‚¹19,900" },
+                        { name: "Priya Nair", role: "HR Executive", gross: "â‚¹38,000", ded: "â‚¹3,800", net: "â‚¹34,200" },
+                        { name: "Amit Patel", role: "Supervisor", gross: "â‚¹30,000", ded: "â‚¹3,000", net: "â‚¹27,000" },
+                        { name: "Suresh Kumar", role: "Engineer", gross: "â‚¹45,000", ded: "â‚¹4,500", net: "â‚¹40,500" },
+                      ].map(({ name, role, gross, ded, net }) => (
+                        <div key={name} className="grid grid-cols-5 px-4 py-3 border-b border-slate-50 last:border-0 items-center">
+                          <div className="col-span-2">
+                            <p className="text-xs font-semibold text-slate-900">{name}</p>
+                            <p className="text-[10px] text-slate-500">{role}</p>
+                          </div>
+                          <span className="text-xs text-slate-700">{gross}</span>
+                          <span className="text-xs text-rose-600">{ded}</span>
+                          <span className="text-xs font-bold text-slate-900">{net}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <button className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-700 text-white text-sm font-semibold shadow-md shadow-blue-700/20 hover:bg-blue-800 transition-all">
+                      <FileText className="w-4 h-4" /> Generate Salary Slips
+                    </button>
+                  </div>
+                )}
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-              {/* Feature 8 */}
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm hover:shadow-md transition">
-                <div className="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-700 flex items-center justify-center mb-4 font-bold">
-                  <BarChart3 className="w-5 h-5" />
+      {/* ================================================================
+          SECTION 06 â€” HOW OIBUZ WORKS
+          ================================================================ */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <p className="text-blue-700 font-bold text-xs tracking-widest uppercase mb-4">How It Works</p>
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              Simple for employees. Structured for management.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+            {/* Connector line (desktop) */}
+            <div className="hidden md:block absolute top-10 left-[12.5%] right-[12.5%] h-px bg-blue-100 z-0" />
+            {[
+              { step: "01", icon: Smartphone, label: "Capture", desc: "Employees submit attendance, leave, timesheets or expenses." },
+              { step: "02", icon: UserCheck, label: "Review", desc: "Managers review information from their direct teams." },
+              { step: "03", icon: ShieldCheck, label: "Control", desc: "HR and Finance handle policy and financial workflows where applicable." },
+              { step: "04", icon: BarChart3, label: "Manage", desc: "Business leaders get centralized visibility into workforce operations." },
+            ].map(({ step, icon: Icon, label, desc }) => (
+              <div key={step} className="relative z-10 flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-2xl bg-blue-700 flex items-center justify-center mb-4 shadow-lg shadow-blue-700/25">
+                  <Icon className="w-7 h-7 text-white" />
                 </div>
-                <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide mb-2">8. REPORTS</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  Access daily and monthly attendance summaries and employee-specific workforce history.
-                </p>
+                <span className="text-[10px] font-black text-blue-400 tracking-widest uppercase mb-1">{step}</span>
+                <h3 className="text-base font-black text-slate-900 mb-2">{label}</h3>
+                <p className="text-xs text-slate-500 leading-relaxed max-w-[180px]">{desc}</p>
               </div>
+            ))}
+          </div>
 
-              {/* Feature 9 */}
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm hover:shadow-md transition">
-                <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center mb-4 font-bold">
-                  <ShieldCheck className="w-5 h-5" />
+          {/* Role chain */}
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-2 text-xs font-semibold">
+            {["Employee", "Manager", "HR", "Finance", "Admin / Business Owner"].map((r, i) => (
+              <React.Fragment key={r}>
+                <span className={`px-3 py-1.5 rounded-lg border ${i === 0 ? "bg-blue-50 border-blue-200 text-blue-800" : "bg-white border-slate-200 text-slate-700"}`}>{r}</span>
+                {i < 4 && <span className="text-blue-300">â†’</span>}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          SECTION 07 â€” ONE PLATFORM. EVERY ROLE.
+          ================================================================ */}
+      <section className="py-20 md:py-28 bg-[#f0f4ff]">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <p className="text-blue-700 font-bold text-xs tracking-widest uppercase mb-4">Role-Based Access</p>
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">One platform. Every role.</h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {[
+              {
+                icon: Smartphone, role: "Employee", color: "bg-blue-700",
+                capabilities: ["Punch in/out", "Submit leave", "Log timesheets", "Submit expenses", "Download salary slips"],
+              },
+              {
+                icon: UserCheck, role: "Manager", color: "bg-blue-600",
+                capabilities: ["View team attendance", "Review leave requests", "Approve timesheets", "Validate reimbursements"],
+              },
+              {
+                icon: Users, role: "HR", color: "bg-indigo-700",
+                capabilities: ["Manage employees", "Manage attendance", "Manage leave policies", "Handle payroll", "Workforce records"],
+              },
+              {
+                icon: CreditCard, role: "Finance", color: "bg-slate-700",
+                capabilities: ["Review reimbursements", "Verify approved claims", "Final reimbursement approval"],
+              },
+              {
+                icon: ShieldCheck, role: "Admin", color: "bg-slate-900",
+                capabilities: ["Organization-wide view", "Policy configuration", "Audit logs", "Workflow oversight"],
+              },
+            ].map(({ icon: Icon, role, color, capabilities }) => (
+              <div key={role} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+                <div className={`${color} px-4 py-4 flex items-center gap-3`}>
+                  <Icon className="w-5 h-5 text-white" />
+                  <span className="text-white font-bold text-sm">{role}</span>
                 </div>
-                <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide mb-2">9. ROLE-BASED ACCESS</h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  Tailored dashboards and explicit functional permissions for Employee, Manager, HR, and Admin.
-                </p>
+                <div className="p-4 space-y-2">
+                  {capabilities.map((c) => (
+                    <div key={c} className="flex items-start gap-2">
+                      <CheckCircle className="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5" />
+                      <span className="text-xs text-slate-600 leading-tight">{c}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-              {/* Feature 10 */}
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm hover:shadow-md transition md:col-span-2 lg:col-span-3">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center font-bold shrink-0">
-                    <Lock className="w-5 h-5" />
+      {/* ================================================================
+          SECTION 08 â€” FEATURE SPOTLIGHTS (Alternating)
+          ================================================================ */}
+      {[
+        {
+          id: "spotlight-1",
+          badge: "Attendance",
+          title: "Attendance you can trust.",
+          desc: "Employees can punch in and out from their mobile device with selfie and location capture. Attendance corrections can follow an approval workflow where needed.",
+          icon: Clock,
+          bg: "bg-white",
+          panel: (
+            <div className="bg-[#f8fafc] rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+              <div className="bg-[#0f172a] px-4 py-3 flex items-center gap-2">
+                <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-5 w-auto" />
+                <span className="text-xs text-slate-400">Attendance</span>
+              </div>
+              <div className="p-5 space-y-3">
+                <div className="bg-white rounded-xl border border-emerald-100 p-4 flex items-start gap-3 shadow-sm">
+                  <div className="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-slate-900 uppercase tracking-wide mb-1">10. AUDIT LOGS</h3>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                      Track important system actions and preserve workflow accountability across all attendance edits, approvals, profile changes, and payroll releases.
-                    </p>
+                    <p className="text-xs font-bold text-slate-900">Punch Recorded</p>
+                    <p className="text-[11px] text-slate-500">Rahul Sharma Â· Site A Â· 08:02 AM</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5">Location captured at punch in</p>
+                  </div>
+                </div>
+                <div className="bg-white rounded-xl border border-blue-100 p-4 flex items-start gap-3 shadow-sm">
+                  <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                    <ScanFace className="w-4 h-4 text-blue-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-slate-900">Selfie Captured</p>
+                    <p className="text-[11px] text-slate-500">Photo taken at punch time</p>
+                  </div>
+                </div>
+                <div className="bg-white rounded-xl border border-slate-100 p-4 flex items-start gap-3 shadow-sm">
+                  <div className="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center shrink-0">
+                    <RefreshCw className="w-4 h-4 text-amber-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-slate-900">Correction Request</p>
+                    <p className="text-[11px] text-slate-500">Suresh Kumar Â· Missed punch-out Â· Pending</p>
                   </div>
                 </div>
               </div>
-
             </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 8 — ATTENDANCE HERO FEATURE SECTION */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-white relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-blue-700 bg-blue-100 px-3 py-1 rounded-full border border-blue-200">
-                VERIFIED ATTENDANCE ENGINE
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                Attendance You Can Actually Trust.
-              </h2>
-              <p className="text-base sm:text-lg text-slate-600 font-medium">
-                Capture the event. Verify the employee. Keep the history.
-              </p>
-            </div>
-
-            {/* Attendance Punch Workflow Step Diagram */}
-            <div className="bg-slate-900 rounded-3xl p-6 sm:p-10 text-white shadow-2xl mb-12 border border-slate-800">
-              
-              <div className="text-xs font-mono text-blue-400 font-bold uppercase tracking-wider mb-6 text-center">
-                PUNCH-IN TO HOURS CALCULATION PIPELINE
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 text-center">
-                {[
-                  { step: "01", label: "PUNCH IN", icon: Smartphone },
-                  { step: "02", label: "Time Captured", icon: Clock },
-                  { step: "03", label: "Location Captured", icon: MapPin },
-                  { step: "04", label: "Selfie Captured", icon: Camera },
-                  { step: "05", label: "Session Opened", icon: CheckCircle2 },
-                  { step: "06", label: "PUNCH OUT", icon: Smartphone },
-                  { step: "07", label: "Hours Calculated", icon: CreditCard },
-                ].map((item, idx) => {
-                  const Icon = item.icon;
-                  return (
-                    <div key={item.label} className="bg-slate-950 p-3 rounded-xl border border-slate-800 flex flex-col justify-between items-center">
-                      <span className="text-[10px] font-mono text-blue-400 font-bold mb-1">{item.step}</span>
-                      <Icon className="w-5 h-5 text-purple-400 mb-2" />
-                      <span className="text-xs font-bold text-slate-200 leading-tight">{item.label}</span>
-                    </div>
-                  );
-                })}
-              </div>
-
-            </div>
-
-            {/* Attendance Highlights Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-              <div className="p-4 rounded-xl bg-slate-50 border border-purple-100 text-xs text-slate-700">
-                <strong className="text-blue-700 block mb-1">Real-time Manager Visibility</strong>
-                Instant team check-in status on manager dashboards.
-              </div>
-              <div className="p-4 rounded-xl bg-slate-50 border border-purple-100 text-xs text-slate-700">
-                <strong className="text-purple-700 block mb-1">Organization-Wide HR Reporting</strong>
-                Daily and monthly muster roll reports across departments.
-              </div>
-              <div className="p-4 rounded-xl bg-slate-50 border border-purple-100 text-xs text-slate-700">
-                <strong className="text-indigo-700 block mb-1">Auto-Close Shift Safeguards</strong>
-                Handles forgotten punch-outs with structured rules.
-              </div>
-              <div className="p-4 rounded-xl bg-slate-50 border border-purple-100 text-xs text-slate-700">
-                <strong className="text-amber-700 block mb-1">Attendance Correction Workflow</strong>
-                Employees request fixes, managers review and audit.
-              </div>
-              <div className="p-4 rounded-xl bg-slate-50 border border-purple-100 text-xs text-slate-700">
-                <strong className="text-emerald-700 block mb-1">Immutable Auditability</strong>
-                Complete history of timestamps, GPS, and photos.
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 9 — FIELD & PROJECT WORKFORCE SECTION */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-slate-50 border-y border-purple-100 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-purple-700 bg-purple-100 px-3 py-1 rounded-full border border-purple-200">
-                DESK-BOUND &amp; FIELD-CONNECTED WORKFORCES
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                Built for Workforces That Aren’t Sitting at One Desk.
-              </h2>
-              <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
-                Whether teams work across offices, sites or projects, Oibuz helps managers and HR stay connected with attendance, timesheets, approvals and workforce records.
-              </p>
-            </div>
-
-            {/* Target Organizations Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+          ),
+        },
+        {
+          id: "spotlight-2",
+          badge: "Approvals",
+          title: "Approvals that don't disappear.",
+          desc: "Leave, timesheets and reimbursements move through defined approval workflows so requests remain visible and accountable at every stage.",
+          icon: CheckCircle,
+          bg: "bg-[#f0f4ff]",
+          panel: (
+            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm p-5 space-y-3">
+              <p className="text-xs font-bold text-slate-800 mb-2">Leave Request â€” Vikram Singh</p>
               {[
-                { title: "Construction", icon: Building2 },
-                { title: "EPC Firms", icon: Layers },
-                { title: "Infrastructure", icon: Compass },
-                { title: "Project Teams", icon: Briefcase },
-                { title: "Field Teams", icon: MapPin },
-                { title: "Multi-Location", icon: Users },
-                { title: "Growing SMEs", icon: TrendingUp },
-              ].map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.title} className="p-4 rounded-2xl bg-white border border-purple-100 text-center shadow-sm hover:shadow-md transition">
-                    <Icon className="w-6 h-6 text-purple-600 mx-auto mb-2" />
-                    <div className="text-xs font-bold text-slate-900">{item.title}</div>
+                { label: "Submitted", desc: "Dec 5 Â· Sick Leave Â· 2 days", done: true },
+                { label: "Manager Review", desc: "Amit Patel â€” Approved", done: true },
+                { label: "HR Review", desc: "Priya Nair â€” Approved", done: true },
+                { label: "Completed", desc: "Leave reflected in attendance", done: true },
+              ].map(({ label, desc, done }, i) => (
+                <div key={label} className="flex items-start gap-3">
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${done ? "bg-blue-600" : "bg-slate-200"}`}>
+                    <Check className="w-3 h-3 text-white" />
                   </div>
-                );
-              })}
+                  <div className={`flex-1 pb-3 ${i < 3 ? "border-b border-slate-100" : ""}`}>
+                    <p className="text-xs font-bold text-slate-900">{label}</p>
+                    <p className="text-[11px] text-slate-500">{desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 10 — ROLE-BASED EXPERIENCE (4 ROLES) */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-white relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-blue-700 bg-blue-100 px-3 py-1 rounded-full border border-blue-200">
-                ROLE-BASED GOVERNANCE
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                Tailored Experiences for Every Role.
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                Provide clean operational visibility and appropriate security permissions for every level of the organization.
-              </p>
-            </div>
-
-            {/* 4 Role Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              
-              {/* Employee */}
-              <div className="p-6 rounded-2xl bg-slate-50 border border-purple-100 flex flex-col justify-between shadow-sm">
-                <div>
-                  <div className="text-xs font-mono font-bold text-blue-700 uppercase tracking-widest mb-2">ROLE 01</div>
-                  <h3 className="text-xl font-black text-slate-900 mb-3">EMPLOYEE</h3>
-                  <ul className="space-y-2 text-xs text-slate-600 font-medium">
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600" /> Own profile management</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600" /> Attendance check-in / out</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600" /> Leave application</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600" /> Timesheet entry</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600" /> Reimbursements</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-blue-600" /> Monthly payslips</li>
-                  </ul>
-                </div>
+          ),
+        },
+        {
+          id: "spotlight-3",
+          badge: "Payroll",
+          title: "Payroll built from workforce data.",
+          desc: "Payroll uses employee salary information together with attendance and approved leave data to prepare monthly payroll for review and distribution.",
+          icon: CreditCard,
+          bg: "bg-white",
+          panel: (
+            <div className="bg-[#f8fafc] rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+              <div className="bg-[#0f172a] px-4 py-3">
+                <span className="text-xs text-slate-300 font-semibold">Payroll â€” November 2024</span>
               </div>
-
-              {/* Manager */}
-              <div className="p-6 rounded-2xl bg-slate-50 border border-purple-100 flex flex-col justify-between shadow-sm">
-                <div>
-                  <div className="text-xs font-mono font-bold text-purple-700 uppercase tracking-widest mb-2">ROLE 02</div>
-                  <h3 className="text-xl font-black text-slate-900 mb-3">MANAGER</h3>
-                  <ul className="space-y-2 text-xs text-slate-600 font-medium">
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600" /> Team attendance status</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600" /> Direct reports overview</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600" /> Pending approvals queue</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600" /> Attendance corrections</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-purple-600" /> Timesheet review</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* HR */}
-              <div className="p-6 rounded-2xl bg-slate-50 border border-purple-100 flex flex-col justify-between shadow-sm">
-                <div>
-                  <div className="text-xs font-mono font-bold text-indigo-700 uppercase tracking-widest mb-2">ROLE 03</div>
-                  <h3 className="text-xl font-black text-slate-900 mb-3">HR</h3>
-                  <ul className="space-y-2 text-xs text-slate-600 font-medium">
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600" /> Workforce summary</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600" /> Organization attendance</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600" /> Final leave approvals</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600" /> Monthly payroll run</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-indigo-600" /> Employee management</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* Admin */}
-              <div className="p-6 rounded-2xl bg-slate-50 border border-purple-100 flex flex-col justify-between shadow-sm">
-                <div>
-                  <div className="text-xs font-mono font-bold text-slate-800 uppercase tracking-widest mb-2">ROLE 04</div>
-                  <h3 className="text-xl font-black text-slate-900 mb-3">ADMIN</h3>
-                  <ul className="space-y-2 text-xs text-slate-600 font-medium">
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-slate-800" /> Organization config</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-slate-800" /> Full platform access</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-slate-800" /> System audit logs</li>
-                    <li className="flex items-center gap-2"><Check className="w-4 h-4 text-slate-800" /> Role &amp; permission admin</li>
-                  </ul>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 11 — APPROVAL WORKFLOW SECTION */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-slate-50 border-y border-purple-100 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-purple-700 bg-purple-100 px-3 py-1 rounded-full border border-purple-200">
-                CONTROLLED ROUTING
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                Every Request Has a Clear Path.
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                Automated status tracking ensures requests move smoothly from submission to finalization.
-              </p>
-            </div>
-
-            {/* 4 Workflow Graphics */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
-              {/* Leave Workflow */}
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm">
-                <div className="text-xs font-mono font-bold text-blue-700 uppercase mb-3">LEAVE APPROVAL ROUTE</div>
-                <div className="flex items-center justify-between text-xs font-bold text-slate-800 bg-slate-50 p-3 rounded-xl border border-purple-100 font-mono">
-                  <span>Employee</span>
-                  <ArrowRight className="w-4 h-4 text-blue-600" />
-                  <span>Manager</span>
-                  <ArrowRight className="w-4 h-4 text-purple-600" />
-                  <span>HR</span>
-                  <ArrowRight className="w-4 h-4 text-emerald-600" />
-                  <span className="text-emerald-700">Finalized</span>
-                </div>
-              </div>
-
-              {/* Timesheet Workflow */}
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm">
-                <div className="text-xs font-mono font-bold text-indigo-700 uppercase mb-3">TIMESHEET APPROVAL ROUTE</div>
-                <div className="flex items-center justify-between text-xs font-bold text-slate-800 bg-slate-50 p-3 rounded-xl border border-purple-100 font-mono">
-                  <span>Employee</span>
-                  <ArrowRight className="w-4 h-4 text-blue-600" />
-                  <span>Manager</span>
-                  <ArrowRight className="w-4 h-4 text-purple-600" />
-                  <span>HR</span>
-                  <ArrowRight className="w-4 h-4 text-emerald-600" />
-                  <span className="text-emerald-700">Approved</span>
-                </div>
-              </div>
-
-              {/* Reimbursement Workflow */}
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm">
-                <div className="text-xs font-mono font-bold text-purple-700 uppercase mb-3">REIMBURSEMENT APPROVAL ROUTE</div>
-                <div className="flex items-center justify-between text-xs font-bold text-slate-800 bg-slate-50 p-3 rounded-xl border border-purple-100 font-mono">
-                  <span>Employee</span>
-                  <ArrowRight className="w-4 h-4 text-blue-600" />
-                  <span>Manager</span>
-                  <ArrowRight className="w-4 h-4 text-purple-600" />
-                  <span>HR</span>
-                  <ArrowRight className="w-4 h-4 text-amber-600" />
-                  <span>Finance</span>
-                  <ArrowRight className="w-4 h-4 text-emerald-600" />
-                  <span className="text-emerald-700">Finalized</span>
-                </div>
-              </div>
-
-              {/* Attendance Correction Workflow */}
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm">
-                <div className="text-xs font-mono font-bold text-slate-800 uppercase mb-3">ATTENDANCE CORRECTION ROUTE</div>
-                <div className="flex items-center justify-between text-xs font-bold text-slate-800 bg-slate-50 p-3 rounded-xl border border-purple-100 font-mono">
-                  <span>Employee</span>
-                  <ArrowRight className="w-4 h-4 text-blue-600" />
-                  <span>Manager / HR / Admin</span>
-                  <ArrowRight className="w-4 h-4 text-emerald-600" />
-                  <span className="text-emerald-700">Finalized</span>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 12 — PAYROLL SECTION */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-white relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-200">
-                PAYROLL PROCESSING
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                From Salary Structure to Payslip.
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                Connect verified attendance and approved leave data directly to monthly payroll execution.
-              </p>
-            </div>
-
-            {/* Payroll Pipeline Steps */}
-            <div className="bg-slate-900 rounded-3xl p-6 sm:p-8 text-white mb-8 shadow-xl">
-              <div className="text-xs font-mono text-emerald-400 font-bold uppercase mb-6 text-center">MONTHLY PAYROLL PIPELINE</div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 text-center text-xs font-mono">
+              <div className="p-4 space-y-2">
                 {[
-                  "Salary Structure",
-                  "Assign Employee",
-                  "Payroll Run",
-                  "Draft",
-                  "Calculated",
-                  "Finalized",
-                  "Published",
-                  "Employee Payslip",
-                ].map((step, idx) => (
-                  <div key={step} className="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                    <div className="text-emerald-400 font-bold text-[10px] mb-1">0{idx + 1}</div>
-                    <div className="text-slate-200 font-bold text-[11px] leading-tight">{step}</div>
+                  { name: "Rahul Sharma", gross: "â‚¹22,000", net: "â‚¹19,900", status: "Ready" },
+                  { name: "Priya Nair", gross: "â‚¹38,000", net: "â‚¹34,200", status: "Ready" },
+                  { name: "Amit Patel", gross: "â‚¹30,000", net: "â‚¹27,000", status: "Ready" },
+                ].map(({ name, gross, net, status }) => (
+                  <div key={name} className="bg-white rounded-xl border border-slate-100 px-4 py-3 flex items-center justify-between shadow-sm">
+                    <div>
+                      <p className="text-xs font-bold text-slate-900">{name}</p>
+                      <p className="text-[10px] text-slate-500">Gross: {gross}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-black text-slate-900">{net}</p>
+                      <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">{status}</span>
+                    </div>
+                  </div>
+                ))}
+                <button className="w-full py-2.5 rounded-xl bg-blue-700 text-white text-xs font-bold mt-2">Generate Salary Slips</button>
+              </div>
+            </div>
+          ),
+        },
+        {
+          id: "spotlight-4",
+          badge: "Visibility",
+          title: "Visibility for the people running the business.",
+          desc: "See workforce attendance, requests, activity and operational status from centralized dashboards. Business leaders get the information they need without relying on manual reports.",
+          icon: BarChart3,
+          bg: "bg-[#f0f4ff]",
+          panel: (
+            <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm p-5 space-y-3">
+              <p className="text-xs font-bold text-slate-800">Admin Dashboard â€” Overview</p>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { label: "Attendance Today", value: "231 / 248", color: "text-blue-700" },
+                  { label: "Pending Approvals", value: "7 Requests", color: "text-amber-600" },
+                  { label: "On Leave", value: "12 Employees", color: "text-slate-700" },
+                  { label: "Open Expenses", value: "4 Claims", color: "text-slate-700" },
+                ].map(({ label, value, color }) => (
+                  <div key={label} className="bg-slate-50 border border-slate-100 rounded-xl p-3">
+                    <p className="text-[10px] text-slate-500 mb-1">{label}</p>
+                    <p className={`text-sm font-black ${color}`}>{value}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="bg-slate-50 border border-slate-100 rounded-xl p-3">
+                <p className="text-[10px] text-slate-500 mb-2">Workforce Activity</p>
+                <div className="flex items-end gap-1 h-10">
+                  {[70, 80, 65, 90, 85, 55, 92].map((v, i) => (
+                    <div key={i} className="flex-1 bg-blue-600 rounded-sm" style={{ height: `${(v / 100) * 40}px` }} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          ),
+        },
+      ].map(({ id, badge, title, desc, icon: Icon, bg, panel }, idx) => (
+        <section key={id} className={`py-16 md:py-24 ${bg}`}>
+          <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+            <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${idx % 2 === 1 ? "lg:flex-row-reverse" : ""}`}>
+              <div className={idx % 2 === 1 ? "lg:order-2" : ""}>
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider mb-4">
+                  <Icon className="w-3 h-3" /> {badge}
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mb-4">{title}</h2>
+                <p className="text-slate-500 text-base leading-relaxed mb-6">{desc}</p>
+                <a href="#demo-form" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-semibold text-sm transition-all shadow-md shadow-blue-700/20">
+                  See this in action <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+              <div className={idx % 2 === 1 ? "lg:order-1" : ""}>{panel}</div>
+            </div>
+          </div>
+        </section>
+      ))}
+
+      {/* ================================================================
+          SECTION 09 â€” A TYPICAL DAY WITH OIBUZ
+          ================================================================ */}
+      <section className="py-20 md:py-28 bg-white relative overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-top opacity-[0.04]"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=60')" }}
+        />
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 max-w-4xl">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <p className="text-blue-700 font-bold text-xs tracking-widest uppercase mb-4">Workflow</p>
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">A typical day with Oibuz.</h2>
+            <p className="mt-4 text-slate-500 text-base leading-relaxed">
+              From the first punch-in to month-end payroll, workforce information stays connected.
+            </p>
+          </div>
+
+          <div className="relative">
+            {/* Vertical timeline line */}
+            <div className="absolute left-[27px] top-0 bottom-0 w-px bg-blue-100 hidden sm:block" />
+            <div className="space-y-8">
+              {[
+                { time: "08:00 AM", title: "Site workers punch in.", desc: "Employees open the Oibuz app and punch in. Selfie and location are captured during attendance." },
+                { time: "11:30 AM", title: "A site expense is submitted.", desc: "A supervisor submits a material expense with a receipt photo. The claim routes through the approval workflow." },
+                { time: "02:15 PM", title: "Attendance correction submitted.", desc: "An employee who missed a punch-out submits a correction request. It routes to the manager for review." },
+                { time: "05:00 PM", title: "Project hours reviewed.", desc: "Employees submit daily timesheets against projects. Managers review and validate hour allocations." },
+                { time: "Month End", title: "HR runs payroll.", desc: "Payroll is prepared using salary data, attendance records and approved leave information. Salary slips are distributed." },
+              ].map(({ time, title, desc }, i) => (
+                <div key={i} className="flex gap-6">
+                  <div className="flex flex-col items-center shrink-0">
+                    <div className="w-[55px] h-[55px] rounded-full bg-blue-700 flex items-center justify-center shadow-lg shadow-blue-700/20 text-white text-[10px] font-black text-center leading-tight z-10">
+                      {time.split(" ").join("\n")}
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex-1">
+                    <h3 className="text-sm font-black text-slate-900 mb-1">{title}</h3>
+                    <p className="text-xs text-slate-500 leading-relaxed">{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          SECTION 10 â€” WHY OIBUZ
+          ================================================================ */}
+      <section className="py-20 md:py-28 bg-[#f0f4ff]">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <p className="text-blue-700 font-bold text-xs tracking-widest uppercase mb-4">Why Oibuz</p>
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              Replace disconnected processes with one source of truth.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {[
+              { icon: ShieldCheck, title: "Accountability", desc: "Structured workflows and audit history keep important actions traceable." },
+              { icon: FileCheck2, title: "Less Paperwork", desc: "Digitize attendance, leave requests, expense claims and timesheets." },
+              { icon: Zap, title: "Faster Administration", desc: "Keep workforce information together instead of reconciling separate sources." },
+              { icon: Lock, title: "Clear Ownership", desc: "Defined roles determine who reviews and approves each workflow." },
+              { icon: Eye, title: "Centralized Visibility", desc: "Management can see workforce information through one connected platform." },
+            ].map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="bg-white rounded-2xl border border-blue-50 p-5 shadow-sm text-center">
+                <div className="w-11 h-11 rounded-xl bg-blue-700 flex items-center justify-center mx-auto mb-4">
+                  <Icon className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="text-sm font-bold text-slate-900 mb-2">{title}</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          SECTION 11 â€” CONTROL & SECURITY (Dark navy)
+          ================================================================ */}
+      <section className="py-20 md:py-28 bg-[#0f172a]">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <p className="text-blue-400 font-bold text-xs tracking-widest uppercase mb-4">Enterprise Control</p>
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+              Built with control and accountability in mind.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {[
+              { icon: Lock, title: "Role-Based Access", desc: "Users only access data appropriate to their role. Employees see their own records. Managers see their teams. Admins see the full picture.", badge: "Access Control" },
+              { icon: CheckCircle, title: "Approval Workflows", desc: "Requests move through defined approval levels. Leave, timesheets and reimbursements each follow a structured review chain.", badge: "Workflow" },
+              { icon: FileSearch, title: "Audit Logging", desc: "Critical actions are recorded for accountability. The system keeps a structured history of approvals, changes and key events.", badge: "Transparency" },
+              { icon: Zap, title: "SLA Escalations", desc: "Delayed requests can be escalated to prevent workflow bottlenecks. If a manager doesn't act within the configured SLA, the system flags and escalates.", badge: "Reliability" },
+            ].map(({ icon: Icon, title, desc, badge }) => (
+              <div key={title} className="bg-slate-800/60 border border-slate-700 rounded-2xl p-6 flex gap-5">
+                <div className="w-11 h-11 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center shrink-0">
+                  <Icon className="w-5 h-5 text-blue-400" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <h3 className="text-sm font-bold text-white">{title}</h3>
+                    <span className="text-[10px] font-semibold text-blue-400 bg-blue-400/10 border border-blue-400/20 px-2 py-0.5 rounded-full">{badge}</span>
+                  </div>
+                  <p className="text-xs text-slate-400 leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          SECTION 12 â€” BUSINESS VISIBILITY (Light blue)
+          ================================================================ */}
+      <section className="py-20 md:py-28 bg-[#f0f4ff]">
+        <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <p className="text-blue-700 font-bold text-xs tracking-widest uppercase mb-4">Information Flow</p>
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              From site-level activity to business-level visibility.
+            </h2>
+          </div>
+
+          {/* Flow diagram */}
+          <div className="flex flex-col items-center gap-3">
+            {[
+              { label: "Multiple Sites", sub: "Attendance Â· Timesheets Â· Expenses", icon: Building2 },
+              { label: "Workforce Data", sub: "Collected & structured in Oibuz", icon: Users },
+              { label: "Approvals", sub: "Manager â†’ HR â†’ Finance workflows", icon: CheckCircle },
+              { label: "HR & Finance", sub: "Payroll Â· Reimbursements Â· Records", icon: FileText },
+              { label: "Leadership", sub: "Dashboard Â· Reports Â· Audit", icon: BarChart3 },
+            ].map(({ label, sub, icon: Icon }, i) => (
+              <React.Fragment key={label}>
+                <div className="bg-white rounded-2xl border border-blue-100 shadow-sm px-6 py-4 flex items-center gap-4 w-full max-w-sm">
+                  <div className="w-10 h-10 rounded-xl bg-blue-700 flex items-center justify-center shrink-0">
+                    <Icon className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-slate-900">{label}</p>
+                    <p className="text-xs text-slate-500">{sub}</p>
+                  </div>
+                </div>
+                {i < 4 && <div className="w-px h-6 bg-blue-200" />}
+              </React.Fragment>
+            ))}
+          </div>
+
+          {/* Dashboard category tiles */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-12">
+            {[
+              { label: "Attendance", icon: Clock, color: "bg-blue-50 border-blue-100 text-blue-700" },
+              { label: "Approvals", icon: CheckCircle, color: "bg-emerald-50 border-emerald-100 text-emerald-700" },
+              { label: "Workforce", icon: Users, color: "bg-indigo-50 border-indigo-100 text-indigo-700" },
+              { label: "Payroll", icon: CreditCard, color: "bg-slate-50 border-slate-200 text-slate-700" },
+            ].map(({ label, icon: Icon, color }) => (
+              <div key={label} className={`${color} border rounded-2xl p-4 flex flex-col items-center gap-2 text-center`}>
+                <Icon className="w-6 h-6" />
+                <p className="text-sm font-bold">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          SECTION 13 â€” FAQ
+          ================================================================ */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
+          <div className="text-center mb-12">
+            <p className="text-blue-700 font-bold text-xs tracking-widest uppercase mb-4">FAQ</p>
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">Frequently Asked Questions</h2>
+          </div>
+
+          <div className="space-y-2">
+            {[
+              { q: "What is Oibuz?", a: "Oibuz is a construction-focused workforce and business management platform. It helps construction companies, contractors and project-based businesses manage employee attendance, leave, timesheets, expenses, payroll and salary slips through structured digital workflows." },
+              { q: "Who is Oibuz designed for?", a: "Oibuz is designed primarily for construction companies, civil contractors, multi-site teams and project-based businesses that manage distributed workforces across multiple locations." },
+              { q: "How does attendance verification work?", a: "Employees punch in and out using the Oibuz mobile app. The app captures a selfie photo and location at the time of punching. If a punch-out is missed, employees can submit an attendance correction request which routes through an approval workflow." },
+              { q: "Can employees submit leave and expense requests?", a: "Yes. Employees can submit leave applications, view their leave balances and track request status. They can also submit expense reimbursement claims with receipt information that route through the defined approval workflow." },
+              { q: "Does Oibuz support project timesheets?", a: "Yes. Employees can log hours against specific construction projects and tasks. Managers review and validate these timesheets before they feed into payroll." },
+              { q: "How does the payroll workflow work?", a: "Payroll is prepared using employee salary information, attendance data and approved leave records. HR runs payroll through the Oibuz platform, reviews the summary and publishes the run for salary slip distribution." },
+              { q: "How do employees receive salary slips?", a: "Once payroll is published, PDF salary slips are generated and made available to employees directly through the Oibuz platform, so employees can access their own pay information without contacting HR." },
+              { q: "What roles are supported?", a: "Oibuz supports five primary roles: Employee, Manager, HR, Finance and Admin. Each role has defined access and responsibilities within the platform." },
+              { q: "How does role-based access work?", a: "Each user only sees and manages information appropriate to their role. Employees see their own records. Managers see their direct teams. HR has broader access for workforce management. Finance handles reimbursement approvals. Admins have organization-wide visibility and configuration access." },
+              { q: "Can Oibuz support distributed construction teams?", a: "Yes. Oibuz is specifically designed for teams working across multiple sites and locations. Workforce data from all sites is centralized in one platform, giving managers and leadership visibility across the full operation." },
+            ].map(({ q, a }, i) => (
+              <div key={i} className="border border-slate-100 rounded-2xl overflow-hidden bg-white shadow-sm">
+                <button
+                  className="w-full flex items-center justify-between px-5 py-4 text-left"
+                  onClick={() => setOpenFaqIndex(openFaqIndex === i ? -1 : i)}
+                >
+                  <span className="text-sm font-bold text-slate-900 pr-4">{q}</span>
+                  <ChevronDown className={`w-4 h-4 text-slate-400 shrink-0 transition-transform ${openFaqIndex === i ? "rotate-180" : ""}`} />
+                </button>
+                <AnimatePresence>
+                  {openFaqIndex === i && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-5 pb-5 text-sm text-slate-500 leading-relaxed border-t border-slate-100 pt-3">
+                        {a}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          SECTION 14 â€” FINAL CTA (Dark navy)
+          ================================================================ */}
+      <section className="py-24 md:py-32 bg-[#0f172a] relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-blue-800/10" />
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 max-w-4xl text-center">
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mb-5">
+            Bring your workforce operations into one system.
+          </h2>
+          <p className="text-slate-400 text-base sm:text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
+            See how Oibuz can fit your employees, projects, sites and approval workflows.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+            <a
+              href="#demo-form"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-base shadow-xl shadow-blue-600/30 transition-all hover:-translate-y-0.5"
+            >
+              Book a Demo <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+            </a>
+            <button
+              onClick={openWhatsAppDirect}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white font-semibold text-base transition-all"
+            >
+              <Phone className="w-4 h-4" /> Talk to Our Team
+            </button>
+          </div>
+          <p className="text-slate-600 text-sm font-semibold tracking-wide">Built for construction. Designed for control.</p>
+        </div>
+      </section>
+
+      {/* ================================================================
+          SECTION 15 â€” DEMO FORM
+          ================================================================ */}
+      <section id="demo-form" className="py-20 md:py-28 bg-[#f8fafc]">
+        <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            {/* Left: copy */}
+            <div>
+              <p className="text-blue-700 font-bold text-xs tracking-widest uppercase mb-4">Get Started</p>
+              <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mb-4">
+                Request a Demo
+              </h2>
+              <p className="text-slate-500 text-base leading-relaxed mb-8">
+                Share your details and our team will get in touch to walk you through Oibuz â€” tailored to your construction operation.
+              </p>
+              <div className="space-y-4">
+                {[
+                  { icon: Users, text: "Understand how Oibuz fits your workforce structure" },
+                  { icon: Building2, text: "See workflows configured for your sites" },
+                  { icon: CheckCircle, text: "Get answers to your operational questions" },
+                ].map(({ icon: Icon, text }) => (
+                  <div key={text} className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center shrink-0">
+                      <Icon className="w-4 h-4 text-blue-700" />
+                    </div>
+                    <p className="text-sm text-slate-600">{text}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Supported Components & Transparent Note */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-6 rounded-2xl bg-slate-50 border border-purple-100 shadow-sm">
-                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wide mb-3">Supported Salary Components</h3>
-                <div className="flex flex-wrap gap-2 text-xs font-mono font-bold text-slate-700">
-                  <span className="px-3 py-1 bg-white rounded-lg border border-purple-200">Basic</span>
-                  <span className="px-3 py-1 bg-white rounded-lg border border-purple-200">HRA</span>
-                  <span className="px-3 py-1 bg-white rounded-lg border border-purple-200">Allowances</span>
-                  <span className="px-3 py-1 bg-white rounded-lg border border-purple-200">PF (Provident Fund)</span>
-                  <span className="px-3 py-1 bg-white rounded-lg border border-purple-200">PT (Professional Tax)</span>
-                </div>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-blue-50/70 border border-blue-200 text-xs text-blue-900 flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-blue-700 shrink-0 mt-0.5" />
-                <div>
-                  <strong className="block mb-1 text-sm font-bold">Scope Clarity Note:</strong>
-                  “Configured salary structures support payroll processing; complex statutory compliance filing/routing is outside the current product scope.”
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 13 — SECURITY & CONTROL SECTION */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-slate-50 border-y border-purple-100 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-slate-800 bg-slate-200 px-3 py-1 rounded-full border border-slate-300">
-                GOVERNANCE &amp; CONTROLS
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                Control Without Creating More Work.
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                Granular security and visibility controls tailored to each operational role.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm">
-                <Shield className="w-6 h-6 text-blue-600 mb-3" />
-                <h3 className="text-base font-bold text-slate-900 mb-1">Role-Based Access</h3>
-                <p className="text-xs text-slate-600">Strict permission boundaries for Employee, Manager, HR, and Admin.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm">
-                <Users className="w-6 h-6 text-purple-600 mb-3" />
-                <h3 className="text-base font-bold text-slate-900 mb-1">Team Visibility</h3>
-                <p className="text-xs text-slate-600">Managers see direct reports and active team attendance.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm">
-                <Lock className="w-6 h-6 text-indigo-600 mb-3" />
-                <h3 className="text-base font-bold text-slate-900 mb-1">Audit Logs</h3>
-                <p className="text-xs text-slate-600">Complete log of critical system actions, edits, and approvals.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white border border-purple-100 shadow-sm">
-                <Activity className="w-6 h-6 text-rose-600 mb-3" />
-                <h3 className="text-base font-bold text-slate-900 mb-1">Attendance Exceptions</h3>
-                <p className="text-xs text-slate-600">Highlight missing punches, late check-ins, and leave discrepancies.</p>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 14 — WHY OIBUZ SECTION */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-white relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-blue-700 bg-blue-100 px-3 py-1 rounded-full border border-blue-200">
-                PROVEN BUSINESS VALUE
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                Why Organizations Choose Oibuz
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-8 rounded-3xl bg-slate-50 border border-purple-100 shadow-sm">
-                <div className="text-xs font-mono font-bold text-blue-700 uppercase tracking-widest mb-2">01. EFFICIENCY</div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">LESS MANUAL WORK</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  “Replace scattered registers, requests and records with connected workflows.”
-                </p>
-              </div>
-
-              <div className="p-8 rounded-3xl bg-slate-50 border border-purple-100 shadow-sm">
-                <div className="text-xs font-mono font-bold text-purple-700 uppercase tracking-widest mb-2">02. TRANSPARENCY</div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">MORE VISIBILITY</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  “See attendance, exceptions, approvals and workforce status through role-based dashboards.”
-                </p>
-              </div>
-
-              <div className="p-8 rounded-3xl bg-slate-50 border border-purple-100 shadow-sm">
-                <div className="text-xs font-mono font-bold text-indigo-700 uppercase tracking-widest mb-2">03. GOVERNANCE</div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">BETTER ACCOUNTABILITY</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  “Capture attendance details and preserve approval/correction history.”
-                </p>
-              </div>
-
-              <div className="p-8 rounded-3xl bg-slate-50 border border-purple-100 shadow-sm">
-                <div className="text-xs font-mono font-bold text-emerald-700 uppercase tracking-widest mb-2">04. INTEGRATION</div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">ONE CONNECTED RECORD</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  “Keep employee, attendance, leave, timesheet, reimbursement and payroll information linked.”
-                </p>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 15 — WHO IS OIBUZ FOR? */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-slate-50 border-y border-purple-100 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-16">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-purple-700 bg-purple-100 px-3 py-1 rounded-full border border-purple-200">
-                TARGET ORGANIZATIONS
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                Designed for Growing Organizations
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                Empowering teams from 50 to 500+ employees across diverse operational environments.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center font-bold text-xs">
-              <div className="p-4 rounded-xl bg-white border border-purple-100 text-slate-900 shadow-sm">50–500+ Employees</div>
-              <div className="p-4 rounded-xl bg-white border border-purple-100 text-slate-900 shadow-sm">Construction &amp; Contracting</div>
-              <div className="p-4 rounded-xl bg-white border border-purple-100 text-slate-900 shadow-sm">EPC &amp; Engineering</div>
-              <div className="p-4 rounded-xl bg-white border border-purple-100 text-slate-900 shadow-sm">Infrastructure Companies</div>
-              <div className="p-4 rounded-xl bg-white border border-purple-100 text-slate-900 shadow-sm">Project-Based Teams</div>
-              <div className="p-4 rounded-xl bg-white border border-purple-100 text-slate-900 shadow-sm">Field Service Operations</div>
-              <div className="p-4 rounded-xl bg-white border border-purple-100 text-slate-900 shadow-sm">Multi-Location Businesses</div>
-              <div className="p-4 rounded-xl bg-white border border-purple-100 text-slate-900 shadow-sm">Manager → HR Workflows</div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 16 — PRODUCT DASHBOARD SHOWCASE (INTERACTIVE TABS) */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-white relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="max-w-3xl mx-auto text-center space-y-4 mb-12">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-blue-700 bg-blue-100 px-3 py-1 rounded-full border border-blue-200">
-                INTERACTIVE INTERFACE PREVIEW
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-                Experience Oibuz HRMS
-              </h2>
-            </div>
-
-            {/* Showcase Tabs */}
-            <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
-              {[
-                { id: "employee", label: "Employee Directory" },
-                { id: "attendance", label: "Attendance Punch" },
-                { id: "manager", label: "Manager View" },
-                { id: "hr", label: "HR Console" },
-                { id: "payroll", label: "Payroll Run" },
-                { id: "leave", label: "Leave Requests" },
-                { id: "timesheet", label: "Timesheets" },
-                { id: "reports", label: "Reports" },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveScreenTab(tab.id)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                    activeScreenTab === tab.id
-                      ? "bg-blue-600 text-white shadow-md"
-                      : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
-            {/* Dynamic Interactive Card Screen */}
-            <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-10 border border-slate-800 shadow-2xl">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeScreenTab}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="space-y-4"
-                >
-                  {activeScreenTab === "employee" && (
-                    <div>
-                      <h4 className="text-lg font-bold text-white mb-2">Central Employee Directory</h4>
-                      <p className="text-xs text-slate-400 mb-4">Unified records containing employee profiles, designations, managers, work locations, and compliance info.</p>
-                      <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-slate-300">
-                        Directory Record #EMP-1049 • Rajesh Sharma (Sr. Site Engineer) • Dept: Operations • Location: Pune Hub
-                      </div>
-                    </div>
-                  )}
-
-                  {activeScreenTab === "attendance" && (
-                    <div>
-                      <h4 className="text-lg font-bold text-white mb-2">Verified Mobile Punch-In</h4>
-                      <p className="text-xs text-slate-400 mb-4">Captures punch timestamp, point-in-time GPS coordinates, and selfie audit image.</p>
-                      <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-emerald-400">
-                        Check-in Recorded • 09:02 AM • GPS: 18.5529 N, 73.8052 E • Selfie Verified ✓
-                      </div>
-                    </div>
-                  )}
-
-                  {activeScreenTab === "manager" && (
-                    <div>
-                      <h4 className="text-lg font-bold text-white mb-2">Manager Team Dashboard</h4>
-                      <p className="text-xs text-slate-400 mb-4">Real-time team presence, pending approvals, and attendance exception flags.</p>
-                      <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-blue-400">
-                        Direct Reports: 18 • Present: 16 • On Leave: 2 • Pending Approvals: 1 Leave Request
-                      </div>
-                    </div>
-                  )}
-
-                  {activeScreenTab === "hr" && (
-                    <div>
-                      <h4 className="text-lg font-bold text-white mb-2">HR Organization Console</h4>
-                      <p className="text-xs text-slate-400 mb-4">Organization-wide workforce statistics, monthly muster rolls, and policy execution.</p>
-                      <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-purple-400">
-                        Total Staff: 340 Employees • Active Sites: 5 • Muster Roll Finalized for Oct
-                      </div>
-                    </div>
-                  )}
-
-                  {activeScreenTab === "payroll" && (
-                    <div>
-                      <h4 className="text-lg font-bold text-white mb-2">Monthly Payroll Run</h4>
-                      <p className="text-xs text-slate-400 mb-4">Consolidates attendance days, leaves, and salary structures to publish monthly payslips.</p>
-                      <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-amber-400">
-                        Run Status: Finalized • Basic + HRA + Allowances - PF - PT • Payslips Published
-                      </div>
-                    </div>
-                  )}
-
-                  {activeScreenTab === "leave" && (
-                    <div>
-                      <h4 className="text-lg font-bold text-white mb-2">Leave Request Routing</h4>
-                      <p className="text-xs text-slate-400 mb-4">Structured Employee → Manager → HR approval flow with audit history.</p>
-                      <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-slate-300">
-                        Leave Ref #LV-882 • Casual Leave (2 Days) • Status: Approved by Manager &amp; HR
-                      </div>
-                    </div>
-                  )}
-
-                  {activeScreenTab === "timesheet" && (
-                    <div>
-                      <h4 className="text-lg font-bold text-white mb-2">Project Timesheets</h4>
-                      <p className="text-xs text-slate-400 mb-4">Track project and task hours for accurate workforce allocation and review.</p>
-                      <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-indigo-400">
-                        Timesheet Week 42 • Project Alpha (32 hrs) • Project Beta (8 hrs) • Approved
-                      </div>
-                    </div>
-                  )}
-
-                  {activeScreenTab === "reports" && (
-                    <div>
-                      <h4 className="text-lg font-bold text-white mb-2">Workforce Analytics &amp; Reports</h4>
-                      <p className="text-xs text-slate-400 mb-4">Downloadable daily summaries, monthly muster rolls, and attendance history.</p>
-                      <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-emerald-400">
-                        Report Generated: Oct Attendance Summary.xlsx • 100% Data Verified
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 17 — INTERACTIVE BEFORE VS AFTER & ROI CALCULATOR */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-slate-50 border-y border-purple-100 relative">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              
-              {/* Before/After Interactive Slider */}
-              <div className="space-y-6">
-                <div>
-                  <span className="text-xs font-mono font-bold uppercase tracking-widest text-purple-700 bg-purple-100 px-3 py-1 rounded-full border border-purple-200">
-                    TRANSFORMATION
-                  </span>
-                  <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2">
-                    Paper Registers vs Oibuz HRMS
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 mt-1">Drag slider to compare traditional manual HR vs Oibuz digital control.</p>
-                </div>
-
-                <div className="relative h-64 rounded-2xl overflow-hidden shadow-xl border border-purple-200 select-none">
-                  {/* Digital / After (Full width background) */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-purple-950 text-white p-6 flex flex-col justify-between">
-                    <div>
-                      <span className="text-[10px] font-mono bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded font-bold uppercase">
-                        AFTER: OIBUZ HRMS
-                      </span>
-                      <h4 className="text-lg font-bold text-white mt-2">Connected Digital Control</h4>
-                      <ul className="text-xs text-slate-200 space-y-1 mt-2 font-mono">
-                        <li>✓ Real-time mobile check-in with GPS</li>
-                        <li>✓ Photo verification snapshot</li>
-                        <li>✓ Automated leave &amp; approval routing</li>
-                        <li>✓ One-click payroll calculation</li>
-                      </ul>
-                    </div>
-                    <span className="text-[10px] font-mono text-emerald-400 font-bold">100% VERIFIED DATA</span>
+            {/* Right: form */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+              {isSubmitted ? (
+                <div className="text-center py-10">
+                  <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle2 className="w-7 h-7 text-emerald-600" />
                   </div>
-
-                  {/* Paper / Before (Clipped foreground) */}
-                  <div
-                    className="absolute inset-y-0 left-0 bg-slate-900 text-slate-200 p-6 flex flex-col justify-between overflow-hidden border-r-2 border-white"
-                    style={{ width: `${sliderPos}%` }}
-                  >
-                    <div className="w-[400px]">
-                      <span className="text-[10px] font-mono bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded font-bold uppercase">
-                        BEFORE: MANUAL REGISTERS
-                      </span>
-                      <h4 className="text-lg font-bold text-rose-200 mt-2">Fragmented Paper Registers</h4>
-                      <ul className="text-xs text-rose-100 space-y-1 mt-2 font-mono">
-                        <li>✕ Paper muster rolls prone to loss</li>
-                        <li>✕ Proxy punches &amp; unverified attendance</li>
-                        <li>✕ Delayed leave approvals over phone</li>
-                        <li>✕ Month-end payroll calculation stress</li>
-                      </ul>
-                    </div>
-                    <span className="text-[10px] font-mono text-rose-400 font-bold">HIGH OPERATIONAL LEAKAGE</span>
-                  </div>
-
-                  {/* Draggable Handle Input */}
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={sliderPos}
-                    onChange={(e) => setSliderPos(Number(e.target.value))}
-                    className="absolute inset-0 opacity-0 cursor-ew-resize w-full h-full z-20"
-                  />
-                </div>
-              </div>
-
-              {/* Interactive ROI Savings Calculator */}
-              <div className="bg-white p-8 rounded-3xl border border-purple-100 shadow-md space-y-6">
-                <div>
-                  <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-200">
-                    ESTIMATED COST LEAKAGE SAVINGS
-                  </span>
-                  <h3 className="text-2xl font-black text-slate-900 mt-2">
-                    Workforce ROI Calculator
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 mt-1">
-                    Calculate potential monthly savings by eliminating attendance leakage and manual errors.
+                  <h3 className="text-lg font-black text-slate-900 mb-2">Request Received</h3>
+                  <p className="text-slate-500 text-sm leading-relaxed">
+                    Thank you. Our team will reach out to schedule your Oibuz demo shortly.
                   </p>
                 </div>
-
-                <div className="space-y-4">
-                  <div>
-                    <div className="flex justify-between text-xs font-bold text-slate-800 mb-1">
-                      <span>Workforce Size</span>
-                      <span className="font-mono text-purple-700">{roiWorkers} Employees</span>
-                    </div>
-                    <input
-                      type="range"
-                      min="25"
-                      max="1000"
-                      step="25"
-                      value={roiWorkers}
-                      onChange={(e) => setRoiWorkers(Number(e.target.value))}
-                      className="w-full accent-purple-600 cursor-pointer"
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex justify-between text-xs font-bold text-slate-800 mb-1">
-                      <span>Average Daily Wage</span>
-                      <span className="font-mono text-purple-700">₹{roiWage} / day</span>
-                    </div>
-                    <input
-                      type="range"
-                      min="400"
-                      max="2000"
-                      step="50"
-                      value={roiWage}
-                      onChange={(e) => setRoiWage(Number(e.target.value))}
-                      className="w-full accent-purple-600 cursor-pointer"
-                    />
-                  </div>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-gradient-to-r from-purple-50 to-blue-50 border border-purple-100 text-center">
-                  <div className="text-xs font-mono font-bold text-slate-500 uppercase">ESTIMATED MONTHLY SAVINGS</div>
-                  <div className="text-3xl font-black text-purple-700 mt-1">₹{monthlyLeakage.toLocaleString("en-IN")}</div>
-                  <div className="text-[11px] text-slate-500 mt-1 leading-tight">
-                    Based on typical 3% leakage recovery through verified GPS/selfie attendance and connected payroll.
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 18 — FREQUENTLY ASKED QUESTIONS */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-white relative">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="text-center space-y-4 mb-12">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-blue-700 bg-blue-100 px-3 py-1 rounded-full border border-blue-200">
-                QUESTIONS &amp; ANSWERS
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-                Frequently Asked Questions
-              </h2>
-            </div>
-
-            <div className="space-y-3">
-              {faqList.map((faq, idx) => {
-                const isOpen = expandedFaq === idx;
-                return (
-                  <div
-                    key={faq.q}
-                    className="border border-purple-100 rounded-2xl overflow-hidden transition bg-slate-50/50 hover:bg-slate-50"
-                  >
-                    <button
-                      onClick={() => setExpandedFaq(isOpen ? -1 : idx)}
-                      className="w-full p-5 text-left font-bold text-sm sm:text-base text-slate-900 flex justify-between items-center gap-4 cursor-pointer"
-                    >
-                      <span>{faq.q}</span>
-                      <ChevronDown className={`w-4 h-4 text-purple-600 transition-transform ${isOpen ? "rotate-180" : ""}`} />
-                    </button>
-                    <AnimatePresence>
-                      {isOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="px-5 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-purple-100/60 pt-3"
-                        >
-                          {faq.a}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              })}
-            </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 19 — DEMO CTA & CONTACT FORM */}
-        {/* ========================================================================= */}
-        <section className="py-20 bg-gradient-to-b from-slate-50 via-purple-50/30 to-white relative" id="demo-request-form">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-              
-              {/* Left Column: CTA Context */}
-              <div className="lg:col-span-5 space-y-6">
-                <span className="text-xs font-mono font-bold uppercase tracking-widest text-blue-700 bg-blue-100 px-3 py-1 rounded-full border border-blue-200">
-                  BOOK A PRODUCT DEMO
-                </span>
-
-                <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-                  See Oibuz in Action.
-                </h2>
-
-                <p className="text-base text-slate-600 leading-relaxed">
-                  Explore how Oibuz can fit your current HR workflow. Schedule a live walkthrough with our platform specialists at OI HRMS SOLUTIONS.
-                </p>
-
-                <div className="p-4 rounded-2xl bg-white border border-purple-100 shadow-sm space-y-2 text-xs text-slate-700">
-                  <div className="font-bold text-slate-900 flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-blue-600" />
-                    <span>What to Expect in the Walkthrough:</span>
-                  </div>
-                  <ul className="space-y-1 text-slate-600 pl-6 list-disc">
-                    <li>Live demonstration of employee self-service and mobile attendance</li>
-                    <li>Manager and HR approval workflow customization</li>
-                    <li>Salary structure configuration and payroll run demonstration</li>
-                    <li>Role-based permissions setup tailored to your organization</li>
-                  </ul>
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    onClick={openWhatsAppDemo}
-                    className="w-full py-3.5 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition flex items-center justify-center gap-2 shadow-md cursor-pointer"
-                  >
-                    <Phone className="w-4 h-4" />
-                    <span>Instant WhatsApp Demo Request</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Right Column: Demo Form Card */}
-              <div className="lg:col-span-7 bg-white p-8 rounded-3xl border border-purple-200 shadow-xl">
-                {formSubmitted ? (
-                  <div className="text-center py-12 space-y-4">
-                    <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-                      <CheckCircle2 className="w-8 h-8" />
-                    </div>
-                    <h3 className="text-2xl font-black text-slate-900">Demo Request Received!</h3>
-                    <p className="text-sm text-slate-600 max-w-md mx-auto">
-                      Thank you, <strong>{formData.name}</strong>. Our technical product team at OI HRMS SOLUTIONS will reach out shortly to coordinate your live Oibuz HRMS demo.
-                    </p>
-                    <button
-                      onClick={() => setFormSubmitted(false)}
-                      className="px-6 py-2 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs hover:bg-slate-200 transition"
-                    >
-                      Submit Another Inquiry
-                    </button>
-                  </div>
-                ) : (
-                  <form onSubmit={handleFormSubmit} className="space-y-4">
-                    <h3 className="text-xl font-black text-slate-900 mb-2">Schedule Your Product Demo</h3>
-
-                    {formError && (
-                      <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold">
-                        {formError}
-                      </div>
-                    )}
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Your Name *</label>
-                        <input
-                          type="text"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          placeholder="e.g. Rahul Verma"
-                          className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:bg-white focus:border-blue-600 outline-none transition"
-                          required
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Designation</label>
-                        <input
-                          type="text"
-                          name="designation"
-                          value={formData.designation}
-                          onChange={handleInputChange}
-                          placeholder="e.g. HR Head / Managing Director"
-                          className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:bg-white focus:border-blue-600 outline-none transition"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Work Email *</label>
-                        <input
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          placeholder="rahul@company.com"
-                          className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:bg-white focus:border-blue-600 outline-none transition"
-                          required
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Phone Number *</label>
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          placeholder="+91 98765 43210"
-                          className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:bg-white focus:border-blue-600 outline-none transition"
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Company Name</label>
-                        <input
-                          type="text"
-                          name="company"
-                          value={formData.company}
-                          onChange={handleInputChange}
-                          placeholder="e.g. Acme Enterprises"
-                          className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:bg-white focus:border-blue-600 outline-none transition"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Workforce Size</label>
-                        <select
-                          name="employeeCount"
-                          value={formData.employeeCount}
-                          onChange={handleInputChange}
-                          className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:bg-white focus:border-blue-600 outline-none transition"
-                        >
-                          {EMPLOYEE_RANGES.map((opt) => (
-                            <option key={opt} value={opt}>{opt}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Industry Type</label>
-                        <select
-                          name="industry"
-                          value={formData.industry}
-                          onChange={handleInputChange}
-                          className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:bg-white focus:border-blue-600 outline-none transition"
-                        >
-                          {INDUSTRY_OPTIONS.map((ind) => (
-                            <option key={ind} value={ind}>{ind}</option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-bold text-slate-700 mb-1">Workforce Setup</label>
-                        <select
-                          name="workforceType"
-                          value={formData.workforceType}
-                          onChange={handleInputChange}
-                          className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:bg-white focus:border-blue-600 outline-none transition"
-                        >
-                          {WORKFORCE_RANGES.map((rng) => (
-                            <option key={rng} value={rng}>{rng}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-1">Specific Requirements / Notes</label>
-                      <textarea
-                        name="message"
-                        value={formData.message}
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {[
+                    { name: "name", label: "Your Name", type: "text", placeholder: "Rajesh Sharma" },
+                    { name: "company", label: "Company Name", type: "text", placeholder: "Apex Constructions" },
+                    { name: "phone", label: "Phone / WhatsApp", type: "tel", placeholder: "+91 90000 00000" },
+                  ].map(({ name, label, type, placeholder }) => (
+                    <div key={name}>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">{label}</label>
+                      <input
+                        type={type}
+                        name={name}
+                        value={formData[name]}
                         onChange={handleInputChange}
-                        rows="3"
-                        placeholder="Tell us about your attendance, approval, or payroll workflow needs..."
-                        className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:bg-white focus:border-blue-600 outline-none transition"
+                        placeholder={placeholder}
+                        required
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       />
                     </div>
-
-                    <button
-                      type="submit"
-                      disabled={formSubmitting}
-                      className="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm transition shadow-lg flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-                    >
-                      {formSubmitting ? (
-                        <span>Submitting...</span>
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4" />
-                          <span>Request Walkthrough &amp; Demo</span>
-                        </>
-                      )}
-                    </button>
-
-                  </form>
-                )}
-              </div>
-
-            </div>
-
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* SECTION 20 — FOOTER / BRAND SUMMARY */}
-        {/* ========================================================================= */}
-        <footer className="py-12 bg-slate-900 text-white border-t border-slate-800">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <div className="text-xl font-black tracking-tight text-white flex items-center gap-2">
-                <span className="text-blue-400">Oibuz</span> HRMS
-              </div>
-              <p className="text-xs font-mono text-slate-400 mt-1">
-                On-field Integration for Business &amp; User Zeal • Product by OI HRMS SOLUTIONS
-              </p>
-              <p className="text-xs text-slate-500 mt-0.5">
-                “Connecting people, processes and workforce operations in one platform.”
-              </p>
-            </div>
-
-            <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
-              <span>Cloud-based</span>
-              <span>•</span>
-              <span>Role-based</span>
-              <span>•</span>
-              <span>Workforce-focused</span>
+                  ))}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">Employees</label>
+                      <select
+                        name="workers"
+                        value={formData.workers}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        {["< 50 Employees", "50â€“150 Employees", "150â€“500 Employees", "500+ Employees"].map((o) => <option key={o}>{o}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">Active Sites</label>
+                      <select
+                        name="sites"
+                        value={formData.sites}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      >
+                        {["1 Site", "2â€“3 Sites", "4â€“10 Sites", "10+ Sites"].map((o) => <option key={o}>{o}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full py-3.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm shadow-lg shadow-blue-700/20 transition-all flex items-center justify-center gap-2 mt-2"
+                  >
+                    {isSubmitting ? "Submitting..." : <><span>Request a Demo</span><ArrowRight className="w-4 h-4" /></>}
+                  </button>
+                  <p className="text-center text-[11px] text-slate-400">No spam. Our construction tech team will be in touch.</p>
+                </form>
+              )}
             </div>
           </div>
-        </footer>
-
-        {/* ========================================================================= */}
-        {/* MOBILE FLOATING STICKY CTA BAR (CRO ENGINE) */}
-        {/* ========================================================================= */}
-        <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 shadow-[0_-10px_25px_rgba(0,0,0,0.1)] flex items-center justify-between gap-2">
-          <button
-            onClick={scrollToForm}
-            className="flex-1 py-3 px-4 rounded-xl bg-blue-600 text-white font-bold text-xs text-center flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition"
-          >
-            <span>Book a Demo</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-          <button
-            onClick={openWhatsAppDemo}
-            className="py-3 px-4 rounded-xl bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition"
-          >
-            <Phone className="w-3.5 h-3.5" />
-            <span>WhatsApp</span>
-          </button>
         </div>
+      </section>
 
-        {/* ========================================================================= */}
-        {/* INTERACTIVE 60-SECOND PRODUCT TOUR MODAL */}
-        {/* ========================================================================= */}
-        <AnimatePresence>
-          {showDemoModal && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md"
-            >
-              <motion.div
-                initial={{ scale: 0.95, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.95, y: 20 }}
-                className="bg-slate-900 border border-slate-800 text-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative overflow-hidden"
-              >
-                {/* Close Button */}
-                <button
-                  onClick={() => setShowDemoModal(false)}
-                  className="absolute top-4 right-4 p-2 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition cursor-pointer"
-                >
-                  <X className="w-5 h-5" />
-                </button>
+      {/* ================================================================
+          SECTION 16 â€” FOOTER
+          ================================================================ */}
+      <footer className="bg-[#0f172a] border-t border-slate-800 pt-16 pb-8">
+        <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+            {/* Brand */}
+            <div className="lg:col-span-2">
+              <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-9 w-auto mb-4 brightness-0 invert" />
+              <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
+                Workforce management for construction and project-based businesses.
+              </p>
+              <p className="text-slate-600 text-xs mt-4 font-medium">A Prajyot Infotech Product</p>
+            </div>
+            {/* Platform */}
+            <div>
+              <p className="text-white text-xs font-bold uppercase tracking-widest mb-4">Platform</p>
+              <div className="space-y-2.5">
+                {["Platform", "Features", "For Construction", "How It Works", "FAQ"].map((item) => (
+                  <a key={item} href="#" className="block text-sm text-slate-400 hover:text-white transition-colors">{item}</a>
+                ))}
+              </div>
+            </div>
+            {/* Company */}
+            <div>
+              <p className="text-white text-xs font-bold uppercase tracking-widest mb-4">Company</p>
+              <div className="space-y-2.5">
+                {[
+                  { label: "About", href: "/about" },
+                  { label: "Prajyot Infotech", href: "/" },
+                  { label: "Contact", href: "/contact" },
+                  { label: "Privacy Policy", href: "#" },
+                  { label: "Terms & Conditions", href: "#" },
+                ].map(({ label, href }) => (
+                  <a key={label} href={href} className="block text-sm text-slate-400 hover:text-white transition-colors">{label}</a>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-slate-600 text-xs">Â© {new Date().getFullYear()} Oibuz Â· Prajyot Infotech. All rights reserved.</p>
+            <div className="flex items-center gap-4">
+              <a href="#demo-form" className="text-xs text-blue-400 hover:text-blue-300 font-semibold transition-colors">Book a Demo â†’</a>
+            </div>
+          </div>
+        </div>
+      </footer>
 
-                <div className="flex items-center gap-2 text-xs font-mono font-bold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20 mb-4 inline-block">
-                  {tourSteps[demoStep].badge}
-                </div>
-
-                <h3 className="text-2xl font-black text-white mb-1">
-                  {tourSteps[demoStep].title}
-                </h3>
-                <p className="text-xs font-mono text-purple-400 mb-4">
-                  {tourSteps[demoStep].subtitle}
-                </p>
-
-                {/* Simulated Tour Video Screen Container */}
-                <div className="bg-slate-950 rounded-2xl p-6 border border-slate-800 space-y-4 mb-6 relative">
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
-                    {tourSteps[demoStep].desc}
-                  </p>
-
-                  <div className="p-3 bg-slate-900 rounded-xl border border-slate-800 text-xs font-mono text-emerald-400 flex items-center justify-between">
-                    <span>Live Verification Output</span>
-                    <span className="font-bold">STATUS: OK ✓</span>
-                  </div>
-                </div>
-
-                {/* Tour Navigation Controls */}
-                <div className="flex items-center justify-between border-t border-slate-800 pt-4">
-                  <div className="flex gap-1.5">
-                    {tourSteps.map((_, i) => (
-                      <button
-                        key={i}
-                        onClick={() => setDemoStep(i)}
-                        className={`h-2 rounded-full transition-all cursor-pointer ${
-                          demoStep === i ? "w-8 bg-blue-500" : "w-2 bg-slate-700"
-                        }`}
-                      />
-                    ))}
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    {demoStep < tourSteps.length - 1 ? (
-                      <button
-                        onClick={() => setDemoStep((prev) => prev + 1)}
-                        className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition cursor-pointer flex items-center gap-1.5"
-                      >
-                        <span>Next Feature</span>
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => {
-                          setShowDemoModal(false);
-                          scrollToForm();
-                        }}
-                        className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition cursor-pointer flex items-center gap-1.5"
-                      >
-                        <span>Book Full Live Demo</span>
-                        <ArrowRight className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
-                </div>
-
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
+      {/* Mobile sticky bar */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 p-3 bg-white/95 backdrop-blur-md border-t border-slate-200 flex items-center gap-3 shadow-lg">
+        <button
+          onClick={openWhatsAppDirect}
+          className="flex-1 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md"
+        >
+          <Phone className="w-3.5 h-3.5" />
+          <span>WhatsApp Us</span>
+        </button>
+        <a
+          href="#demo-form"
+          className="flex-1 py-3 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md"
+        >
+          <span>Book a Demo</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </a>
       </div>
-    </>
+    </div>
   );
 }

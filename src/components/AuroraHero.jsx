@@ -57,19 +57,35 @@ export default function AuroraHero() {
         style={prefersReducedMotion ? undefined : { y, opacity }}
         className="relative z-10 mx-auto max-w-7xl px-4 pt-20 sm:pt-28 md:pt-32 pb-12 sm:pb-16 flex-1 flex flex-col justify-center items-center text-center"
       >
-        {/* Availability badge */}
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.5 }}
-          className="mb-5 sm:mb-6 inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/65 backdrop-blur-md px-4 py-1.5 text-[11px] sm:text-xs font-semibold text-slate-700 shadow-sm"
-        >
-          <span className="relative flex size-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
-            <span className="relative inline-flex rounded-full size-2 bg-emerald-500" />
-          </span>
-          {availability}
-        </motion.p>
+        {/* Availability badge & Flagship Product pill */}
+        <div className="mb-5 sm:mb-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
+            className="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/65 backdrop-blur-md px-4 py-1.5 text-[11px] sm:text-xs font-semibold text-slate-700 shadow-sm"
+          >
+            <span className="relative flex size-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
+              <span className="relative inline-flex rounded-full size-2 bg-emerald-500" />
+            </span>
+            {availability}
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 0.5 }}
+          >
+            <Link
+              to="/products/hrms"
+              className="inline-flex items-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-4 py-1.5 text-[11px] sm:text-xs font-extrabold text-amber-900 shadow-sm hover:bg-amber-100 transition-all group"
+            >
+              <span>🏆 Flagship Product: OIBUZ Construction HRMS</span>
+              <span className="text-amber-700 group-hover:translate-x-0.5 transition-transform">→</span>
+            </Link>
+          </motion.div>
+        </div>
 
         {/* Main headline */}
         <motion.h1

@@ -3,6 +3,8 @@ import { motion, useInView, useMotionValue, useSpring, AnimatePresence } from "f
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import ProcessRoadmap from "../components/ProcessRoadmap.jsx";
+import SiteVisitsGallery from "../components/SiteVisitsGallery.jsx";
+
 
 const WA_NUMBER = "917020708747";
 const EMAIL = "hr@prajyotinfotech.in";
@@ -641,8 +643,15 @@ export default function About() {
           </div>
         </section>
 
+        {/* ═══ REAL SITE VISITS & TRAINING SHOWCASE ═══ */}
+        <SiteVisitsGallery
+          title="Direct On-Site Engagements & Team Training"
+          subtitle="Our relationship doesn't stop at screen sharing. We visit client factories, construction sites, and corporate offices to train users and ensure complete solution adoption."
+        />
+
         {/* ═══ FAQ ═══ */}
         <section className="py-24 bg-white" aria-label="Frequently asked questions">
+
           <div className="mx-auto max-w-3xl px-4">
             <Reveal>
               <div className="text-center mb-14">

@@ -22,6 +22,7 @@ const TechGlossary = lazy(() => import("./pages/TechGlossary.jsx"));
 const Careers = lazy(() => import("./pages/Careers.jsx"));
 const CareerManager = lazy(() => import("./pages/CareerManager.jsx"));
 const ConstructionHrmsPage = lazy(() => import("./pages/ConstructionHrmsPage.jsx"));
+const SiteVisitsPage = lazy(() => import("./pages/SiteVisitsPage.jsx"));
 
 import HelpBot from "./components/HelpBot.jsx";
 import FloatingWhatsApp from "./components/FloatingWhatsApp.jsx";
@@ -29,7 +30,7 @@ import FloatingWhatsApp from "./components/FloatingWhatsApp.jsx";
 import { LeadModalProvider } from "./context/LeadModalContext.jsx";
 import LeadModal from "./components/LeadModal.jsx";
 
-import { CITIES_DATA } from "./data/citiesData.js";
+
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -61,13 +62,15 @@ export default function App() {
   }, []);
 
   const location = useLocation();
+  // Pages with their own dedicated navbar — hide global Nav on these
+  const hideGlobalNav = ["/products/hrms"].includes(location.pathname);
 
   return (
     <LeadModalProvider>
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-brand-50/20 text-navy-800 antialiased selection:bg-brand-200/50 selection:text-navy-900 overflow-clip">
         {/* ↑ overflow-clip prevents mobile sideways scroll without breaking position: sticky */}
         <ScrollToTop />
-        <Nav />
+        {!hideGlobalNav && <Nav />}
 
         <Suspense fallback={<div className="flex h-screen items-center justify-center text-brand-500">Loading...</div>}>
           <AnimatePresence mode="wait">
@@ -80,18 +83,15 @@ export default function App() {
               <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
               <Route path="/estimate" element={<PageWrapper><Estimate /></PageWrapper>} />
               <Route path="/products/hrms" element={<PageWrapper><ConstructionHrmsPage /></PageWrapper>} />
-              {Object.keys(CITIES_DATA).map((cityKey) => (
-                <Route
-                  key={cityKey}
-                  path={`/software-company-in-${cityKey}`}
-                  element={<PageWrapper><CityLandingPage cityId={cityKey} /></PageWrapper>}
-                />
-              ))}
+              <Route path="/site-visits" element={<PageWrapper><SiteVisitsPage /></PageWrapper>} />
+
               <Route path="/articles" element={<PageWrapper><Articles /></PageWrapper>} />
               <Route path="/glossary" element={<PageWrapper><TechGlossary /></PageWrapper>} />
               <Route path="/careers" element={<PageWrapper><Careers /></PageWrapper>} />
               <Route path="/careers/manage" element={<PageWrapper><CareerManager /></PageWrapper>} />
+              <Route path="/admin" element={<PageWrapper><CareerManager /></PageWrapper>} />
               <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
+
             </Routes>
           </AnimatePresence>
         </Suspense>
@@ -110,7 +110,7 @@ export default function App() {
           </>
         )}
 
-        <Footer />
+        {!hideGlobalNav && <Footer />}
 
         {/* Global Lead Capture Modal */}
         <LeadModal />

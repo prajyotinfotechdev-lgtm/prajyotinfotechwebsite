@@ -59,23 +59,30 @@ export default function HrmsSpotlight() {
           {/* Left: Product Information & Value */}
           <div className="lg:col-span-6 space-y-6">
             <div>
-              <div className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-purple-600 uppercase tracking-widest mb-3 bg-purple-50 px-3 py-1 rounded-md border border-purple-100">
-                <Zap className="w-3.5 h-3.5" />
-                <span>CONNECTED WORKFORCE PLATFORM</span>
+              <div className="flex items-center gap-3 mb-4">
+                <img
+                  src="/images/oibuz_logo.png"
+                  alt="OIBUZ Construction Workforce Management Logo"
+                  className="h-14 sm:h-16 w-auto object-contain drop-shadow-md rounded-xl bg-white p-1.5 border border-purple-100 shadow-sm"
+                />
+                <div className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200 shadow-sm">
+                  <Zap className="w-3.5 h-3.5 text-amber-600" />
+                  <span>FLAGSHIP B2B ENTERPRISE SAAS</span>
+                </div>
               </div>
-              <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              <h2 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
                 Oibuz <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-indigo-600 to-violet-600">
-                  HRMS
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-700 to-amber-600">
+                  Construction Platform
                 </span>
               </h2>
-              <p className="text-lg sm:text-xl font-medium text-slate-700 mt-3 leading-snug">
-                Connect your workforce. Simplify HR. Stay in control.
+              <p className="text-lg sm:text-xl font-bold text-slate-800 mt-3 leading-snug">
+                Every Worker Verified. Every Rupee Accounted.
               </p>
             </div>
 
-            <p className="text-base text-slate-600 leading-relaxed max-w-xl">
-              Eliminate disconnected registers and fragmented workflows. Oibuz HRMS brings employee records, attendance, leave, timesheets, reimbursements, payroll and approvals into one connected workforce platform.
+            <p className="text-base text-slate-600 leading-relaxed max-w-xl font-medium">
+              Eliminate ghost workers, paper muster rolls, and site cash leakage. Oibuz brings mobile face-scan attendance, GPS geofencing, project timesheets, geotagged expense claims, and 1-click payroll into one unified system.
             </p>
 
             {/* Feature Highlights Grid */}

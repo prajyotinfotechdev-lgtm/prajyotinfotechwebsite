@@ -15,17 +15,13 @@ const TechStack    = lazy(() => import("../components/TechStack.jsx"));
 const CaseStudies  = lazy(() => import("../components/CaseStudies.jsx"));
 const CTA          = lazy(() => import("../components/CTA.jsx"));
 
-const BeforeAfterSlider = lazy(() => import("../components/BeforeAfterSlider.jsx"));
 const ParallaxPortfolio = lazy(() => import("../components/ParallaxPortfolio.jsx"));
-const DigitalReadinessQuiz = lazy(() => import("../components/DigitalReadinessQuiz.jsx"));
 const ArticlesPreview = lazy(() => import("../components/ArticlesPreview.jsx"));
 const PortfolioDemoModal = lazy(() => import("../components/PortfolioDemoModal.jsx"));
 const EngineeringProcess = lazy(() => import("../components/EngineeringProcess.jsx"));
-const ROICalculator = lazy(() => import("../components/ROICalculator.jsx"));
-const TrustGuarantees = lazy(() => import("../components/TrustGuarantees.jsx"));
-const ArchitectureBlueprint = lazy(() => import("../components/ArchitectureBlueprint.jsx"));
-const ClientExperienceSimulator = lazy(() => import("../components/ClientExperienceSimulator.jsx"));
 const HrmsSpotlight = lazy(() => import("../components/HrmsSpotlight.jsx"));
+const SiteVisitsGallery = lazy(() => import("../components/SiteVisitsGallery.jsx"));
+
 
 const SectionSkeleton = ({ className = "" }) => (
   <div className={`mx-auto w-full max-w-7xl px-4 py-16 ${className}`}>
@@ -185,15 +181,7 @@ export default function Home() {
           <HrmsSpotlight />
         </Suspense>
 
-        {/* 2.5 DIGITAL READINESS QUIZ */}
-        <Suspense fallback={<SectionSkeleton />}>
-          <DigitalReadinessQuiz />
-        </Suspense>
 
-        {/* 2.75 BEFORE / AFTER SLIDER - educational quality contrast */}
-        <Suspense fallback={<SectionSkeleton />}>
-          <BeforeAfterSlider />
-        </Suspense>
 
         {/* 3. WHAT WE BUILD — service benefit cards (business outcomes) */}
         <Suspense fallback={<SectionSkeleton />}>
@@ -215,10 +203,7 @@ export default function Home() {
           <TechStack />
         </Suspense>
 
-        {/* 6.25 ENTERPRISE ARCHITECTURE & SECURITY BLUEPRINT */}
-        <Suspense fallback={<SectionSkeleton />}>
-          <ArchitectureBlueprint />
-        </Suspense>
+
 
         {/* 6.5 PARALLAX PORTFOLIO — Apple style scrolling */}
         <Suspense fallback={<SectionSkeleton />}>
@@ -237,22 +222,17 @@ export default function Home() {
           </Suspense>
         </div>
 
-        {/* 7.35 INTERACTIVE CLIENT STAGING & SPRINT TRACKER SIMULATOR */}
+        {/* 7.5 REAL ON-SITE DELIVERIES & SOFTWARE TRAINING SHOWCASE */}
         <Suspense fallback={<SectionSkeleton />}>
-          <ClientExperienceSimulator />
+          <SiteVisitsGallery
+            maxItems={3}
+            title="Real Field Deployments & Onsite Training"
+            subtitle="Verified photo & video proof of our software deliveries, client handovers, and staff training."
+          />
         </Suspense>
 
-        {/* 7.5 INTERACTIVE ROI & AUTOMATION SAVINGS CALCULATOR */}
-        <Suspense fallback={<SectionSkeleton />}>
-          <ROICalculator />
-        </Suspense>
 
-        {/* 7.75 5 ENTERPRISE GUARANTEES & COMPARISON MATRIX */}
-        <div className="bg-slate-50/50 py-4 my-8 border-y border-purple-100/60">
-          <Suspense fallback={<SectionSkeleton />}>
-            <TrustGuarantees />
-          </Suspense>
-        </div>
+
 
         {/* 8. INTERACTIVE TECH LAB & ARTICLES — engineering authority */}
         <Suspense fallback={<SectionSkeleton />}>

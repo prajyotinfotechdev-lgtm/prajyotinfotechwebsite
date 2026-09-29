@@ -34,10 +34,13 @@ import {
   Zap,
   PhoneCall,
   MessageSquare,
-  Terminal
+  Terminal,
+  Camera,
+  Sparkles
 } from "lucide-react";
 import Seo from "../components/Seo.jsx";
 import { supabase } from "../lib/supabase.js";
+import SiteVisitsManager from "../components/admin/SiteVisitsManager.jsx";
 import {
   getJobs,
   saveJob,
@@ -58,6 +61,7 @@ import {
 
 
 
+
 export default function CareerManager() {
   // Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -65,8 +69,16 @@ export default function CareerManager() {
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
 
-  // Tabs: "jobs" | "applications" | "leads"
-  const [activeTab, setActiveTab] = useState("jobs");
+  // Tabs: "jobs" | "applications" | "leads" | "visits"
+  const [activeTab, setActiveTab] = useState(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("tab") || "jobs";
+    } catch {
+      return "jobs";
+    }
+  });
+
 
   // Data states
   const [jobs, setJobs] = useState([]);
@@ -141,12 +153,23 @@ export default function CareerManager() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setAuthError("");
-    const { error } = await supabase.auth.signInWithPassword({
+
+    // Hardcoded Admin Credentials Fallback
+    if (email === "prajyotinfotech.dev@gmail.com" && password === "SanketPrajyot@2026") {
+      setIsAuthenticated(true);
+      loadData();
+      return;
+    }
+
+    const { error, data } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
     if (error) {
       setAuthError(error.message);
+    } else if (data?.session) {
+      setIsAuthenticated(true);
+      loadData();
     }
   };
 
@@ -615,7 +638,20 @@ export default function CareerManager() {
                 </span>
               )}
             </button>
+
+            <button
+              onClick={() => setActiveTab("visits")}
+              className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2 relative ${
+                activeTab === "visits"
+                  ? "bg-brand-600 text-white shadow-md shadow-brand-500/20"
+                  : "bg-white text-slate-600 hover:bg-slate-200/70"
+              }`}
+            >
+              <Camera className="w-4 h-4" />
+              <span>Site Visits & Training</span>
+            </button>
           </div>
+
 
           {/* TAB 1: OPPORTUNITIES MANAGEMENT */}
           {activeTab === "jobs" && (
@@ -1082,7 +1118,19 @@ export default function CareerManager() {
             </motion.div>
           )}
 
+          {/* TAB 4: SITE VISITS & TRAINING PHOTOS */}
+          {activeTab === "visits" && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6"
+            >
+              <SiteVisitsManager onToast={showToast} />
+            </motion.div>
+          )}
+
           {/* --- CREATE / EDIT JOB MODAL --- */}
+
           <AnimatePresence>
             {isJobModalOpen && (
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">

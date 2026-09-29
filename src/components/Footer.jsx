@@ -114,14 +114,7 @@ export default function Footer() {
               </span>
             </Link>
 
-            {/* Status badge */}
-            <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/8 border border-emerald-500/18 text-emerald-400 text-xs font-medium">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
-                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
-              </span>
-              Systems Operational · 99.98% Cloud SLA
-            </div>
+
 
             <p className="mt-4 text-slate-400 leading-relaxed text-sm max-w-sm">
               Premier software engineering and digital transformation studio. We architect
@@ -211,6 +204,7 @@ export default function Footer() {
             <ul className="space-y-3 text-slate-400 text-xs">
               <li><Link to="/"        className="hover:text-slate-200 transition-colors">Home</Link></li>
               <li><Link to="/about"   className="hover:text-slate-200 transition-colors">About Us &amp; Team</Link></li>
+              <li><Link to="/site-visits" className="hover:text-slate-200 transition-colors">Client Deliveries &amp; Visits</Link></li>
               <li><Link to="/work"    className="hover:text-slate-200 transition-colors">Engineering Portfolio</Link></li>
               <li><Link to="/pricing" className="hover:text-slate-200 transition-colors">Transparent Pricing</Link></li>
               <li>
@@ -295,41 +289,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* SEO regional hubs */}
-      <div className="relative z-10 py-7 px-4 border-b border-slate-800/50 bg-[#080d19]">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col md:flex-row items-center gap-4 text-xs text-slate-500">
-            <span className="font-bold text-slate-400 uppercase tracking-widest text-[10px] shrink-0">
-              Global &amp; Regional Hubs:
-            </span>
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-1.5">
-              {["Pune","Mumbai","Bangalore","Hyderabad","Delhi NCR","Latur","Nagpur","Nashik","Aurangabad","Thane","Navi Mumbai"].map((city) => (
-                <Link
-                  key={city}
-                  to={`/software-company-in-${city.toLowerCase().replace(/\s+/g,"-")}`}
-                  className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 hover:border-brand-700/40 hover:text-slate-300 transition-colors"
-                >
-                  {city}
-                </Link>
-              ))}
-              <span className="text-slate-700 px-1">|</span>
-              {[
-                { to: "/software-company-in-usa", label: "USA 🇺🇸" },
-                { to: "/software-company-in-uae", label: "UAE 🇦🇪" },
-                { to: "/software-company-in-uk",  label: "UK 🇬🇧" },
-              ].map(({ to, label }) => (
-                <Link
-                  key={to}
-                  to={to}
-                  className="px-2.5 py-1 rounded-md bg-navy-900/40 border border-navy-800/40 text-navy-300 hover:text-white transition-colors font-medium"
-                >
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+
 
       {/* Bottom bar */}
       <div className="relative z-10 py-6 px-4 bg-[#050810]">
