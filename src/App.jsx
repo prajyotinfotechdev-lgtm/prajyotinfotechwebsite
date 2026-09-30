@@ -23,6 +23,7 @@ const Careers = lazy(() => import("./pages/Careers.jsx"));
 const CareerManager = lazy(() => import("./pages/CareerManager.jsx"));
 const ConstructionHrmsPage = lazy(() => import("./pages/ConstructionHrmsPage.jsx"));
 const SiteVisitsPage = lazy(() => import("./pages/SiteVisitsPage.jsx"));
+const OibuzLandingPage = lazy(() => import("./pages/OibuzLandingPage.jsx"));
 
 import HelpBot from "./components/HelpBot.jsx";
 import FloatingWhatsApp from "./components/FloatingWhatsApp.jsx";
@@ -63,7 +64,7 @@ export default function App() {
 
   const location = useLocation();
   // Pages with their own dedicated navbar — hide global Nav on these
-  const hideGlobalNav = ["/products/hrms"].includes(location.pathname);
+  const hideGlobalNav = ["/products/hrms", "/oibuz"].includes(location.pathname);
 
   return (
     <LeadModalProvider>
@@ -84,6 +85,7 @@ export default function App() {
               <Route path="/estimate" element={<PageWrapper><Estimate /></PageWrapper>} />
               <Route path="/products/hrms" element={<PageWrapper><ConstructionHrmsPage /></PageWrapper>} />
               <Route path="/site-visits" element={<PageWrapper><SiteVisitsPage /></PageWrapper>} />
+              <Route path="/oibuz" element={<PageWrapper><OibuzLandingPage /></PageWrapper>} />
 
               <Route path="/articles" element={<PageWrapper><Articles /></PageWrapper>} />
               <Route path="/glossary" element={<PageWrapper><TechGlossary /></PageWrapper>} />
