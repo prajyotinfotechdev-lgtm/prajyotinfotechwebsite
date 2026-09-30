@@ -297,7 +297,7 @@ export default function SiteVisitsManager({ onToast }) {
 
         <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
           <Filter className="w-4 h-4 text-slate-400 shrink-0 ml-1" />
-          {["All", "Product Delivery", "Software Training", "Onsite Implementation"].map((cat) => (
+          {["All", "Product Delivery", "Software Training", "Onsite Implementation", "Client Milestone"].map((cat) => (
             <button
               key={cat}
               onClick={() => setCategoryFilter(cat)}

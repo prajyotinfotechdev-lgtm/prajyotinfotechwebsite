@@ -40,7 +40,7 @@ export default function SiteVisitsGallery({ title, subtitle, maxItems = null, sh
     load();
   }, []);
 
-  const categories = ["All", "Product Delivery", "Software Training", "Onsite Implementation"];
+  const categories = ["All", "Product Delivery", "Software Training", "Onsite Implementation", "Client Milestone"];
 
   const filteredVisits = visits.filter((v) => {
     if (selectedCategory === "All") return true;
@@ -57,6 +57,8 @@ export default function SiteVisitsGallery({ title, subtitle, maxItems = null, sh
         return <GraduationCap className="w-3.5 h-3.5" />;
       case "Onsite Implementation":
         return <Wrench className="w-3.5 h-3.5" />;
+      case "Client Milestone":
+        return <CheckCircle2 className="w-3.5 h-3.5" />;
       default:
         return <ShieldCheck className="w-3.5 h-3.5" />;
     }
@@ -70,6 +72,8 @@ export default function SiteVisitsGallery({ title, subtitle, maxItems = null, sh
         return "bg-blue-50 text-blue-700 border-blue-200/80";
       case "Onsite Implementation":
         return "bg-amber-50 text-amber-700 border-amber-200/80";
+      case "Client Milestone":
+        return "bg-purple-50 text-purple-700 border-purple-200/80";
       default:
         return "bg-slate-50 text-slate-700 border-slate-200/80";
     }
