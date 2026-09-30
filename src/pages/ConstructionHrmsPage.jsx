@@ -61,6 +61,7 @@ import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import { createLead } from "../utils/leadStorage.js";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
+import OibuzAudioStory from "../components/OibuzAudioStory.jsx";
 
 const WHATSAPP_NUMBER = "917020708747";
 
@@ -450,6 +451,7 @@ const CLIENT_PARTNERS = [
 
 export default function ConstructionHrmsPage() {
   const { openModal } = useLeadModal();
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   // Interactive Live Mobile Punch Simulator State
   const [punchState, setPunchState] = useState("idle"); // idle | scanning | verified
@@ -590,30 +592,91 @@ export default function ConstructionHrmsPage() {
 
           {/* Nav */}
           <nav className="hidden lg:flex items-center gap-0.5">
-            {["Platform", "Features", "For Construction", "Pricing", "Resources"].map((item) => (
+            {[
+              { label: "Platform", href: "#platform" },
+              { label: "Product Story", href: "#product-story" },
+              { label: "Features", href: "#features" },
+              { label: "For Construction", href: "#for-construction" },
+              { label: "Pricing", href: "#pricing" },
+              { label: "Resources", href: "#resources" }
+            ].map((item) => (
               <a
-                key={item}
-                href="#"
+                key={item.label}
+                href={item.href}
                 className="px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-blue-700 hover:bg-blue-50/70 rounded-lg transition-all"
               >
-                {item}
+                {item.label}
               </a>
             ))}
           </nav>
 
           {/* Right CTAs */}
-          <div className="flex items-center gap-3">
-            <a href="#demo-form" className="hidden sm:inline-flex text-sm font-semibold text-slate-700 hover:text-blue-700 px-3 py-2 rounded-lg transition-all">
-              Login
+          <div className="flex items-center gap-2 sm:gap-3">
+            <a href="/" className="hidden sm:inline-flex text-xs font-semibold text-slate-600 hover:text-blue-700 px-3 py-2 rounded-lg transition-all border border-slate-200">
+              ← Prajyot Infotech Home
             </a>
             <a
               href="#demo-form"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-semibold text-sm shadow-md shadow-blue-700/20 transition-all hover:-translate-y-px"
+              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-semibold text-xs sm:text-sm shadow-md shadow-blue-700/20 transition-all hover:-translate-y-px"
             >
               Book a Demo <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
             </a>
+            {/* Mobile menu toggle */}
+            <button
+              type="button"
+              onClick={() => setMobileNavOpen(!mobileNavOpen)}
+              className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-blue-700 hover:bg-slate-100 focus:outline-none"
+              aria-label="Toggle menu"
+            >
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {mobileNavOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
           </div>
         </div>
+
+        {/* Mobile menu sheet */}
+        <AnimatePresence>
+          {mobileNavOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="lg:hidden bg-white border-b border-slate-200 overflow-hidden px-4 py-4 space-y-3"
+            >
+              <div className="flex flex-col space-y-2">
+                {[
+                  { label: "Platform", href: "#platform" },
+                  { label: "Product Story", href: "#product-story" },
+                  { label: "Features", href: "#features" },
+                  { label: "For Construction", href: "#for-construction" },
+                  { label: "Pricing", href: "#pricing" },
+                  { label: "Resources", href: "#resources" }
+                ].map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setMobileNavOpen(false)}
+                    className="px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+                <a
+                  href="/"
+                  className="px-3 py-2 text-sm font-semibold text-blue-700 bg-blue-50 rounded-lg flex items-center justify-between"
+                >
+                  <span>Prajyot Infotech Official Site</span>
+                  <span>→</span>
+                </a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* â”€â”€ HERO BODY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
@@ -716,7 +779,7 @@ export default function ConstructionHrmsPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.32, duration: 0.4 }}
-                className="grid grid-cols-4 gap-3 pt-1"
+                className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1"
               >
                 {[
                   { icon: ScanFace, l1: "Selfie & Location", l2: "Attendance" },
@@ -724,9 +787,9 @@ export default function ConstructionHrmsPage() {
                   { icon: CheckCircle2, l1: "Structured", l2: "Approvals" },
                   { icon: CreditCard, l1: "Integrated", l2: "Payroll" },
                 ].map(({ icon: Icon, l1, l2 }) => (
-                  <div key={l1} className="flex flex-col items-center gap-1.5 text-center">
-                    <div className="w-10 h-10 rounded-xl border border-blue-100 bg-blue-50 flex items-center justify-center">
-                      <Icon className="w-5 h-5 text-blue-700 stroke-[1.5]" />
+                  <div key={l1} className="flex flex-col items-center gap-1.5 text-center p-2 rounded-xl bg-slate-50/90 border border-slate-100 shadow-2xs">
+                    <div className="w-9 h-9 rounded-xl border border-blue-100 bg-blue-50 flex items-center justify-center">
+                      <Icon className="w-4.5 h-4.5 text-blue-700 stroke-[1.5]" />
                     </div>
                     <p className="text-[11px] font-semibold text-slate-700 leading-tight">
                       {l1}<br />{l2}
@@ -930,6 +993,11 @@ export default function ConstructionHrmsPage() {
           </div>
         </div>
       </section>
+
+      {/* ─── AUDIO-SYNCHRONIZED CINEMATIC PRODUCT STORY ───────────────────────── */}
+      <OibuzAudioStory
+        onDemoClick={() => document.getElementById("demo-form")?.scrollIntoView({ behavior: "smooth" })}
+      />
 
 
 

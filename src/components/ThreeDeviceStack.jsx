@@ -6,7 +6,7 @@ export default function ThreeDeviceStack() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto h-[380px] sm:h-[460px] flex items-center justify-center perspective-1000 select-none">
+    <div className="relative w-full max-w-2xl mx-auto h-[340px] sm:h-[460px] flex items-center justify-center perspective-1000 select-none scale-[0.88] xs:scale-95 sm:scale-100 origin-center">
       
       {/* Ambient Pulsing Glow behind devices */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -89,7 +89,7 @@ export default function ThreeDeviceStack() {
         initial={{ opacity: 0, x: -50, y: 40 }}
         animate={prefersReducedMotion ? { opacity: 1, x: -30, y: 30 } : { opacity: 1, x: [-20, -35, -20], y: [40, 25, 40], rotate: [-2, 1, -2] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-2 sm:left-6 bottom-4 sm:bottom-8 w-44 sm:w-56 z-20"
+        className="absolute left-1 sm:left-6 bottom-4 sm:bottom-8 w-36 sm:w-56 z-20"
         style={{
           filter: "drop-shadow(0 20px 30px rgba(0, 0, 0, 0.4))"
         }}
@@ -117,7 +117,7 @@ export default function ThreeDeviceStack() {
         initial={{ opacity: 0, x: 50, y: 20 }}
         animate={prefersReducedMotion ? { opacity: 1, x: 30, y: 10 } : { opacity: 1, x: [20, 35, 20], y: [15, 30, 15], rotate: [3, -1, 3] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-        className="absolute right-2 sm:right-6 top-8 sm:top-12 w-36 sm:w-44 z-30"
+        className="absolute right-1 sm:right-6 top-6 sm:top-12 w-32 sm:w-44 z-30"
         style={{
           filter: "drop-shadow(0 20px 35px rgba(0, 0, 0, 0.45))"
         }}
@@ -141,18 +141,18 @@ export default function ThreeDeviceStack() {
       <motion.div
         animate={{ y: [0, -8, 0] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-2 left-4 z-40 bg-white/90 backdrop-blur-md border border-purple-200 px-3.5 py-1.5 rounded-full shadow-xl flex items-center gap-2 text-xs font-bold text-purple-900"
+        className="absolute -top-2 left-1 sm:left-4 z-40 bg-white/95 backdrop-blur-md border border-purple-200 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full shadow-xl flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-bold text-purple-900"
       >
-        <Zap className="w-3.5 h-3.5 text-purple-600" />
+        <Zap className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-600" />
         <span>Sub-Second Cloud Sync</span>
       </motion.div>
 
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        className="absolute bottom-2 right-4 z-40 bg-white/90 backdrop-blur-md border border-emerald-200 px-3.5 py-1.5 rounded-full shadow-xl flex items-center gap-2 text-xs font-bold text-emerald-900"
+        className="absolute -bottom-2 right-1 sm:right-4 z-40 bg-white/95 backdrop-blur-md border border-emerald-200 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full shadow-xl flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-bold text-emerald-900"
       >
-        <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+        <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600" />
         <span>Role-Based Governance</span>
       </motion.div>
 

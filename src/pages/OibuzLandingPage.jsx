@@ -12,6 +12,7 @@ import {
   ClipboardList, Archive, Send, Home,
   Globe, Layers,
 } from "lucide-react";
+import OibuzAudioStory from "../components/OibuzAudioStory";
 
 /* ─── UTILITIES ───────────────────────────────────────────────────────────── */
 function useScrollReveal(threshold = 0.1) {
@@ -19,7 +20,7 @@ function useScrollReveal(threshold = 0.1) {
   const isInView = useInView(ref, { once: true, margin: "-30px", amount: threshold });
   return [ref, isInView];
 }
-const fadeUp  = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } } };
+const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } } };
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.08 } } };
 
 /* ─── SHARED STYLES ────────────────────────────────────────────────────────── */
@@ -48,20 +49,19 @@ function OibuzHeader({ onDemoClick }) {
   }, []);
 
   const navLinks = [
-    { label: "Platform",         href: "#platform"     },
-    { label: "Features",         href: "#features"     },
+    { label: "Platform", href: "#platform" },
+    { label: "Features", href: "#features" },
     { label: "For Construction", href: "#construction" },
-    { label: "How It Works",     href: "#how-it-works" },
-    { label: "FAQ",              href: "#faq"          },
+    { label: "How It Works", href: "#how-it-works" },
+    { label: "FAQ", href: "#faq" },
   ];
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled || menuOpen
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled || menuOpen
           ? "bg-white/97 backdrop-blur-md shadow-sm border-b border-slate-100"
           : "bg-transparent"
-      }`}
+        }`}
     >
       <div className={container}>
         <div className="flex items-center justify-between h-[68px]">
@@ -158,28 +158,28 @@ function OibuzHeader({ onDemoClick }) {
 /* ─── HERO DASHBOARD — DESKTOP ───────────────────────────────────────────── */
 function HeroDashboardDesktop() {
   const kpis = [
-    { l: "Total Employees", v: "248", c: "#2563eb", I: Users     },
-    { l: "Present Today",   v: "231", c: "#059669", I: UserCheck },
-    { l: "On Leave",        v: "12",  c: "#d97706", I: Calendar  },
-    { l: "Pending",         v: "7",   c: "#dc2626", I: Bell      },
+    { l: "Total Employees", v: "248", c: "#2563eb", I: Users },
+    { l: "Present Today", v: "231", c: "#059669", I: UserCheck },
+    { l: "On Leave", v: "12", c: "#d97706", I: Calendar },
+    { l: "Pending", v: "7", c: "#dc2626", I: Bell },
   ];
   const activity = [
-    { m: "Rahul punched in",   s: "Site A · 08:02 AM", c: "#059669" },
-    { m: "Leave approved",     s: "Amit · 2 days",     c: "#2563eb" },
-    { m: "Expense submitted",  s: "Site B · ₹4,850",  c: "#d97706" },
-    { m: "Timesheet approved", s: "Site C",             c: "#7c3aed" },
+    { m: "Rahul punched in", s: "Site A · 08:02 AM", c: "#059669" },
+    { m: "Leave approved", s: "Amit · 2 days", c: "#2563eb" },
+    { m: "Expense submitted", s: "Site B · ₹4,850", c: "#d97706" },
+    { m: "Timesheet approved", s: "Site C", c: "#7c3aed" },
   ];
   const sideNav = [
-    { I: Home,          l: "Dashboard",  a: true },
-    { I: Users,         l: "Employees"           },
-    { I: Clock,         l: "Attendance"          },
-    { I: Calendar,      l: "Leave"               },
-    { I: FileSpreadsheet, l: "Timesheets"        },
-    { I: Receipt,       l: "Expenses"            },
-    { I: CreditCard,    l: "Payroll"             },
-    { I: CheckCircle,   l: "Approvals"           },
-    { I: BarChart3,     l: "Reports"             },
-    { I: Settings,      l: "Settings"            },
+    { I: Home, l: "Dashboard", a: true },
+    { I: Users, l: "Employees" },
+    { I: Clock, l: "Attendance" },
+    { I: Calendar, l: "Leave" },
+    { I: FileSpreadsheet, l: "Timesheets" },
+    { I: Receipt, l: "Expenses" },
+    { I: CreditCard, l: "Payroll" },
+    { I: CheckCircle, l: "Approvals" },
+    { I: BarChart3, l: "Reports" },
+    { I: Settings, l: "Settings" },
   ];
 
   return (
@@ -199,9 +199,8 @@ function HeroDashboardDesktop() {
           {sideNav.map(({ I, l, a }) => (
             <div
               key={l}
-              className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[11px] font-medium ${
-                a ? "bg-[#2563eb] text-white" : "text-slate-400"
-              }`}
+              className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[11px] font-medium ${a ? "bg-[#2563eb] text-white" : "text-slate-400"
+                }`}
             >
               <I className="w-3 h-3 flex-shrink-0" />
               <span className="truncate">{l}</span>
@@ -258,18 +257,18 @@ function HeroDashboardDesktop() {
 /* ─── HERO DASHBOARD — MOBILE (simplified card) ──────────────────────────── */
 function HeroDashboardMobile() {
   const stats = [
-    { l: "Employees", v: "248", c: "#2563eb", I: Users     },
-    { l: "Present",   v: "231", c: "#059669", I: UserCheck },
-    { l: "On Leave",  v: "12",  c: "#d97706", I: Calendar  },
-    { l: "Pending",   v: "7",   c: "#dc2626", I: Bell      },
+    { l: "Employees", v: "248", c: "#2563eb", I: Users },
+    { l: "Present", v: "231", c: "#059669", I: UserCheck },
+    { l: "On Leave", v: "12", c: "#d97706", I: Calendar },
+    { l: "Pending", v: "7", c: "#dc2626", I: Bell },
   ];
   const modules = [
-    { I: Clock,         l: "Attendance",   c: "#2563eb" },
-    { I: Calendar,      l: "Leave",        c: "#059669" },
+    { I: Clock, l: "Attendance", c: "#2563eb" },
+    { I: Calendar, l: "Leave", c: "#059669" },
     { I: FileSpreadsheet, l: "Timesheets", c: "#7c3aed" },
-    { I: Receipt,       l: "Expenses",     c: "#d97706" },
-    { I: CreditCard,    l: "Payroll",      c: "#059669" },
-    { I: CheckCircle,   l: "Approvals",    c: "#0891b2" },
+    { I: Receipt, l: "Expenses", c: "#d97706" },
+    { I: CreditCard, l: "Payroll", c: "#059669" },
+    { I: CheckCircle, l: "Approvals", c: "#0891b2" },
   ];
   return (
     <div className="bg-white rounded-2xl shadow-xl border border-slate-200/80 overflow-hidden w-full">
@@ -317,10 +316,10 @@ function HeroDashboardMobile() {
 function HeroSection({ onDemoClick }) {
   const [ref, inView] = useScrollReveal(0.05);
   const pills = [
-    { I: Smartphone,      l: "Selfie & Location Attendance" },
-    { I: FileSpreadsheet, l: "Project Timesheets"            },
-    { I: CheckCircle,     l: "Structured Approvals"          },
-    { I: CreditCard,      l: "Integrated Payroll"            },
+    { I: Smartphone, l: "Selfie & Location Attendance" },
+    { I: FileSpreadsheet, l: "Project Timesheets" },
+    { I: CheckCircle, l: "Structured Approvals" },
+    { I: CreditCard, l: "Integrated Payroll" },
   ];
 
   return (
@@ -446,10 +445,10 @@ function HeroSection({ onDemoClick }) {
 function AudienceStrip() {
   const [ref, inView] = useScrollReveal();
   const items = [
-    { I: Building2, t: "Construction Companies",   d: "Multi-disciplinary firms managing large on-site and back-office workforces." },
-    { I: HardHat,   t: "Contractors",              d: "Specialist contractors coordinating teams, approvals and documentation." },
-    { I: MapPin,    t: "Multi-Site Teams",          d: "Operations spread across multiple active sites needing centralized oversight." },
-    { I: Briefcase, t: "Project-Based Businesses",  d: "Project-driven organizations needing precise time, expense and workforce tracking." },
+    { I: Building2, t: "Construction Companies", d: "Multi-disciplinary firms managing large on-site and back-office workforces." },
+    { I: HardHat, t: "Contractors", d: "Specialist contractors coordinating teams, approvals and documentation." },
+    { I: MapPin, t: "Multi-Site Teams", d: "Operations spread across multiple active sites needing centralized oversight." },
+    { I: Briefcase, t: "Project-Based Businesses", d: "Project-driven organizations needing precise time, expense and workforce tracking." },
   ];
   return (
     <section className="bg-white py-12 sm:py-14 border-b border-slate-100" id="construction">
@@ -483,10 +482,10 @@ function AudienceStrip() {
 function ProblemSection() {
   const [ref, inView] = useScrollReveal();
   const probs = [
-    { n: "01", I: ClipboardList,  t: "Manual Attendance",      d: "Paper registers make it nearly impossible to verify whether a worker was actually on site.",        v: "📋 Paper Register" },
-    { n: "02", I: Bell,           t: "Scattered Approvals",    d: "Leave requests lost in WhatsApp threads cause delays and disputes at payroll time.",                  v: "💬 WhatsApp"       },
-    { n: "03", I: FileSpreadsheet, t: "Payroll Admin",         d: "Combining attendance, leave and timesheets at month-end is time-consuming and error-prone.",          v: "📊 Excel Sheet"    },
-    { n: "04", I: Eye,            t: "Limited Visibility",     d: "Business owners have no real-time view into who is working or where bottlenecks are.",                v: "🔍 Manual Reports" },
+    { n: "01", I: ClipboardList, t: "Manual Attendance", d: "Paper registers make it nearly impossible to verify whether a worker was actually on site.", v: "📋 Paper Register" },
+    { n: "02", I: Bell, t: "Scattered Approvals", d: "Leave requests lost in WhatsApp threads cause delays and disputes at payroll time.", v: "💬 WhatsApp" },
+    { n: "03", I: FileSpreadsheet, t: "Payroll Admin", d: "Combining attendance, leave and timesheets at month-end is time-consuming and error-prone.", v: "📊 Excel Sheet" },
+    { n: "04", I: Eye, t: "Limited Visibility", d: "Business owners have no real-time view into who is working or where bottlenecks are.", v: "🔍 Manual Reports" },
   ];
   return (
     <section className={`bg-slate-50 ${sxPad}`} id="features">
@@ -542,14 +541,14 @@ function ProblemSection() {
 function CorePlatform() {
   const [ref, inView] = useScrollReveal();
   const mods = [
-    { I: Users,         t: "Employee Management", d: "Centralized digital directory — profiles, roles, salary setup and reporting structure.",         c: "#2563eb", lg: true },
-    { I: Clock,         t: "Attendance",          d: "Mobile punch in/out with selfie and location capture. Correction workflows included.",           c: "#059669", lg: true },
-    { I: Calendar,      t: "Leave Management",    d: "Leave balance tracking, multi-level approvals and automatic policy enforcement.",               c: "#7c3aed" },
-    { I: FileSpreadsheet, t: "Timesheets",         d: "Log daily project and task hours for accurate labor distribution.",                             c: "#0891b2" },
-    { I: Receipt,       t: "Reimbursements",      d: "Receipt uploads and structured multi-level claim approvals through Finance.",                   c: "#d97706" },
-    { I: CreditCard,    t: "Payroll",             d: "HR-driven payroll calculation from attendance, leaves and base salary data.",                   c: "#059669" },
-    { I: FileText,      t: "Salary Slips",        d: "Auto-generated PDF salary slips published after payroll finalization.",                         c: "#2563eb" },
-    { I: BarChart3,     t: "Reports & Visibility", d: "Consolidated workforce summaries and SLA escalations for business leaders.",                   c: "#1a3a6b" },
+    { I: Users, t: "Employee Management", d: "Centralized digital directory — profiles, roles, salary setup and reporting structure.", c: "#2563eb", lg: true },
+    { I: Clock, t: "Attendance", d: "Mobile punch in/out with selfie and location capture. Correction workflows included.", c: "#059669", lg: true },
+    { I: Calendar, t: "Leave Management", d: "Leave balance tracking, multi-level approvals and automatic policy enforcement.", c: "#7c3aed" },
+    { I: FileSpreadsheet, t: "Timesheets", d: "Log daily project and task hours for accurate labor distribution.", c: "#0891b2" },
+    { I: Receipt, t: "Reimbursements", d: "Receipt uploads and structured multi-level claim approvals through Finance.", c: "#d97706" },
+    { I: CreditCard, t: "Payroll", d: "HR-driven payroll calculation from attendance, leaves and base salary data.", c: "#059669" },
+    { I: FileText, t: "Salary Slips", d: "Auto-generated PDF salary slips published after payroll finalization.", c: "#2563eb" },
+    { I: BarChart3, t: "Reports & Visibility", d: "Consolidated workforce summaries and SLA escalations for business leaders.", c: "#1a3a6b" },
   ];
   return (
     <section className={`bg-white ${sxPad}`} id="platform">
@@ -603,8 +602,8 @@ function MultiSiteSection() {
   const [ref, inView] = useScrollReveal();
   const sites = [
     { n: "Site A", items: ["Workers", "Attendance", "Timesheets"], c: "#2563eb" },
-    { n: "Site B", items: ["Workers", "Attendance", "Expenses"],   c: "#059669" },
-    { n: "Site C", items: ["Workers", "Attendance", "Approvals"],  c: "#7c3aed" },
+    { n: "Site B", items: ["Workers", "Attendance", "Expenses"], c: "#059669" },
+    { n: "Site C", items: ["Workers", "Attendance", "Approvals"], c: "#7c3aed" },
   ];
   const roles = ["Manager", "HR", "Finance", "Business Owner"];
 
@@ -730,10 +729,10 @@ function ProductShowcase({ onDemoClick }) {
             </thead>
             <tbody className="divide-y divide-slate-50">
               {[
-                { n: "Rahul Sharma", s: "Site A", t: "08:02 AM", st: "Present",  c: "#059669" },
-                { n: "Amit Kumar",   s: "Site B", t: "08:15 AM", st: "Present",  c: "#059669" },
-                { n: "Priya Singh",  s: "HQ",     t: "09:00 AM", st: "Present",  c: "#059669" },
-                { n: "Vijay Patil",  s: "Site C", t: "—",        st: "On Leave", c: "#d97706" },
+                { n: "Rahul Sharma", s: "Site A", t: "08:02 AM", st: "Present", c: "#059669" },
+                { n: "Amit Kumar", s: "Site B", t: "08:15 AM", st: "Present", c: "#059669" },
+                { n: "Priya Singh", s: "HQ", t: "09:00 AM", st: "Present", c: "#059669" },
+                { n: "Vijay Patil", s: "Site C", t: "—", st: "On Leave", c: "#d97706" },
               ].map(({ n, s, t, st, c }) => (
                 <tr key={n} className="hover:bg-slate-50">
                   <td className="px-3 sm:px-4 py-2.5 font-medium text-slate-700 whitespace-nowrap">{n}</td>
@@ -755,9 +754,9 @@ function ProductShowcase({ onDemoClick }) {
         </div>
         <div className="space-y-3">
           {[
-            { n: "Rahul Sharma", t: "Casual Leave", d: "Oct 5–6",   dy: 2, st: "Pending Manager", c: "#d97706", p: 30  },
-            { n: "Amit Kumar",   t: "Sick Leave",   d: "Sep 30",    dy: 1, st: "Approved",         c: "#059669", p: 100 },
-            { n: "Priya Singh",  t: "Annual Leave", d: "Oct 10–14", dy: 5, st: "Pending HR",       c: "#2563eb", p: 60  },
+            { n: "Rahul Sharma", t: "Casual Leave", d: "Oct 5–6", dy: 2, st: "Pending Manager", c: "#d97706", p: 30 },
+            { n: "Amit Kumar", t: "Sick Leave", d: "Sep 30", dy: 1, st: "Approved", c: "#059669", p: 100 },
+            { n: "Priya Singh", t: "Annual Leave", d: "Oct 10–14", dy: 5, st: "Pending HR", c: "#2563eb", p: 60 },
           ].map(({ n, t, d, dy, st, c, p }) => (
             <div key={n} className="bg-white rounded-xl p-3 sm:p-4 border border-slate-100 shadow-sm">
               <div className="flex items-start sm:items-center justify-between mb-2 gap-2">
@@ -784,8 +783,8 @@ function ProductShowcase({ onDemoClick }) {
         <div className="space-y-3">
           {[
             { e: "Rahul Sharma", p: "Site A – Foundation", h: "40h", t: "Excavation & Piling", s: "Submitted" },
-            { e: "Amit Kumar",   p: "Site B – Framing",    h: "38h", t: "RCC Column Work",     s: "Approved"  },
-            { e: "Sanjay Rao",   p: "Site A – Foundation", h: "35h", t: "Formwork Setup",      s: "Submitted" },
+            { e: "Amit Kumar", p: "Site B – Framing", h: "38h", t: "RCC Column Work", s: "Approved" },
+            { e: "Sanjay Rao", p: "Site A – Foundation", h: "35h", t: "Formwork Setup", s: "Submitted" },
           ].map(({ e, p, h, t, s }) => (
             <div key={e} className="bg-white rounded-xl p-3 sm:p-4 border border-slate-100 shadow-sm">
               <div className="flex items-center justify-between mb-1.5">
@@ -810,9 +809,9 @@ function ProductShowcase({ onDemoClick }) {
         </div>
         <div className="space-y-3">
           {[
-            { e: "Amit Kumar",  d: "Site B – Emergency Cement", a: "₹4,850", s: "Finance Review", p: 75 },
-            { e: "Priya Singh", d: "Travel – Client Meeting",    a: "₹2,200", s: "HR Approved",    p: 60 },
-            { e: "Vijay Patil", d: "Site A – Safety Equipment",  a: "₹5,350", s: "Manager Review", p: 30 },
+            { e: "Amit Kumar", d: "Site B – Emergency Cement", a: "₹4,850", s: "Finance Review", p: 75 },
+            { e: "Priya Singh", d: "Travel – Client Meeting", a: "₹2,200", s: "HR Approved", p: 60 },
+            { e: "Vijay Patil", d: "Site A – Safety Equipment", a: "₹5,350", s: "Manager Review", p: 30 },
           ].map(({ e, d, a, s, p }) => (
             <div key={e} className="bg-white rounded-xl p-3 sm:p-4 border border-slate-100 shadow-sm">
               <div className="flex items-center justify-between mb-1">
@@ -872,16 +871,16 @@ function ProductShowcase({ onDemoClick }) {
   };
 
   const sideNav = [
-    { I: Home,            l: "Dashboard",    id: "Dashboard"      },
-    { I: Users,           l: "Employees"                          },
-    { I: Clock,           l: "Attendance",   id: "Attendance"     },
-    { I: Calendar,        l: "Leave",        id: "Leave"          },
-    { I: FileSpreadsheet, l: "Timesheets",   id: "Timesheets"     },
-    { I: Receipt,         l: "Expenses",     id: "Reimbursements" },
-    { I: CreditCard,      l: "Payroll",      id: "Payroll"        },
-    { I: CheckCircle,     l: "Approvals"                          },
-    { I: BarChart3,       l: "Reports"                            },
-    { I: Settings,        l: "Settings"                           },
+    { I: Home, l: "Dashboard", id: "Dashboard" },
+    { I: Users, l: "Employees" },
+    { I: Clock, l: "Attendance", id: "Attendance" },
+    { I: Calendar, l: "Leave", id: "Leave" },
+    { I: FileSpreadsheet, l: "Timesheets", id: "Timesheets" },
+    { I: Receipt, l: "Expenses", id: "Reimbursements" },
+    { I: CreditCard, l: "Payroll", id: "Payroll" },
+    { I: CheckCircle, l: "Approvals" },
+    { I: BarChart3, l: "Reports" },
+    { I: Settings, l: "Settings" },
   ];
 
   return (
@@ -904,9 +903,8 @@ function ProductShowcase({ onDemoClick }) {
                 <button
                   key={tab}
                   onClick={() => setActive(tab)}
-                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap flex-shrink-0 min-h-[40px] ${
-                    active === tab ? "bg-[#1a3a6b] text-white shadow-md" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                  }`}
+                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap flex-shrink-0 min-h-[40px] ${active === tab ? "bg-[#1a3a6b] text-white shadow-md" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    }`}
                 >
                   {tab}
                 </button>
@@ -936,9 +934,8 @@ function ProductShowcase({ onDemoClick }) {
                     <div
                       key={l}
                       onClick={() => id && setActive(id)}
-                      className={`flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-medium transition-all ${
-                        id === active ? "bg-[#2563eb] text-white" : "text-slate-400 hover:text-white hover:bg-white/5"
-                      } ${id ? "cursor-pointer" : ""}`}
+                      className={`flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-medium transition-all ${id === active ? "bg-[#2563eb] text-white" : "text-slate-400 hover:text-white hover:bg-white/5"
+                        } ${id ? "cursor-pointer" : ""}`}
                     >
                       <I className="w-3.5 h-3.5 flex-shrink-0" />
                       <span className="truncate">{l}</span>
@@ -984,10 +981,10 @@ function ProductShowcase({ onDemoClick }) {
 function HowItWorks() {
   const [ref, inView] = useScrollReveal();
   const steps = [
-    { n: "01", t: "Capture",  I: Smartphone, d: "Employees submit attendance, leave, timesheets or expense claims from their devices.",         c: "#2563eb" },
-    { n: "02", t: "Review",   I: Eye,        d: "Managers review requests against project reality and team availability.",                       c: "#059669" },
-    { n: "03", t: "Control",  I: Shield,     d: "HR and Finance handle policy verification and financial workflows where applicable.",            c: "#7c3aed" },
-    { n: "04", t: "Manage",   I: BarChart3,  d: "Business leaders receive centralized workforce visibility and consolidated reports.",            c: "#1a3a6b" },
+    { n: "01", t: "Capture", I: Smartphone, d: "Employees submit attendance, leave, timesheets or expense claims from their devices.", c: "#2563eb" },
+    { n: "02", t: "Review", I: Eye, d: "Managers review requests against project reality and team availability.", c: "#059669" },
+    { n: "03", t: "Control", I: Shield, d: "HR and Finance handle policy verification and financial workflows where applicable.", c: "#7c3aed" },
+    { n: "04", t: "Manage", I: BarChart3, d: "Business leaders receive centralized workforce visibility and consolidated reports.", c: "#1a3a6b" },
   ];
   const flow = ["Employee", "Manager", "HR", "Finance", "Admin"];
   return (
@@ -1042,28 +1039,28 @@ function SignatureWorkflow() {
     Leave: {
       title: "Leave Request",
       steps: [
-        { a: "Employee", d: "Checks balance and submits leave request",       I: Smartphone,    s: "submitted" },
-        { a: "Manager",  d: "Reviews site coverage and approves",             I: Eye,           s: "reviewing" },
-        { a: "HR",       d: "Verifies policy and gives final approval",       I: UserCheck,     s: "verifying" },
-        { a: "System",   d: "Leave balance deducted. Request completed.",     I: CheckCircle,   s: "done"      },
+        { a: "Employee", d: "Checks balance and submits leave request", I: Smartphone, s: "submitted" },
+        { a: "Manager", d: "Reviews site coverage and approves", I: Eye, s: "reviewing" },
+        { a: "HR", d: "Verifies policy and gives final approval", I: UserCheck, s: "verifying" },
+        { a: "System", d: "Leave balance deducted. Request completed.", I: CheckCircle, s: "done" },
       ],
     },
     Timesheet: {
       title: "Timesheet Submission",
       steps: [
-        { a: "Employee", d: "Logs daily project and task hours",              I: FileSpreadsheet, s: "submitted" },
-        { a: "Manager",  d: "Reviews labor hours against project reality",    I: Eye,             s: "reviewing" },
-        { a: "System",   d: "Timesheet locked and recorded.",                I: CheckCircle,     s: "done"      },
+        { a: "Employee", d: "Logs daily project and task hours", I: FileSpreadsheet, s: "submitted" },
+        { a: "Manager", d: "Reviews labor hours against project reality", I: Eye, s: "reviewing" },
+        { a: "System", d: "Timesheet locked and recorded.", I: CheckCircle, s: "done" },
       ],
     },
     Reimbursement: {
       title: "Expense Reimbursement",
       steps: [
-        { a: "Employee", d: "Submits receipt photo and expense claim",        I: Receipt,        s: "submitted" },
-        { a: "Manager",  d: "Validates expense against project need",         I: Eye,            s: "reviewing" },
-        { a: "HR",       d: "Reviews against company expense policy",         I: UserCheck,      s: "verifying" },
-        { a: "Finance",  d: "Final verification and payment clearance",       I: CreditCard,     s: "verifying" },
-        { a: "System",   d: "Claim approved. Payment processed.",             I: CheckCircle,    s: "done"      },
+        { a: "Employee", d: "Submits receipt photo and expense claim", I: Receipt, s: "submitted" },
+        { a: "Manager", d: "Validates expense against project need", I: Eye, s: "reviewing" },
+        { a: "HR", d: "Reviews against company expense policy", I: UserCheck, s: "verifying" },
+        { a: "Finance", d: "Final verification and payment clearance", I: CreditCard, s: "verifying" },
+        { a: "System", d: "Claim approved. Payment processed.", I: CheckCircle, s: "done" },
       ],
     },
   };
@@ -1084,9 +1081,8 @@ function SignatureWorkflow() {
               <button
                 key={k}
                 onClick={() => setActive(k)}
-                className={`px-4 sm:px-5 py-2.5 rounded-xl text-sm font-semibold transition-all min-h-[44px] ${
-                  active === k ? "bg-[#1a3a6b] text-white shadow-md" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                }`}
+                className={`px-4 sm:px-5 py-2.5 rounded-xl text-sm font-semibold transition-all min-h-[44px] ${active === k ? "bg-[#1a3a6b] text-white shadow-md" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  }`}
               >
                 {k}
               </button>
@@ -1130,11 +1126,11 @@ function RoleSection() {
   const [active, setActive] = useState("Employee");
   const [ref, inView] = useScrollReveal();
   const roles = {
-    Employee: { I: Smartphone,  c: "#2563eb", tag: "Your daily work, in one place.",            caps: ["Punch in and out with selfie and location", "Submit leave requests and track balances", "Log daily project timesheets", "Submit expense receipts for reimbursement", "Download monthly salary slips"] },
-    Manager:  { I: Eye,         c: "#059669", tag: "Oversight of your direct team.",             caps: ["View direct-team attendance records", "Review and approve leave requests", "Approve project timesheets", "Validate reimbursement claims", "Track team availability across sites"] },
-    HR:       { I: UserCheck,   c: "#7c3aed", tag: "Workforce administration, centralized.",     caps: ["Manage employee profiles and roles", "Oversee attendance and corrections", "Final leave approval and policy verification", "Run and publish monthly payroll", "Workforce administration and reporting"] },
-    Finance:  { I: CreditCard,  c: "#d97706", tag: "Financial control for reimbursements.",     caps: ["Review manager-approved expense claims", "Verify receipt amounts and documentation", "Issue final approval for reimbursement", "Track outstanding expense obligations"] },
-    Admin:    { I: Shield,      c: "#1a3a6b", tag: "Organization-wide visibility and control.", caps: ["View all data across the organization", "Configure system-wide policies", "Review full audit logs", "Manage workflow and escalation rules", "Override approvals when required"] },
+    Employee: { I: Smartphone, c: "#2563eb", tag: "Your daily work, in one place.", caps: ["Punch in and out with selfie and location", "Submit leave requests and track balances", "Log daily project timesheets", "Submit expense receipts for reimbursement", "Download monthly salary slips"] },
+    Manager: { I: Eye, c: "#059669", tag: "Oversight of your direct team.", caps: ["View direct-team attendance records", "Review and approve leave requests", "Approve project timesheets", "Validate reimbursement claims", "Track team availability across sites"] },
+    HR: { I: UserCheck, c: "#7c3aed", tag: "Workforce administration, centralized.", caps: ["Manage employee profiles and roles", "Oversee attendance and corrections", "Final leave approval and policy verification", "Run and publish monthly payroll", "Workforce administration and reporting"] },
+    Finance: { I: CreditCard, c: "#d97706", tag: "Financial control for reimbursements.", caps: ["Review manager-approved expense claims", "Verify receipt amounts and documentation", "Issue final approval for reimbursement", "Track outstanding expense obligations"] },
+    Admin: { I: Shield, c: "#1a3a6b", tag: "Organization-wide visibility and control.", caps: ["View all data across the organization", "Configure system-wide policies", "Review full audit logs", "Manage workflow and escalation rules", "Override approvals when required"] },
   };
   return (
     <section className={`bg-slate-50 ${sxPad}`} id="roles">
@@ -1156,9 +1152,8 @@ function RoleSection() {
                 <button
                   key={r}
                   onClick={() => setActive(r)}
-                  className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex-shrink-0 min-h-[44px] ${
-                    active === r ? "text-white shadow-md" : "bg-white border border-slate-200 text-slate-600 hover:border-slate-300"
-                  }`}
+                  className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap flex-shrink-0 min-h-[44px] ${active === r ? "text-white shadow-md" : "bg-white border border-slate-200 text-slate-600 hover:border-slate-300"
+                    }`}
                   style={active === r ? { backgroundColor: c } : {}}
                 >
                   <I className="w-3.5 h-3.5 flex-shrink-0" />{r}
@@ -1243,11 +1238,11 @@ function FeatureSpotlights() {
         <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-5 w-56 sm:w-64 mx-auto">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Approval Status</p>
           {[
-            { l: "Employee Submitted",  st: "Done",        c: "#059669", I: Send        },
-            { l: "Manager Reviewed",    st: "Done",        c: "#059669", I: Eye         },
-            { l: "HR Verification",     st: "In Progress", c: "#2563eb", I: UserCheck   },
-            { l: "Finance Approval",    st: "Pending",     c: "#94a3b8", I: CreditCard  },
-            { l: "Completed",           st: "Pending",     c: "#94a3b8", I: CheckCircle },
+            { l: "Employee Submitted", st: "Done", c: "#059669", I: Send },
+            { l: "Manager Reviewed", st: "Done", c: "#059669", I: Eye },
+            { l: "HR Verification", st: "In Progress", c: "#2563eb", I: UserCheck },
+            { l: "Finance Approval", st: "Pending", c: "#94a3b8", I: CreditCard },
+            { l: "Completed", st: "Pending", c: "#94a3b8", I: CheckCircle },
           ].map(({ l, st, c, I }, i, a) => (
             <div key={l} className="flex gap-3">
               <div className="flex flex-col items-center">
@@ -1303,10 +1298,10 @@ function FeatureSpotlights() {
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Management Dashboard — Demo</p>
           <div className="grid grid-cols-2 gap-2 mb-3">
             {[
-              { l: "Workforce",     v: "248",  c: "#2563eb", I: Users     },
-              { l: "Attendance",    v: "93%",  c: "#059669", I: Clock     },
-              { l: "Approvals Due", v: "7",    c: "#d97706", I: Bell      },
-              { l: "Sites Active",  v: "3",    c: "#7c3aed", I: Building2 },
+              { l: "Workforce", v: "248", c: "#2563eb", I: Users },
+              { l: "Attendance", v: "93%", c: "#059669", I: Clock },
+              { l: "Approvals Due", v: "7", c: "#d97706", I: Bell },
+              { l: "Sites Active", v: "3", c: "#7c3aed", I: Building2 },
             ].map(({ l, v, c, I }) => (
               <div key={l} className="bg-slate-50 rounded-xl p-2.5 border border-slate-100 flex items-center gap-2">
                 <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${c}12` }}>
@@ -1378,9 +1373,9 @@ function FeatureSpotlights() {
 function WhyOibuz() {
   const [ref, inView] = useScrollReveal();
   const bens = [
-    { I: HardHat,  c: "#2563eb", t: "Built for field operations.",          d: "Mobile-first tools designed for workers who are never at a desk. Attendance, leave, timesheets and expense submissions work from active construction sites." },
-    { I: Workflow, c: "#7c3aed", t: "Structured workflows — no gaps.",       d: "Every request follows a defined path through the organization. Accountability is built in at each stage. Nothing is approved without proper oversight." },
-    { I: Globe,    c: "#059669", t: "One view across your entire workforce.", d: "Replace disconnected processes with a single source of truth. Business leaders see workforce status, pending approvals and summaries in one place." },
+    { I: HardHat, c: "#2563eb", t: "Built for field operations.", d: "Mobile-first tools designed for workers who are never at a desk. Attendance, leave, timesheets and expense submissions work from active construction sites." },
+    { I: Workflow, c: "#7c3aed", t: "Structured workflows — no gaps.", d: "Every request follows a defined path through the organization. Accountability is built in at each stage. Nothing is approved without proper oversight." },
+    { I: Globe, c: "#059669", t: "One view across your entire workforce.", d: "Replace disconnected processes with a single source of truth. Business leaders see workforce status, pending approvals and summaries in one place." },
   ];
   return (
     <section className={`${sxPad}`} style={{ background: "linear-gradient(135deg, #f0f5ff 0%, #e8f0fe 100%)" }}>
@@ -1413,10 +1408,10 @@ function WhyOibuz() {
 function ControlSecurity() {
   const [ref, inView] = useScrollReveal();
   const pillars = [
-    { I: Lock,     t: "Role-Based Access",  d: "Every user sees only the data their role permits — employees see their own records, managers see their team, HR sees the full workforce.", c: "#60a5fa" },
-    { I: Workflow, t: "Approval Workflows", d: "All requests route through a structured hierarchy. No single user can unilaterally approve their own submissions.",                         c: "#34d399" },
-    { I: Archive,  t: "Audit Logging",      d: "An unalterable log records every critical action — who approved what, who changed a salary, and when it happened.",                      c: "#a78bfa" },
-    { I: Bell,     t: "SLA Escalations",    d: "If a manager ignores a pending request beyond the allowed window, the system automatically escalates to prevent bottlenecks.",           c: "#fbbf24" },
+    { I: Lock, t: "Role-Based Access", d: "Every user sees only the data their role permits — employees see their own records, managers see their team, HR sees the full workforce.", c: "#60a5fa" },
+    { I: Workflow, t: "Approval Workflows", d: "All requests route through a structured hierarchy. No single user can unilaterally approve their own submissions.", c: "#34d399" },
+    { I: Archive, t: "Audit Logging", d: "An unalterable log records every critical action — who approved what, who changed a salary, and when it happened.", c: "#a78bfa" },
+    { I: Bell, t: "SLA Escalations", d: "If a manager ignores a pending request beyond the allowed window, the system automatically escalates to prevent bottlenecks.", c: "#fbbf24" },
   ];
   return (
     <section className={`bg-[#0f1f3d] ${sxPad}`}>
@@ -1449,15 +1444,15 @@ function FAQ() {
   const [open, setOpen] = useState(null);
   const [ref, inView] = useScrollReveal();
   const faqs = [
-    { q: "What is Oibuz?",                                   a: "Oibuz is a cloud-based workforce and business management platform for construction companies, contractors and project-based businesses. It handles attendance, leave, timesheets, expenses, payroll and role-based approvals in a single connected system." },
-    { q: "Who is Oibuz designed for?",                       a: "Oibuz is built for construction companies, contractors, multi-site teams and project-based businesses that need to manage a distributed workforce across active sites and back-office operations." },
-    { q: "How does attendance verification work?",           a: "Employees punch in and out using the Oibuz mobile app. Each punch captures a selfie photo and the device's current location at that exact moment. An attendance correction workflow allows employees to request a fix for missed punch-outs, which a manager can review and approve." },
+    { q: "What is Oibuz?", a: "Oibuz is a cloud-based workforce and business management platform for construction companies, contractors and project-based businesses. It handles attendance, leave, timesheets, expenses, payroll and role-based approvals in a single connected system." },
+    { q: "Who is Oibuz designed for?", a: "Oibuz is built for construction companies, contractors, multi-site teams and project-based businesses that need to manage a distributed workforce across active sites and back-office operations." },
+    { q: "How does attendance verification work?", a: "Employees punch in and out using the Oibuz mobile app. Each punch captures a selfie photo and the device's current location at that exact moment. An attendance correction workflow allows employees to request a fix for missed punch-outs, which a manager can review and approve." },
     { q: "Can employees submit leave and expense requests?", a: "Yes. Employees can view their leave balances and submit requests directly from the platform. For expenses, they upload a photo of the receipt and submit a claim. Both flow through a structured multi-level approval process." },
-    { q: "Does Oibuz support project timesheets?",           a: "Yes. Employees log their daily hours against specific projects and tasks. Managers can review these logs to understand labor distribution across different sites. Timesheets require manager approval before they are locked." },
-    { q: "How does the payroll workflow work?",              a: "At month end, HR initiates a payroll run. Oibuz aggregates each employee's base salary, attendance records and approved leave data to calculate the payable amount. HR reviews and finalizes the run before publishing." },
-    { q: "How do employees receive salary slips?",           a: "Once HR finalizes and publishes the payroll run, Oibuz automatically generates PDF salary slips. Employees can securely download their own slip from their dashboard — no email or manual distribution required." },
-    { q: "What roles are supported?",                        a: "Oibuz supports five roles: Employee, Manager, HR, Finance and Admin. Each role has a clearly defined set of permissions and visibility appropriate to their responsibilities." },
-    { q: "How does role-based access work?",                 a: "Each role is scoped strictly. An employee sees only their own records. A manager sees data for their direct reports only. HR has workforce-wide visibility. Finance manages reimbursement approvals. Admin has full organizational access and audit logs." },
+    { q: "Does Oibuz support project timesheets?", a: "Yes. Employees log their daily hours against specific projects and tasks. Managers can review these logs to understand labor distribution across different sites. Timesheets require manager approval before they are locked." },
+    { q: "How does the payroll workflow work?", a: "At month end, HR initiates a payroll run. Oibuz aggregates each employee's base salary, attendance records and approved leave data to calculate the payable amount. HR reviews and finalizes the run before publishing." },
+    { q: "How do employees receive salary slips?", a: "Once HR finalizes and publishes the payroll run, Oibuz automatically generates PDF salary slips. Employees can securely download their own slip from their dashboard — no email or manual distribution required." },
+    { q: "What roles are supported?", a: "Oibuz supports five roles: Employee, Manager, HR, Finance and Admin. Each role has a clearly defined set of permissions and visibility appropriate to their responsibilities." },
+    { q: "How does role-based access work?", a: "Each role is scoped strictly. An employee sees only their own records. A manager sees data for their direct reports only. HR has workforce-wide visibility. Finance manages reimbursement approvals. Admin has full organizational access and audit logs." },
     { q: "Can Oibuz support distributed construction teams?", a: "Yes — this is Oibuz's core design purpose. Field workers across multiple sites submit data via mobile. Site managers review their team. HR and Finance at headquarters handle back-office workflows. Business owners see consolidated visibility across all sites." },
   ];
   return (
@@ -1598,9 +1593,9 @@ function DemoForm() {
           ) : (
             <motion.form variants={fadeUp} onSubmit={hs} className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-100 shadow-md space-y-5">
               {[
-                { label: "Name",             name: "name",    type: "text", ph: "Your full name"  },
-                { label: "Company",          name: "company", type: "text", ph: "Company name"     },
-                { label: "Phone / WhatsApp", name: "phone",   type: "tel",  ph: "+91 XXXXX XXXXX" },
+                { label: "Name", name: "name", type: "text", ph: "Your full name" },
+                { label: "Company", name: "company", type: "text", ph: "Company name" },
+                { label: "Phone / WhatsApp", name: "phone", type: "tel", ph: "+91 XXXXX XXXXX" },
               ].map(({ label, name, type, ph }) => (
                 <div key={name}>
                   <label htmlFor={`form-${name}`} className="block text-sm font-semibold text-slate-700 mb-1.5">{label}</label>
@@ -1654,8 +1649,8 @@ function DemoForm() {
 function OibuzFooter() {
   const cols = {
     Platform: ["Features", "For Construction", "How It Works", "FAQ", "Contact"],
-    Company:  ["About", "Prajyot Infotech", "Support"],
-    Legal:    ["Privacy Policy", "Terms & Conditions"],
+    Company: ["About", "Prajyot Infotech", "Support"],
+    Legal: ["Privacy Policy", "Terms & Conditions"],
   };
   return (
     <footer className="bg-[#0a1628] text-white py-12 sm:py-16">
@@ -1693,13 +1688,14 @@ export default function OibuzLandingPage() {
   const scrollToDemo = () => document.getElementById("demo")?.scrollIntoView({ behavior: "smooth" });
   return (
     <div className="bg-white overflow-x-clip">
-      <OibuzHeader      onDemoClick={scrollToDemo} />
-      <HeroSection      onDemoClick={scrollToDemo} />
+      <OibuzHeader onDemoClick={scrollToDemo} />
+      <HeroSection onDemoClick={scrollToDemo} />
       <AudienceStrip />
+      <OibuzAudioStory onDemoClick={scrollToDemo} />
       <ProblemSection />
       <CorePlatform />
       <MultiSiteSection />
-      <ProductShowcase  onDemoClick={scrollToDemo} />
+      <ProductShowcase onDemoClick={scrollToDemo} />
       <HowItWorks />
       <SignatureWorkflow />
       <RoleSection />
@@ -1707,7 +1703,7 @@ export default function OibuzLandingPage() {
       <WhyOibuz />
       <ControlSecurity />
       <FAQ />
-      <FinalCTA         onDemoClick={scrollToDemo} />
+      <FinalCTA onDemoClick={scrollToDemo} />
       <DemoForm />
       <OibuzFooter />
     </div>

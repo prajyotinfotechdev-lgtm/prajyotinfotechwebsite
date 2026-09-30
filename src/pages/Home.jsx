@@ -7,13 +7,13 @@ import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import AuroraHero from "../components/AuroraHero.jsx";
 
 // Lazy load everything below the fold
-const Marquee      = lazy(() => import("../components/Marquee.jsx"));
-const Features     = lazy(() => import("../components/Features.jsx"));
-const Industries   = lazy(() => import("../components/Industries.jsx"));
-const Showreel     = lazy(() => import("../components/Showreel.jsx"));
-const TechStack    = lazy(() => import("../components/TechStack.jsx"));
-const CaseStudies  = lazy(() => import("../components/CaseStudies.jsx"));
-const CTA          = lazy(() => import("../components/CTA.jsx"));
+const Marquee = lazy(() => import("../components/Marquee.jsx"));
+const Features = lazy(() => import("../components/Features.jsx"));
+const Industries = lazy(() => import("../components/Industries.jsx"));
+const Showreel = lazy(() => import("../components/Showreel.jsx"));
+const TechStack = lazy(() => import("../components/TechStack.jsx"));
+const CaseStudies = lazy(() => import("../components/CaseStudies.jsx"));
+const CTA = lazy(() => import("../components/CTA.jsx"));
 
 const ParallaxPortfolio = lazy(() => import("../components/ParallaxPortfolio.jsx"));
 const ArticlesPreview = lazy(() => import("../components/ArticlesPreview.jsx"));

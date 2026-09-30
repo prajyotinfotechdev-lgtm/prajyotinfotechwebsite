@@ -93,7 +93,7 @@ export default function AuroraHero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.65 }}
-          className="text-3xl sm:text-5xl md:text-7xl lg:text-[5.25rem]/tight font-black tracking-tight text-slate-900 max-w-5xl"
+          className="text-3xl sm:text-5xl md:text-6xl lg:text-[5.25rem]/tight font-black tracking-tight text-slate-900 max-w-5xl"
         >
           Build software that{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-navy-600">
@@ -106,7 +106,7 @@ export default function AuroraHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="mt-4 sm:mt-6 max-w-2xl text-sm sm:text-lg/relaxed text-slate-600 font-normal px-2"
+          className="mt-4 sm:mt-6 max-w-2xl text-base sm:text-lg/relaxed text-slate-600 font-normal px-2"
         >
           We build hyper-performant websites, mobile apps, CRM systems, and business
           automation software for companies that refuse to settle for average.
@@ -117,7 +117,7 @@ export default function AuroraHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.42, duration: 0.6 }}
-          className="mt-8 sm:mt-10 flex flex-row gap-2 sm:gap-4 justify-center items-center w-full"
+          className="mt-7 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full max-w-md sm:max-w-none mx-auto"
         >
           {/* Primary */}
           <button
@@ -130,10 +130,10 @@ export default function AuroraHero() {
                 projectType: "Website / Web App Development",
               })
             }
-            className="w-auto group px-3 py-2 sm:px-7 sm:py-3.5 rounded-full bg-navy-800 text-white font-semibold shadow-md shadow-navy-900/20 transition-all duration-300 hover:bg-navy-700 hover:shadow-lg hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 flex items-center justify-center gap-1.5 cursor-pointer text-xs sm:text-base whitespace-nowrap"
+            className="w-full sm:w-auto group px-6 py-3.5 sm:px-7 sm:py-3.5 rounded-full bg-navy-800 text-white font-semibold shadow-md shadow-navy-900/20 transition-all duration-300 hover:bg-navy-700 hover:shadow-lg hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 flex items-center justify-center gap-2 cursor-pointer text-sm sm:text-base whitespace-nowrap"
           >
             Book Call
-            <svg className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
           </button>
@@ -141,7 +141,7 @@ export default function AuroraHero() {
           {/* Secondary — brand gradient */}
           <Link
             to="/estimate"
-            className="w-auto px-3 py-2 sm:px-7 sm:py-3.5 rounded-full bg-gradient-to-r from-brand-600 to-brand-700 text-white font-semibold shadow-md shadow-brand-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-brand-500/25 hover:scale-[1.02] focus:outline-none text-xs sm:text-base flex items-center justify-center gap-2 whitespace-nowrap"
+            className="w-full sm:w-auto px-6 py-3.5 sm:px-7 sm:py-3.5 rounded-full bg-gradient-to-r from-brand-600 to-brand-700 text-white font-semibold shadow-md shadow-brand-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-brand-500/25 hover:scale-[1.02] focus:outline-none text-sm sm:text-base flex items-center justify-center gap-2 whitespace-nowrap"
           >
             Estimate Cost
           </Link>
@@ -149,7 +149,7 @@ export default function AuroraHero() {
           {/* Ghost */}
           <Link
             to="/services"
-            className="hidden sm:flex w-auto px-7 py-3.5 rounded-full border border-slate-900/12 bg-white/55 backdrop-blur-sm text-slate-700 font-semibold transition-all duration-300 hover:bg-white/75 hover:border-slate-300 focus:outline-none text-sm items-center justify-center whitespace-nowrap"
+            className="w-full sm:w-auto px-6 py-3.5 sm:px-7 sm:py-3.5 rounded-full border border-slate-900/12 bg-white/55 backdrop-blur-sm text-slate-700 font-semibold transition-all duration-300 hover:bg-white/75 hover:border-slate-300 focus:outline-none text-sm flex items-center justify-center whitespace-nowrap"
           >
             Explore Services
           </Link>
@@ -160,9 +160,9 @@ export default function AuroraHero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.52, duration: 0.5 }}
-          className="mt-6 sm:mt-8 inline-flex flex-wrap items-center justify-center gap-2 text-xs font-medium text-slate-500 bg-white/55 border border-slate-200/60 backdrop-blur-md px-4 py-2 rounded-full"
+          className="mt-6 sm:mt-8 inline-flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm font-medium text-slate-600 bg-white/60 border border-slate-200/70 backdrop-blur-md px-4 py-2 rounded-full shadow-xs"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          <span className="w-2 h-2 rounded-full bg-emerald-500" />
           Trusted by growing businesses across India &amp; worldwide
         </motion.div>
       </motion.div>
