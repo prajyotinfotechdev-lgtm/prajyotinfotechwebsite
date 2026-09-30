@@ -101,40 +101,28 @@ export async function getSiteVisits() {
       .select("*")
       .order("date", { ascending: false });
 
-    const localData = getLocalVisits();
-
     if (error || !data || data.length === 0) {
-      return localData;
+      return getLocalVisits();
     }
 
-    // Merge Supabase data with LocalStorage data to prevent data loss
-    // if a local save succeeded but the Supabase upsert silently failed.
-    const mergedMap = new Map();
-    
-    // First add all Supabase data
-    data.forEach(item => {
-      mergedMap.set(item.id, {
-        id: item.id,
-        title: item.title,
-        client_name: item.client_name || item.clientName || "",
-        category: item.category || "Product Delivery",
-        location: item.location || "Pune, Maharashtra",
-        date: item.date || item.created_at?.split("T")[0] || "",
-        description: item.description || "",
-        image_url: item.image_url || item.imageUrl || "",
-        tags: Array.isArray(item.tags) ? item.tags : (item.tags ? JSON.parse(item.tags) : []),
-        featured: item.featured ?? true,
-        created_at: item.created_at
-      });
-    });
+    const formattedData = data.map((item) => ({
+      id: item.id,
+      title: item.title,
+      client_name: item.client_name || item.clientName || "",
+      category: item.category || "Product Delivery",
+      location: item.location || "Pune, Maharashtra",
+      date: item.date || item.created_at?.split("T")[0] || "",
+      description: item.description || "",
+      image_url: item.image_url || item.imageUrl || "",
+      tags: Array.isArray(item.tags) ? item.tags : (item.tags ? JSON.parse(item.tags) : []),
+      featured: item.featured ?? true,
+      created_at: item.created_at
+    }));
 
-    // Then add/overwrite with LocalStorage data, since LocalStorage is updated immediately on save
-    localData.forEach(item => {
-      mergedMap.set(item.id, item);
-    });
+    // Update local cache with latest cloud data to keep them perfectly in sync
+    saveLocalVisits(formattedData);
 
-    // Convert map back to array and sort by date descending
-    return Array.from(mergedMap.values()).sort((a, b) => new Date(b.date) - new Date(a.date));
+    return formattedData;
   } catch (err) {
     console.warn("Supabase site_visits table not available, using local cache:", err);
     return getLocalVisits();
