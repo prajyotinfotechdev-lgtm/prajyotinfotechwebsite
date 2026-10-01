@@ -8,7 +8,7 @@ import {
   HardHat, MapPin, Users, Clock, Calendar, CreditCard,
   FileSpreadsheet, FileText, CheckCircle2, AlertCircle, Sparkles,
   Building2, ArrowRight, ShieldCheck, Check, Smartphone, Layers,
-  Camera, Zap, CheckCheck
+  Camera, Zap, CheckCheck, Radio, Headphones
 } from "lucide-react";
 
 // Easily replaceable audio URL configuration
@@ -112,6 +112,38 @@ function formatTime(sec) {
   const m = Math.floor(sec / 60);
   const s = Math.floor(sec % 60);
   return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+}
+
+// Live Voice Equalizer Animation Component
+function VoiceEqualizer({ isPlaying, barCount = 4, className = "" }) {
+  return (
+    <div className={`inline-flex items-end gap-[2px] h-3.5 ${className}`} aria-hidden="true">
+      {Array.from({ length: barCount }).map((_, i) => (
+        <motion.span
+          key={i}
+          animate={
+            isPlaying
+              ? {
+                  height: ["25%", "100%", "45%", "90%", "30%"],
+                }
+              : { height: "30%" }
+          }
+          transition={
+            isPlaying
+              ? {
+                  duration: 0.55 + (i % 3) * 0.18,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  ease: "easeInOut",
+                  delay: i * 0.08,
+                }
+              : { duration: 0.2 }
+          }
+          className="w-[2.5px] bg-current rounded-full"
+        />
+      ))}
+    </div>
+  );
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -601,10 +633,14 @@ export default function OibuzAudioStory({ onDemoClick }) {
   );
   const activeScene = STORY_SCENES[activeSceneIndex !== -1 ? activeSceneIndex : STORY_SCENES.length - 1];
 
+  const isSeekingRef = useRef(false);
+
   // High-frequency animation loop for progress tracking
   const updateLoop = useCallback(() => {
     if (audioRef.current && !audioRef.current.paused) {
-      setCurrentTime(audioRef.current.currentTime);
+      if (!isSeekingRef.current) {
+        setCurrentTime(audioRef.current.currentTime);
+      }
       rafRef.current = requestAnimationFrame(updateLoop);
     }
   }, []);
@@ -776,105 +812,127 @@ export default function OibuzAudioStory({ onDemoClick }) {
         </div>
 
         {/* Player Showcase Container */}
-        <div className="relative w-full max-w-5xl mx-auto rounded-2xl sm:rounded-3xl bg-white border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden">
+        <div className="relative w-full max-w-5xl mx-auto">
+          {/* Ambient Glow */}
+          <div className="absolute -inset-1.5 bg-gradient-to-r from-blue-600/15 via-indigo-600/20 to-blue-600/15 rounded-3xl blur-xl -z-10 pointer-events-none opacity-80" />
           
-          {/* Top Player Header */}
-          <div className="bg-slate-50 border-b border-slate-200 px-4 sm:px-6 py-3 flex items-center justify-between text-xs font-semibold text-slate-600">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-600 shrink-0" />
-              {hasStarted ? (
-                <span className="font-bold text-slate-900">
-                  {activeScene.chapter} / {activeScene.label}
-                </span>
+          <div className="relative w-full rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-2xl shadow-slate-200/60 overflow-hidden">
+            {/* Top Player Header */}
+            <div className="bg-slate-50/90 backdrop-blur-sm border-b border-slate-200 px-4 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between text-xs font-semibold text-slate-600">
+              <div className="flex items-center gap-2">
+                {hasStarted ? (
+                  <div className="flex items-center gap-2">
+                    <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-[11px] font-bold text-blue-700">
+                      <VoiceEqualizer isPlaying={isPlaying} barCount={4} className="text-blue-700" />
+                      <span>{activeScene.chapter} / {activeScene.label}</span>
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse shrink-0" />
+                    <span className="font-bold text-slate-900 tracking-wide">OIBUZ GUIDED TOUR</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="font-mono text-slate-500 text-xs">
+                  <span className="text-blue-700 font-bold">{formatTime(currentTime)}</span> / {formatTime(duration)}
+                </div>
+              </div>
+            </div>
+
+            {/* Master Visual Stage */}
+            <div
+              ref={stageRef}
+              className="relative w-full bg-white min-h-[440px] sm:min-h-[400px] md:min-h-0 md:aspect-[16/9] flex flex-col justify-between overflow-hidden"
+            >
+              {/* Background Layer with Crossfade & Subtle Cinematic Motion */}
+              <div className="absolute inset-0 z-0 opacity-15 overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeScene.id}
+                    initial={{ opacity: 0, scale: 1 }}
+                    animate={{ opacity: 1, scale: prefersReducedMotion ? 1 : 1.05 }}
+                    exit={{ opacity: 0 }}
+                    transition={{
+                      opacity: { duration: prefersReducedMotion ? 0.2 : 0.6 },
+                      scale: { duration: Math.max((activeScene.end - activeScene.start), 5), ease: "easeOut" }
+                    }}
+                    className="absolute inset-0 bg-cover bg-center origin-center"
+                    style={{ backgroundImage: `url(${activeScene.bgImage})` }}
+                  />
+                </AnimatePresence>
+              </div>
+
+              {/* INITIAL POSTER STATE (BEFORE PLAY) */}
+              {!hasStarted ? (
+                <div className="relative z-20 w-full h-full flex flex-col items-center justify-center p-6 sm:p-10 text-center my-auto">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center mb-5 shadow-sm">
+                    <img
+                      src="/images/oibuz_logo.png"
+                      alt="Oibuz"
+                      className="h-9 sm:h-12 w-auto object-contain"
+                    />
+                  </div>
+
+                  <span className="inline-block text-xs font-bold text-blue-700 bg-blue-50 border border-blue-100 px-3 py-1 rounded-md uppercase tracking-wider mb-3">
+                    PRODUCT STORY
+                  </span>
+
+                  <h3 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
+                    See how Oibuz connects the work.
+                  </h3>
+                  
+                  <p className="text-sm sm:text-base text-slate-600 max-w-md mb-7">
+                    Experience the platform through a 40-second guided product story.
+                  </p>
+
+                  <button
+                    onClick={handleStartStory}
+                    className="inline-flex items-center justify-center gap-2 sm:gap-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold px-5 sm:px-9 py-2.5 sm:py-3.5 rounded-lg sm:rounded-xl text-xs sm:text-base shadow-lg shadow-blue-700/20 transition-all hover:-translate-y-px"
+                    aria-label="Play product story"
+                  >
+                    <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white shrink-0" />
+                    <span className="whitespace-nowrap">PLAY PRODUCT STORY</span>
+                  </button>
+                </div>
               ) : (
-                <span className="font-bold text-slate-900">OIBUZ PRODUCT STORY</span>
+                /* ACTIVE DYNAMIC SCENE DISPLAY */
+                <div className="relative z-10 w-full h-full flex flex-col justify-between">
+                  <div className="w-full h-full">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={activeScene.id}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: prefersReducedMotion ? 0.2 : 0.4 }}
+                        className="w-full h-full"
+                      >
+                        {renderSceneContent()}
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Subtitle Bar with Voice Guide HUD */}
+                  <div className="relative z-20 px-4 sm:px-6 py-2.5 sm:py-3 bg-slate-950/95 backdrop-blur-md text-white border-t border-slate-800 flex items-center justify-between gap-3 shadow-lg">
+                    <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-blue-900/70 border border-blue-600/40 text-[10px] sm:text-[11px] font-bold text-blue-300 uppercase tracking-wider shrink-0">
+                        <VoiceEqualizer isPlaying={isPlaying} barCount={3} className="text-blue-400" />
+                        <span>OIBUZ</span>
+                      </div>
+                      <p className="text-xs sm:text-sm font-medium text-slate-100 italic truncate">
+                        "{activeScene.narration}"
+                      </p>
+                    </div>
+                    <div className="hidden md:flex items-center gap-1.5 text-[11px] font-semibold text-slate-400 shrink-0 font-mono bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                      <span className="text-blue-400">CH {activeScene.chapter}</span>/08
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
-
-            <div className="font-mono text-slate-500">
-              <span className="text-blue-700 font-bold">{formatTime(currentTime)}</span> / {formatTime(duration)}
-            </div>
-          </div>
-
-          {/* Master Visual Stage */}
-          <div
-            ref={stageRef}
-            className="relative w-full bg-white min-h-[440px] sm:min-h-[400px] md:min-h-0 md:aspect-[16/9] flex flex-col justify-between overflow-hidden"
-          >
-            {/* Background Layer with Crossfade (Low opacity for subtlety) */}
-            <div className="absolute inset-0 z-0 opacity-10">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeScene.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: prefersReducedMotion ? 0.2 : 0.6 }}
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${activeScene.bgImage})` }}
-                />
-              </AnimatePresence>
-            </div>
-
-            {/* INITIAL POSTER STATE (BEFORE PLAY) */}
-            {!hasStarted ? (
-              <div className="relative z-20 w-full h-full flex flex-col items-center justify-center p-6 sm:p-10 text-center my-auto">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center mb-5 shadow-sm">
-                  <img
-                    src="/images/oibuz_logo.png"
-                    alt="Oibuz"
-                    className="h-9 sm:h-12 w-auto object-contain"
-                  />
-                </div>
-
-                <span className="inline-block text-xs font-bold text-blue-700 bg-blue-50 border border-blue-100 px-3 py-1 rounded-md uppercase tracking-wider mb-3">
-                  PRODUCT STORY
-                </span>
-
-                <h3 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
-                  See how Oibuz connects the work.
-                </h3>
-                
-                <p className="text-sm sm:text-base text-slate-600 max-w-md mb-7">
-                  Experience the platform through a 40-second guided product story.
-                </p>
-
-                <button
-                  onClick={handleStartStory}
-                  className="inline-flex items-center gap-2.5 bg-blue-700 hover:bg-blue-800 text-white font-bold px-7 sm:px-9 py-3.5 rounded-xl text-sm sm:text-base shadow-lg shadow-blue-700/20 transition-all hover:-translate-y-px"
-                  aria-label="Play product story"
-                >
-                  <Play className="w-4 h-4 fill-white" />
-                  <span>PLAY PRODUCT STORY · 0:40</span>
-                </button>
-              </div>
-            ) : (
-              /* ACTIVE DYNAMIC SCENE DISPLAY */
-              <div className="relative z-10 w-full h-full flex flex-col justify-between">
-                <div className="w-full h-full">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeScene.id}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: prefersReducedMotion ? 0.2 : 0.4 }}
-                      className="w-full h-full"
-                    >
-                      {renderSceneContent()}
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-
-                {/* Subtitle Bar */}
-                <div className="relative z-20 px-5 sm:px-8 py-2.5 bg-slate-900 text-white flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse shrink-0" />
-                  <p className="text-xs sm:text-sm font-medium italic truncate">
-                    "{activeScene.narration}"
-                  </p>
-                </div>
-              </div>
-            )}
 
             {/* AUDIO CONTROLS BAR */}
             <div className="relative z-30 bg-slate-50 border-t border-slate-200 px-4 sm:px-6 py-3 flex flex-col gap-2">
@@ -887,6 +945,10 @@ export default function OibuzAudioStory({ onDemoClick }) {
                   max={duration || 39.7}
                   step="0.05"
                   value={currentTime}
+                  onMouseDown={() => { isSeekingRef.current = true; }}
+                  onTouchStart={() => { isSeekingRef.current = true; }}
+                  onMouseUp={() => { isSeekingRef.current = false; }}
+                  onTouchEnd={() => { isSeekingRef.current = false; }}
                   onChange={handleSeek}
                   aria-label="Seek audio position"
                   className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-700 z-10"

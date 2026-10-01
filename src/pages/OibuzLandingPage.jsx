@@ -80,7 +80,14 @@ function OibuzHeader({ onDemoClick }) {
               <a
                 key={l.label}
                 href={l.href}
-                className="text-sm font-medium text-slate-600 hover:text-[#1a3a6b] transition-colors whitespace-nowrap"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const target = document.querySelector(l.href);
+                  if (target) {
+                    target.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                className="text-sm font-medium text-slate-600 hover:text-[#1a3a6b] transition-colors whitespace-nowrap cursor-pointer"
               >
                 {l.label}
               </a>
@@ -133,8 +140,15 @@ function OibuzHeader({ onDemoClick }) {
                 <a
                   key={l.label}
                   href={l.href}
-                  className="flex items-center px-4 py-3 text-sm font-medium text-slate-700 rounded-xl hover:bg-slate-50 min-h-[48px]"
-                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center px-4 py-3 text-sm font-medium text-slate-700 rounded-xl hover:bg-slate-50 min-h-[48px] cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMenuOpen(false);
+                    const target = document.querySelector(l.href);
+                    if (target) {
+                      target.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
                 >
                   {l.label}
                 </a>
@@ -384,17 +398,17 @@ function HeroSection({ onDemoClick }) {
             </motion.p>
 
             {/* CTAs */}
-            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 mb-8">
+            <motion.div variants={fadeUp} className="flex flex-row w-full sm:w-auto gap-2 sm:gap-3 mb-8">
               <button
                 onClick={onDemoClick}
                 id="hero-demo-btn"
-                className="flex items-center justify-center gap-2 bg-[#1a3a6b] hover:bg-[#15305a] text-white font-semibold px-7 py-3.5 rounded-xl transition-all hover:shadow-xl hover:-translate-y-0.5 min-h-[48px] w-full sm:w-auto"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 bg-[#1a3a6b] hover:bg-[#15305a] text-white font-semibold px-2 sm:px-7 py-3.5 rounded-xl transition-all hover:shadow-xl hover:-translate-y-0.5 min-h-[48px] text-[13px] sm:text-base whitespace-nowrap"
               >
-                Book a Demo <ArrowRight className="w-4 h-4 flex-shrink-0" />
+                Book a Demo <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
               </button>
               <a
                 href="#platform"
-                className="flex items-center justify-center gap-2 border border-[#1a3a6b]/25 text-[#1a3a6b] font-semibold px-7 py-3.5 rounded-xl hover:bg-[#1a3a6b]/5 transition-all min-h-[48px] w-full sm:w-auto text-center"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 border border-[#1a3a6b]/25 text-[#1a3a6b] font-semibold px-2 sm:px-7 py-3.5 rounded-xl hover:bg-[#1a3a6b]/5 transition-all min-h-[48px] text-[13px] sm:text-base text-center whitespace-nowrap"
               >
                 Explore Platform
               </a>

@@ -20,6 +20,7 @@ const ArticlesPreview = lazy(() => import("../components/ArticlesPreview.jsx"));
 const PortfolioDemoModal = lazy(() => import("../components/PortfolioDemoModal.jsx"));
 const EngineeringProcess = lazy(() => import("../components/EngineeringProcess.jsx"));
 const HrmsSpotlight = lazy(() => import("../components/HrmsSpotlight.jsx"));
+const BrandAudioStory = lazy(() => import("../components/BrandAudioStory.jsx"));
 const SiteVisitsGallery = lazy(() => import("../components/SiteVisitsGallery.jsx"));
 
 
@@ -174,6 +175,11 @@ export default function Home() {
         {/* 2. SERVICES MARQUEE — visual rhythm breaker */}
         <Suspense fallback={<div className="h-16 border-y border-slate-200 bg-white animate-pulse" />}>
           <Marquee />
+        </Suspense>
+
+        {/* 2.15 BRAND FILM — AUDIO-SYNCHRONIZED STORY */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <BrandAudioStory />
         </Suspense>
 
         {/* 2.25 HERO PRODUCT SPOTLIGHT — PRAJYOT CONSTRUCTION HRMS */}

@@ -119,32 +119,34 @@ export default function AuroraHero() {
           transition={{ delay: 0.42, duration: 0.6 }}
           className="mt-7 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center w-full max-w-md sm:max-w-none mx-auto"
         >
-          {/* Primary */}
-          <button
-            type="button"
-            onClick={() =>
-              openLeadModal({
-                source: "Hero Section - Book Discovery Call",
-                title: "Book Technical Discovery Call",
-                subtitle: "Schedule a 15-min project scoping session with Prajyot Infotech.",
-                projectType: "Website / Web App Development",
-              })
-            }
-            className="w-full sm:w-auto group px-6 py-3.5 sm:px-7 sm:py-3.5 rounded-full bg-navy-800 text-white font-semibold shadow-md shadow-navy-900/20 transition-all duration-300 hover:bg-navy-700 hover:shadow-lg hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 flex items-center justify-center gap-2 cursor-pointer text-sm sm:text-base whitespace-nowrap"
-          >
-            Book Call
-            <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
+          <div className="flex flex-row w-full sm:w-auto gap-2 sm:gap-4">
+            {/* Primary */}
+            <button
+              type="button"
+              onClick={() =>
+                openLeadModal({
+                  source: "Hero Section - Book Discovery Call",
+                  title: "Book Technical Discovery Call",
+                  subtitle: "Schedule a 15-min project scoping session with Prajyot Infotech.",
+                  projectType: "Website / Web App Development",
+                })
+              }
+              className="flex-1 sm:flex-none group px-3 py-3.5 sm:px-7 sm:py-3.5 rounded-full bg-navy-800 text-white font-semibold shadow-md shadow-navy-900/20 transition-all duration-300 hover:bg-navy-700 hover:shadow-lg hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer text-[13px] sm:text-base whitespace-nowrap"
+            >
+              Book Call
+              <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
 
-          {/* Secondary — brand gradient */}
-          <Link
-            to="/estimate"
-            className="w-full sm:w-auto px-6 py-3.5 sm:px-7 sm:py-3.5 rounded-full bg-gradient-to-r from-brand-600 to-brand-700 text-white font-semibold shadow-md shadow-brand-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-brand-500/25 hover:scale-[1.02] focus:outline-none text-sm sm:text-base flex items-center justify-center gap-2 whitespace-nowrap"
-          >
-            Estimate Cost
-          </Link>
+            {/* Secondary — brand gradient */}
+            <Link
+              to="/estimate"
+              className="flex-1 sm:flex-none px-3 py-3.5 sm:px-7 sm:py-3.5 rounded-full bg-gradient-to-r from-brand-600 to-brand-700 text-white font-semibold shadow-md shadow-brand-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-brand-500/25 hover:scale-[1.02] focus:outline-none text-[13px] sm:text-base flex items-center justify-center gap-2 whitespace-nowrap"
+            >
+              Estimate Cost
+            </Link>
+          </div>
 
           {/* Ghost */}
           <Link

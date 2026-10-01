@@ -22,6 +22,11 @@ const TechGlossary = lazy(() => import("./pages/TechGlossary.jsx"));
 const Careers = lazy(() => import("./pages/Careers.jsx"));
 const CareerManager = lazy(() => import("./pages/CareerManager.jsx"));
 const ConstructionHrmsPage = lazy(() => import("./pages/ConstructionHrmsPage.jsx"));
+const HrmsStoryPage = lazy(() => import("./pages/hrms/HrmsStoryPage.jsx"));
+const HrmsFeaturesPage = lazy(() => import("./pages/hrms/HrmsFeaturesPage.jsx"));
+const HrmsConstructionPage = lazy(() => import("./pages/hrms/HrmsConstructionPage.jsx"));
+const HrmsPricingPage = lazy(() => import("./pages/hrms/HrmsPricingPage.jsx"));
+const HrmsResourcesPage = lazy(() => import("./pages/hrms/HrmsResourcesPage.jsx"));
 const SiteVisitsPage = lazy(() => import("./pages/SiteVisitsPage.jsx"));
 const OibuzLandingPage = lazy(() => import("./pages/OibuzLandingPage.jsx"));
 
@@ -64,7 +69,7 @@ export default function App() {
 
   const location = useLocation();
   // Pages with their own dedicated navbar — hide global Nav on these
-  const hideGlobalNav = ["/products/hrms", "/oibuz"].includes(location.pathname);
+  const hideGlobalNav = location.pathname.startsWith("/products/hrms") || location.pathname === "/oibuz";
 
   return (
     <LeadModalProvider>
@@ -84,6 +89,11 @@ export default function App() {
               <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
               <Route path="/estimate" element={<PageWrapper><Estimate /></PageWrapper>} />
               <Route path="/products/hrms" element={<PageWrapper><ConstructionHrmsPage /></PageWrapper>} />
+              <Route path="/products/hrms/story" element={<PageWrapper><HrmsStoryPage /></PageWrapper>} />
+              <Route path="/products/hrms/features" element={<PageWrapper><HrmsFeaturesPage /></PageWrapper>} />
+              <Route path="/products/hrms/for-construction" element={<PageWrapper><HrmsConstructionPage /></PageWrapper>} />
+              <Route path="/products/hrms/pricing" element={<PageWrapper><HrmsPricingPage /></PageWrapper>} />
+              <Route path="/products/hrms/resources" element={<PageWrapper><HrmsResourcesPage /></PageWrapper>} />
               <Route path="/site-visits" element={<PageWrapper><SiteVisitsPage /></PageWrapper>} />
               <Route path="/oibuz" element={<PageWrapper><OibuzLandingPage /></PageWrapper>} />
 

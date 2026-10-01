@@ -62,6 +62,8 @@ import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import { createLead } from "../utils/leadStorage.js";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
 import OibuzAudioStory from "../components/OibuzAudioStory.jsx";
+import HrmsHeader from "../components/HrmsHeader.jsx";
+import HrmsFooter from "../components/HrmsFooter.jsx";
 
 const WHATSAPP_NUMBER = "917020708747";
 
@@ -87,9 +89,9 @@ const ROLE_DATA = [
     mockup: {
       screenType: "Field Worker Mobile App",
       badge: "GPS Geofence: Site #3 Metro Tower",
-      status: "Attendance Verified â€¢ 08:02 AM",
+      status: "Attendance Verified • 08:02 AM",
       metricTitle: "Accrued Wages This Month",
-      metricValue: "â‚¹18,500 (24 Shifts Logged)",
+      metricValue: "₹18,500 (24 Shifts Logged)",
       actionTitle: "Daily Task Logged",
       actionDesc: "4.5h Piling + 3.5h RCC Pouring",
     },
@@ -113,12 +115,12 @@ const ROLE_DATA = [
     ],
     mockup: {
       screenType: "Supervisor Site Tablet",
-      badge: "Live Headcount â€¢ Sector 4",
+      badge: "Live Headcount • Sector 4",
       status: "48 of 50 Workers On Site",
       metricTitle: "Gang Punch Speed",
       metricValue: "42 Workers in 38 Seconds",
       actionTitle: "Challan Pending Verification",
-      actionDesc: "200 Bags UltraTech Cement (â‚¹74,000)",
+      actionDesc: "200 Bags UltraTech Cement (₹74,000)",
     },
   },
   {
@@ -145,7 +147,7 @@ const ROLE_DATA = [
       metricTitle: "Payroll Execution Speed",
       metricValue: "45 Seconds (150 Employees)",
       actionTitle: "Automated Compliance",
-      actionDesc: "0 Duplicate Entries â€¢ PDF Payslips Ready",
+      actionDesc: "0 Duplicate Entries • PDF Payslips Ready",
     },
   },
   {
@@ -170,7 +172,7 @@ const ROLE_DATA = [
       badge: "Verified Claims Queue",
       status: "14 Invoices Cleared for Payout",
       metricTitle: "Cleared Site Reimbursements",
-      metricValue: "â‚¹1,42,800 Approved",
+      metricValue: "₹1,42,800 Approved",
       actionTitle: "Direct Bank Transfer Export",
       actionDesc: "Single Click NEFT / RTGS File Generated",
     },
@@ -182,7 +184,7 @@ const ROLE_DATA = [
     badge: "Owner & Managing Director",
     icon: ShieldCheck,
     color: "rose",
-    tagline: "Multi-Site 360Â° Radar & Tamper-Proof Audit",
+    tagline: "Multi-Site 360° Radar & Tamper-Proof Audit",
     summary:
       "Business owners get complete multi-site operational visibility, system-wide configuration control, and unalterable background audit logs.",
     capabilities: [
@@ -197,7 +199,7 @@ const ROLE_DATA = [
       badge: "6 Active Project Locations",
       status: "284 Total Labor Force Active",
       metricTitle: "Daily Workforce Burn Rate",
-      metricValue: "â‚¹1.84 Lakhs / Day Tracked",
+      metricValue: "₹1.84 Lakhs / Day Tracked",
       actionTitle: "Unalterable Audit Trail",
       actionDesc: "100% Policy Compliance Logged",
     },
@@ -332,7 +334,7 @@ const FEATURE_INVENTORY = [
   { module: "Attendance", feature: "Auto-Leave Cancellation", user: "System", what: "Automatically cancels pending leave if worker punches in on site.", purpose: "Prevents double-booking of paid time off." },
   { module: "Attendance", feature: "Correction Workflow", user: "Employee, Mgr, HR", what: "Submit fix request for missed punch-outs with supervisor sign-off.", purpose: "Maintains clean muster without penalizing honest workers." },
   { module: "Leaves", feature: "Live Balance Tracking", user: "All Staff, HR", what: "Tracks accrued vs. used paid leave balances automatically.", purpose: "Eliminates Excel spreadsheets for leave tracking." },
-  { module: "Leaves", feature: "Multi-Tier Approvals", user: "Manager, HR", what: "Sequential approval chain (Manager â†’ HR) with audit logging.", purpose: "Balances site operational needs with HR policy compliance." },
+  { module: "Leaves", feature: "Multi-Tier Approvals", user: "Manager, HR", what: "Sequential approval chain (Manager → HR) with audit logging.", purpose: "Balances site operational needs with HR policy compliance." },
   { module: "Timesheets", feature: "Project Labor Logging", user: "Employee, Mgr", what: "Logs daily hours against specific construction projects & tasks.", purpose: "Accurate labor cost tracking per sq. ft." },
   { module: "Reimbursements", feature: "Geotagged Photo Receipts", user: "Employee, Finance", what: "Upload challan receipt photos with timestamp & GPS coordinates.", purpose: "Permanent digital proof; stops lost paper bills." },
   { module: "Payroll", feature: "1-Click Calculation Run", user: "HR, Admin", what: "Aggregates base pay, attendance, shifts, advances & deductions.", purpose: "Cuts payroll processing from 4 days to 45 seconds." },
@@ -345,35 +347,35 @@ const FEATURE_INVENTORY = [
 // Real Construction Case Study Timeline (Section 9 of Spec)
 const CASE_STUDY_STEPS = [
   {
-    time: "08:00 AM â€¢ Morning Gate Check",
+    time: "08:00 AM • Morning Gate Check",
     title: "Face-Scan Site Arrival & Geofence Lock",
     desc: "Workers arrive across Site A, B, and C. They open Oibuz or stand before the supervisor's phone. AI matches facial geometry and GPS locks physical presence.",
     icon: ScanFace,
     tag: "3D Face Verified",
   },
   {
-    time: "11:30 AM â€¢ Site Procurement",
+    time: "11:30 AM • Site Procurement",
     title: "Emergency Cement Purchase with Photo Challan",
     desc: "Supervisor buys 200 bags of emergency cement. He snaps a photo of the bill with GPS metadata. The claim instantly routes to HR and Finance for clearance.",
     icon: Receipt,
     tag: "GPS Tagged Bill",
   },
   {
-    time: "02:15 PM â€¢ Mid-Day Smart Sync",
+    time: "02:15 PM • Mid-Day Smart Sync",
     title: "Automatic Leave Cancellation on Physical Punch",
     desc: "Worker originally requested medical leave but arrived on site to work. Oibuz automatically cancels the pending leave and logs regular daily wages.",
     icon: CheckCircle2,
     tag: "Zero Human Error",
   },
   {
-    time: "05:00 PM â€¢ Shift Handover",
+    time: "05:00 PM • Shift Handover",
     title: "Labor Hours Tagged to Project Timesheets",
     desc: "Workers distribute 8 hours between 'Basement Piling' and 'Wing B Slab'. Site manager validates hour allocation with 1 tap for exact sq. ft. cost audits.",
     icon: Clock,
     tag: "Cost Verified",
   },
   {
-    time: "Month-End â€¢ HQ Finance Run",
+    time: "Month-End • HQ Finance Run",
     title: "1-Click Biometric Payroll & PDF Slips",
     desc: "HR initiates payroll run in 45 seconds. Oibuz factors daily wages, piece-rate, advances, and verified expense claims. Standardized PDF slips arrive on workers' phones.",
     icon: FileSpreadsheet,
@@ -385,12 +387,12 @@ const CASE_STUDY_STEPS = [
 const TESTIMONIALS = [
   {
     quote:
-      "Oibuz eliminated ghost workers across our 4 flyover projects. We saved over â‚¹2.2 Lakhs in the very first month by stopping buddy punching.",
+      "Oibuz eliminated ghost workers across our 4 flyover projects. We saved over ₹2.2 Lakhs in the very first month by stopping buddy punching.",
     name: "Vikramaditya Shinde",
     role: "Managing Director",
     company: "Apex Infra Developers",
     location: "Pune, Maharashtra",
-    metrics: "â‚¹2.2L Saved / Month",
+    metrics: "₹2.2L Saved / Month",
   },
   {
     quote:
@@ -399,7 +401,7 @@ const TESTIMONIALS = [
     role: "Chief Operations Officer",
     company: "Metro Urban Constructions",
     location: "Navi Mumbai",
-    metrics: "4 Days â†’ 10 Mins",
+    metrics: "4 Days → 10 Mins",
   },
   {
     quote:
@@ -578,108 +580,14 @@ export default function ConstructionHrmsPage() {
         ]}
       />
 
-      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-          OIBUZ HERO â€” Reference Image Faithful Rebuild
-          â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      {/* ===========================================================
+          OIBUZ HERO — Reference Image Faithful Rebuild
+          =========================================================== */}
 
-      {/* â”€â”€ NAVBAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm">
-        <div className="container mx-auto px-4 sm:px-6 max-w-7xl flex items-center justify-between h-16">
-          {/* Logo */}
-          <a href="/" className="flex items-center gap-2 shrink-0">
-            <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-9 w-auto object-contain" />
-          </a>
+      {/* ── NAVBAR ────────────────────────────────────────── */}
+      <HrmsHeader />
 
-          {/* Nav */}
-          <nav className="hidden lg:flex items-center gap-0.5">
-            {[
-              { label: "Platform", href: "#platform" },
-              { label: "Product Story", href: "#product-story" },
-              { label: "Features", href: "#features" },
-              { label: "For Construction", href: "#for-construction" },
-              { label: "Pricing", href: "#pricing" },
-              { label: "Resources", href: "#resources" }
-            ].map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="px-3.5 py-2 text-sm font-medium text-slate-600 hover:text-blue-700 hover:bg-blue-50/70 rounded-lg transition-all"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Right CTAs */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            <a href="/" className="hidden sm:inline-flex text-xs font-semibold text-slate-600 hover:text-blue-700 px-3 py-2 rounded-lg transition-all border border-slate-200">
-              ← Prajyot Infotech Home
-            </a>
-            <a
-              href="#demo-form"
-              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-semibold text-xs sm:text-sm shadow-md shadow-blue-700/20 transition-all hover:-translate-y-px"
-            >
-              Book a Demo <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
-            </a>
-            {/* Mobile menu toggle */}
-            <button
-              type="button"
-              onClick={() => setMobileNavOpen(!mobileNavOpen)}
-              className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-blue-700 hover:bg-slate-100 focus:outline-none"
-              aria-label="Toggle menu"
-            >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {mobileNavOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile menu sheet */}
-        <AnimatePresence>
-          {mobileNavOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden bg-white border-b border-slate-200 overflow-hidden px-4 py-4 space-y-3"
-            >
-              <div className="flex flex-col space-y-2">
-                {[
-                  { label: "Platform", href: "#platform" },
-                  { label: "Product Story", href: "#product-story" },
-                  { label: "Features", href: "#features" },
-                  { label: "For Construction", href: "#for-construction" },
-                  { label: "Pricing", href: "#pricing" },
-                  { label: "Resources", href: "#resources" }
-                ].map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setMobileNavOpen(false)}
-                    className="px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-lg"
-                  >
-                    {item.label}
-                  </a>
-                ))}
-                <a
-                  href="/"
-                  className="px-3 py-2 text-sm font-semibold text-blue-700 bg-blue-50 rounded-lg flex items-center justify-between"
-                >
-                  <span>Prajyot Infotech Official Site</span>
-                  <span>→</span>
-                </a>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
-
-      {/* â”€â”€ HERO BODY â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* -€-€ HERO BODY -€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€ */}
       <section className="relative overflow-hidden bg-white" style={{ minHeight: "700px" }}>
 
         {/* -- CONSTRUCTION BACKGROUND: obiz_background.png --------------- */}
@@ -710,11 +618,11 @@ export default function ConstructionHrmsPage() {
         {/* Bottom fade -- blends hero into next section */}
         <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white/60 to-transparent" />
 
-        {/* â”€â”€ CONTENT GRID â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* -€-€ CONTENT GRID -€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€ */}
         <div className="relative z-10 container mx-auto px-4 sm:px-6 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 items-center gap-8 lg:gap-4 pt-12 pb-16 lg:pt-14 lg:pb-18">
 
-            {/* â”€â”€ LEFT COL (42%) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* -€-€ LEFT COL (42%) -€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€ */}
             <div className="lg:col-span-5 flex flex-col gap-6">
 
               {/* Eyebrow */}
@@ -746,7 +654,7 @@ export default function ConstructionHrmsPage() {
                 transition={{ delay: 0.14, duration: 0.4 }}
                 className="text-slate-500 text-[1rem] leading-[1.7] max-w-[500px]"
               >
-                Manage attendance, leave, timesheets, expenses and payroll across your workforce â€” from one connected platform.
+                Manage attendance, leave, timesheets, expenses and payroll across your workforce — from one connected platform.
               </motion.p>
 
               {/* CTA buttons */}
@@ -754,21 +662,21 @@ export default function ConstructionHrmsPage() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.21, duration: 0.4 }}
-                className="flex flex-col sm:flex-row gap-3"
+                className="flex flex-row w-full sm:w-auto gap-2 sm:gap-3"
               >
                 <a
                   href="#demo-form"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-sm shadow-lg shadow-blue-700/25 transition-all hover:-translate-y-0.5"
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-6 py-3.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-[13px] sm:text-sm shadow-lg shadow-blue-700/25 transition-all hover:-translate-y-0.5 whitespace-nowrap"
                 >
                   Book a Demo
-                  <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
                 </a>
                 <a
                   href="#features"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-sm transition-all"
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-6 py-3.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-[13px] sm:text-sm transition-all whitespace-nowrap"
                 >
-                  <span className="w-5 h-5 rounded-full border-[1.5px] border-slate-400 flex items-center justify-center shrink-0">
-                    <span className="w-0 h-0 border-t-[3.5px] border-t-transparent border-b-[3.5px] border-b-transparent border-l-[6px] border-l-slate-500 ml-0.5" />
+                  <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border-[1.5px] border-slate-400 flex items-center justify-center shrink-0">
+                    <span className="w-0 h-0 border-t-[3px] sm:border-t-[3.5px] border-t-transparent border-b-[3px] sm:border-b-[3.5px] border-b-transparent border-l-[5px] sm:border-l-[6px] border-l-slate-500 ml-0.5" />
                   </span>
                   Explore Platform
                 </a>
@@ -799,7 +707,7 @@ export default function ConstructionHrmsPage() {
               </motion.div>
             </div>
 
-            {/* â”€â”€ RIGHT COL (58%) â€” Dashboard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* -€-€ RIGHT COL (58%) — Dashboard -€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€ */}
             <div className="lg:col-span-7 relative flex items-center justify-center lg:justify-end">
               <motion.div
                 initial={{ opacity: 0, x: 30, y: 10 }}
@@ -810,7 +718,7 @@ export default function ConstructionHrmsPage() {
                 {/* Radial blue glow */}
                 <div className="absolute -inset-4 rounded-3xl bg-blue-600/10 blur-2xl" />
 
-                {/* â”€â”€ DASHBOARD SHELL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+                {/* -€-€ DASHBOARD SHELL -€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€ */}
                 <div className="relative bg-white rounded-2xl shadow-2xl shadow-slate-400/30 border border-slate-200 overflow-hidden">
 
                   {/* Top-bar */}
@@ -818,7 +726,7 @@ export default function ConstructionHrmsPage() {
                     <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-6 w-auto object-contain" />
                     <div className="flex items-center gap-1.5">
                       <div className="relative w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center">
-                        <span className="text-[11px]">ðŸ””</span>
+                        <span className="text-[11px]">🔔</span>
                         <span className="absolute top-0.5 right-0.5 w-2 h-2 rounded-full bg-rose-500 border border-white" />
                       </div>
                       <div className="w-7 h-7 rounded-full bg-blue-700 flex items-center justify-center">
@@ -939,9 +847,9 @@ export default function ConstructionHrmsPage() {
                           </div>
                           <div className="space-y-1.5">
                             {[
-                              { dot: "bg-emerald-500", title: "Rahul punched in", sub: "Site A Â· 08:02 AM", time: "5m ago" },
-                              { dot: "bg-blue-500", title: "Leave approved", sub: "Amit Sharma Â· 2 days", time: "23m ago" },
-                              { dot: "bg-amber-500", title: "Expense submitted", sub: "Site B Â· â‚¹4,850", time: "1h ago" },
+                              { dot: "bg-emerald-500", title: "Rahul punched in", sub: "Site A · 08:02 AM", time: "5m ago" },
+                              { dot: "bg-blue-500", title: "Leave approved", sub: "Amit Sharma · 2 days", time: "23m ago" },
+                              { dot: "bg-amber-500", title: "Expense submitted", sub: "Site B · ₹4,850", time: "1h ago" },
                               { dot: "bg-purple-500", title: "Timesheet approved", sub: "Site C", time: "2h ago" },
                             ].map(({ dot, title, sub, time }) => (
                               <div key={title} className="flex items-center gap-1.5">
@@ -967,7 +875,7 @@ export default function ConstructionHrmsPage() {
         </div>
       </section>
 
-      {/* â”€â”€ AUDIENCE STRIP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* -€-€ AUDIENCE STRIP -€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€-€ */}
       <section className="py-10 bg-white border-y border-slate-100">
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
           <p className="text-center text-[10.5px] uppercase tracking-[0.2em] font-bold text-slate-400 mb-7">
@@ -995,15 +903,17 @@ export default function ConstructionHrmsPage() {
       </section>
 
       {/* ─── AUDIO-SYNCHRONIZED CINEMATIC PRODUCT STORY ───────────────────────── */}
-      <OibuzAudioStory
-        onDemoClick={() => document.getElementById("demo-form")?.scrollIntoView({ behavior: "smooth" })}
-      />
+      <div id="product-story" className="scroll-mt-20">
+        <OibuzAudioStory
+          onDemoClick={() => document.getElementById("demo-form")?.scrollIntoView({ behavior: "smooth" })}
+        />
+      </div>
 
 
 
 
       {/* ================================================================
-          SECTION 02 â€” THE PROBLEM
+          SECTION 02 ── THE PROBLEM
           ================================================================ */}
       <section className="py-20 md:py-28 bg-white">
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
@@ -1017,15 +927,15 @@ export default function ConstructionHrmsPage() {
             </p>
           </div>
 
-          {/* Problem â†’ Solution visual transition */}
+          {/* Problem ── Solution visual transition */}
           <div className="flex flex-wrap items-center justify-center gap-2 mb-12 text-xs font-semibold">
             {["Paper Registers", "WhatsApp Groups", "Excel Sheets", "Manual Processes"].map((item, i) => (
               <React.Fragment key={item}>
                 <span className="px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-slate-600">{item}</span>
-                {i < 3 && <span className="text-slate-300 text-base">â†’</span>}
+                {i < 3 && <span className="text-slate-300 text-base">──</span>}
               </React.Fragment>
             ))}
-            <span className="text-slate-300 text-base">â†’</span>
+            <span className="text-slate-300 text-base">──</span>
             <span className="px-4 py-1.5 rounded-lg bg-blue-700 text-white font-bold">Oibuz</span>
           </div>
 
@@ -1049,9 +959,9 @@ export default function ConstructionHrmsPage() {
       </section>
 
       {/* ================================================================
-          SECTION 03 â€” ONE PLATFORM / CORE MODULES
+          SECTION 03 ── ONE PLATFORM / CORE MODULES
           ================================================================ */}
-      <section id="features" className="py-20 md:py-28 bg-[#f0f4ff]">
+      <section id="platform" className="py-20 md:py-28 bg-[#f0f4ff] scroll-mt-20">
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <p className="text-blue-700 font-bold text-xs tracking-widest uppercase mb-4">The Platform</p>
@@ -1063,7 +973,7 @@ export default function ConstructionHrmsPage() {
             </p>
           </div>
 
-          {/* Primary modules grid â€” varied sizes for visual hierarchy */}
+          {/* Primary modules grid — varied sizes for visual hierarchy */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {/* Large feature: Employee Management */}
             <div className="col-span-2 bg-white rounded-2xl border border-blue-100 p-6 shadow-sm flex gap-5 items-start">
@@ -1108,9 +1018,9 @@ export default function ConstructionHrmsPage() {
       </section>
 
       {/* ================================================================
-          SECTION 04 â€” BUILT FOR CONSTRUCTION
+          SECTION 04 ── BUILT FOR CONSTRUCTION
           ================================================================ */}
-      <section className="py-20 md:py-28 bg-white relative overflow-hidden">
+      <section id="for-construction" className="py-20 md:py-28 bg-white relative overflow-hidden scroll-mt-20">
         {/* Subtle construction background */}
         <div
           className="absolute inset-0 bg-cover bg-center opacity-[0.05]"
@@ -1175,7 +1085,7 @@ export default function ConstructionHrmsPage() {
                     <Icon className="w-4 h-4 text-blue-700" />
                     <span className="text-sm font-semibold text-slate-800">{label}</span>
                   </div>
-                  {i < 3 && <div className="flex items-center text-slate-300 text-lg">â†’</div>}
+                  {i < 3 && <div className="flex items-center text-slate-300 text-lg">──</div>}
                 </React.Fragment>
               ))}
             </div>
@@ -1184,9 +1094,9 @@ export default function ConstructionHrmsPage() {
       </section>
 
       {/* ================================================================
-          SECTION 05 â€” PRODUCT SHOWCASE (Tabbed)
+          SECTION 05 ── PRODUCT SHOWCASE (Tabbed)
           ================================================================ */}
-      <section className="py-20 md:py-28 bg-[#0f172a]">
+      <section id="features" className="py-20 md:py-28 bg-[#0f172a] scroll-mt-20">
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <p className="text-blue-400 font-bold text-xs tracking-widest uppercase mb-4">Product Showcase</p>
@@ -1212,7 +1122,7 @@ export default function ConstructionHrmsPage() {
             ))}
           </div>
 
-          {/* Tab content â€” realistic UI panels */}
+          {/* Tab content — realistic UI panels */}
           <div className="bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-700">
             {/* Inner topbar */}
             <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100 bg-white">
@@ -1280,7 +1190,7 @@ export default function ConstructionHrmsPage() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="bg-white rounded-xl p-4 border border-slate-100 shadow-sm">
-                        <p className="text-sm font-bold text-slate-800 mb-3">Workforce Attendance â€” This Week</p>
+                        <p className="text-sm font-bold text-slate-800 mb-3">Workforce Attendance — This Week</p>
                         <div className="flex items-end gap-2 h-24">
                           {[85, 90, 75, 88, 92, 60].map((v, i) => (
                             <div key={i} className="flex-1 flex flex-col gap-0.5 items-center justify-end h-full">
@@ -1293,13 +1203,13 @@ export default function ConstructionHrmsPage() {
                       <div className="bg-white rounded-xl p-4 border border-slate-100 shadow-sm">
                         <div className="flex items-center justify-between mb-3">
                           <p className="text-sm font-bold text-slate-800">Recent Activity</p>
-                          <span className="text-xs text-blue-600">View All â†’</span>
+                          <span className="text-xs text-blue-600">View All →</span>
                         </div>
                         {[
-                          { icon: "ðŸŸ¢", text: "Rahul punched in", sub: "Site A Â· 08:02 AM" },
-                          { icon: "ðŸ“…", text: "Leave approved", sub: "Amit Sharma Â· 2 days" },
-                          { icon: "ðŸ§¾", text: "Expense submitted", sub: "Site B Â· â‚¹4,850" },
-                          { icon: "âœ…", text: "Timesheet approved", sub: "Site C" },
+                          { icon: "🟢", text: "Rahul punched in", sub: "Site A · 08:02 AM" },
+                          { icon: "📅", text: "Leave approved", sub: "Amit Sharma · 2 days" },
+                          { icon: "📄", text: "Expense submitted", sub: "Site B · ₹4,850" },
+                          { icon: "✓", text: "Timesheet approved", sub: "Site C" },
                         ].map(({ icon, text, sub }) => (
                           <div key={text} className="flex items-center gap-2 py-1.5 border-b border-slate-50 last:border-0">
                             <span className="text-sm">{icon}</span>
@@ -1333,9 +1243,9 @@ export default function ConstructionHrmsPage() {
                       {[
                         { name: "Rahul Sharma", role: "Field Worker", time: "08:02 AM", status: "Present", site: "Site A", color: "bg-emerald-100 text-emerald-700" },
                         { name: "Amit Patel", role: "Supervisor", time: "08:15 AM", status: "Present", site: "Site B", color: "bg-emerald-100 text-emerald-700" },
-                        { name: "Suresh Kumar", role: "Engineer", time: "â€”", status: "On Leave", site: "Site C", color: "bg-amber-100 text-amber-700" },
+                        { name: "Suresh Kumar", role: "Engineer", time: "—", status: "On Leave", site: "Site C", color: "bg-amber-100 text-amber-700" },
                         { name: "Priya Nair", role: "HR Executive", time: "09:00 AM", status: "Present", site: "HQ", color: "bg-emerald-100 text-emerald-700" },
-                        { name: "Ravi Desai", role: "Field Worker", time: "â€”", status: "Absent", site: "Site A", color: "bg-red-100 text-red-600" },
+                        { name: "Ravi Desai", role: "Field Worker", time: "—", status: "Absent", site: "Site A", color: "bg-red-100 text-red-600" },
                       ].map(({ name, role, time, status, site, color }) => (
                         <div key={name} className="grid grid-cols-5 gap-0 px-4 py-3 border-b border-slate-50 last:border-0 items-center">
                           <div className="col-span-2 flex items-center gap-2">
@@ -1370,9 +1280,9 @@ export default function ConstructionHrmsPage() {
                         <span>Action</span>
                       </div>
                       {[
-                        { name: "Vikram Singh", leave: "Sick Leave", dates: "Dec 5â€“6 (2d)", status: "Pending Manager", action: true },
+                        { name: "Vikram Singh", leave: "Sick Leave", dates: "Dec 5–6 (2d)", status: "Pending Manager", action: true },
                         { name: "Meera Joshi", leave: "Casual Leave", dates: "Dec 3 (1d)", status: "Approved", action: false },
-                        { name: "Rakesh Gupta", leave: "Earned Leave", dates: "Dec 8â€“10 (3d)", status: "Pending HR", action: false },
+                        { name: "Rakesh Gupta", leave: "Earned Leave", dates: "Dec 8–10 (3d)", status: "Pending HR", action: false },
                         { name: "Sunita Patil", leave: "Sick Leave", dates: "Nov 28 (1d)", status: "Approved", action: false },
                       ].map(({ name, leave, dates, status, action }) => (
                         <div key={name} className="grid grid-cols-5 px-4 py-3 border-b border-slate-50 last:border-0 items-center">
@@ -1387,7 +1297,7 @@ export default function ConstructionHrmsPage() {
                           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full w-fit ${status === "Approved" ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"}`}>{status}</span>
                           {action
                             ? <div className="flex gap-1"><button className="text-[10px] bg-blue-600 text-white px-2 py-1 rounded font-semibold">Approve</button><button className="text-[10px] bg-slate-100 text-slate-600 px-2 py-1 rounded font-semibold">Decline</button></div>
-                            : <span className="text-[10px] text-slate-400">â€”</span>
+                            : <span className="text-[10px] text-slate-400">—</span>
                           }
                         </div>
                       ))}
@@ -1397,7 +1307,7 @@ export default function ConstructionHrmsPage() {
 
                 {activeTab === "Timesheets" && (
                   <div className="space-y-4">
-                    <h3 className="text-base font-bold text-slate-900">Timesheets â€” This Week</h3>
+                    <h3 className="text-base font-bold text-slate-900">Timesheets — This Week</h3>
                     <div className="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
                       <div className="grid grid-cols-4 px-4 py-2 bg-slate-50 border-b border-slate-100 text-[11px] font-bold text-slate-500 uppercase tracking-wide">
                         <span className="col-span-2">Employee / Project</span>
@@ -1405,10 +1315,10 @@ export default function ConstructionHrmsPage() {
                         <span>Status</span>
                       </div>
                       {[
-                        { name: "Suresh Kumar", project: "Wing B â€” RCC Slab", hours: "40h", status: "Submitted" },
-                        { name: "Rahul Sharma", project: "Foundation â€” Basement", hours: "36h", status: "Approved" },
-                        { name: "Anita Das", project: "Site C â€” Electrical", hours: "38h", status: "Pending" },
-                        { name: "Mohan Reddy", project: "Wing A â€” Plastering", hours: "42h", status: "Approved" },
+                        { name: "Suresh Kumar", project: "Wing B — RCC Slab", hours: "40h", status: "Submitted" },
+                        { name: "Rahul Sharma", project: "Foundation — Basement", hours: "36h", status: "Approved" },
+                        { name: "Anita Das", project: "Site C — Electrical", hours: "38h", status: "Pending" },
+                        { name: "Mohan Reddy", project: "Wing A — Plastering", hours: "42h", status: "Approved" },
                       ].map(({ name, project, hours, status }) => (
                         <div key={name} className="grid grid-cols-4 px-4 py-3 border-b border-slate-50 last:border-0 items-center">
                           <div className="col-span-2">
@@ -1434,10 +1344,10 @@ export default function ConstructionHrmsPage() {
                         <span>Status</span>
                       </div>
                       {[
-                        { name: "Amit Patel", cat: "Site Materials", amount: "â‚¹4,850", stage: "Manager", status: "Pending" },
-                        { name: "Vikram Singh", cat: "Travel", amount: "â‚¹1,200", stage: "HR", status: "In Review" },
-                        { name: "Priya Nair", cat: "Office Supplies", amount: "â‚¹680", stage: "Finance", status: "Approved" },
-                        { name: "Ravi Desai", cat: "Site Equipment", amount: "â‚¹8,400", stage: "Finance", status: "Approved" },
+                        { name: "Amit Patel", cat: "Site Materials", amount: "₹4,850", stage: "Manager", status: "Pending" },
+                        { name: "Vikram Singh", cat: "Travel", amount: "₹1,200", stage: "HR", status: "In Review" },
+                        { name: "Priya Nair", cat: "Office Supplies", amount: "₹680", stage: "Finance", status: "Approved" },
+                        { name: "Ravi Desai", cat: "Site Equipment", amount: "₹8,400", stage: "Finance", status: "Approved" },
                       ].map(({ name, cat, amount, stage, status }) => (
                         <div key={name} className="grid grid-cols-5 px-4 py-3 border-b border-slate-50 last:border-0 items-center">
                           <div className="col-span-2">
@@ -1457,7 +1367,7 @@ export default function ConstructionHrmsPage() {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="text-base font-bold text-slate-900">Payroll â€” November 2024</h3>
+                        <h3 className="text-base font-bold text-slate-900">Payroll — November 2024</h3>
                         <p className="text-xs text-slate-500">Generated from attendance and approved leave data</p>
                       </div>
                       <span className="text-[10px] bg-emerald-100 text-emerald-700 font-bold px-3 py-1 rounded-full">Processing</span>
@@ -1470,10 +1380,10 @@ export default function ConstructionHrmsPage() {
                         <span>Net</span>
                       </div>
                       {[
-                        { name: "Rahul Sharma", role: "Field Worker", gross: "â‚¹22,000", ded: "â‚¹2,100", net: "â‚¹19,900" },
-                        { name: "Priya Nair", role: "HR Executive", gross: "â‚¹38,000", ded: "â‚¹3,800", net: "â‚¹34,200" },
-                        { name: "Amit Patel", role: "Supervisor", gross: "â‚¹30,000", ded: "â‚¹3,000", net: "â‚¹27,000" },
-                        { name: "Suresh Kumar", role: "Engineer", gross: "â‚¹45,000", ded: "â‚¹4,500", net: "â‚¹40,500" },
+                        { name: "Rahul Sharma", role: "Field Worker", gross: "₹22,000", ded: "₹2,100", net: "₹19,900" },
+                        { name: "Priya Nair", role: "HR Executive", gross: "₹38,000", ded: "₹3,800", net: "₹34,200" },
+                        { name: "Amit Patel", role: "Supervisor", gross: "₹30,000", ded: "₹3,000", net: "₹27,000" },
+                        { name: "Suresh Kumar", role: "Engineer", gross: "₹45,000", ded: "₹4,500", net: "₹40,500" },
                       ].map(({ name, role, gross, ded, net }) => (
                         <div key={name} className="grid grid-cols-5 px-4 py-3 border-b border-slate-50 last:border-0 items-center">
                           <div className="col-span-2">
@@ -1498,7 +1408,7 @@ export default function ConstructionHrmsPage() {
       </section>
 
       {/* ================================================================
-          SECTION 06 â€” HOW OIBUZ WORKS
+          SECTION 06 — HOW OIBUZ WORKS
           ================================================================ */}
       <section className="py-20 md:py-28 bg-white">
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
@@ -1534,7 +1444,7 @@ export default function ConstructionHrmsPage() {
             {["Employee", "Manager", "HR", "Finance", "Admin / Business Owner"].map((r, i) => (
               <React.Fragment key={r}>
                 <span className={`px-3 py-1.5 rounded-lg border ${i === 0 ? "bg-blue-50 border-blue-200 text-blue-800" : "bg-white border-slate-200 text-slate-700"}`}>{r}</span>
-                {i < 4 && <span className="text-blue-300">â†’</span>}
+                {i < 4 && <span className="text-blue-300">→</span>}
               </React.Fragment>
             ))}
           </div>
@@ -1542,7 +1452,7 @@ export default function ConstructionHrmsPage() {
       </section>
 
       {/* ================================================================
-          SECTION 07 â€” ONE PLATFORM. EVERY ROLE.
+          SECTION 07 — ONE PLATFORM. EVERY ROLE.
           ================================================================ */}
       <section className="py-20 md:py-28 bg-[#f0f4ff]">
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
@@ -1594,7 +1504,7 @@ export default function ConstructionHrmsPage() {
       </section>
 
       {/* ================================================================
-          SECTION 08 â€” FEATURE SPOTLIGHTS (Alternating)
+          SECTION 08 — FEATURE SPOTLIGHTS (Alternating)
           ================================================================ */}
       {[
         {
@@ -1617,7 +1527,7 @@ export default function ConstructionHrmsPage() {
                   </div>
                   <div>
                     <p className="text-xs font-bold text-slate-900">Punch Recorded</p>
-                    <p className="text-[11px] text-slate-500">Rahul Sharma Â· Site A Â· 08:02 AM</p>
+                    <p className="text-[11px] text-slate-500">Rahul Sharma · Site A · 08:02 AM</p>
                     <p className="text-[10px] text-slate-400 mt-0.5">Location captured at punch in</p>
                   </div>
                 </div>
@@ -1636,7 +1546,7 @@ export default function ConstructionHrmsPage() {
                   </div>
                   <div>
                     <p className="text-xs font-bold text-slate-900">Correction Request</p>
-                    <p className="text-[11px] text-slate-500">Suresh Kumar Â· Missed punch-out Â· Pending</p>
+                    <p className="text-[11px] text-slate-500">Suresh Kumar · Missed punch-out · Pending</p>
                   </div>
                 </div>
               </div>
@@ -1652,11 +1562,11 @@ export default function ConstructionHrmsPage() {
           bg: "bg-[#f0f4ff]",
           panel: (
             <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm p-5 space-y-3">
-              <p className="text-xs font-bold text-slate-800 mb-2">Leave Request â€” Vikram Singh</p>
+              <p className="text-xs font-bold text-slate-800 mb-2">Leave Request — Vikram Singh</p>
               {[
-                { label: "Submitted", desc: "Dec 5 Â· Sick Leave Â· 2 days", done: true },
-                { label: "Manager Review", desc: "Amit Patel â€” Approved", done: true },
-                { label: "HR Review", desc: "Priya Nair â€” Approved", done: true },
+                { label: "Submitted", desc: "Dec 5 · Sick Leave · 2 days", done: true },
+                { label: "Manager Review", desc: "Amit Patel — Approved", done: true },
+                { label: "HR Review", desc: "Priya Nair — Approved", done: true },
                 { label: "Completed", desc: "Leave reflected in attendance", done: true },
               ].map(({ label, desc, done }, i) => (
                 <div key={label} className="flex items-start gap-3">
@@ -1682,13 +1592,13 @@ export default function ConstructionHrmsPage() {
           panel: (
             <div className="bg-[#f8fafc] rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
               <div className="bg-[#0f172a] px-4 py-3">
-                <span className="text-xs text-slate-300 font-semibold">Payroll â€” November 2024</span>
+                <span className="text-xs text-slate-300 font-semibold">Payroll — November 2024</span>
               </div>
               <div className="p-4 space-y-2">
                 {[
-                  { name: "Rahul Sharma", gross: "â‚¹22,000", net: "â‚¹19,900", status: "Ready" },
-                  { name: "Priya Nair", gross: "â‚¹38,000", net: "â‚¹34,200", status: "Ready" },
-                  { name: "Amit Patel", gross: "â‚¹30,000", net: "â‚¹27,000", status: "Ready" },
+                  { name: "Rahul Sharma", gross: "₹22,000", net: "₹19,900", status: "Ready" },
+                  { name: "Priya Nair", gross: "₹38,000", net: "₹34,200", status: "Ready" },
+                  { name: "Amit Patel", gross: "₹30,000", net: "₹27,000", status: "Ready" },
                 ].map(({ name, gross, net, status }) => (
                   <div key={name} className="bg-white rounded-xl border border-slate-100 px-4 py-3 flex items-center justify-between shadow-sm">
                     <div>
@@ -1715,7 +1625,7 @@ export default function ConstructionHrmsPage() {
           bg: "bg-[#f0f4ff]",
           panel: (
             <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm p-5 space-y-3">
-              <p className="text-xs font-bold text-slate-800">Admin Dashboard â€” Overview</p>
+              <p className="text-xs font-bold text-slate-800">Admin Dashboard — Overview</p>
               <div className="grid grid-cols-2 gap-2">
                 {[
                   { label: "Attendance Today", value: "231 / 248", color: "text-blue-700" },
@@ -1761,7 +1671,7 @@ export default function ConstructionHrmsPage() {
       ))}
 
       {/* ================================================================
-          SECTION 09 â€” A TYPICAL DAY WITH OIBUZ
+          SECTION 09 — A TYPICAL DAY WITH OIBUZ
           ================================================================ */}
       <section className="py-20 md:py-28 bg-white relative overflow-hidden">
         <div
@@ -1806,9 +1716,9 @@ export default function ConstructionHrmsPage() {
       </section>
 
       {/* ================================================================
-          SECTION 10 â€” WHY OIBUZ
+          SECTION 10 ── WHY OIBUZ
           ================================================================ */}
-      <section className="py-20 md:py-28 bg-[#f0f4ff]">
+      <section id="pricing" className="py-20 md:py-28 bg-[#f0f4ff] scroll-mt-20">
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <p className="text-blue-700 font-bold text-xs tracking-widest uppercase mb-4">Why Oibuz</p>
@@ -1838,7 +1748,7 @@ export default function ConstructionHrmsPage() {
       </section>
 
       {/* ================================================================
-          SECTION 11 â€” CONTROL & SECURITY (Dark navy)
+          SECTION 11 ── CONTROL & SECURITY (Dark navy)
           ================================================================ */}
       <section className="py-20 md:py-28 bg-[#0f172a]">
         <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
@@ -1874,7 +1784,7 @@ export default function ConstructionHrmsPage() {
       </section>
 
       {/* ================================================================
-          SECTION 12 â€” BUSINESS VISIBILITY (Light blue)
+          SECTION 12 ── BUSINESS VISIBILITY (Light blue)
           ================================================================ */}
       <section className="py-20 md:py-28 bg-[#f0f4ff]">
         <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
@@ -1888,11 +1798,11 @@ export default function ConstructionHrmsPage() {
           {/* Flow diagram */}
           <div className="flex flex-col items-center gap-3">
             {[
-              { label: "Multiple Sites", sub: "Attendance Â· Timesheets Â· Expenses", icon: Building2 },
+              { label: "Multiple Sites", sub: "Attendance ── Timesheets ── Expenses", icon: Building2 },
               { label: "Workforce Data", sub: "Collected & structured in Oibuz", icon: Users },
-              { label: "Approvals", sub: "Manager â†’ HR â†’ Finance workflows", icon: CheckCircle },
-              { label: "HR & Finance", sub: "Payroll Â· Reimbursements Â· Records", icon: FileText },
-              { label: "Leadership", sub: "Dashboard Â· Reports Â· Audit", icon: BarChart3 },
+              { label: "Approvals", sub: "Manager ── HR ── Finance workflows", icon: CheckCircle },
+              { label: "HR & Finance", sub: "Payroll ── Reimbursements ── Records", icon: FileText },
+              { label: "Leadership", sub: "Dashboard ── Reports ── Audit", icon: BarChart3 },
             ].map(({ label, sub, icon: Icon }, i) => (
               <React.Fragment key={label}>
                 <div className="bg-white rounded-2xl border border-blue-100 shadow-sm px-6 py-4 flex items-center gap-4 w-full max-w-sm">
@@ -1927,9 +1837,9 @@ export default function ConstructionHrmsPage() {
       </section>
 
       {/* ================================================================
-          SECTION 13 â€” FAQ
+          SECTION 13 ── FAQ
           ================================================================ */}
-      <section className="py-20 md:py-28 bg-white">
+      <section id="resources" className="py-20 md:py-28 bg-white scroll-mt-20">
         <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
           <div className="text-center mb-12">
             <p className="text-blue-700 font-bold text-xs tracking-widest uppercase mb-4">FAQ</p>
@@ -1979,7 +1889,7 @@ export default function ConstructionHrmsPage() {
       </section>
 
       {/* ================================================================
-          SECTION 14 â€” FINAL CTA (Dark navy)
+          SECTION 14 — FINAL CTA (Dark navy)
           ================================================================ */}
       <section className="py-24 md:py-32 bg-[#0f172a] relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-blue-800/10" />
@@ -2009,9 +1919,9 @@ export default function ConstructionHrmsPage() {
       </section>
 
       {/* ================================================================
-          SECTION 15 â€” DEMO FORM
+          SECTION 15 ── DEMO FORM
           ================================================================ */}
-      <section id="demo-form" className="py-20 md:py-28 bg-[#f8fafc]">
+      <section id="demo-form" className="py-20 md:py-28 bg-[#f8fafc] scroll-mt-20">
         <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Left: copy */}
@@ -2021,7 +1931,7 @@ export default function ConstructionHrmsPage() {
                 Request a Demo
               </h2>
               <p className="text-slate-500 text-base leading-relaxed mb-8">
-                Share your details and our team will get in touch to walk you through Oibuz â€” tailored to your construction operation.
+                Share your details and our team will get in touch to walk you through Oibuz — tailored to your construction operation.
               </p>
               <div className="space-y-4">
                 {[
@@ -2080,7 +1990,7 @@ export default function ConstructionHrmsPage() {
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
-                        {["< 50 Employees", "50â€“150 Employees", "150â€“500 Employees", "500+ Employees"].map((o) => <option key={o}>{o}</option>)}
+                        {["< 50 Employees", "50–150 Employees", "150–500 Employees", "500+ Employees"].map((o) => <option key={o}>{o}</option>)}
                       </select>
                     </div>
                     <div>
@@ -2091,7 +2001,7 @@ export default function ConstructionHrmsPage() {
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
-                        {["1 Site", "2â€“3 Sites", "4â€“10 Sites", "10+ Sites"].map((o) => <option key={o}>{o}</option>)}
+                        {["1 Site", "2–3 Sites", "4–10 Sites", "10+ Sites"].map((o) => <option key={o}>{o}</option>)}
                       </select>
                     </div>
                   </div>
@@ -2111,52 +2021,9 @@ export default function ConstructionHrmsPage() {
       </section>
 
       {/* ================================================================
-          SECTION 16 â€” FOOTER
+          SECTION 16 — FOOTER
           ================================================================ */}
-      <footer className="bg-[#0f172a] border-t border-slate-800 pt-16 pb-8">
-        <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-            {/* Brand */}
-            <div className="lg:col-span-2">
-              <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-9 w-auto mb-4 brightness-0 invert" />
-              <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
-                Workforce management for construction and project-based businesses.
-              </p>
-              <p className="text-slate-600 text-xs mt-4 font-medium">A Prajyot Infotech Product</p>
-            </div>
-            {/* Platform */}
-            <div>
-              <p className="text-white text-xs font-bold uppercase tracking-widest mb-4">Platform</p>
-              <div className="space-y-2.5">
-                {["Platform", "Features", "For Construction", "How It Works", "FAQ"].map((item) => (
-                  <a key={item} href="#" className="block text-sm text-slate-400 hover:text-white transition-colors">{item}</a>
-                ))}
-              </div>
-            </div>
-            {/* Company */}
-            <div>
-              <p className="text-white text-xs font-bold uppercase tracking-widest mb-4">Company</p>
-              <div className="space-y-2.5">
-                {[
-                  { label: "About", href: "/about" },
-                  { label: "Prajyot Infotech", href: "/" },
-                  { label: "Contact", href: "/contact" },
-                  { label: "Privacy Policy", href: "#" },
-                  { label: "Terms & Conditions", href: "#" },
-                ].map(({ label, href }) => (
-                  <a key={label} href={href} className="block text-sm text-slate-400 hover:text-white transition-colors">{label}</a>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-slate-600 text-xs">Â© {new Date().getFullYear()} Oibuz Â· Prajyot Infotech. All rights reserved.</p>
-            <div className="flex items-center gap-4">
-              <a href="#demo-form" className="text-xs text-blue-400 hover:text-blue-300 font-semibold transition-colors">Book a Demo â†’</a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <HrmsFooter />
 
       {/* Mobile sticky bar */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 p-3 bg-white/95 backdrop-blur-md border-t border-slate-200 flex items-center gap-3 shadow-lg">
