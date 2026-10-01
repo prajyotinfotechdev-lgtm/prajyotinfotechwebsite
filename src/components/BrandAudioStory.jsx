@@ -1099,7 +1099,7 @@ function SceneVisualRenderer({ sceneId, onExploreLead, sceneShotProgress = 0, is
             initial={{ opacity: 0, x: 15 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="p-4 sm:p-5 rounded-xl sm:rounded-2xl border-2 border-emerald-500/80 bg-white shadow-lg shadow-emerald-500/10 relative overflow-hidden"
+            className="p-4 sm:p-5 rounded-xl sm:rounded-2xl border-2 border-emerald-500/80 bg-white shadow-lg shadow-emerald-500/10 relative"
           >
             <div className="absolute -top-2.5 right-3 px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-[9px] sm:text-[10px] font-bold tracking-wider uppercase shadow-xs flex items-center gap-1">
               <Check className="w-2.5 h-2.5" />
