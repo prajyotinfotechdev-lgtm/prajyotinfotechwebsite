@@ -312,7 +312,7 @@ export default function Services() {
           <p className="mt-2 max-w-3xl text-slate-700">
             A simple, transparent process — so you always know what's happening and when.
           </p>
-          <ol className="mt-6 grid gap-4 md:grid-cols-5">
+          <ol className="mt-6 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {process.map((s) => (
               <li key={s.n} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-600 to-brand-700 text-white text-sm font-bold shadow-md shadow-brand-500/25">

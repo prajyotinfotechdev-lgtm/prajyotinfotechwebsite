@@ -640,7 +640,7 @@ export default function ConstructionHrmsPage() {
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.07, duration: 0.45 }}
-                className="text-[2.5rem] sm:text-[2.9rem] md:text-[3.2rem] font-black text-slate-900 leading-[1.08] tracking-tight"
+                className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 leading-[1.1] tracking-tight"
               >
                 Workforce<br />Management<br />
                 Built for{" "}
@@ -723,7 +723,7 @@ export default function ConstructionHrmsPage() {
 
                   {/* Top-bar */}
                   <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-100 bg-white">
-                    <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-6 w-auto object-contain" />
+                    <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-6 max-h-6 w-auto object-contain" />
                     <div className="flex items-center gap-1.5">
                       <div className="relative w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center">
                         <span className="text-[11px]">🔔</span>
@@ -1127,7 +1127,7 @@ export default function ConstructionHrmsPage() {
             {/* Inner topbar */}
             <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100 bg-white">
               <div className="flex items-center gap-3">
-                <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-7 w-auto" />
+                <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-6 max-h-6 w-auto object-contain" />
                 <span className="text-sm font-semibold text-slate-800">{activeTab}</span>
               </div>
               <div className="flex items-center gap-2">
@@ -1517,7 +1517,7 @@ export default function ConstructionHrmsPage() {
           panel: (
             <div className="bg-[#f8fafc] rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
               <div className="bg-[#0f172a] px-4 py-3 flex items-center gap-2">
-                <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-5 w-auto" />
+                <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-5 max-h-5 w-auto object-contain" />
                 <span className="text-xs text-slate-400">Attendance</span>
               </div>
               <div className="p-5 space-y-3">
@@ -1900,18 +1900,18 @@ export default function ConstructionHrmsPage() {
           <p className="text-slate-400 text-base sm:text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
             See how Oibuz can fit your employees, projects, sites and approval workflows.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+          <div className="flex flex-row flex-wrap items-center justify-center gap-2.5 sm:gap-4 mb-8">
             <a
               href="#demo-form"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-base shadow-xl shadow-blue-600/30 transition-all hover:-translate-y-0.5"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-base shadow-xl shadow-blue-600/30 transition-all hover:-translate-y-0.5 whitespace-nowrap"
             >
-              Book a Demo <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+              Book a Demo <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
             </a>
             <button
               onClick={openWhatsAppDirect}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white font-semibold text-base transition-all"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 sm:px-8 py-3.5 sm:py-4 rounded-xl border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white font-semibold text-xs sm:text-base transition-all whitespace-nowrap cursor-pointer"
             >
-              <Phone className="w-4 h-4" /> Talk to Our Team
+              <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Talk to Our Team
             </button>
           </div>
           <p className="text-slate-600 text-sm font-semibold tracking-wide">Built for construction. Designed for control.</p>

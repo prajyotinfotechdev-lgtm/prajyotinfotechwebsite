@@ -634,7 +634,7 @@ export default function BrandAudioStory() {
                 <img
                   src="/videos/SingleLogo.png"
                   alt="Prajyot Infotech"
-                  className="h-5 sm:h-6 w-auto object-contain"
+                  className="!h-3 sm:!h-4 w-auto object-contain"
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
                   }}
@@ -704,7 +704,7 @@ export default function BrandAudioStory() {
                       <img
                         src="/videos/SingleLogo.png"
                         alt="Prajyot Infotech Logo"
-                        className="h-7 sm:h-10 w-auto object-contain"
+                        className="!h-7 sm:!h-10 w-auto object-contain"
                       />
                     </div>
 
@@ -720,12 +720,12 @@ export default function BrandAudioStory() {
                       </p>
                     </div>
 
-                    <div className="pt-1 sm:pt-2 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3">
+                    <div className="pt-1 sm:pt-2 flex flex-row flex-wrap items-center justify-center gap-2 sm:gap-3">
                       <button
                         onClick={handlePlay}
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-brand-700 via-brand-600 to-indigo-700 text-white font-bold text-xs sm:text-base shadow-lg shadow-brand-500/25 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                        className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 sm:px-8 py-2.5 sm:py-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-brand-700 via-brand-600 to-indigo-700 text-white font-bold text-xs sm:text-base shadow-lg shadow-brand-500/25 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer whitespace-nowrap"
                       >
-                        <Play className="w-4 h-4 fill-current" />
+                        <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current shrink-0" />
                         <span>▶ PLAY BRAND STORY</span>
                       </button>
 
@@ -1156,7 +1156,7 @@ function SceneVisualRenderer({ sceneId, onExploreLead, sceneShotProgress = 0, is
                 <img
                   src="/videos/SingleLogo.png"
                   alt="Prajyot Infotech Logo"
-                  className="h-10 sm:h-12 w-auto object-contain"
+                  className="!h-10 sm:!h-12 w-auto object-contain"
                 />
               </div>
               <div className="text-left">
@@ -1689,7 +1689,7 @@ function SceneVisualRenderer({ sceneId, onExploreLead, sceneShotProgress = 0, is
               <img
                 src="/videos/SingleLogo.png"
                 alt="Prajyot Infotech Logo"
-                className="h-10 sm:h-14 w-auto object-contain"
+                className="!h-10 sm:!h-14 w-auto object-contain"
               />
             </div>
           </div>
@@ -1706,18 +1706,18 @@ function SceneVisualRenderer({ sceneId, onExploreLead, sceneShotProgress = 0, is
             Pune, Maharashtra • Serving Clients Across India & Worldwide
           </p>
 
-          <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 relative z-10">
+          <div className="mt-5 sm:mt-6 flex flex-row flex-wrap items-center justify-center gap-2 sm:gap-3 relative z-10">
             <button
               onClick={onExploreLead}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 rounded-xl bg-gradient-to-r from-brand-700 via-brand-600 to-indigo-700 hover:from-brand-800 hover:to-indigo-800 text-white font-bold text-xs sm:text-sm shadow-lg shadow-brand-500/25 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 sm:px-7 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-brand-700 via-brand-600 to-indigo-700 hover:from-brand-800 hover:to-indigo-800 text-white font-bold text-xs sm:text-sm shadow-lg shadow-brand-500/25 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer whitespace-nowrap"
             >
               <span>Get Free Project Consultation</span>
-              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
             </button>
 
             <Link
               to="/services"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-5 py-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs sm:text-sm transition-all"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs sm:text-sm transition-all whitespace-nowrap"
             >
               <span>Explore All Services</span>
             </Link>

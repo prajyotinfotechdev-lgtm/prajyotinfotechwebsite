@@ -23,27 +23,27 @@ import {
 
 export default function HrmsSpotlight() {
   return (
-    <section className="relative py-24 overflow-hidden bg-gradient-to-b from-white via-purple-50/50 to-slate-50 border-y border-purple-100/80 text-slate-800">
+    <section className="relative py-14 sm:py-20 lg:py-24 overflow-hidden bg-gradient-to-b from-white via-purple-50/50 to-slate-50 border-y border-purple-100/80 text-slate-800">
       
       {/* Soft Moody Ambient Backlight Orbs */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[550px] h-[550px] bg-purple-300/20 blur-[140px] rounded-full pointer-events-none" />
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[550px] h-[550px] bg-indigo-300/20 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[350px] sm:w-[550px] h-[350px] sm:h-[550px] bg-purple-300/20 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[350px] sm:w-[550px] h-[350px] sm:h-[550px] bg-indigo-300/20 blur-[100px] sm:blur-[140px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Flagship Hero Product Callout Header Banner */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-12 pb-6 border-b border-purple-100">
+        <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4 mb-8 sm:mb-12 pb-5 sm:pb-6 border-b border-purple-100">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 via-indigo-50 to-purple-50 border border-purple-200/80 text-purple-800 text-xs font-mono font-extrabold uppercase tracking-widest shadow-sm"
+            className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-purple-100 via-indigo-50 to-purple-50 border border-purple-200/80 text-purple-800 text-[11px] sm:text-xs font-mono font-extrabold uppercase tracking-wider sm:tracking-widest shadow-sm"
           >
-            <Trophy className="w-4 h-4 text-purple-600" />
+            <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600 shrink-0" />
             <span>OUR HERO PRODUCT &bull; FLAGSHIP B2B SAAS</span>
           </motion.div>
 
-          <div className="flex items-center gap-3 text-xs font-mono text-slate-500 font-medium">
+          <div className="flex items-center gap-2 sm:gap-3 text-[11px] sm:text-xs font-mono text-slate-500 font-medium">
             <span className="flex items-center gap-1.5 text-emerald-600 font-semibold">
               <Activity className="w-3.5 h-3.5" />
               <span>LIVE ENTERPRISE DEPLOYMENTS</span>
@@ -54,29 +54,33 @@ export default function HrmsSpotlight() {
         </div>
 
         {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Left: Product Information & Value */}
-          <div className="lg:col-span-6 space-y-6">
+          <div className="lg:col-span-6 space-y-5 sm:space-y-6">
             <div>
-              <div className="flex items-center gap-3 mb-4">
-                <img
-                  src="/images/oibuz_logo.png"
-                  alt="OIBUZ Construction Workforce Management Logo"
-                  className="h-14 sm:h-16 w-auto object-contain drop-shadow-md rounded-xl bg-white p-1.5 border border-purple-100 shadow-sm"
-                />
-                <div className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200 shadow-sm">
-                  <Zap className="w-3.5 h-3.5 text-amber-600" />
-                  <span>FLAGSHIP B2B ENTERPRISE SAAS</span>
+              <div className="flex flex-col gap-4 sm:gap-5 mb-4 sm:mb-5">
+                <div className="flex justify-center w-full">
+                  <img
+                    src="/images/oibuz_logo.png"
+                    alt="OIBUZ Construction Workforce Management Logo"
+                    className="h-10 sm:h-12 max-h-12 w-auto object-contain drop-shadow-sm"
+                  />
+                </div>
+                <div>
+                  <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-mono font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-3 py-1.5 rounded-lg border border-amber-200 shadow-sm">
+                    <Zap className="w-3.5 h-3.5 text-amber-600" />
+                    <span>FLAGSHIP B2B ENTERPRISE SAAS</span>
+                  </div>
                 </div>
               </div>
-              <h2 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
                 Oibuz <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-700 to-amber-600">
                   Construction Platform
                 </span>
               </h2>
-              <p className="text-lg sm:text-xl font-bold text-slate-800 mt-3 leading-snug">
+              <p className="text-base sm:text-xl font-bold text-slate-800 mt-2.5 sm:mt-3 leading-snug">
                 Every Worker Verified. Every Rupee Accounted.
               </p>
             </div>
@@ -129,17 +133,17 @@ export default function HrmsSpotlight() {
             </div>
 
             {/* Action CTAs */}
-            <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <div className="pt-3 flex flex-row flex-wrap items-center gap-2.5 sm:gap-4">
               <Link
                 to="/products/hrms"
-                className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 text-white font-bold text-base shadow-[0_10px_30px_-10px_rgba(124,58,237,0.4)] hover:shadow-[0_15px_35px_-5px_rgba(124,58,237,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 sm:px-7 py-3 sm:py-4 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 text-white font-bold text-xs sm:text-base shadow-[0_10px_30px_-10px_rgba(124,58,237,0.4)] hover:shadow-[0_15px_35px_-5px_rgba(124,58,237,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap"
               >
                 <span>Explore Hero Product &rarr;</span>
               </Link>
 
               <Link
                 to="/products/hrms#demo-request-form"
-                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-white hover:bg-purple-50/80 border border-purple-200 text-purple-900 text-base font-semibold shadow-sm hover:border-purple-300 transition"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-3 sm:py-4 rounded-2xl bg-white hover:bg-purple-50/80 border border-purple-200 text-purple-900 text-xs sm:text-base font-semibold shadow-sm hover:border-purple-300 transition whitespace-nowrap"
               >
                 <span>Book Live Product Demo</span>
               </Link>

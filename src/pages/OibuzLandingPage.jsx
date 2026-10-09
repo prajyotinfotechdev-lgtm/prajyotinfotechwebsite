@@ -1,7 +1,7 @@
 // src/pages/OibuzLandingPage.jsx
 // OIBUZ — Production Responsive Polish (v3)
-import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
 import {
   Users, MapPin, Clock, Calendar, FileText, CreditCard,
   CheckCircle, ChevronDown, ArrowRight, Menu, X, Building2,
@@ -169,98 +169,422 @@ function OibuzHeader({ onDemoClick }) {
   );
 }
 
-/* ─── HERO DASHBOARD — DESKTOP ───────────────────────────────────────────── */
-function HeroDashboardDesktop() {
+/* ─── HYBRID HERO SECTION: MOTION GRAPHICS + LIVE SAAS DASHBOARD ────────────── */
+
+// 39 seconds total: 3 stages x 13 seconds each
+const HERO_SLIDE_DURATION = 13000;
+const HERO_EASE = [0.16, 1, 0.3, 1];
+
+const HERO_STAGES = [
+  {
+    id: "attendance",
+    stepNum: "01",
+    tabLabel: "GPS Attendance",
+    badge: "GPS Geofence + Selfie Verified",
+    headlineWords1: ["Every", "Worker", "Verified."],
+    headlineWords2: ["Every", "Rupee", "Accounted."],
+    accentLine: 1, // highlight line 2 in accent color
+    accentColor: "#2563eb",
+    sub: "Live selfie punch-in with precise GPS geofencing eliminates ghost workers and proxy attendance across all your active construction sites.",
+    floatingBadge: {
+      tag: "Live Punch Feed",
+      title: "Rahul M. · Site A",
+      sub: "GPS & Selfie Verified (08:02 AM)",
+      status: "Verified",
+      iconColor: "#059669",
+    },
+  },
+  {
+    id: "timesheets",
+    stepNum: "02",
+    tabLabel: "Project Timesheets",
+    badge: "Site & Task Labor Distribution",
+    headlineWords1: ["Project", "Timesheets."],
+    headlineWords2: ["Logged", "by", "Active", "Site."],
+    accentLine: 1,
+    accentColor: "#0891b2",
+    sub: "Map daily worker and contractor hours to concrete pouring, structural steel, or electrical tasks. Multi-tier manager sign-offs before locking.",
+    floatingBadge: {
+      tag: "Weekly Batch",
+      title: "Site C · Tower 4",
+      sub: "420 hrs Logged · Manager Signed",
+      status: "Approved",
+      iconColor: "#0891b2",
+    },
+  },
+  {
+    id: "payroll",
+    stepNum: "03",
+    tabLabel: "Automated Payroll",
+    badge: "Zero Spreadsheets • 1-Click Pay",
+    headlineWords1: ["Leave", "to", "Payroll."],
+    headlineWords2: ["100%", "Automated."],
+    accentLine: 1,
+    accentColor: "#059669",
+    sub: "Base salaries, approved leave, and verified punch logs calculate automatically at month-end. One click generates downloadable PDF salary slips.",
+    floatingBadge: {
+      tag: "Auto-Calculated",
+      title: "October Payroll Run",
+      sub: "248 Slips Generated · 0 Errors",
+      status: "Finalized",
+      iconColor: "#059669",
+    },
+  },
+];
+
+/* Ambient Floating Particles (Soft light mode) */
+function AmbientHeroParticles({ color = "#2563eb" }) {
+  const pts = useRef(
+    Array.from({ length: 22 }, (_, i) => ({
+      id: i,
+      x: 8 + Math.random() * 84,
+      y: 8 + Math.random() * 84,
+      size: 2 + Math.random() * 3.2,
+      dur: 6 + Math.random() * 8,
+      delay: Math.random() * 4,
+      dx: (Math.random() - 0.5) * 45,
+      dy: (Math.random() - 0.5) * 45,
+    }))
+  ).current;
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      {pts.map((p) => (
+        <motion.div
+          key={p.id}
+          className="absolute rounded-full"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.size,
+            height: p.size,
+            backgroundColor: color,
+            opacity: 0.22,
+          }}
+          animate={{
+            x: [0, p.dx, 0],
+            y: [0, p.dy, 0],
+            opacity: [0.08, 0.38, 0.08],
+            scale: [1, 1.7, 1],
+          }}
+          transition={{
+            duration: p.dur,
+            repeat: Infinity,
+            delay: p.delay,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* SVG Circular Progress Ring */
+function HeroProgressRing({ duration, active, color = "#2563eb" }) {
+  const r = 9;
+  const circ = 2 * Math.PI * r;
+  const [progress, setProgress] = useState(0);
+  const startRef = useRef(null);
+  const rafRef = useRef(null);
+
+  useEffect(() => {
+    if (!active) {
+      setProgress(0);
+      startRef.current = null;
+      return;
+    }
+    const tick = (ts) => {
+      if (!startRef.current) startRef.current = ts;
+      const p = Math.min((ts - startRef.current) / duration, 1);
+      setProgress(p);
+      if (p < 1) rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [active, duration]);
+
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" className="rotate-[-90deg] flex-shrink-0">
+      <circle cx="12" cy="12" r={r} fill="none" stroke="currentColor" strokeWidth="2.5" className="text-slate-200" />
+      <circle
+        cx="12"
+        cy="12"
+        r={r}
+        fill="none"
+        stroke={color}
+        strokeWidth="2.5"
+        strokeDasharray={circ}
+        strokeDashoffset={circ * (1 - progress)}
+        strokeLinecap="round"
+        style={{ transition: "stroke-dashoffset 0.08s linear" }}
+      />
+    </svg>
+  );
+}
+
+/* ─── DYNAMIC LIVING DESKTOP DASHBOARD ────────────────────────────────────── */
+function HybridDashboardDesktop({ activeStageId, accentColor, floatingBadge }) {
   const kpis = [
     { l: "Total Employees", v: "248", c: "#2563eb", I: Users },
     { l: "Present Today", v: "231", c: "#059669", I: UserCheck },
     { l: "On Leave", v: "12", c: "#d97706", I: Calendar },
     { l: "Pending", v: "7", c: "#dc2626", I: Bell },
   ];
-  const activity = [
-    { m: "Rahul punched in", s: "Site A · 08:02 AM", c: "#059669" },
-    { m: "Leave approved", s: "Amit · 2 days", c: "#2563eb" },
-    { m: "Expense submitted", s: "Site B · ₹4,850", c: "#d97706" },
-    { m: "Timesheet approved", s: "Site C", c: "#7c3aed" },
-  ];
+
   const sideNav = [
-    { I: Home, l: "Dashboard", a: true },
-    { I: Users, l: "Employees" },
-    { I: Clock, l: "Attendance" },
-    { I: Calendar, l: "Leave" },
-    { I: FileSpreadsheet, l: "Timesheets" },
-    { I: Receipt, l: "Expenses" },
-    { I: CreditCard, l: "Payroll" },
-    { I: CheckCircle, l: "Approvals" },
-    { I: BarChart3, l: "Reports" },
-    { I: Settings, l: "Settings" },
+    { I: Home, l: "Dashboard", id: "dash" },
+    { I: Clock, l: "Attendance", id: "attendance" },
+    { I: FileSpreadsheet, l: "Timesheets", id: "timesheets" },
+    { I: CreditCard, l: "Payroll", id: "payroll" },
+    { I: Users, l: "Employees", id: "emp" },
+    { I: Receipt, l: "Expenses", id: "exp" },
+    { I: CheckCircle, l: "Approvals", id: "app" },
+    { I: BarChart3, l: "Reports", id: "rep" },
   ];
 
   return (
-    <div className="bg-white rounded-2xl shadow-2xl border border-slate-200/80 overflow-hidden w-full">
-      {/* Title bar */}
-      <div className="flex items-center gap-2 px-4 py-3 bg-[#0f1f3d] flex-shrink-0">
-        <div className="w-3 h-3 rounded-full bg-red-400/80 flex-shrink-0" />
-        <div className="w-3 h-3 rounded-full bg-yellow-400/80 flex-shrink-0" />
-        <div className="w-3 h-3 rounded-full bg-green-400/80 flex-shrink-0" />
-        <span className="ml-2 text-xs text-slate-400 font-mono truncate">Oibuz · Workforce Platform</span>
-        <span className="ml-auto text-[10px] text-slate-500 italic flex-shrink-0 hidden sm:block">Demo data</span>
-      </div>
+    <div className="relative w-full">
+      {/* Ambient Radial Glow behind dashboard */}
+      <motion.div
+        className="absolute -inset-4 rounded-3xl blur-2xl pointer-events-none opacity-45"
+        animate={{
+          background: [
+            `radial-gradient(circle at 60% 40%, ${accentColor}40 0%, transparent 70%)`,
+            `radial-gradient(circle at 50% 50%, ${accentColor}55 0%, transparent 75%)`,
+            `radial-gradient(circle at 60% 40%, ${accentColor}40 0%, transparent 70%)`,
+          ],
+          scale: [1, 1.03, 1],
+        }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      />
 
-      <div className="flex" style={{ minHeight: 320 }}>
-        {/* Sidebar */}
-        <div className="w-32 xl:w-36 bg-[#0f1f3d] py-3 px-2 flex-col hidden md:flex gap-0.5 flex-shrink-0">
-          {sideNav.map(({ I, l, a }) => (
-            <div
-              key={l}
-              className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[11px] font-medium ${a ? "bg-[#2563eb] text-white" : "text-slate-400"
-                }`}
-            >
-              <I className="w-3 h-3 flex-shrink-0" />
-              <span className="truncate">{l}</span>
+      {/* Floating Live Verification Badge (Staggered Animation) */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`float-badge-${activeStageId}`}
+          initial={{ opacity: 0, y: -16, scale: 0.92 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 12, scale: 0.92 }}
+          transition={{ duration: 0.45, ease: HERO_EASE }}
+          className="absolute -top-5 right-6 z-20 hidden sm:flex items-center gap-3 bg-white/95 border border-slate-200/90 rounded-2xl p-2.5 shadow-xl backdrop-blur-md"
+        >
+          <div
+            className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs"
+            style={{ backgroundColor: `${accentColor}18`, color: accentColor }}
+          >
+            ✓
+          </div>
+          <div className="pr-1">
+            <div className="flex items-center gap-1.5">
+              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">
+                {floatingBadge.tag}
+              </span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             </div>
-          ))}
+            <p className="text-xs font-bold text-slate-800 leading-tight">
+              {floatingBadge.title}
+            </p>
+            <p className="text-[10px] text-slate-500 leading-tight">
+              {floatingBadge.sub}
+            </p>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Main Glassmorphic Chrome Card */}
+      <div className="relative bg-white rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden w-full backdrop-blur-sm">
+        {/* Title bar */}
+        <div className="flex items-center gap-2 px-4 py-3 bg-[#0f1f3d] flex-shrink-0">
+          <div className="flex items-center gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-red-400/80 flex-shrink-0" />
+            <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/80 flex-shrink-0" />
+            <div className="w-2.5 h-2.5 rounded-full bg-green-400/80 flex-shrink-0" />
+          </div>
+          <span className="ml-2 text-xs text-slate-300 font-mono font-medium truncate">
+            Oibuz · Workforce OS
+          </span>
+          <div className="ml-auto flex items-center gap-2 text-[10px] text-emerald-400 font-mono">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+            <span className="hidden sm:inline">Site Network Online</span>
+          </div>
         </div>
 
-        {/* Content */}
-        <div className="flex-1 bg-[#f7f9fc] p-3 xl:p-4 min-w-0">
-          <p className="text-[10px] text-slate-400 mb-0.5">Mon, 30 Sep — Illustrative Demo</p>
-          <p className="text-xs font-bold text-slate-700 mb-3">Good Morning, Admin</p>
+        <div className="flex" style={{ minHeight: 335 }}>
+          {/* Sidebar */}
+          <div className="w-32 xl:w-36 bg-[#0f1f3d] py-3 px-2 flex-col hidden md:flex gap-1 flex-shrink-0 border-t border-slate-800">
+            {sideNav.map(({ I, l, id }) => {
+              const isSelected = id === activeStageId || (id === "dash" && activeStageId === "attendance");
+              return (
+                <div
+                  key={l}
+                  className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md text-[11px] font-medium transition-all duration-300 ${
+                    isSelected
+                      ? "text-white shadow-sm"
+                      : "text-slate-400 hover:text-slate-300"
+                  }`}
+                  style={isSelected ? { backgroundColor: accentColor } : {}}
+                >
+                  <I className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span className="truncate">{l}</span>
+                </div>
+              );
+            })}
+          </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
-            {kpis.map(({ l, v, c, I }) => (
-              <div key={l} className="bg-white rounded-xl p-2.5 border border-slate-100 shadow-sm">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[9px] text-slate-500 leading-tight">{l}</span>
-                  <div className="w-4 h-4 rounded flex items-center justify-center" style={{ backgroundColor: `${c}18` }}>
-                    <I className="w-2.5 h-2.5" style={{ color: c }} />
+          {/* Dynamic Content Pane */}
+          <div className="flex-1 bg-[#f8fafc] p-3.5 xl:p-4 min-w-0 flex flex-col justify-between">
+            <div>
+              {/* Header inside pane */}
+              <div className="flex items-center justify-between mb-2.5">
+                <div>
+                  <p className="text-[10px] text-slate-400 font-medium">Mon, 30 Sep · Illustrative Demo</p>
+                  <p className="text-xs font-bold text-slate-800">Good Morning, Site Director</p>
+                </div>
+                <span
+                  className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider transition-colors duration-300"
+                  style={{ backgroundColor: `${accentColor}18`, color: accentColor }}
+                >
+                  {activeStageId === "attendance" ? "Attendance Mode" : activeStageId === "timesheets" ? "Timesheet Mode" : "Payroll Mode"}
+                </span>
+              </div>
+
+              {/* 4 Mini KPIs */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+                {kpis.map(({ l, v, c, I }) => (
+                  <div key={l} className="bg-white rounded-xl p-2.5 border border-slate-200/70 shadow-sm">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-[9px] text-slate-500 leading-tight truncate">{l}</span>
+                      <div className="w-4 h-4 rounded flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${c}18` }}>
+                        <I className="w-2.5 h-2.5" style={{ color: c }} />
+                      </div>
+                    </div>
+                    <p className="text-base font-black text-slate-800 leading-none">{v}</p>
                   </div>
-                </div>
-                <p className="text-base font-black text-slate-800">{v}</p>
+                ))}
               </div>
-            ))}
-          </div>
 
-          <div className="bg-white rounded-xl p-3 border border-slate-100 mb-2">
-            <p className="text-[9px] font-semibold text-slate-500 mb-1.5">Attendance — This Week</p>
-            <div className="flex items-end gap-1 h-10">
-              {[78, 85, 92, 88, 95, 91, 83].map((h, i) => (
-                <div key={i} className="flex-1 rounded-sm" style={{ height: `${h}%`, backgroundColor: i === 4 ? "#2563eb" : "#bfdbfe" }} />
-              ))}
+              {/* STAGE-SPECIFIC INTERACTIVE PREVIEW */}
+              <AnimatePresence mode="wait">
+                {activeStageId === "attendance" && (
+                  <motion.div
+                    key="stage-attendance"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.35, ease: HERO_EASE }}
+                    className="space-y-2.5"
+                  >
+                    <div className="bg-white rounded-xl p-3 border border-slate-200/70 shadow-sm">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[9px] font-bold text-slate-600 uppercase tracking-wide">
+                          Live On-Site GPS Attendance Feed
+                        </span>
+                        <span className="text-[9px] font-bold text-emerald-600 flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                          93% Present
+                        </span>
+                      </div>
+                      <div className="space-y-1.5">
+                        {[
+                          { n: "Rahul M. (Mason)", site: "Site A · Tower 2", t: "08:02 AM", s: "Selfie Verified" },
+                          { n: "Vikram P. (Foreman)", site: "Site B · Block 4", t: "08:14 AM", s: "Selfie Verified" },
+                        ].map((item) => (
+                          <div key={item.n} className="flex items-center justify-between text-[9px] bg-slate-50 rounded-lg p-1.5 border border-slate-100">
+                            <div className="flex items-center gap-1.5">
+                              <div className="w-4 h-4 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-[8px]">
+                                ✓
+                              </div>
+                              <span className="font-semibold text-slate-700">{item.n}</span>
+                            </div>
+                            <span className="text-slate-400 text-[8px]">{item.site}</span>
+                            <span className="text-emerald-700 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded text-[8px]">{item.s}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {activeStageId === "timesheets" && (
+                  <motion.div
+                    key="stage-timesheets"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.35, ease: HERO_EASE }}
+                    className="space-y-2.5"
+                  >
+                    <div className="bg-white rounded-xl p-3 border border-slate-200/70 shadow-sm">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[9px] font-bold text-slate-600 uppercase tracking-wide">
+                          Project Timesheet Allocation · Week 39
+                        </span>
+                        <span className="text-[9px] font-bold text-cyan-600">420 hrs Logged</span>
+                      </div>
+                      <div className="space-y-1.5">
+                        {[
+                          { task: "Foundation Piling", crew: "8 Workers", hrs: "64 hrs", status: "Approved" },
+                          { task: "Structural Rebar", crew: "14 Workers", hrs: "112 hrs", status: "Approved" },
+                        ].map((t) => (
+                          <div key={t.task} className="flex items-center justify-between text-[9px] bg-slate-50 rounded-lg p-1.5 border border-slate-100">
+                            <div>
+                              <p className="font-semibold text-slate-700">{t.task}</p>
+                              <p className="text-[8px] text-slate-400">{t.crew}</p>
+                            </div>
+                            <span className="font-mono font-bold text-slate-800">{t.hrs}</span>
+                            <span className="text-cyan-700 font-semibold bg-cyan-50 px-1.5 py-0.5 rounded text-[8px]">{t.status}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {activeStageId === "payroll" && (
+                  <motion.div
+                    key="stage-payroll"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.35, ease: HERO_EASE }}
+                    className="space-y-2.5"
+                  >
+                    <div className="bg-white rounded-xl p-3 border border-slate-200/70 shadow-sm">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[9px] font-bold text-slate-600 uppercase tracking-wide">
+                          October Payroll Preview
+                        </span>
+                        <span className="text-[9px] font-bold text-emerald-600">248 Slips Ready</span>
+                      </div>
+                      <div className="space-y-1.5">
+                        {[
+                          { n: "Rahul M. (Mason)", days: "26 Days Present", net: "₹28,400", st: "Ready" },
+                          { n: "Sunil K. (Electrician)", days: "24 Days Present", net: "₹22,100", st: "Ready" },
+                        ].map((p) => (
+                          <div key={p.n} className="flex items-center justify-between text-[9px] bg-slate-50 rounded-lg p-1.5 border border-slate-100">
+                            <div>
+                              <p className="font-semibold text-slate-700">{p.n}</p>
+                              <p className="text-[8px] text-slate-400">{p.days}</p>
+                            </div>
+                            <span className="font-mono font-bold text-slate-900">{p.net}</span>
+                            <span className="text-emerald-700 font-semibold bg-emerald-50 px-1.5 py-0.5 rounded text-[8px]">{p.st}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          </div>
 
-          <div className="bg-white rounded-xl p-3 border border-slate-100">
-            <p className="text-[9px] font-semibold text-slate-500 mb-1.5">Recent Activity</p>
-            {activity.map(({ m, s, c }) => (
-              <div key={m} className="flex items-start gap-1.5 mb-1 last:mb-0">
-                <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ backgroundColor: c }} />
-                <div className="min-w-0">
-                  <p className="text-[9px] font-medium text-slate-700 truncate">{m}</p>
-                  <p className="text-[8px] text-slate-400 truncate">{s}</p>
-                </div>
-              </div>
-            ))}
+            {/* Micro bottom status bar */}
+            <div className="mt-2 pt-2 border-t border-slate-200/60 flex items-center justify-between text-[9px] text-slate-500">
+              <span className="flex items-center gap-1.5 font-medium">
+                <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: accentColor }} />
+                Synchronized across all site nodes
+              </span>
+              <span className="font-mono text-[8px] text-slate-400">SSL · Role-Scoped</span>
+            </div>
           </div>
         </div>
       </div>
@@ -268,67 +592,83 @@ function HeroDashboardDesktop() {
   );
 }
 
-/* ─── HERO DASHBOARD — MOBILE (simplified card) ──────────────────────────── */
-function HeroDashboardMobile() {
+/* ─── DYNAMIC MOBILE DASHBOARD ───────────────────────────────────────────── */
+function HybridDashboardMobile({ activeStageId, accentColor }) {
   const stats = [
     { l: "Employees", v: "248", c: "#2563eb", I: Users },
     { l: "Present", v: "231", c: "#059669", I: UserCheck },
     { l: "On Leave", v: "12", c: "#d97706", I: Calendar },
     { l: "Pending", v: "7", c: "#dc2626", I: Bell },
   ];
-  const modules = [
-    { I: Clock, l: "Attendance", c: "#2563eb" },
-    { I: Calendar, l: "Leave", c: "#059669" },
-    { I: FileSpreadsheet, l: "Timesheets", c: "#7c3aed" },
-    { I: Receipt, l: "Expenses", c: "#d97706" },
-    { I: CreditCard, l: "Payroll", c: "#059669" },
-    { I: CheckCircle, l: "Approvals", c: "#0891b2" },
-  ];
+
   return (
-    <div className="bg-white rounded-2xl shadow-xl border border-slate-200/80 overflow-hidden w-full">
-      <div className="flex items-center gap-2 px-4 py-3 bg-[#0f1f3d]">
-        <div className="flex gap-1.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
-          <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
-          <div className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
+    <div className="bg-white rounded-2xl shadow-xl border border-slate-200/90 overflow-hidden w-full">
+      <div className="flex items-center justify-between px-4 py-3 bg-[#0f1f3d]">
+        <div className="flex items-center gap-1.5">
+          <div className="w-2 h-2 rounded-full bg-red-400/80" />
+          <div className="w-2 h-2 rounded-full bg-yellow-400/80" />
+          <div className="w-2 h-2 rounded-full bg-green-400/80" />
+          <span className="ml-2 text-xs text-slate-300 font-medium">Oibuz · Mobile OS</span>
         </div>
-        <span className="ml-2 text-xs text-slate-400">Oibuz · Demo View</span>
+        <span
+          className="text-[9px] font-bold px-2 py-0.5 rounded-full uppercase"
+          style={{ backgroundColor: `${accentColor}25`, color: accentColor }}
+        >
+          {activeStageId}
+        </span>
       </div>
-      <div className="p-4 bg-[#f7f9fc]">
-        <p className="text-[10px] text-slate-400 italic mb-3">Illustrative demo data</p>
-        {/* KPI 2x2 */}
-        <div className="grid grid-cols-2 gap-2.5 mb-4">
+
+      <div className="p-4 bg-[#f8fafc]">
+        <div className="grid grid-cols-2 gap-2 mb-3">
           {stats.map(({ l, v, c, I }) => (
-            <div key={l} className="bg-white rounded-xl p-3.5 border border-slate-100 shadow-sm flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${c}15` }}>
-                <I className="w-4.5 h-4.5" style={{ color: c }} />
-              </div>
-              <div>
-                <p className="text-lg font-black text-slate-800 leading-none">{v}</p>
-                <p className="text-[10px] text-slate-500 mt-0.5">{l}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-        {/* Module grid */}
-        <div className="grid grid-cols-3 gap-2">
-          {modules.map(({ I, l, c }) => (
-            <div key={l} className="bg-white rounded-xl p-2.5 border border-slate-100 text-center">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center mx-auto mb-1.5" style={{ backgroundColor: `${c}12` }}>
+            <div key={l} className="bg-white rounded-xl p-3 border border-slate-100 shadow-sm flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${c}15` }}>
                 <I className="w-4 h-4" style={{ color: c }} />
               </div>
-              <p className="text-[10px] font-semibold text-slate-600">{l}</p>
+              <div>
+                <p className="text-base font-black text-slate-800 leading-none">{v}</p>
+                <p className="text-[9px] text-slate-500 mt-0.5">{l}</p>
+              </div>
             </div>
           ))}
+        </div>
+
+        <div className="bg-white rounded-xl p-3 border border-slate-100 text-left">
+          <p className="text-[10px] font-bold text-slate-700 mb-1">
+            {activeStageId === "attendance"
+              ? "Live GPS Selfie punches active across all sites"
+              : activeStageId === "timesheets"
+              ? "Project timesheets submitted & pending manager review"
+              : "October payroll run ready for automated release"}
+          </p>
+          <p className="text-[9px] text-slate-400">Zero paperwork · Instant field-to-office sync</p>
         </div>
       </div>
     </div>
   );
 }
 
-/* ─── HERO ───────────────────────────────────────────────────────────────── */
+/* ─── MAIN HYBRID HERO SECTION ───────────────────────────────────────────── */
 function HeroSection({ onDemoClick }) {
   const [ref, inView] = useScrollReveal(0.05);
+  const reduced = useReducedMotion();
+  const [activeStage, setActiveStage] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const timerRef = useRef(null);
+
+  const advance = useCallback(() => {
+    setActiveStage((s) => (s + 1) % HERO_STAGES.length);
+  }, []);
+
+  useEffect(() => {
+    if (isPaused || reduced) return;
+    timerRef.current = setInterval(advance, HERO_SLIDE_DURATION);
+    return () => clearInterval(timerRef.current);
+  }, [isPaused, reduced, advance]);
+
+  const stage = HERO_STAGES[activeStage];
+  const accentColor = stage.accentColor;
+
   const pills = [
     { I: Smartphone, l: "Selfie & Location Attendance" },
     { I: FileSpreadsheet, l: "Project Timesheets" },
@@ -339,32 +679,80 @@ function HeroSection({ onDemoClick }) {
   return (
     <section
       className="relative min-h-screen flex flex-col justify-center pt-[68px] overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #eef2ff 0%, #e8f0fe 50%, #f7f9fc 100%)" }}
+      style={{
+        background: "linear-gradient(135deg, #f8fafc 0%, #eef2ff 45%, #e8f0fe 75%, #f1f5f9 100%)",
+      }}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      aria-label="Oibuz Product Showcase"
     >
-      {/* Construction BG — hidden on xs, faded on sm */}
+      {/* Architectural Background Grid */}
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.035]"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <defs>
+          <pattern id="hero-arch-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+            <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#1a3a6b" strokeWidth="0.8" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#hero-arch-grid)" />
+      </svg>
+
+      {/* Ambient Radial Concentric Rings */}
+      {!reduced && [560, 390, 230].map((size, i) => (
+        <motion.div
+          key={`arch-ring-${i}`}
+          className="absolute top-1/2 left-1/2 rounded-full border pointer-events-none hidden sm:block"
+          style={{
+            width: size,
+            height: size,
+            x: "-50%",
+            y: "-50%",
+            borderColor: `${accentColor}12`,
+          }}
+          animate={{
+            scale: [1, 1.04 + i * 0.015, 1],
+            rotate: [0, i % 2 === 0 ? 8 : -8, 0],
+          }}
+          transition={{
+            duration: 8 + i * 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: i * 0.9,
+          }}
+        />
+      ))}
+
+      {/* Construction BG Photo with Smooth Right-side Fade Mask */}
       <div
         className="absolute inset-0 pointer-events-none hidden sm:block"
         style={{
           backgroundImage: "url('/images/construction-bg.png')",
           backgroundSize: "cover",
           backgroundPosition: "center right",
-          maskImage: "linear-gradient(to left, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.08) 40%, transparent 65%)",
-          WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.08) 40%, transparent 65%)",
+          maskImage: "linear-gradient(to left, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.05) 40%, transparent 65%)",
+          WebkitMaskImage: "linear-gradient(to left, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.05) 40%, transparent 65%)",
         }}
       />
-      {/* Left white fade */}
+
+      {/* Soft Left Light Fade */}
       <div
         className="absolute inset-y-0 left-0 hidden sm:block pointer-events-none"
         style={{
-          width: "60%",
-          background: "linear-gradient(to right, #eef2ff 0%, rgba(238,242,255,0.97) 60%, transparent 100%)",
+          width: "55%",
+          background: "linear-gradient(to right, #f8fafc 0%, rgba(248,250,252,0.96) 65%, transparent 100%)",
         }}
       />
 
-      <div className={`relative ${container} py-12 sm:py-16 lg:py-20`}>
+      {/* Floating Micro-Particles */}
+      {!reduced && <AmbientHeroParticles color={accentColor} />}
+
+      <div className={`relative ${container} py-10 sm:py-14 lg:py-18`}>
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-8 xl:gap-12 items-center">
 
-          {/* LEFT — copy */}
+          {/* LEFT: KINETIC MOTION COPY & INTERACTIVE 39s SLIDESHOW */}
           <motion.div
             ref={ref}
             initial="hidden"
@@ -372,54 +760,196 @@ function HeroSection({ onDemoClick }) {
             variants={stagger}
             className="max-w-xl"
           >
-            {/* Eyebrow */}
-            <motion.div variants={fadeUp} className="mb-5">
-              <div className="inline-flex items-center gap-2 bg-[#1a3a6b]/8 border border-[#1a3a6b]/15 rounded-full px-4 py-1.5">
+            {/* Eyebrow badge with Live Pulsing Beacon */}
+            <motion.div variants={fadeUp} className="mb-4">
+              <div className="inline-flex items-center gap-2 bg-white/90 border border-slate-200/90 rounded-full px-4 py-1.5 shadow-sm backdrop-blur-sm">
                 <HardHat className="w-3.5 h-3.5 text-[#2563eb] flex-shrink-0" />
                 <span className="text-xs font-semibold text-[#1a3a6b] tracking-wide uppercase leading-none">
                   Workforce Management for Construction
                 </span>
+                <span className="text-slate-300">·</span>
+                <span
+                  className="text-[10px] font-bold font-mono tracking-wider transition-colors duration-300"
+                  style={{ color: accentColor }}
+                >
+                  {stage.badge}
+                </span>
               </div>
             </motion.div>
 
-            {/* H1 — clamp for responsive sizing */}
-            <motion.h1
+            {/* Kinetic Word-by-Word Motion Headline */}
+            <div className="mb-4 min-h-[96px] sm:min-h-[110px] flex flex-col justify-center">
+              <AnimatePresence mode="wait">
+                <motion.h1
+                  key={`headline-${stage.id}`}
+                  className="font-extrabold text-[#0f1f3d] tracking-tight leading-[1.08]"
+                  style={{ fontSize: "clamp(2.1rem, 4.2vw, 3.4rem)" }}
+                >
+                  {/* Line 1 */}
+                  <span className="block mb-1">
+                    {stage.headlineWords1.map((word, wi) => (
+                      <motion.span
+                        key={`${stage.id}-1-${wi}`}
+                        initial={{ opacity: 0, y: 14, filter: "blur(4px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        exit={{ opacity: 0, y: -8, filter: "blur(2px)" }}
+                        transition={{ delay: wi * 0.08, duration: 0.42, ease: HERO_EASE }}
+                        className="inline-block mr-[0.25em]"
+                      >
+                        {word}
+                      </motion.span>
+                    ))}
+                  </span>
+
+                  {/* Line 2 (Highlighted) */}
+                  <span className="block" style={{ color: accentColor }}>
+                    {stage.headlineWords2.map((word, wi) => (
+                      <motion.span
+                        key={`${stage.id}-2-${wi}`}
+                        initial={{ opacity: 0, y: 14, filter: "blur(4px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        exit={{ opacity: 0, y: -8, filter: "blur(2px)" }}
+                        transition={{ delay: 0.18 + wi * 0.08, duration: 0.42, ease: HERO_EASE }}
+                        className="inline-block mr-[0.25em]"
+                        style={{
+                          textShadow: `0 0 35px ${accentColor}30`,
+                        }}
+                      >
+                        {word}
+                      </motion.span>
+                    ))}
+                  </span>
+                </motion.h1>
+              </AnimatePresence>
+            </div>
+
+            {/* Dynamic Kinetic Subtitle */}
+            <div className="mb-6 min-h-[56px] sm:min-h-[64px]">
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={`sub-${stage.id}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ delay: 0.2, duration: 0.4, ease: HERO_EASE }}
+                  className="text-base sm:text-lg text-slate-600 leading-relaxed"
+                >
+                  {stage.sub}
+                </motion.p>
+              </AnimatePresence>
+            </div>
+
+            {/* 39-SECOND INTERACTIVE SEGMENT CONTROLLER (3 stages x 13s) */}
+            <motion.div
               variants={fadeUp}
-              className="font-extrabold text-[#0f1f3d] tracking-tight mb-5 leading-[1.08]"
-              style={{ fontSize: "clamp(2.1rem, 4.5vw, 3.5rem)" }}
+              className="bg-white/95 border border-slate-200/90 rounded-2xl p-2 sm:p-2.5 shadow-sm mb-7 backdrop-blur-sm relative overflow-hidden"
             >
-              Workforce Management<br className="hidden sm:block" />
-              {" "}Built for{" "}
-              <span style={{ color: "#2563eb" }}>Construction.</span>
-            </motion.h1>
+              {/* Active Slide Background Highlight */}
+              <div className="flex items-center justify-between gap-1.5 sm:gap-2">
+                {HERO_STAGES.map((st, i) => {
+                  const isActive = i === activeStage;
+                  return (
+                    <button
+                      key={st.id}
+                      onClick={() => setActiveStage(i)}
+                      className={`flex-1 flex items-center justify-between px-2.5 sm:px-3 py-2 rounded-xl text-left transition-all duration-300 relative ${
+                        isActive
+                          ? "bg-slate-50 border border-slate-200/90 shadow-xs"
+                          : "hover:bg-slate-50/60 opacity-75 hover:opacity-100"
+                      }`}
+                    >
+                      <div className="min-w-0 pr-1">
+                        <span className="text-[9px] font-mono font-bold block text-slate-400 leading-none">
+                          {st.stepNum}
+                        </span>
+                        <span
+                          className={`text-[11px] sm:text-xs font-bold truncate block mt-0.5 ${
+                            isActive ? "text-slate-900" : "text-slate-600"
+                          }`}
+                        >
+                          {st.tabLabel}
+                        </span>
+                      </div>
+                      {isActive && (
+                        <HeroProgressRing
+                          duration={HERO_SLIDE_DURATION}
+                          active={!isPaused}
+                          color={st.accentColor}
+                        />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
 
-            <motion.p variants={fadeUp} className="text-base sm:text-lg text-slate-600 leading-relaxed mb-7">
-              Manage attendance, leave, timesheets, expenses and payroll across your workforce — from one connected platform.
-            </motion.p>
+              {/* Linear Progress Timeline Line */}
+              <div className="w-full h-0.5 bg-slate-100 rounded-full mt-2 overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`timeline-${activeStage}`}
+                    className="h-full rounded-full"
+                    style={{ backgroundColor: accentColor }}
+                    initial={{ width: "0%" }}
+                    animate={{ width: isPaused ? undefined : "100%" }}
+                    transition={{ duration: HERO_SLIDE_DURATION / 1000, ease: "linear" }}
+                  />
+                </AnimatePresence>
+              </div>
 
-            {/* CTAs */}
-            <motion.div variants={fadeUp} className="flex flex-row w-full sm:w-auto gap-2 sm:gap-3 mb-8">
+              {/* Controls bar */}
+              <div className="flex items-center justify-between px-1.5 pt-2 mt-1 text-[10px] text-slate-400">
+                <span className="font-mono">
+                  Stage {activeStage + 1} of 3 · 39s Presentation
+                </span>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={() => setActiveStage((s) => (s - 1 + HERO_STAGES.length) % HERO_STAGES.length)}
+                    aria-label="Previous stage"
+                    className="w-6 h-6 rounded-md hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors font-bold"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    onClick={() => setIsPaused((p) => !p)}
+                    aria-label={isPaused ? "Resume auto-play" : "Pause auto-play"}
+                    className="px-2 py-0.5 rounded-md hover:bg-slate-100 font-medium text-slate-700 transition-colors"
+                  >
+                    {isPaused ? "▶ Play" : "❚❚ Pause"}
+                  </button>
+                  <button
+                    onClick={advance}
+                    aria-label="Next stage"
+                    className="w-6 h-6 rounded-md hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors font-bold"
+                  >
+                    ›
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Primary CTAs */}
+            <motion.div variants={fadeUp} className="flex flex-row w-full sm:w-auto gap-2 sm:gap-3 mb-7">
               <button
                 onClick={onDemoClick}
                 id="hero-demo-btn"
-                className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 bg-[#1a3a6b] hover:bg-[#15305a] text-white font-semibold px-2 sm:px-7 py-3.5 rounded-xl transition-all hover:shadow-xl hover:-translate-y-0.5 min-h-[48px] text-[13px] sm:text-base whitespace-nowrap"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#1a3a6b] hover:bg-[#15305a] text-white font-semibold px-6 sm:px-8 py-3.5 rounded-xl transition-all hover:shadow-xl hover:-translate-y-0.5 min-h-[48px] text-[13px] sm:text-base whitespace-nowrap shadow-lg shadow-blue-900/15"
               >
                 Book a Demo <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
               </button>
               <a
                 href="#platform"
-                className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 border border-[#1a3a6b]/25 text-[#1a3a6b] font-semibold px-2 sm:px-7 py-3.5 rounded-xl hover:bg-[#1a3a6b]/5 transition-all min-h-[48px] text-[13px] sm:text-base text-center whitespace-nowrap"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 border border-[#1a3a6b]/20 text-[#1a3a6b] font-semibold px-5 sm:px-7 py-3.5 rounded-xl hover:bg-white/80 transition-all min-h-[48px] text-[13px] sm:text-base text-center whitespace-nowrap bg-white/50 backdrop-blur-sm"
               >
                 Explore Platform
               </a>
             </motion.div>
 
-            {/* Feature pills — 2×2 on mobile, row on larger */}
+            {/* Feature Pills */}
             <motion.div variants={fadeUp} className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
               {pills.map(({ I, l }) => (
                 <div
                   key={l}
-                  className="flex items-center gap-1.5 bg-white border border-slate-200 rounded-xl sm:rounded-full px-3 py-2 shadow-sm"
+                  className="flex items-center gap-1.5 bg-white/90 border border-slate-200/90 rounded-xl sm:rounded-full px-3 py-2 shadow-xs backdrop-blur-sm"
                 >
                   <I className="w-3.5 h-3.5 text-[#2563eb] flex-shrink-0" />
                   <span className="text-xs font-medium text-slate-700 leading-tight">{l}</span>
@@ -428,27 +958,34 @@ function HeroSection({ onDemoClick }) {
             </motion.div>
           </motion.div>
 
-          {/* RIGHT — desktop dashboard (hidden on mobile, shown below instead) */}
+          {/* RIGHT: DESKTOP LIVING DASHBOARD */}
           <motion.div
-            initial={{ opacity: 0, x: 30, scale: 0.97 }}
+            initial={{ opacity: 0, x: 28, scale: 0.98 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.2 }}
             className="hidden lg:flex justify-end"
           >
-            <div className="w-full max-w-[520px]">
-              <HeroDashboardDesktop />
+            <div className="w-full max-w-[530px]">
+              <HybridDashboardDesktop
+                activeStageId={stage.id}
+                accentColor={accentColor}
+                floatingBadge={stage.floatingBadge}
+              />
             </div>
           </motion.div>
         </div>
 
-        {/* Mobile dashboard — shown below copy */}
+        {/* Mobile Dashboard */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
-          className="lg:hidden mt-10"
+          className="lg:hidden mt-8"
         >
-          <HeroDashboardMobile />
+          <HybridDashboardMobile
+            activeStageId={stage.id}
+            accentColor={accentColor}
+          />
         </motion.div>
       </div>
     </section>
@@ -1544,7 +2081,7 @@ function FinalCTA({ onDemoClick }) {
             See how Oibuz fits your employees, projects, sites and approval workflows.
           </motion.p>
 
-          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-8 sm:mb-10">
+          <motion.div variants={fadeUp} className="flex flex-row flex-wrap items-center justify-center gap-2.5 sm:gap-4 mb-8 sm:mb-10">
             <button
               onClick={onDemoClick}
               id="final-cta-btn"

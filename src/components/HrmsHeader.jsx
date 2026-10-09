@@ -22,7 +22,7 @@ export default function HrmsHeader() {
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl flex items-center justify-between h-16">
         {/* Logo */}
         <Link to="/products/hrms" className="flex items-center gap-2 shrink-0">
-          <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-9 w-auto object-contain" />
+          <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-8 max-h-8 w-auto object-contain" />
         </Link>
 
         {/* Desktop Nav */}

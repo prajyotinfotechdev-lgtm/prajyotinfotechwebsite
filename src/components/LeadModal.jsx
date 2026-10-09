@@ -209,18 +209,18 @@ export default function LeadModal() {
                   <div><span className="text-slate-400">BUDGET:</span> <span className="text-indigo-300">{form.budget}</span></div>
                 </div>
 
-                <div className="pt-2 flex flex-col sm:flex-row gap-3">
+                <div className="pt-2 flex flex-row flex-wrap items-center gap-2.5 sm:gap-3">
                   <button
                     onClick={openWhatsAppConfirmation}
-                    className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-teal-500 hover:bg-teal-600 text-white py-3.5 px-5 font-semibold text-sm shadow-lg shadow-teal-500/20 transition-all hover:scale-[1.02] cursor-pointer"
+                    className="flex-1 min-w-[140px] inline-flex items-center justify-center gap-1.5 rounded-xl bg-teal-500 hover:bg-teal-600 text-white py-3 px-4 font-semibold text-xs sm:text-sm shadow-lg shadow-teal-500/20 transition-all hover:scale-[1.02] cursor-pointer whitespace-nowrap"
                   >
-                    <MessageSquare className="w-4.5 h-4.5" />
+                    <MessageSquare className="w-4 h-4 shrink-0" />
                     <span>Instant Chat on WhatsApp</span>
                   </button>
 
                   <button
                     onClick={closeLeadModal}
-                    className="rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 py-3.5 px-5 font-semibold text-sm transition cursor-pointer"
+                    className="flex-1 min-w-[100px] rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 py-3 px-4 font-semibold text-xs sm:text-sm transition cursor-pointer whitespace-nowrap"
                   >
                     Close Window
                   </button>

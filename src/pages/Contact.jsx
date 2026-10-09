@@ -145,17 +145,17 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
                   Your project enquiry has been safely received in our database. Our technical team will review your notes and reach out shortly.
                 </p>
 
-                <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <div className="mt-8 flex flex-row flex-wrap items-center justify-center gap-2.5 sm:gap-3">
                   <button
                     onClick={openWhatsAppDirect}
-                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md flex items-center justify-center gap-2"
+                    className="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
                   >
-                    <MessageSquare className="w-4 h-4" />
+                    <MessageSquare className="w-4 h-4 shrink-0" />
                     <span>Continue on WhatsApp Now</span>
                   </button>
                   <button
                     onClick={() => { setSubmitted(false); setForm({ name: "", contact: "", message: "", projectType: "Website / App Development" }); }}
-                    className="w-full sm:w-auto px-5 py-3 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                    className="flex-1 sm:flex-none px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 whitespace-nowrap cursor-pointer"
                   >
                     Send Another Message
                   </button>
@@ -233,26 +233,26 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
                   />
                 </div>
 
-                <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
+                <div className="pt-2 flex flex-row flex-wrap items-center gap-2.5 sm:gap-3">
                   <button
                     type="submit"
                     disabled={!isValid || submitting}
-                    className={`w-full sm:w-auto px-6 py-3.5 rounded-xl font-bold text-xs sm:text-sm shadow-lg flex items-center justify-center gap-2 transition-all ${
+                    className={`flex-1 sm:flex-none px-4 sm:px-6 py-3 sm:py-3.5 rounded-xl font-bold text-xs sm:text-sm shadow-lg flex items-center justify-center gap-2 transition-all whitespace-nowrap ${
                       isValid && !submitting
-                        ? "bg-slate-950 text-white hover:bg-slate-800 shadow-slate-900/20 active:scale-95"
+                        ? "bg-slate-950 text-white hover:bg-slate-800 shadow-slate-900/20 active:scale-95 cursor-pointer"
                         : "bg-slate-200 text-slate-400 cursor-not-allowed"
                     }`}
                   >
-                    <Send className="w-4 h-4" />
-                    <span>{submitting ? "Submitting Inquiry..." : "Submit Project Inquiry"}</span>
+                    <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+                    <span>{submitting ? "Submitting..." : "Submit Project Inquiry"}</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={openWhatsAppDirect}
-                    className="w-full sm:w-auto px-5 py-3.5 rounded-xl border border-emerald-500 text-emerald-700 hover:bg-emerald-50 text-xs sm:text-sm font-bold transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 sm:flex-none px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl border border-emerald-500 text-emerald-700 hover:bg-emerald-50 text-xs sm:text-sm font-bold transition-colors flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer"
                   >
-                    <MessageSquare className="w-4 h-4 text-emerald-600" />
+                    <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0" />
                     <span>Chat on WhatsApp</span>
                   </button>
                 </div>

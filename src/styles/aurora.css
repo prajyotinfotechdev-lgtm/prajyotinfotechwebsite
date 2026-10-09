@@ -1,4 +1,4 @@
-/* aurora.css — original vibe, toned down just enough */
+/* aurora.css — Cinematic upgrade for Prajyot Infotech hero */
 
 .aurora-bg {
   position: absolute;
@@ -14,7 +14,7 @@
   position: absolute;
   border-radius: 50%;
   filter: blur(90px);
-  opacity: 0.55;               /* was 0.8 — this was the main culprit */
+  opacity: 0.55;
   animation: aurora-flow 22s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
@@ -29,7 +29,7 @@
   animation-duration: 28s;
 }
 
-/* Violet — slightly softer than before */
+/* Violet */
 .aurora-blob-4 {
   width: 500px;
   height: 500px;
@@ -40,7 +40,7 @@
   animation-delay: -15s;
 }
 
-/* Emerald — kept, it's a nice contrast note */
+/* Emerald */
 .aurora-blob-2 {
   width: 650px;
   height: 650px;
@@ -51,7 +51,7 @@
   animation-delay: -6s;
 }
 
-/* Soft lavender — replaces harsh pink */
+/* Soft lavender */
 .aurora-blob-3 {
   width: 750px;
   height: 750px;
@@ -70,10 +70,43 @@
   100% { transform: translate(4%, 4%)    scale(1)    rotate(360deg); }
 }
 
-/* Mobile */
+/* ── Slow pulse — used across hero sections ── */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%       { opacity: 0.9; transform: scale(1.04); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s ease-in-out infinite;
+}
+
+/* ── Slide progress bar ── */
+@keyframes slide-progress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+.hero-slide-progress {
+  animation: slide-progress linear forwards;
+}
+
+/* ── Mobile ── */
 @media (max-width: 768px) {
   .aurora-blob {
     filter: blur(70px);
     opacity: 0.38;
+  }
+}
+
+/* ── Reduced motion — freeze all aurora blobs ── */
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob {
+    animation: none !important;
+  }
+  .animate-pulse-slow {
+    animation: none !important;
+  }
+  .hero-slide-progress {
+    animation: none !important;
   }
 }

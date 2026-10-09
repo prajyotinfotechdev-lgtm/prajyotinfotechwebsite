@@ -167,3 +167,59 @@
     background: rgba(124, 58, 237, 0.15);
     color: #1e2756;
 }
+
+/* ═══════════════════════════════════════════
+   Reduced Motion — global override
+   ═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ═══════════════════════════════════════════
+   Hero micro-animation utilities
+   ═══════════════════════════════════════════ */
+
+/* Animated scroll-mouse indicator */
+@keyframes scroll-mouse-ball {
+    0%   { transform: translateY(0);   opacity: 1; }
+    60%  { transform: translateY(10px); opacity: 0; }
+    100% { transform: translateY(0);   opacity: 0; }
+}
+.animate-scroll-mouse {
+    animation: scroll-mouse-ball 1.8s ease-in-out infinite;
+}
+
+/* Data-flow path drawing repeating */
+@keyframes path-draw {
+    0%   { stroke-dashoffset: 1000; opacity: 0; }
+    10%  { opacity: 1; }
+    80%  { stroke-dashoffset: 0; opacity: 1; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+}
+.animate-path-draw {
+    stroke-dasharray: 1000;
+    animation: path-draw 3s ease-in-out infinite;
+}
+
+/* Slide-in from right for hero cards */
+@keyframes slide-in-right {
+    from { transform: translateX(20px); opacity: 0; }
+    to   { transform: translateX(0);    opacity: 1; }
+}
+.animate-slide-in-right {
+    animation: slide-in-right 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Stagger children utility */
+.stagger-children > *:nth-child(1) { animation-delay: 0s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.4s; }

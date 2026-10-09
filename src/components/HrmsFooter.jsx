@@ -11,7 +11,7 @@ export default function HrmsFooter() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-9 w-auto mb-4 brightness-0 invert" />
+            <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-8 max-h-8 w-auto mb-4 brightness-0 invert object-contain" />
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
               Workforce management for construction and project-based businesses.
             </p>
@@ -56,7 +56,7 @@ export default function HrmsFooter() {
           </div>
         </div>
 
-        <div className="border-t border-slate-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="border-t border-slate-800 pt-6 flex flex-row flex-wrap items-center justify-between gap-3">
           <p className="text-slate-500 text-xs">© {new Date().getFullYear()} Oibuz · Prajyot Infotech. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <button

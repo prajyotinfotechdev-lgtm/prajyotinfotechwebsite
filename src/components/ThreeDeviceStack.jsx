@@ -6,7 +6,7 @@ export default function ThreeDeviceStack() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto h-[340px] sm:h-[460px] flex items-center justify-center perspective-1000 select-none scale-[0.88] xs:scale-95 sm:scale-100 origin-center">
+    <div className="relative w-full max-w-2xl mx-auto h-[290px] sm:h-[460px] flex items-center justify-center perspective-1000 select-none scale-[0.72] xs:scale-[0.84] sm:scale-100 origin-center my-2 sm:my-0">
       
       {/* Ambient Pulsing Glow behind devices */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">

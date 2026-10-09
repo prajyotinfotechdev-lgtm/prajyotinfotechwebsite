@@ -357,12 +357,12 @@ export default function PortfolioSpotlight({ onOpenDemo }) {
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
+              <div className="pt-2 flex flex-row flex-wrap items-center gap-2.5">
                 <button
                   onClick={() => onOpenDemo("restaurant-management")}
-                  className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-orange-500/25 transition cursor-pointer flex items-center justify-center gap-2 text-xs"
+                  className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-orange-500/25 transition cursor-pointer flex items-center justify-center gap-2 text-xs whitespace-nowrap"
                 >
-                  <Zap className="w-4 h-4" />
+                  <Zap className="w-4 h-4 shrink-0" />
                   Launch Full Interactive Simulator
                 </button>
               </div>
