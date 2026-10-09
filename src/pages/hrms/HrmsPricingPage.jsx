@@ -20,6 +20,7 @@ import HrmsHeader from "../../components/HrmsHeader.jsx";
 import HrmsFooter from "../../components/HrmsFooter.jsx";
 import Seo from "../../components/Seo.jsx";
 import { useLeadModal } from "../../context/LeadModalContext.jsx";
+import OibuzPricingSection from "../../components/OibuzPricingSection.jsx";
 
 const container = "mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8";
 const sxPad = "py-14 sm:py-20 lg:py-24";
@@ -91,27 +92,50 @@ export default function HrmsPricingPage() {
       <HrmsHeader />
 
       {/* ─── HERO SECTION ────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/50 via-white to-slate-50/60 border-b border-slate-100 pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-20">
-        {/* Glow Effects */}
-        <div className="absolute top-10 right-10 w-[500px] h-[500px] bg-gradient-to-br from-blue-500/15 to-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-10 left-10 w-96 h-96 bg-blue-600/10 rounded-full blur-2xl pointer-events-none" />
+      <section className="relative overflow-hidden bg-gradient-to-b from-slate-900 via-[#0a162b] to-slate-900 text-white border-b border-slate-800 pt-20 sm:pt-24 lg:pt-32 pb-20 sm:pb-24">
+        {/* Animated Ambient Light Streams */}
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.35, 0.2],
+          }}
+          transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+          className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-gradient-to-br from-blue-600/30 via-indigo-600/20 to-transparent rounded-full blur-3xl pointer-events-none"
+        />
+        <motion.div
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.15, 0.25, 0.15],
+          }}
+          transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
+          className="absolute -bottom-20 left-10 w-[500px] h-[500px] bg-gradient-to-tr from-cyan-500/25 via-blue-600/15 to-transparent rounded-full blur-3xl pointer-events-none"
+        />
+
+        {/* Subtle Cyber Grid */}
+        <div
+          className="absolute inset-0 opacity-[0.05] pointer-events-none"
+          style={{
+            backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`,
+            backgroundSize: "50px 50px",
+          }}
+        />
 
         <div className={container}>
-          <div className="max-w-3xl">
+          <div className="max-w-3xl relative z-10">
             {/* Eyebrow badge */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="inline-flex items-center gap-2.5 bg-blue-50 border border-blue-200/80 rounded-full px-4 py-1.5 mb-6 shadow-xs"
+              className="inline-flex items-center gap-2.5 bg-blue-500/10 border border-blue-400/30 rounded-full px-4 py-1.5 mb-6 shadow-xs"
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
               </span>
-              <Building2 className="w-3.5 h-3.5 text-blue-700 shrink-0" />
-              <span className="text-xs font-bold text-blue-900 tracking-wide uppercase leading-none">
-                Transparent Workforce Deployment
+              <Building2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+              <span className="text-xs font-black text-cyan-300 tracking-wider uppercase leading-none">
+                Predictable Workforce SaaS Architecture
               </span>
             </motion.div>
 
@@ -120,11 +144,11 @@ export default function HrmsPricingPage() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08, duration: 0.45 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.08] mb-6"
+              className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.05] mb-6"
             >
-              Let's build the right Oibuz plan{" "}
-              <span className="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                for your workforce.
+              Built for site crews.{" "}
+              <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-300 bg-clip-text text-transparent">
+                Priced for control.
               </span>
             </motion.h1>
 
@@ -133,9 +157,9 @@ export default function HrmsPricingPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15, duration: 0.4 }}
-              className="text-lg sm:text-xl text-slate-600 font-normal leading-relaxed mb-8 max-w-2xl"
+              className="text-base sm:text-xl text-slate-300 font-normal leading-relaxed mb-8 max-w-2xl"
             >
-              Every construction organization is structured differently. We provide transparent, custom-scoped proposals tailored to your active site count, team size, and operational requirements.
+              Transparent, scalable construction workforce management. Choose your headcount tier with zero biometric hardware, instant GPS geofencing, and comprehensive role-based governance.
             </motion.p>
 
             {/* CTAs */}
@@ -143,33 +167,61 @@ export default function HrmsPricingPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.22, duration: 0.4 }}
-              className="flex flex-row w-full sm:w-auto gap-3 items-center"
+              className="flex flex-row flex-nowrap w-full sm:w-auto gap-2.5 sm:gap-3.5 items-center mb-10"
             >
+              <a
+                href="#pricing-plans"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("pricing-plans")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 text-white font-black px-4 sm:px-8 py-3.5 sm:py-4 rounded-xl transition-all shadow-xl shadow-blue-600/30 hover:shadow-2xl hover:shadow-indigo-600/40 hover:-translate-y-0.5 min-h-[46px] sm:min-h-[50px] text-xs sm:text-base cursor-pointer whitespace-nowrap"
+              >
+                <span>View Plans</span>
+                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 stroke-[2.5]" />
+              </a>
+
               <button
                 type="button"
                 onClick={() =>
                   openLeadModal({
                     source: "Pricing Page - Hero CTA",
-                    title: "Request Tailored Oibuz Quote",
-                    subtitle: "Tell us about your workforce scale to receive a custom pricing proposal.",
+                    title: "Book Live Oibuz Product Walkthrough",
+                    subtitle: "Schedule a 15-min walkthrough tailored to your job sites and active crews.",
                     projectType: "Oibuz Construction HRMS",
                   })
                 }
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white font-bold px-7 sm:px-8 py-3.5 rounded-xl transition-all shadow-lg shadow-blue-700/25 hover:shadow-xl hover:-translate-y-0.5 min-h-[48px] text-sm sm:text-base cursor-pointer whitespace-nowrap"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 sm:gap-2 border border-slate-700 bg-white/5 hover:bg-white/10 text-slate-200 font-bold px-4 sm:px-7 py-3.5 sm:py-4 rounded-xl transition-all min-h-[46px] sm:min-h-[50px] text-xs sm:text-base text-center whitespace-nowrap shadow-xs hover:border-slate-500 cursor-pointer"
               >
-                Talk to Sales <ArrowRight className="w-4 h-4 shrink-0 stroke-[2.5]" />
+                Book Demo
               </button>
+            </motion.div>
 
-              <Link
-                to="/products/hrms/features"
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-semibold px-5 sm:px-7 py-3.5 rounded-xl transition-all min-h-[48px] text-sm sm:text-base text-center whitespace-nowrap shadow-xs hover:border-blue-300"
-              >
-                Explore Features
-              </Link>
+            {/* Floating Trust Metric Strip */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.4 }}
+              className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-800/80"
+            >
+              {[
+                { label: "1-Tap Selfie Punch", sub: "GPS Geofenced" },
+                { label: "5-Tier Roles", sub: "Complete Control" },
+                { label: "Instant Payslips", sub: "Automated PDF" },
+                { label: "Zero Hardware", sub: "100% Smartphone" },
+              ].map((item, idx) => (
+                <div key={idx} className="bg-white/5 backdrop-blur-sm rounded-xl p-3 border border-white/5">
+                  <div className="text-xs font-bold text-white leading-tight">{item.label}</div>
+                  <div className="text-[10px] text-cyan-300 font-medium mt-0.5">{item.sub}</div>
+                </div>
+              ))}
             </motion.div>
           </div>
         </div>
       </section>
+
+      {/* ─── PRICING PLANS SECTION ────────────────────────────────────────── */}
+      <OibuzPricingSection id="pricing-plans" />
 
       {/* ─── SECTION 1: INTERACTIVE SCOPING CALCULATOR ──────────────────── */}
       <section className={`bg-slate-50 border-b border-slate-200/80 ${sxPad}`}>

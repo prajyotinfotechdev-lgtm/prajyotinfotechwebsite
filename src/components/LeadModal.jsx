@@ -27,6 +27,7 @@ import { createLead } from "../utils/leadStorage.js";
 const WHATSAPP_NUMBER = "917020708747";
 
 const PROJECT_TYPES = [
+  { label: "Oibuz Construction HRMS", badge: "Flagship SaaS" },
   { label: "Website / Web App Development", badge: "High Speed" },
   { label: "Enterprise ERP / CRM Suite", badge: "Custom Logic" },
   { label: "Cross-Platform Mobile App (Android/iOS)", badge: "Native Quality" },
@@ -301,6 +302,11 @@ export default function LeadModal() {
                       onChange={(e) => setForm({ ...form, budget: e.target.value })}
                       className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-xs sm:text-sm focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 outline-none transition"
                     >
+                      {form.budget && !BUDGET_RANGES.includes(form.budget) && (
+                        <option value={form.budget} className="bg-slate-900 text-white font-bold">
+                          {form.budget}
+                        </option>
+                      )}
                       {BUDGET_RANGES.map((range) => (
                         <option key={range} value={range} className="bg-slate-900 text-white">
                           {range}

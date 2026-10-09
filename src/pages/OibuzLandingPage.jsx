@@ -13,6 +13,7 @@ import {
   Globe, Layers,
 } from "lucide-react";
 import OibuzAudioStory from "../components/OibuzAudioStory";
+import OibuzPricingSection from "../components/OibuzPricingSection";
 
 /* ─── UTILITIES ───────────────────────────────────────────────────────────── */
 function useScrollReveal(threshold = 0.1) {
@@ -53,6 +54,7 @@ function OibuzHeader({ onDemoClick }) {
     { label: "Features", href: "#features" },
     { label: "For Construction", href: "#construction" },
     { label: "How It Works", href: "#how-it-works" },
+    { label: "Pricing", href: "#pricing" },
     { label: "FAQ", href: "#faq" },
   ];
 
@@ -2199,7 +2201,7 @@ function DemoForm() {
 /* ─── FOOTER ─────────────────────────────────────────────────────────────── */
 function OibuzFooter() {
   const cols = {
-    Platform: ["Features", "For Construction", "How It Works", "FAQ", "Contact"],
+    Platform: ["Features", "For Construction", "How It Works", "Pricing", "FAQ", "Contact"],
     Company: ["About", "Prajyot Infotech", "Support"],
     Legal: ["Privacy Policy", "Terms & Conditions"],
   };
@@ -2253,6 +2255,7 @@ export default function OibuzLandingPage() {
       <FeatureSpotlights />
       <WhyOibuz />
       <ControlSecurity />
+      <OibuzPricingSection id="pricing" />
       <FAQ />
       <FinalCTA onDemoClick={scrollToDemo} />
       <DemoForm />
