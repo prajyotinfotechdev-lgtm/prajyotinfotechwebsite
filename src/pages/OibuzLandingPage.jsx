@@ -1033,10 +1033,10 @@ function AudienceStrip() {
 function ProblemSection() {
   const [ref, inView] = useScrollReveal();
   const probs = [
-    { n: "01", I: ClipboardList, t: "Manual Attendance", d: "Paper registers make it nearly impossible to verify whether a worker was actually on site.", v: "📋 Paper Register" },
-    { n: "02", I: Bell, t: "Scattered Approvals", d: "Leave requests lost in WhatsApp threads cause delays and disputes at payroll time.", v: "💬 WhatsApp" },
-    { n: "03", I: FileSpreadsheet, t: "Payroll Admin", d: "Combining attendance, leave and timesheets at month-end is time-consuming and error-prone.", v: "📊 Excel Sheet" },
-    { n: "04", I: Eye, t: "Limited Visibility", d: "Business owners have no real-time view into who is working or where bottlenecks are.", v: "🔍 Manual Reports" },
+    { n: "01", I: ClipboardList, t: "Manual Attendance", d: "Paper registers make it nearly impossible to verify whether a worker was actually on site.", v: "Paper Register" },
+    { n: "02", I: Bell, t: "Scattered Approvals", d: "Leave requests lost in WhatsApp threads cause delays and disputes at payroll time.", v: "WhatsApp" },
+    { n: "03", I: FileSpreadsheet, t: "Payroll Admin", d: "Combining attendance, leave and timesheets at month-end is time-consuming and error-prone.", v: "Excel Sheets" },
+    { n: "04", I: Eye, t: "Limited Visibility", d: "Business owners have no real-time view into who is working or where bottlenecks are.", v: "Manual Reports" },
   ];
   return (
     <section className={`bg-slate-50 ${sxPad}`} id="features">

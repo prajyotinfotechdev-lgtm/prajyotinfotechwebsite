@@ -32,6 +32,10 @@ import {
   CreditCard,
   AlertCircle,
   Send,
+  Flame,
+  Inbox,
+  Bell,
+  CheckCheck,
 } from "lucide-react";
 
 const WA = (text) =>
@@ -210,14 +214,20 @@ function RestaurantSimulator() {
             >
               <div className="flex items-center justify-between mb-1">
                 <span className="font-bold text-orange-300">Live Ticket: Table #{tableNum}</span>
-                <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase flex items-center gap-1 ${
                   orderStatus === "ready"
                     ? "bg-emerald-500/30 text-emerald-300"
                     : orderStatus === "preparing"
                     ? "bg-amber-500/30 text-amber-300"
                     : "bg-blue-500/30 text-blue-300"
                 }`}>
-                  {orderStatus === "ready" ? "✓ Food Ready for Dispatch" : orderStatus === "preparing" ? "🔥 Cooking on Stove 3" : "📥 Ticket Received"}
+                  {orderStatus === "ready" ? (
+                    <><CheckCircle2 className="w-3 h-3 text-emerald-400" /> Food Ready for Dispatch</>
+                  ) : orderStatus === "preparing" ? (
+                    <><Flame className="w-3 h-3 text-amber-400" /> Cooking on Stove 3</>
+                  ) : (
+                    <><Inbox className="w-3 h-3 text-blue-400" /> Ticket Received</>
+                  )}
                 </span>
               </div>
               <p className="text-slate-300 text-[11px]">
@@ -252,7 +262,7 @@ function RestaurantSimulator() {
         </div>
 
         <div className="bg-slate-950/60 rounded-xl p-3 border border-slate-800/80 mt-3 text-slate-400 flex items-center justify-between">
-          <span>⚡ Table Turnover Speed: <strong>+35% Faster</strong></span>
+          <span className="flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" /> Table Turnover Speed: <strong className="text-slate-200">+35% Faster</strong></span>
           <span>Zero paper tickets lost</span>
         </div>
       </div>
@@ -412,7 +422,7 @@ function MobileShopSimulator() {
                 animate={{ opacity: 1, y: 0 }}
                 className="mt-2 p-2 bg-emerald-50 rounded border border-emerald-200 text-emerald-800 text-[10px] flex items-center justify-between"
               >
-                <span>✓ WhatsApp PDF automatically delivered to {phone}</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" /> WhatsApp PDF automatically delivered to {phone}</span>
                 <span className="font-bold">Sent via API</span>
               </motion.div>
             )}
@@ -420,7 +430,7 @@ function MobileShopSimulator() {
         </div>
 
         <div className="mt-3 text-slate-400 flex items-center justify-between text-[11px]">
-          <span>⚡ Billing Time: <strong>Cut from 10m to 45s</strong></span>
+          <span className="flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" /> Billing Time: <strong className="text-slate-200">Cut from 10m to 45s</strong></span>
           <span className="text-emerald-400 font-bold">0% Inventory Discrepancy</span>
         </div>
       </div>
@@ -632,15 +642,15 @@ function ClinicSimulator() {
 
           <div className="bg-[#0b141a] p-3 rounded-xl border border-slate-800 text-slate-100 font-sans space-y-2">
             <div className="bg-[#202c33] p-3 rounded-lg max-w-[90%] shadow">
-              <p className="text-[11px] font-semibold text-emerald-400 mb-1">
-                🏥 Lifeline Multispeciality Clinic
+              <p className="text-[11px] font-semibold text-emerald-400 mb-1 flex items-center gap-1.5">
+                <Building2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> Lifeline Multispeciality Clinic
               </p>
               <p className="text-[11px] leading-relaxed">
                 Dear <strong>{patient}</strong>, your appointment with <strong>Dr. S. Kulkarni (MD Med)</strong> is scheduled for today at <strong className="text-amber-400">{selectedSlot}</strong>.
               </p>
               <div className="mt-2 pt-2 border-t border-slate-700/60 flex items-center justify-between text-[10px] text-slate-400">
                 <span>Token #14 • Room 204</span>
-                <span className="text-emerald-400">✓✓ Delivered</span>
+                <span className="text-emerald-400 flex items-center gap-1"><CheckCheck className="w-3 h-3" /> Delivered</span>
               </div>
             </div>
 
@@ -648,10 +658,11 @@ function ClinicSimulator() {
               <motion.div
                 initial={{ opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-[#202c33] p-2.5 rounded-lg max-w-[90%] border-l-4 border-emerald-500"
+                className="bg-[#202c33] p-2.5 rounded-lg max-w-[90%] border-l-4 border-emerald-500 flex items-center gap-1.5"
               >
+                <Bell className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                 <p className="text-[10px] text-slate-300">
-                  🔔 2-hour pre-appointment reminder auto-scheduled in queue.
+                  2-hour pre-appointment reminder auto-scheduled in queue.
                 </p>
               </motion.div>
             )}
@@ -659,7 +670,7 @@ function ClinicSimulator() {
         </div>
 
         <div className="mt-3 text-slate-400 flex items-center justify-between text-[11px]">
-          <span>⚡ Patient No-Shows: <strong>Reduced by 40%</strong></span>
+          <span className="flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" /> Patient No-Shows: <strong className="text-slate-200">Reduced by 40%</strong></span>
           <span className="text-rose-400 font-bold">Paperless Prescriptions</span>
         </div>
       </div>
@@ -971,7 +982,7 @@ function WholesaleSimulator() {
                 Driver: {warehouses[warehouse].driver}
               </p>
               <p className="text-[10px] text-slate-400">
-                Route: {warehouses[warehouse].name} ➔ {party.split(" ")[0]}
+                Route: {warehouses[warehouse].name} → {party.split(" ")[0]}
               </p>
               <div className="text-[9px] font-mono text-slate-400 pt-1 border-t border-slate-700 flex justify-between">
                 <span>e-Way Bill: 2819-4820-9182</span>
@@ -985,13 +996,13 @@ function WholesaleSimulator() {
                 <span className="flex items-center gap-1">
                   <MessageSquare className="w-3.5 h-3.5" /> Retailer WhatsApp Notification
                 </span>
-                <span>✓✓ Sent</span>
+                <span className="flex items-center gap-1"><CheckCheck className="w-3 h-3" /> Sent</span>
               </div>
               <p className="text-[11px] leading-relaxed text-slate-200">
                 Dear <strong>{party.split(" ")[0]}</strong>, your Wholesale Order <strong>#WD-8429</strong> of <strong>₹{total.toLocaleString()}</strong> has been dispatched from <strong>{warehouses[warehouse].name}</strong>.
               </p>
               <div className="p-2 rounded bg-slate-900/80 border border-slate-700/80 text-[10px] text-slate-300 flex items-center justify-between font-mono">
-                <span>📄 Tax_Invoice_eWay_8429.pdf</span>
+                <span className="flex items-center gap-1.5"><FileText className="w-3.5 h-3.5 text-cyan-400 shrink-0" /> Tax_Invoice_eWay_8429.pdf</span>
                 <span className="text-cyan-400 font-bold">Download</span>
               </div>
             </div>
@@ -1010,7 +1021,7 @@ function WholesaleSimulator() {
         </div>
 
         <div className="pt-2 border-t border-slate-800 text-slate-400 flex items-center justify-between text-[11px] font-mono">
-          <span>⚡ Invoice Gen: <strong>&lt; 25 Sec</strong></span>
+          <span className="flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" /> Invoice Gen: <strong className="text-slate-200">&lt; 25 Sec</strong></span>
           <span className="text-amber-400 font-bold">Zero Ledger Errors</span>
         </div>
       </div>
@@ -1158,7 +1169,7 @@ function CoachingSimulator() {
             {/* RFID Attendance Notification */}
             <div className="bg-[#202c33] p-3 rounded-lg shadow space-y-1">
               <p className="text-[10px] font-bold text-sky-400 flex items-center justify-between">
-                <span>🎓 Pioneer Science Academy</span>
+                <span className="flex items-center gap-1.5"><GraduationCap className="w-3.5 h-3.5 text-sky-400 shrink-0" /> Pioneer Science Academy</span>
                 <span className="text-slate-400 font-mono">08:02 AM</span>
               </p>
               <p className="text-[11px] leading-relaxed text-slate-200">
@@ -1166,7 +1177,7 @@ function CoachingSimulator() {
               </p>
               <div className="text-[9px] text-slate-400 pt-1 border-t border-slate-700/80 flex justify-between">
                 <span>Subject: Advanced Mechanics</span>
-                <span className="text-emerald-400">✓✓ Delivered</span>
+                <span className="text-emerald-400 flex items-center gap-1"><CheckCheck className="w-3 h-3" /> Delivered</span>
               </div>
             </div>
 
@@ -1178,7 +1189,7 @@ function CoachingSimulator() {
                 className="bg-[#202c33] p-3 rounded-lg border-l-4 border-sky-500 space-y-2 shadow"
               >
                 <div className="text-[10px] font-bold text-emerald-400 flex items-center justify-between">
-                  <span>💳 Term-2 Tuition Fee Due</span>
+                  <span className="flex items-center gap-1.5"><CreditCard className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> Term-2 Tuition Fee Due</span>
                   <span>Instant UPI Link</span>
                 </div>
                 <p className="text-[11px] text-slate-200 leading-snug">
@@ -1204,7 +1215,7 @@ function CoachingSimulator() {
         </div>
 
         <div className="pt-2 border-t border-slate-800 text-slate-400 flex items-center justify-between text-[11px] font-mono">
-          <span>⚡ Fee Recovery: <strong>100% Timely</strong></span>
+          <span className="flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" /> Fee Recovery: <strong className="text-slate-200">100% Timely</strong></span>
           <span className="text-sky-400 font-bold">Zero Phone Calling</span>
         </div>
       </div>
@@ -1394,14 +1405,14 @@ function RealEstateSimulator() {
           <div className="bg-[#0b141a] p-3.5 rounded-xl border border-slate-800 space-y-2.5">
             <div className="bg-[#202c33] p-3 rounded-lg shadow space-y-1.5">
               <div className="flex items-center justify-between text-[10px] text-teal-400 font-bold">
-                <span>🏢 Apex Realty VIP Concierge</span>
+                <span className="flex items-center gap-1.5"><Building2 className="w-3.5 h-3.5 text-teal-400 shrink-0" /> Apex Realty VIP Concierge</span>
                 <span className="text-slate-400 font-mono">Just Now</span>
               </div>
               <p className="text-[11px] leading-relaxed text-slate-200">
                 Dear <strong>{leadName}</strong>, thank you for inquiring about <strong>{current.name}</strong>!
               </p>
               <div className="p-2 rounded bg-slate-900/90 border border-slate-700/80 text-[10px] text-slate-200 flex items-center justify-between font-mono">
-                <span className="truncate">📄 {current.name.replace(/ /g, "_")}_Brochure.pdf</span>
+                <span className="truncate flex items-center gap-1.5"><FileText className="w-3.5 h-3.5 text-teal-400 shrink-0" /> {current.name.replace(/ /g, "_")}_Brochure.pdf</span>
                 <span className="text-emerald-400 font-bold shrink-0 ml-1">4.2 MB</span>
               </div>
               <p className="text-[10px] text-slate-400">
@@ -1437,7 +1448,7 @@ function RealEstateSimulator() {
         </div>
 
         <div className="pt-2 border-t border-slate-800 text-slate-400 flex items-center justify-between text-[11px] font-mono">
-          <span>⚡ First Contact SLA: <strong>&lt; 90 Seconds</strong></span>
+          <span className="flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" /> First Contact SLA: <strong className="text-slate-200">&lt; 90 Seconds</strong></span>
           <span className="text-teal-400 font-bold">+25% Site Visits</span>
         </div>
       </div>
@@ -1570,8 +1581,9 @@ export default function PortfolioDemoModal({ project, onClose }) {
                 className="space-y-4"
               >
                 <div className="bg-slate-950/60 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
-                  <p className="text-xs text-slate-300">
-                    💡 <strong>Test-Drive Live:</strong> Interact with the buttons, sliders, and inputs below to experience how this application operates in production.
+                  <p className="text-xs text-slate-300 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span><strong>Test-Drive Live:</strong> Interact with the buttons, sliders, and inputs below to experience how this application operates in production.</span>
                   </p>
                   <span className="text-[10px] text-brand-400 font-mono shrink-0 ml-2">
                     Realtime Virtual Environment

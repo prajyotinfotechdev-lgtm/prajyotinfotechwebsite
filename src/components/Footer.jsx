@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Trophy, Zap } from "lucide-react";
 import Logo from "./Logo.jsx";
 
 const BRAND         = "Prajyot Infotech";
@@ -226,12 +227,14 @@ export default function Footer() {
             <ul className="space-y-3 text-slate-400 text-xs">
               <li>
                 <Link to="/products/hrms" className="hover:text-amber-300 transition-colors flex items-center gap-1.5 font-semibold text-amber-400/90">
-                  💼 Oibuz HRMS (Flagship)
+                  <Trophy className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <span>Oibuz HRMS (Flagship)</span>
                 </Link>
               </li>
               <li>
                 <Link to="/estimate" className="hover:text-slate-200 transition-colors flex items-center gap-1.5 font-medium text-slate-300">
-                  ⚡ Project Cost Estimator
+                  <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <span>Project Cost Estimator</span>
                 </Link>
               </li>
               <li><Link to="/articles"  className="hover:text-slate-200 transition-colors">Tech Architecture Lab</Link></li>

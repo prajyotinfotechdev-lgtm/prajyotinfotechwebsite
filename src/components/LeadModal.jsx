@@ -27,13 +27,13 @@ import { createLead } from "../utils/leadStorage.js";
 const WHATSAPP_NUMBER = "917020708747";
 
 const PROJECT_TYPES = [
-  { label: "Website / Web App Development", icon: "🌐", badge: "High Speed" },
-  { label: "Enterprise ERP / CRM Suite", icon: "⚡", badge: "Custom Logic" },
-  { label: "Cross-Platform Mobile App (Android/iOS)", icon: "📱", badge: "Native Quality" },
-  { label: "WhatsApp & Workflow Automation", icon: "🤖", badge: "Automated Ops" },
-  { label: "UI/UX Design & Prototyping", icon: "🎨", badge: "Design System" },
-  { label: "Dedicated Developer / Offshore Team", icon: "💻", badge: "Staff Augmentation" },
-  { label: "General Inquiry / Scoping Session", icon: "✨", badge: "Consultation" },
+  { label: "Website / Web App Development", badge: "High Speed" },
+  { label: "Enterprise ERP / CRM Suite", badge: "Custom Logic" },
+  { label: "Cross-Platform Mobile App (Android/iOS)", badge: "Native Quality" },
+  { label: "WhatsApp & Workflow Automation", badge: "Automated Ops" },
+  { label: "UI/UX Design & Prototyping", badge: "Design System" },
+  { label: "Dedicated Developer / Offshore Team", badge: "Staff Augmentation" },
+  { label: "General Inquiry / Scoping Session", badge: "Consultation" },
 ];
 
 const BUDGET_RANGES = [
@@ -286,7 +286,7 @@ export default function LeadModal() {
                     >
                       {PROJECT_TYPES.map((type) => (
                         <option key={type.label} value={type.label} className="bg-slate-900 text-white">
-                          {type.icon} {type.label}
+                          {type.label}
                         </option>
                       ))}
                     </select>

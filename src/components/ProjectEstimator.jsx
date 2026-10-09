@@ -466,8 +466,9 @@ I would like to schedule a 15-minute system architecture discovery call to discu
                   <MessageSquare className="w-4 h-4" />
                   Send Configured Scope to WhatsApp
                 </a>
-                <p className="text-[11px] text-slate-500 text-center">
-                  ⚡ Direct response from senior architects within 2 hours.
+                <p className="text-[11px] text-slate-400 text-center flex items-center justify-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <span>Direct response from senior architects within 2 hours.</span>
                 </p>
               </div>
             </div>

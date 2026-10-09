@@ -26,6 +26,7 @@ import {
   HelpCircle,
   ChevronRight,
   ExternalLink,
+  Palette,
 } from "lucide-react";
 
 /**
@@ -100,11 +101,11 @@ const TOPIC_SUGGESTIONS = [
 ];
 
 const PROJECT_OPTIONS = [
-  { label: "Website / Web Application", icon: "🌐", desc: "Corporate / SaaS / E-commerce", badge: "High Speed" },
-  { label: "Mobile Application", icon: "📱", desc: "iOS, Android, React Native & Flutter", badge: "Cross-Platform" },
-  { label: "Enterprise ERP / Custom Software", icon: "⚡", desc: "Tailored Business Automation & APIs", badge: "Custom" },
-  { label: "OIBUZ HRMS / Workforce Suite", icon: "🏗️", desc: "Biometric, Attendance, Field Teams", badge: "HRMS" },
-  { label: "UI/UX Design & Prototyping", icon: "🎨", desc: "Figma Design Systems & Wireframes", badge: "Design" },
+  { label: "Website / Web Application", icon: Globe, desc: "Corporate / SaaS / E-commerce", badge: "High Speed" },
+  { label: "Mobile Application", icon: Smartphone, desc: "iOS, Android, React Native & Flutter", badge: "Cross-Platform" },
+  { label: "Enterprise ERP / Custom Software", icon: Zap, desc: "Tailored Business Automation & APIs", badge: "Custom" },
+  { label: "OIBUZ HRMS / Workforce Suite", icon: Building2, desc: "Biometric, Attendance, Field Teams", badge: "HRMS" },
+  { label: "UI/UX Design & Prototyping", icon: Palette, desc: "Figma Design Systems & Wireframes", badge: "Design" },
 ];
 
 const BUDGET_OPTIONS = [
@@ -115,9 +116,9 @@ const BUDGET_OPTIONS = [
 ];
 
 const TIMELINE_OPTIONS = [
-  { label: "⚡ ASAP (< 2 Weeks)", badge: "Rush Sprint", desc: "Fast-track engineering sprint" },
-  { label: "🚀 3 – 6 Weeks", badge: "Standard Build", desc: "Complete architecture, UI & QA cycle" },
-  { label: "🗓️ Flexible / Planning Phase", badge: "Roadmap", desc: "Discovery, wireframing & scoping" },
+  { label: "ASAP (< 2 Weeks)", badge: "Rush Sprint", desc: "Fast-track engineering sprint" },
+  { label: "3 – 6 Weeks", badge: "Standard Build", desc: "Complete architecture, UI & QA cycle" },
+  { label: "Flexible / Planning Phase", badge: "Roadmap", desc: "Discovery, wireframing & scoping" },
 ];
 
 const getScopeTechTags = (project) => {
@@ -306,7 +307,7 @@ export default function HelpBot({
     // Greeting
     if (/^(hi|hello|hey|greetings|hola|namaste)/i.test(lower)) {
       return botSayAsync(
-        "Hello! 👋 Welcome to Prajyot Infotech. How can I help you today? You can ask about our web development, mobile apps, OIBUZ HRMS, or request a quick project estimate!",
+        "Hello! Welcome to Prajyot Infotech. How can I help you today? You can ask about our web development, mobile apps, OIBUZ HRMS, or request a quick project estimate!",
         {},
         500
       );
@@ -324,7 +325,7 @@ export default function HelpBot({
     // Services / What do you do
     if (lower.includes("service") || lower.includes("what do you do") || lower.includes("offer")) {
       return botSayAsync(
-        "Prajyot Infotech is a full-cycle software engineering company offering:\n1. 🌐 Web & SaaS App Development\n2. 📱 Android & iOS Mobile Applications\n3. ⚡ Custom Software & ERP Systems\n4. 🏗️ OIBUZ HRMS & Workforce Management\n5. 🎨 UI/UX Design & Architecture Consultation.\n\nWhich service are you interested in?",
+        "Prajyot Infotech is a full-cycle software engineering company offering:\n1. Web & SaaS App Development\n2. Android & iOS Mobile Applications\n3. Custom Software & ERP Systems\n4. OIBUZ HRMS & Workforce Management\n5. UI/UX Design & Architecture Consultation.\n\nWhich service are you interested in?",
         { showServicesAction: true },
         600
       );
@@ -369,7 +370,7 @@ export default function HelpBot({
     // Contact / Phone / WhatsApp / Human
     if (lower.includes("contact") || lower.includes("phone") || lower.includes("call") || lower.includes("talk") || lower.includes("human") || lower.includes("whatsapp")) {
       return botSayAsync(
-        `You can connect directly with our technical team:\n📞 WhatsApp/Call: +91 7020708747\n✉️ Email: hr@prajyotinfotech.in\n\nOr click the button below to chat on WhatsApp instantly!`,
+        `You can connect directly with our technical team:\n• WhatsApp/Call: +91 7020708747\n• Email: hr@prajyotinfotech.in\n\nOr click the button below to chat on WhatsApp instantly!`,
         { showWhatsAppAction: true },
         500
       );
@@ -470,7 +471,7 @@ export default function HelpBot({
       }).catch((err) => console.error("Error saving lead:", err));
 
       return botSayAsync(
-        "🎉 Project blueprint generated! Our technical architect has received your requirements and will reach out with a detailed roadmap within 2 business hours.",
+        "Project blueprint generated! Our technical architect has received your requirements and will reach out with a detailed roadmap within 2 business hours.",
         {},
         750
       );
@@ -492,7 +493,7 @@ export default function HelpBot({
     if (topic.id === "web") {
       userSay("Tell me about Website Development");
       botSayAsync(
-        "🌐 Custom Business & Web Applications:\n• Fast Next.js & React builds with SEO optimization\n• Lead capture forms, WhatsApp integration & payment gateway\n• Pricing from ₹29,999 (10–20 days delivery)\n\nWould you like an instant quote for your website?",
+        "Custom Business & Web Applications:\n• Fast Next.js & React builds with SEO optimization\n• Lead capture forms, WhatsApp integration & payment gateway\n• Pricing from ₹29,999 (10–20 days delivery)\n\nWould you like an instant quote for your website?",
         { showEstimateAction: true, projectType: "Website Development" },
         500
       );
@@ -502,7 +503,7 @@ export default function HelpBot({
     if (topic.id === "mobile") {
       userSay("Tell me about Mobile App Development");
       botSayAsync(
-        "📱 Native & Cross-Platform Mobile Apps:\n• iOS & Android with React Native / Flutter\n• Clean UI/UX, push notifications, offline database & cloud sync\n• Pricing from ₹75,000 (4–8 weeks)\n\nWould you like an estimate for your mobile app?",
+        "Native & Cross-Platform Mobile Apps:\n• iOS & Android with React Native / Flutter\n• Clean UI/UX, push notifications, offline database & cloud sync\n• Pricing from ₹75,000 (4–8 weeks)\n\nWould you like an estimate for your mobile app?",
         { showEstimateAction: true, projectType: "Mobile Application" },
         500
       );
@@ -512,7 +513,7 @@ export default function HelpBot({
     if (topic.id === "custom") {
       userSay("Tell me about Custom Software & ERP");
       botSayAsync(
-        "⚡ Bespoke Software & Cloud Architectures:\n• Custom CRM/ERP, automated invoicing, customer portals\n• Robust REST/GraphQL microservices & role-based permissions\n• Pricing from ₹80,000\n\nWould you like to scope your custom software?",
+        "Bespoke Software & Cloud Architectures:\n• Custom CRM/ERP, automated invoicing, customer portals\n• Robust REST/GraphQL microservices & role-based permissions\n• Pricing from ₹80,000\n\nWould you like to scope your custom software?",
         { showEstimateAction: true, projectType: "Custom Software Development" },
         500
       );
@@ -522,7 +523,7 @@ export default function HelpBot({
     if (topic.id === "hrms") {
       userSay("Tell me about OIBUZ HRMS");
       botSayAsync(
-        "🏗️ OIBUZ Construction & Enterprise HRMS:\n• GPS geo-fenced attendance, biometric device integration\n• Daily labor wage tracking, contractor billing & real-time reporting\n• Used by top infrastructure & construction teams across India.\n\nWould you like a live demo or quote for OIBUZ?",
+        "OIBUZ Construction & Enterprise HRMS:\n• GPS geo-fenced attendance, biometric device integration\n• Daily labor wage tracking, contractor billing & real-time reporting\n• Used by top infrastructure & construction teams across India.\n\nWould you like a live demo or quote for OIBUZ?",
         { showWhatsAppAction: true, projectType: "OIBUZ HRMS" },
         500
       );
@@ -618,7 +619,7 @@ export default function HelpBot({
             </div>
             <div>
               <div className="font-semibold text-slate-100">Need a project estimate?</div>
-              <div className="text-[11px] text-purple-300/90">Chat with Prajyot AI in seconds 👋</div>
+              <div className="text-[11px] text-purple-300/90">Chat with Prajyot AI in seconds</div>
             </div>
             <button
               onClick={() => setShowGreetingTooltip(false)}
@@ -801,7 +802,7 @@ export default function HelpBot({
                         <Sparkles className="h-5 w-5 text-purple-300" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-white text-sm">Hi there! 👋 How can we help?</h4>
+                        <h4 className="font-semibold text-white text-sm">Welcome! How can we help?</h4>
                         <p className="text-xs text-slate-300 mt-1 leading-relaxed">
                           I can help you explore our software services, calculate an instant project estimate, or connect directly with our engineering team.
                         </p>
@@ -970,8 +971,10 @@ export default function HelpBot({
                           onClick={() => handleUserInput(opt.label)}
                           className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-900/90 px-3.5 py-2.5 text-left text-xs text-white transition-all hover:bg-slate-850 hover:border-purple-400/60 hover:shadow-md hover:shadow-purple-950/40 group cursor-pointer"
                         >
-                          <div className="flex items-center gap-2.5">
-                            <span className="text-base">{opt.icon}</span>
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
+                              <opt.icon className="w-4 h-4" />
+                            </div>
                             <div>
                               <div className="font-semibold text-white group-hover:text-purple-300 transition">
                                 {opt.label}

@@ -4,6 +4,7 @@
 import React, { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { Trophy, BarChart3, Building2, Smartphone, Zap, Sparkles } from "lucide-react";
 import "../styles/aurora.css";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
 
@@ -90,25 +91,15 @@ function UICard({ delay, x, y, children, className = "" }) {
 
 /* ─── SLIDE 1: "Build software that defines the future" ──────────────────── */
 function Slide1Visual({ reduced }) {
-  const metrics = [
-    { label: "Projects Shipped", value: "180+", color: "#7c3aed" },
-    { label: "Uptime SLA", value: "99.98%", color: "#059669" },
-    { label: "Countries Served", value: "8+", color: "#1e2756" },
-  ];
+
   return (
     <div className="absolute inset-0 overflow-hidden">
       {/* Background environment */}
       <TechnicalGrid opacity={0.05} />
       <DataFlowLines reduced={reduced} />
 
-      {/* Floating metric cards — desktop only */}
+      {/* Floating cards — desktop only */}
       <div className="hidden lg:block">
-        {metrics.map((m, i) => (
-          <UICard key={m.label} delay={0.6 + i * 0.15} x={`${62 + i * 10}%`} y={`${22 + i * 20}%`}>
-            <div className="font-black text-lg leading-none" style={{ color: m.color }}>{m.value}</div>
-            <div className="text-slate-500 mt-0.5 text-[10px] font-medium">{m.label}</div>
-          </UICard>
-        ))}
 
         {/* Code snippet card */}
         <UICard delay={1.1} x="60%" y="75%">
@@ -150,10 +141,10 @@ function Slide1Visual({ reduced }) {
 /* ─── SLIDE 2: "Enterprise ERP & CRM" ────────────────────────────────────── */
 function Slide2Visual({ reduced }) {
   const modules = [
-    { icon: "📊", label: "CRM Pipeline", value: "12 deals", color: "#7c3aed" },
-    { icon: "🏭", label: "ERP Inventory", value: "2,480 items", color: "#2563eb" },
-    { icon: "📱", label: "Mobile App", value: "4.9 ★", color: "#059669" },
-    { icon: "⚡", label: "Automation", value: "38 flows", color: "#d97706" },
+    { icon: BarChart3, label: "CRM Pipeline", value: "12 deals", color: "#7c3aed" },
+    { icon: Building2, label: "ERP Inventory", value: "2,480 items", color: "#2563eb" },
+    { icon: Smartphone, label: "Mobile App", value: "4.9 Rating", color: "#059669" },
+    { icon: Zap, label: "Automation", value: "38 flows", color: "#d97706" },
   ];
   return (
     <div className="absolute inset-0 overflow-hidden">
@@ -186,7 +177,9 @@ function Slide2Visual({ reduced }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 + i * 0.12, duration: 0.5, ease: EASE_OUT_EXPO }}
                 >
-                  <div className="text-lg mb-1">{m.icon}</div>
+                  <div className="w-7 h-7 rounded-lg bg-slate-50 flex items-center justify-center mb-1.5 text-slate-700">
+                    <m.icon className="w-4 h-4" style={{ color: m.color }} />
+                  </div>
                   <div className="text-[10px] text-slate-500 font-medium">{m.label}</div>
                   <div className="text-sm font-black mt-0.5" style={{ color: m.color }}>{m.value}</div>
                 </motion.div>
@@ -249,7 +242,10 @@ function Slide3Visual({ reduced }) {
           transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: 0.2 }}
         >
           <div className="px-4 py-3 bg-gradient-to-r from-brand-700 to-navy-800 text-white">
-            <div className="text-xs font-bold tracking-wide">⚡ Automation Workflow</div>
+            <div className="text-xs font-bold tracking-wide flex items-center gap-1.5">
+              <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span>Automation Workflow</span>
+            </div>
             <div className="text-[10px] text-white/60 mt-0.5 font-mono">Lead Qualification — Live</div>
           </div>
           <div className="p-4 space-y-3">
@@ -283,7 +279,9 @@ function Slide3Visual({ reduced }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.5, ease: EASE_OUT_EXPO }}
         >
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-xl flex-shrink-0">📱</div>
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 flex-shrink-0">
+            <Smartphone className="w-5 h-5" />
+          </div>
           <div>
             <div className="text-xs font-black text-slate-800">50,000+ Automations</div>
             <div className="text-[10px] text-slate-500">Executed monthly across client platforms</div>
@@ -508,10 +506,13 @@ export default function AuroraHero() {
             >
               <Link
                 to="/products/hrms"
-                className="inline-flex items-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-4 py-1.5 text-[11px] sm:text-xs font-extrabold text-amber-900 shadow-sm hover:bg-amber-100 transition-all group"
+                className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-amber-700 font-medium hover:text-amber-900 transition-colors group"
               >
-                <span>🏆 Flagship: OIBUZ Construction HRMS</span>
-                <span className="text-amber-700 group-hover:translate-x-0.5 transition-transform">→</span>
+                <Trophy className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                <span className="border-b border-amber-400/60 group-hover:border-amber-700 transition-colors leading-tight">Flagship: OIBUZ Construction HRMS</span>
+                <svg className="w-3 h-3 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
               </Link>
             </motion.div>
           </div>
@@ -699,28 +700,7 @@ export default function AuroraHero() {
         </div>
       </motion.div>
 
-      {/* Scroll cue */}
-      {!reduced && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.6 }}
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1"
-        >
-          <span className="text-[10px] text-slate-400 font-medium tracking-widest uppercase">Scroll</span>
-          <motion.div
-            className="w-5 h-8 rounded-full border-2 border-slate-300 flex items-start justify-center pt-1.5"
-            animate={{ opacity: [1, 0.4, 1] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <motion.div
-              className="w-1 h-1.5 rounded-full bg-slate-400"
-              animate={{ y: [0, 10, 0], opacity: [1, 0, 1] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </motion.div>
-        </motion.div>
-      )}
+
     </section>
   );
 }

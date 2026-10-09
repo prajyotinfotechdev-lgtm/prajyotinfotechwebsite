@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { Zap } from "lucide-react";
 import Logo from "./Logo.jsx";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
 
@@ -307,7 +308,8 @@ export default function Nav() {
                   onClick={() => setOpen(false)}
                   className="flex items-center justify-center gap-2 w-full rounded-xl bg-navy-800 py-3.5 text-[15px] font-semibold text-white shadow-sm transition-all active:scale-[0.98] hover:bg-navy-700"
                 >
-                  ⚡ Instant Project Estimator
+                  <Zap className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span>Instant Project Estimator</span>
                 </Link>
                 <div className="grid grid-cols-2 gap-3 pt-1 text-sm font-medium">
                   <button

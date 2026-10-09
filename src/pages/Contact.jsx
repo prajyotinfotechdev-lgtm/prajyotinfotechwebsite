@@ -257,8 +257,9 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
                   </button>
                 </div>
 
-                <p className="text-[11px] text-slate-400 mt-2">
-                  🔒 We respect your privacy. Mutual Non-Disclosure Agreement (NDA) provided on request.
+                <p className="text-[11px] text-slate-500 mt-2 flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+                  <span>We respect your privacy. Mutual Non-Disclosure Agreement (NDA) provided on request.</span>
                 </p>
               </form>
             )}
