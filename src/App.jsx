@@ -7,7 +7,13 @@ import Nav from "./components/Nav.jsx";
 import Footer from "./components/Footer.jsx";
 import { Analytics } from "@vercel/analytics/react";
 import "./styles/responsive.css";
+import "./styles/diwali.css";
 import "./style.css";
+
+// 🪔 Diwali 2026 Campaign Components (auto-hide after Nov 30)
+import DiwaliOfferBanner from "./components/DiwaliOfferBanner.jsx";
+import DiwaliGreetingPopup from "./components/DiwaliGreetingPopup.jsx";
+import DiwaliDiyas from "./components/DiwaliDiyas.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Work = lazy(() => import("./pages/work.jsx")); // ✅ ensure case matches actual file on disk
@@ -77,6 +83,10 @@ export default function App() {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-brand-50/20 text-navy-800 antialiased selection:bg-brand-200/50 selection:text-navy-900 overflow-clip">
         {/* ↑ overflow-clip prevents mobile sideways scroll without breaking position: sticky */}
         <ScrollToTop />
+
+        {/* 🪔 Diwali 2026 — Sticky offer banner above Nav */}
+        {!hideGlobalNav && <DiwaliOfferBanner />}
+
         {!hideGlobalNav && <Nav />}
 
         <Suspense fallback={<div className="flex h-screen items-center justify-center text-brand-500">Loading...</div>}>
@@ -127,6 +137,12 @@ export default function App() {
 
         {/* Global Lead Capture Modal */}
         <LeadModal />
+
+        {/* 🪔 Diwali 2026 — One-time greeting popup */}
+        <DiwaliGreetingPopup />
+
+        {/* 🪔 Diwali 2026 — Ambient floating diyas */}
+        <DiwaliDiyas />
 
         {/* Vercel Web Analytics */}
         <Analytics />

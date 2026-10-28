@@ -515,6 +515,37 @@ export default function AuroraHero() {
                 </svg>
               </Link>
             </motion.div>
+
+            {/* 🪔 Diwali 2026 offer badge — auto-hides after Nov 30 */}
+            {Date.now() < new Date("2026-11-30T23:59:59+05:30").getTime() && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2, ease: EASE_OUT_EXPO }}
+              >
+                <span
+                  onClick={() => openLeadModal({
+                    title: "🪔 Diwali Special Consultation — Limited Slots",
+                    subtitle: "Start your new project on an auspicious note! 15% off + 3 months free maintenance.",
+                    source: "Diwali 2026 — Hero Badge",
+                    defaultMessage: "Hi, I saw the Diwali offer and I'm interested!",
+                  })}
+                  className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold rounded-full px-3.5 py-1.5 cursor-pointer transition-all duration-300 hover:scale-105 diwali-badge-glow"
+                  style={{
+                    background: "linear-gradient(135deg, #FFFBEB, #FEF3C7)",
+                    border: "1px solid rgba(251,191,36,0.4)",
+                    color: "#92400E",
+                  }}
+                >
+                  <span className="text-sm">🪔</span>
+                  <span>Diwali Offer Live</span>
+                  <span className="relative flex size-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-60" />
+                    <span className="relative inline-flex rounded-full size-1.5 bg-amber-500" />
+                  </span>
+                </span>
+              </motion.div>
+            )}
           </div>
 
           {/* Slide content */}
