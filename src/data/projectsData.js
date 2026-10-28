@@ -1,5 +1,52 @@
 export const PROJECTS = [
   {
+    id: "sagya-lehengas",
+    tag: "Luxury Fashion",
+    tagColor: "from-amber-400 via-rose-400 to-pink-500",
+    year: 2026,
+    title: "SAGYA — Luxury Bridal & Ethnic Haute Couture",
+    client: "Sagya Heritage Haute Couture",
+    liveUrl: "https://www.sagya.in",
+    logo: "/images/sagya-logo.jpg",
+    shortDesc: "Omnichannel luxury fashion e-commerce — bespoke bridal lehengas, bridal stylist consultation booking, reel commerce, and WhatsApp VIP concierge.",
+    fullDesc: "A bespoke haute couture e-commerce platform crafted for SAGYA, India's luxury bridal and festive ethnic wear brand. Features high-res editorial product galleries, bespoke blouse customizers, direct-to-stylist WhatsApp bridal consultation, fast Razorpay checkout, and social reel commerce integration.",
+    architecture: "Edge SSR + Media Optimization CDN + Omnichannel WhatsApp Concierge",
+    problem: {
+      title: "Bridal Shoppers Reluctant to Buy Luxury Online Without Personal Styling",
+      description: "High-ticket bridal lehengas (₹15,000–₹85,000+) require fabric touch, custom blouse measurements, and stylist guidance. Generic e-commerce carts failed to convert luxury brides who needed bespoke reassurance.",
+      painQuote: "Brides loved our Instagram reels but hesitated at checkout because they wanted direct video calls with a bridal stylist before committing."
+    },
+    solution: {
+      title: "Interactive Haute Couture Experience + VIP WhatsApp Stylist Desk",
+      description: "Engineered ultra-smooth editorial collection lookbooks, custom size guides, real-time inventory synchronization, and 1-click WhatsApp VIP styling assistance that directly connects brides with master drape stylists in Latur."
+    },
+    roi: {
+      title: "+42% Bridal Consultation Bookings & Pan-India Dispatch",
+      description: "Boosted digital bridal conversions by 42%, reduced customer sizing return disputes to zero with guided measurements, and achieved direct online orders from brides across Maharashtra, Gujarat, and abroad."
+    },
+    results: [
+      "42% increase in high-ticket bridal inquiries",
+      "Zero sizing return disputes with guided measurements",
+      "Direct 1-click WhatsApp VIP stylist consultation",
+      "Seamless mobile PWA & reel-commerce integration"
+    ],
+    features: [
+      "Luxury editorial lookbook & collection showcase",
+      "VIP bridal stylist 1-click WhatsApp consultation",
+      "Multi-category catalog (Bridal Lehengas, Designer Blouses, Dandiya sets)",
+      "Wishlist / Saved curation engine",
+      "Interactive size guide & custom measurement intake",
+      "PWA Add-to-Home mobile shopping experience"
+    ],
+    stack: ["React", "Vite", "TailwindCSS", "Razorpay", "WhatsApp Cloud API", "Cloudinary CDN"],
+    metrics: { label: "Bridal Inquiry Surge", value: "+42%", sub: "via VIP Stylist Concierge" },
+    gradient: "from-amber-500/20 via-rose-500/15 to-transparent",
+    accent: "#f59e0b",
+    secondary: "#f43f5e",
+    mockupType: "Phone",
+    scale: "Pan-India Shipping • 500+ Luxury SKUs",
+  },
+  {
     id: "restaurant-management",
     tag: "Hospitality",
     tagColor: "from-orange-400 to-red-500",
@@ -265,5 +312,5 @@ export const PROJECTS = [
   },
 ];
 
-export const INDUSTRIES = ["All", "Hospitality", "Retail", "E-Commerce", "Healthcare", "SaaS", "Wholesale", "Education", "Real Estate"];
+export const INDUSTRIES = ["All", "Luxury Fashion", "Hospitality", "Retail", "E-Commerce", "Healthcare", "SaaS", "Wholesale", "Education", "Real Estate"];
 export const TECH_TAGS = ["All", "React", "Node.js", "MongoDB", "PostgreSQL", "WhatsApp API", "Razorpay", "Redis", "Cloudinary"];

@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import Nav from "./components/Nav.jsx";
 import Footer from "./components/Footer.jsx";
+import { Analytics } from "@vercel/analytics/react";
 import "./styles/responsive.css";
 import "./style.css";
 
@@ -126,6 +127,9 @@ export default function App() {
 
         {/* Global Lead Capture Modal */}
         <LeadModal />
+
+        {/* Vercel Web Analytics */}
+        <Analytics />
       </div>
     </LeadModalProvider>
   );

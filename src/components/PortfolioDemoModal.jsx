@@ -563,6 +563,212 @@ function EcommerceSimulator() {
   );
 }
 
+// ─── SIMULATOR: SAGYA LUXURY BRIDAL & ETHNIC COUTURE ──────────────────────
+function SagyaSimulator() {
+  const [activeCategory, setActiveCategory] = useState("Lehengas");
+  const [savedCount, setSavedCount] = useState(2);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [customBlouse, setCustomBlouse] = useState("Padded with Dori Latkan");
+
+  const products = [
+    {
+      id: "blush-peach-lehenga",
+      name: "Blush Peach Heavy Stone-Work Bridal Lehenga",
+      category: "Lehengas",
+      price: 48500,
+      badge: "Bridal 2026",
+      fabric: "Pure Raw Silk & Net Dupatta",
+      work: "Zardozi, Resham & Cutdana Hand Embroidery",
+      inStock: true,
+    },
+    {
+      id: "ivory-rani-lehenga",
+      name: "Ivory Embroidered Lehenga with Rani Pink Dupatta",
+      category: "Lehengas",
+      price: 36900,
+      badge: "Best Seller",
+      fabric: "Pure Georgette with Banarasi Weave",
+      work: "Tilla & Foil Mirror Embellishments",
+      inStock: true,
+    },
+    {
+      id: "burnt-orange-set",
+      name: "Burnt Orange Gold-Embroidered Lehenga Choli Set",
+      category: "Lehengas",
+      price: 42000,
+      badge: "Royal Edit",
+      fabric: "Velvet Silk & Organza Dupatta",
+      work: "Gold Thread Pita Work & Sequin Border",
+      inStock: true,
+    },
+    {
+      id: "ivory-paisley-blouse",
+      name: "Ivory Multicolour Paisley Designer Blouse",
+      category: "Blouses",
+      price: 6800,
+      badge: "Handcrafted",
+      fabric: "Raw Silk with Cotton Lining",
+      work: "Multicolour Thread Work with Pearl Latkan",
+      inStock: true,
+    },
+    {
+      id: "black-gold-banarasi",
+      name: "Black & Gold Banarasi Brocade Designer Blouse",
+      category: "Blouses",
+      price: 5400,
+      badge: "Heritage",
+      fabric: "Pure Banarasi Katan Silk",
+      work: "Woven Antique Zari Floral Motifs",
+      inStock: true,
+    },
+    {
+      id: "mirror-dandiya-set",
+      name: "Multicolour Mirror Work Dandiya Chaniya Choli",
+      category: "Festive",
+      price: 18500,
+      badge: "Navratri Edit",
+      fabric: "Cotton Silk with 12m Gher Flared Skirt",
+      work: "Authentic Kutch Real Glass Mirror & Gamthi",
+      inStock: true,
+    },
+  ];
+
+  const categories = ["All", "Lehengas", "Blouses", "Festive"];
+  const filtered = activeCategory === "All" ? products : products.filter((p) => p.category === activeCategory);
+
+  return (
+    <div className="space-y-4 text-xs">
+      {/* Luxury Brand Control Bar */}
+      <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 p-4 rounded-2xl border border-amber-500/30 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+        <div className="flex items-center gap-3">
+          <img
+            src="/images/sagya-logo.jpg"
+            alt="SAGYA Logo"
+            className="w-10 h-10 rounded-full object-cover border-2 border-amber-400 shadow-md"
+          />
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="font-serif tracking-widest text-amber-300 font-bold text-sm">SAGYA HAUTE COUTURE</span>
+              <span className="bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2 py-0.5 rounded text-[9px] font-mono">
+                Flagship Boutique • Latur
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-400 mt-0.5">
+              Curated luxury Indian occasionwear • Custom bridal draping & styling
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2.5">
+          <a
+            href="https://www.sagya.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 font-bold transition"
+          >
+            <ExternalLink className="w-3.5 h-3.5" />
+            <span>Open www.sagya.in</span>
+          </a>
+          <span className="flex items-center gap-1 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl text-slate-300 font-bold">
+            <Sparkles className="w-3.5 h-3.5 text-rose-400" />
+            <span>Saved ({savedCount})</span>
+          </span>
+        </div>
+      </div>
+
+      {/* Category Tabs */}
+      <div className="flex gap-2 border-b border-slate-800 pb-2 overflow-x-auto no-scrollbar">
+        {categories.map((c) => (
+          <button
+            key={c}
+            onClick={() => setActiveCategory(c)}
+            className={`px-4 py-1.5 rounded-xl font-bold transition cursor-pointer text-xs ${
+              activeCategory === c
+                ? "bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-md shadow-amber-500/20"
+                : "bg-slate-900 text-slate-400 hover:text-white border border-slate-800"
+            }`}
+          >
+            {c}
+          </button>
+        ))}
+      </div>
+
+      {/* Luxury Product Catalog Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        {filtered.map((item) => (
+          <div
+            key={item.id}
+            className="bg-slate-900/90 rounded-2xl p-4 border border-slate-700/60 shadow-xl flex flex-col justify-between hover:border-amber-500/40 transition group"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded text-[10px] font-mono font-bold">
+                  {item.badge}
+                </span>
+                <span className="text-[10px] text-emerald-400 font-mono">Bespoke Available</span>
+              </div>
+
+              <h4 className="font-bold text-slate-200 text-sm mb-1.5 group-hover:text-amber-300 transition-colors">
+                {item.name}
+              </h4>
+
+              <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800 mb-3 space-y-1">
+                <div className="flex items-baseline justify-between">
+                  <span className="text-xl font-black text-amber-300">₹{item.price.toLocaleString("en-IN")}</span>
+                  <span className="text-[10px] text-slate-400 font-mono">Free Insured Courier</span>
+                </div>
+                <div className="text-[10px] text-slate-400">
+                  <span className="text-slate-500">Fabric:</span> {item.fabric}
+                </div>
+                <div className="text-[10px] text-slate-400">
+                  <span className="text-slate-500">Craft:</span> {item.work}
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <button
+                onClick={() => setSavedCount((c) => c + 1)}
+                className="w-full bg-slate-800 hover:bg-slate-750 text-slate-200 border border-slate-700 font-bold py-1.5 rounded-xl transition cursor-pointer text-xs"
+              >
+                ♥ Save to Bridal Trousseau
+              </button>
+              <a
+                href={WA(`Hi Sagya Team, I love the "${item.name}" (₹${item.price.toLocaleString("en-IN")}) from your website www.sagya.in. I would like to consult with a bridal stylist for custom sizing & delivery.`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition"
+              >
+                <MessageSquare className="w-3.5 h-3.5 text-white" />
+                <span>Chat with SAGYA Stylist on WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Client Physical Experience Highlight Banner */}
+      <div className="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
+          <span className="text-slate-300 text-xs">
+            <strong>SAGYA Heritage Studio:</strong> Arya Complex, Behind Shoppers Stop, Ganjgolai, Latur 413512
+          </span>
+        </div>
+        <a
+          href="https://maps.app.goo.gl/nEkAnxrAiTVtVWRT8"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-amber-400 hover:text-amber-300 font-mono text-[11px] underline flex items-center gap-1"
+        >
+          View Studio on Google Maps
+          <ExternalLink className="w-3 h-3" />
+        </a>
+      </div>
+    </div>
+  );
+}
+
 // ─── SIMULATOR: CLINIC MANAGEMENT SAAS ──────────────────────────────────────
 function ClinicSimulator() {
   const [selectedSlot, setSelectedSlot] = useState("10:30 AM");
@@ -1492,17 +1698,37 @@ export default function PortfolioDemoModal({ project, onClose }) {
                 <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block" />
               </div>
               <div className="h-4 w-px bg-slate-800" />
-              <div>
-                <span className="text-xs font-mono text-slate-400 uppercase tracking-wider">
-                  Interactive Enterprise Showcase
-                </span>
-                <h2 className="text-base sm:text-lg font-black text-white leading-none mt-0.5">
-                  {project.title}
-                </h2>
+              <div className="flex items-center gap-2.5">
+                {project.logo && (
+                  <img
+                    src={project.logo}
+                    alt={`${project.client} logo`}
+                    className="w-8 h-8 rounded-full object-cover border border-amber-400/50 shadow-md shrink-0"
+                  />
+                )}
+                <div>
+                  <span className="text-xs font-mono text-slate-400 uppercase tracking-wider block">
+                    Interactive Enterprise Showcase
+                  </span>
+                  <h2 className="text-base sm:text-lg font-black text-white leading-none mt-0.5">
+                    {project.title}
+                  </h2>
+                </div>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs font-bold transition"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Visit Live Site</span>
+                </a>
+              )}
               <span className={`inline-flex items-center rounded-full bg-gradient-to-r ${project.tagColor} px-3 py-1 text-[11px] font-bold text-white shadow-sm`}>
                 {project.tag}
               </span>
@@ -1590,6 +1816,7 @@ export default function PortfolioDemoModal({ project, onClose }) {
                   </span>
                 </div>
 
+                {project.id === "sagya-lehengas" && <SagyaSimulator />}
                 {project.id === "restaurant-management" && <RestaurantSimulator />}
                 {project.id === "mobile-shop-management" && <MobileShopSimulator />}
                 {project.id === "jollybaba-ecommerce" && <EcommerceSimulator />}
@@ -1599,7 +1826,8 @@ export default function PortfolioDemoModal({ project, onClose }) {
                 {project.id === "coaching-management" && <CoachingSimulator />}
                 {project.id === "real-estate-crm" && <RealEstateSimulator />}
                 {/* Fallback based on project category or default */}
-                {!["restaurant-management", "mobile-shop-management", "jollybaba-ecommerce", "clinic-management", "vyapaariyo-saas", "wholesale-order-management", "coaching-management", "real-estate-crm"].includes(project.id) && (
+                {!["sagya-lehengas", "restaurant-management", "mobile-shop-management", "jollybaba-ecommerce", "clinic-management", "vyapaariyo-saas", "wholesale-order-management", "coaching-management", "real-estate-crm"].includes(project.id) && (
+                  project.tag === "Luxury Fashion" ? <SagyaSimulator /> :
                   project.tag === "Wholesale" ? <WholesaleSimulator /> :
                   project.tag === "Education" ? <CoachingSimulator /> :
                   project.tag === "Real Estate" ? <RealEstateSimulator /> :

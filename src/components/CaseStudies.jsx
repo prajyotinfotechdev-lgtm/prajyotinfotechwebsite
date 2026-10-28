@@ -5,6 +5,18 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 /* ─── Project data ─────────────────────────────────────────── */
 const studies = [
   {
+    tag: "Luxury Fashion",
+    title: "SAGYA Haute Couture — Luxury Bridal E-Commerce",
+    copy: "Editorial lookbook, WhatsApp VIP stylist desk, bespoke blouse customizer, and insured Pan-India dispatch for luxury lehengas.",
+    slug: "sagya-lehengas",
+    meta: "React · Vite · TailwindCSS · Razorpay · WhatsApp API",
+    metric: "Bridal inquiries: +42%",
+    accentA: "#F59E0B",
+    accentB: "#F43F5E",
+    glowColor: "rgba(245,158,11,0.35)",
+    Screen: SagyaScreen,
+  },
+  {
     tag: "Hospitality",
     title: "Restaurant Management System",
     copy: "QR table menus, live kitchen display, WhatsApp order confirmations, GST billing, and admin dashboard. Order errors dropped to 0%.",
@@ -208,6 +220,64 @@ function EcomScreen() {
       <rect x="20" y="289" width="50" height="3" rx="1.5" fill="white"/>
       <rect x="130" y="285" width="30" height="12" rx="6" fill="rgba(0,0,0,0.2)"/>
       <rect x="136" y="289" width="18" height="3" rx="1.5" fill="white"/>
+    </svg>
+  );
+}
+
+function SagyaScreen() {
+  return (
+    <svg viewBox="0 0 180 310" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <rect width="180" height="310" rx="4" fill="#140E0A"/>
+      <rect x="6" y="6" width="168" height="298" rx="2" fill="#1B120C"/>
+      {/* Top luxury header with gold motif */}
+      <rect x="6" y="6" width="168" height="30" fill="#0D0704"/>
+      <circle cx="20" cy="21" r="7" fill="#F59E0B" opacity="0.3"/>
+      <text x="32" y="24" fill="#F59E0B" fontSize="8" fontFamily="serif" letterSpacing="2" fontWeight="bold">SAGYA</text>
+      <rect x="146" y="14" width="18" height="14" rx="4" fill="#F43F5E" opacity="0.2"/>
+      <circle cx="155" cy="21" r="3" fill="#F43F5E"/>
+      {/* Hero Editorial Banner with gold border */}
+      <rect x="12" y="44" width="156" height="65" rx="6" fill="#2E1C12" stroke="#F59E0B" strokeWidth="0.8" strokeOpacity="0.4"/>
+      <rect x="18" y="52" width="60" height="4" rx="2" fill="#F59E0B"/>
+      <rect x="18" y="59" width="80" height="3" rx="1.5" fill="#FED7AA" opacity="0.8"/>
+      <rect x="18" y="65" width="45" height="2.5" rx="1" fill="#F43F5E"/>
+      <rect x="18" y="86" width="46" height="15" rx="4" fill="#F59E0B"/>
+      <text x="23" y="96" fill="#1B120C" fontSize="6" fontWeight="bold">EXPLORE</text>
+      {/* Editorial Lehenga Mock Silhouette */}
+      <circle cx="138" cy="76" r="18" fill="#F59E0B" opacity="0.15"/>
+      <path d="M138 64 L146 88 L130 88 Z" fill="#F43F5E" opacity="0.7"/>
+      <path d="M134 62 L142 62 L140 68 L136 68 Z" fill="#F59E0B" opacity="0.9"/>
+      {/* Category Pills */}
+      <rect x="12" y="116" width="42" height="14" rx="4" fill="#F59E0B" opacity="0.25"/>
+      <rect x="16" y="121" width="34" height="4" rx="1.5" fill="#F59E0B"/>
+      <rect x="58" y="116" width="38" height="14" rx="4" fill="#2E1C12"/>
+      <rect x="62" y="121" width="30" height="4" rx="1.5" fill="#9A7B68"/>
+      <rect x="100" y="116" width="40" height="14" rx="4" fill="#2E1C12"/>
+      <rect x="104" y="121" width="32" height="4" rx="1.5" fill="#9A7B68"/>
+      {/* 2x Luxury Product Grid */}
+      <rect x="12" y="138" width="75" height="100" rx="6" fill="#26170E" stroke="#452718" strokeWidth="0.5"/>
+      <rect x="16" y="142" width="67" height="54" rx="4" fill="#180C05"/>
+      <circle cx="49" cy="169" r="14" fill="#F43F5E" opacity="0.2"/>
+      <path d="M49 158 L57 182 L41 182 Z" fill="#F43F5E" opacity="0.8"/>
+      <rect x="16" y="202" width="55" height="3.5" rx="1" fill="#F5EBE6"/>
+      <rect x="16" y="208" width="36" height="3" rx="1" fill="#F59E0B"/>
+      <rect x="16" y="222" width="67" height="14" rx="4" fill="#10B981" opacity="0.25"/>
+      <text x="21" y="231" fill="#34D399" fontSize="6" fontWeight="bold">WhatsApp VIP</text>
+
+      <rect x="93" y="138" width="75" height="100" rx="6" fill="#26170E" stroke="#452718" strokeWidth="0.5"/>
+      <rect x="97" y="142" width="67" height="54" rx="4" fill="#180C05"/>
+      <circle cx="130" cy="169" r="14" fill="#F59E0B" opacity="0.2"/>
+      <path d="M130 158 L138 182 L122 182 Z" fill="#F59E0B" opacity="0.8"/>
+      <rect x="97" y="202" width="50" height="3.5" rx="1" fill="#F5EBE6"/>
+      <rect x="97" y="208" width="32" height="3" rx="1" fill="#F59E0B"/>
+      <rect x="97" y="222" width="67" height="14" rx="4" fill="#10B981" opacity="0.25"/>
+      <text x="102" y="231" fill="#34D399" fontSize="6" fontWeight="bold">WhatsApp VIP</text>
+
+      {/* Floating Bottom VIP Concierge Bar */}
+      <rect x="12" y="252" width="156" height="42" rx="8" fill="#0D0704" stroke="#F59E0B" strokeWidth="0.8" strokeOpacity="0.4"/>
+      <circle cx="28" cy="273" r="10" fill="#F59E0B" opacity="0.25"/>
+      <path d="M25 273 L27 275 L32 270" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round"/>
+      <text x="44" y="269" fill="#F59E0B" fontSize="6.5" fontWeight="bold">Direct Bridal Stylist Desk</text>
+      <text x="44" y="278" fill="#9A7B68" fontSize="5.5">1-on-1 Video Consultation & Draping</text>
     </svg>
   );
 }

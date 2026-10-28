@@ -203,14 +203,38 @@ function Project3DCard({ project, index, onOpenDemo, prefersReducedMotion }) {
       {/* Card Body */}
       <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
         <div>
-          <div className="flex items-center justify-between text-[11px] text-slate-400 font-mono mb-1">
-            <span>{project.client}</span>
-            <span className="text-emerald-400 font-semibold">{project.scale}</span>
+          <div className="flex items-center gap-2 mb-2">
+            {project.logo ? (
+              <img
+                src={project.logo}
+                alt={`${project.client} logo`}
+                className="w-7 h-7 rounded-full object-cover border border-amber-400/40 shadow-sm shrink-0"
+              />
+            ) : null}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between text-[11px] text-slate-400 font-mono">
+                <span className="truncate">{project.client}</span>
+                <span className="text-emerald-400 font-semibold shrink-0 ml-1">{project.scale}</span>
+              </div>
+            </div>
           </div>
 
-          <h3 className="text-lg font-black text-white leading-snug group-hover:text-brand-300 transition-colors">
-            {project.title}
-          </h3>
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="text-lg font-black text-white leading-snug group-hover:text-brand-300 transition-colors">
+              {project.title}
+            </h3>
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={`Visit live website: ${project.liveUrl}`}
+                className="p-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 transition shrink-0"
+              >
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            )}
+          </div>
 
           <p className="mt-2 text-xs text-slate-400 leading-relaxed line-clamp-2">
             {project.shortDesc}
@@ -291,10 +315,32 @@ function EnterpriseMatrixView({ projects, onOpenDemo }) {
           {projects.map((p) => (
             <tr key={p.id} className="hover:bg-slate-800/40 transition group">
               <td className="py-4 px-6">
-                <div className="font-bold text-white text-sm group-hover:text-brand-300 transition">
-                  {p.title}
+                <div className="flex items-center gap-2.5">
+                  {p.logo && (
+                    <img
+                      src={p.logo}
+                      alt={`${p.client} logo`}
+                      className="w-7 h-7 rounded-full object-cover border border-amber-400/40 shadow shrink-0"
+                    />
+                  )}
+                  <div>
+                    <div className="font-bold text-white text-sm group-hover:text-brand-300 transition flex items-center gap-1.5">
+                      {p.title}
+                      {p.liveUrl && (
+                        <a
+                          href={p.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-amber-400 hover:text-amber-300"
+                          title={`Visit ${p.liveUrl}`}
+                        >
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      )}
+                    </div>
+                    <div className="text-[10px] text-slate-400 font-mono mt-0.5">{p.client}</div>
+                  </div>
                 </div>
-                <div className="text-[10px] text-slate-400 font-mono mt-0.5">{p.client}</div>
               </td>
               <td className="py-4 px-4">
                 <span className={`inline-flex items-center rounded-full bg-gradient-to-r ${p.tagColor} px-2.5 py-0.5 text-[10px] font-bold text-white`}>
