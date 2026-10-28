@@ -185,7 +185,7 @@ export default function DiwaliGreetingPopup() {
             className="fixed inset-0 z-[71] flex items-center justify-center p-4"
           >
             <div
-              className="relative w-full max-w-md rounded-3xl overflow-hidden shadow-2xl"
+              className="relative w-full max-w-md rounded-3xl overflow-hidden shadow-2xl max-h-[92vh] overflow-y-auto"
               style={{
                 background:
                   "linear-gradient(145deg, #FFFBEB 0%, #FEF3C7 30%, #ffffff 60%, #faf5ff 100%)",
@@ -216,12 +216,12 @@ export default function DiwaliGreetingPopup() {
                 <X size={18} />
               </button>
 
-              <div className="relative px-8 pt-8 pb-6 text-center">
+              <div className="relative px-5 sm:px-8 pt-6 sm:pt-8 pb-5 sm:pb-6 text-center">
                 {/* Diyas row */}
-                <div className="flex justify-center gap-4 mb-4">
-                  <DiyaSVG size={44} />
-                  <DiyaSVG size={56} />
-                  <DiyaSVG size={44} />
+                <div className="flex justify-center gap-2.5 sm:gap-4 mb-3 sm:mb-4">
+                  <DiyaSVG size={36} />
+                  <DiyaSVG size={48} />
+                  <DiyaSVG size={36} />
                 </div>
 
                 {/* Greeting */}

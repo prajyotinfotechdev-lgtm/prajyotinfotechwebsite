@@ -252,7 +252,7 @@ export default function Services() {
             href={wa(`Hi ${BRAND}, I want to avail the Diwali 15% OFF offer (Code: DIWALI2026) for my business.`)}
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 px-4 py-2.5 rounded-xl bg-white text-amber-900 font-extrabold text-xs sm:text-sm shadow-md hover:bg-amber-50 hover:scale-105 transition-all"
+            className="shrink-0 w-full sm:w-auto text-center px-4 py-2.5 rounded-xl bg-white text-amber-900 font-extrabold text-xs sm:text-sm shadow-md hover:bg-amber-50 hover:scale-105 active:scale-95 transition-all"
           >
             Claim Offer on WhatsApp →
           </a>

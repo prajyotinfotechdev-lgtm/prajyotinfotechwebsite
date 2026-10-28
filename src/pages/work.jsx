@@ -368,7 +368,7 @@ export default function Work() {
             href={WA("Hi Prajyot Infotech, I'm interested in the Diwali 15% OFF offer (Code: DIWALI2026) for my project.")}
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 px-4 py-2 rounded-xl bg-white text-amber-900 font-extrabold text-xs shadow hover:bg-amber-50 hover:scale-105 transition-all"
+            className="shrink-0 w-full sm:w-auto text-center px-4 py-2 rounded-xl bg-white text-amber-900 font-extrabold text-xs shadow hover:bg-amber-50 hover:scale-105 active:scale-95 transition-all"
           >
             Claim Diwali Offer →
           </a>

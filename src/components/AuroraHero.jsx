@@ -765,6 +765,24 @@ export default function AuroraHero() {
                     </Link>
                   )}
                 </motion.div>
+
+                {/* 🥪 Mobile Diwali Perks Pill (Visible on mobile only for Diwali slide) */}
+                {slide.id === "diwali" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.75, duration: 0.4 }}
+                    className="lg:hidden mt-4 p-2.5 rounded-2xl bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-amber-500/15 border border-amber-300/60 flex items-center justify-between gap-2 text-xs"
+                  >
+                    <div className="flex items-center gap-1.5 font-bold text-amber-950 text-[11px]">
+                      <span>🥪</span>
+                      <span>15% OFF + 3 Months Free AMC</span>
+                    </div>
+                    <div className="font-mono font-bold bg-gradient-to-r from-amber-600 to-orange-600 text-white px-2 py-0.5 rounded-lg text-[10px] tracking-wider shrink-0 shadow-sm">
+                      DIWALI2026
+                    </div>
+                  </motion.div>
+                )}
               </motion.div>
             </AnimatePresence>
           </div>

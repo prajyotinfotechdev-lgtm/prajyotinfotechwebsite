@@ -190,7 +190,7 @@ export default function Pricing() {
                 defaultMessage: `Hi, I'm on the pricing page and want to claim the 15% Diwali discount (Code: DIWALI2026) for my project in ${currency}.`,
               })
             }
-            className="shrink-0 bg-white hover:bg-amber-50 text-amber-900 font-extrabold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-lg hover:scale-105 transition-all cursor-pointer flex items-center gap-2"
+            className="shrink-0 w-full sm:w-auto bg-white hover:bg-amber-50 text-amber-900 font-extrabold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-lg hover:scale-105 transition-all cursor-pointer flex items-center justify-center gap-2"
           >
             <span>Claim 15% Off</span>
             <ArrowRight className="w-4 h-4" />

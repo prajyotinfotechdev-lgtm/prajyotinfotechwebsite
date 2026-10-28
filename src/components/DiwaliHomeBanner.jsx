@@ -111,30 +111,30 @@ export default function DiwaliHomeBanner() {
               "linear-gradient(135deg, #fffbeb 0%, #fef3c7 20%, #ffffff 50%, #fff7ed 80%, #faf5ff 100%)",
           }}
         >
-          {/* Subtle decorative rangoli / corner diyas */}
-          <div className="absolute top-4 left-4 text-3xl opacity-75 select-none" aria-hidden>
+          {/* Subtle decorative rangoli / corner diyas (hidden on small mobile to avoid text clash) */}
+          <div className="hidden sm:block absolute top-4 left-4 text-3xl opacity-75 select-none" aria-hidden>
             🪔
           </div>
-          <div className="absolute top-4 right-4 text-3xl opacity-75 select-none" aria-hidden>
+          <div className="hidden sm:block absolute top-4 right-4 text-3xl opacity-75 select-none" aria-hidden>
             🪔
           </div>
 
           {/* Section Header */}
-          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black tracking-wider uppercase mb-3 shadow-sm diwali-badge-glow">
-              <Sparkles size={13} className="text-amber-200" />
-              <span>Diwali Mahotsav 2026 • Limited Time Offers</span>
-              <Sparkles size={13} className="text-amber-200" />
+          <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-12">
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] sm:text-xs font-black tracking-wider uppercase mb-3 shadow-sm diwali-badge-glow">
+              <Sparkles size={12} className="text-amber-200 shrink-0" />
+              <span>Diwali Mahotsav 2026 • Festive Deals</span>
+              <Sparkles size={12} className="text-amber-200 shrink-0" />
             </div>
 
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight mb-3">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight mb-2 sm:mb-3">
               Light Up Your Business This{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700">
                 Diwali Season
               </span>
             </h2>
 
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-xs sm:text-base text-slate-600 leading-relaxed max-w-2xl mx-auto">
               Start your next software venture on an auspicious note! Avail{" "}
               <strong className="text-amber-900 font-bold">Flat 15% OFF</strong> +{" "}
               <strong className="text-amber-900 font-bold">3 Months Free Maintenance</strong> on all
@@ -142,10 +142,10 @@ export default function DiwaliHomeBanner() {
             </p>
 
             {/* Coupon Code Pill */}
-            <div className="mt-5 inline-flex items-center gap-3 bg-white/90 backdrop-blur-sm border-2 border-dashed border-amber-400 rounded-2xl px-4 py-2 shadow-sm">
+            <div className="mt-4 sm:mt-5 inline-flex flex-wrap items-center justify-center gap-2 sm:gap-3 bg-white/90 backdrop-blur-sm border-2 border-dashed border-amber-400 rounded-2xl px-3.5 sm:px-4 py-1.5 sm:py-2 shadow-sm">
               <div className="flex items-center gap-1.5 text-xs text-amber-900">
-                <Tag size={14} className="text-amber-600" />
-                <span>Coupon Code:</span>
+                <Tag size={13} className="text-amber-600 shrink-0" />
+                <span className="hidden xs:inline">Coupon:</span>
                 <span className="font-mono font-extrabold text-sm sm:text-base text-amber-700 tracking-wider">
                   DIWALI2026
                 </span>
@@ -153,7 +153,7 @@ export default function DiwaliHomeBanner() {
               <button
                 type="button"
                 onClick={handleCopyCode}
-                className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-100 hover:bg-amber-200 px-2.5 py-1 rounded-lg transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-100 hover:bg-amber-200 px-2 sm:px-2.5 py-1 rounded-lg transition-colors cursor-pointer"
               >
                 {copied ? (
                   <>

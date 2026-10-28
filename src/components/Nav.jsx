@@ -296,11 +296,11 @@ export default function Nav() {
                 <div className="flex items-center gap-2">
                   <span className="text-xl">🪔</span>
                   <div>
-                    <div className="text-xs font-bold leading-tight">Diwali Offer: 15% OFF</div>
-                    <div className="text-[10px] text-amber-100 font-mono">Code: DIWALI2026 • Free AMC</div>
+                    <div className="text-xs font-bold leading-tight">Diwali Dhamaka: 15% OFF</div>
+                    <div className="text-[10px] text-amber-100 font-mono">Code: DIWALI2026 • +3 Mo. Free AMC</div>
                   </div>
                 </div>
-                <span className="px-2 py-1 rounded-lg bg-white/20 text-[10px] font-bold">Claim →</span>
+                <span className="px-2.5 py-1 rounded-lg bg-white/20 hover:bg-white/30 text-[10px] font-bold">Claim →</span>
               </div>
 
               {/* Status badge (moved here for mobile) */}

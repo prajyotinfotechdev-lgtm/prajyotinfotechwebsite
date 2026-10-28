@@ -151,34 +151,35 @@ export default function DiwaliOfferBanner() {
               }}
             />
 
-            <div className="relative max-w-7xl mx-auto flex items-center justify-between gap-2 px-3 sm:px-6 py-2.5 sm:py-3 text-white">
+            <div className="relative max-w-7xl mx-auto flex items-center justify-between gap-1.5 sm:gap-2 px-2.5 sm:px-6 py-2 sm:py-3 text-white">
               {/* Left Diya & Tag */}
-              <div className="flex items-center gap-2 shrink-0">
-                <HeaderDiya size={26} />
-                <span className="hidden sm:inline-flex items-center gap-1 bg-amber-950/40 border border-amber-300/40 rounded-full px-2.5 py-0.5 text-[11px] font-bold text-amber-200 tracking-wider uppercase">
+              <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                <HeaderDiya size={22} />
+                <span className="hidden md:inline-flex items-center gap-1 bg-amber-950/40 border border-amber-300/40 rounded-full px-2.5 py-0.5 text-[11px] font-bold text-amber-200 tracking-wider uppercase">
                   <Sparkles size={11} className="text-amber-300" />
                   Diwali Mahotsav 2026
                 </span>
               </div>
 
               {/* Center message & countdown & promo code */}
-              <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center flex-1 mx-2">
-                <div className="text-xs sm:text-sm font-semibold tracking-wide flex items-center gap-1.5">
-                  <span className="font-extrabold text-amber-100">शुभ दीपावली!</span>
+              <div className="flex flex-wrap items-center justify-center gap-x-2 sm:gap-x-3 gap-y-0.5 sm:gap-y-1 text-center flex-1 mx-1 sm:mx-2 min-w-0">
+                <div className="text-[11px] sm:text-xs md:text-sm font-semibold tracking-wide flex items-center gap-1 sm:gap-1.5 truncate">
+                  <span className="font-extrabold text-amber-100 hidden sm:inline">शुभ दीपावली!</span>
                   <span className="text-amber-200 hidden md:inline">•</span>
                   <span>
-                    Get <strong className="text-amber-200 font-extrabold underline decoration-amber-300/60 underline-offset-2">15% OFF</strong> + <strong className="text-white">3 Months Free Support</strong>
+                    Get <strong className="text-amber-200 font-extrabold underline decoration-amber-300/60 underline-offset-2">15% OFF</strong>
+                    <span className="hidden sm:inline"> + <strong className="text-white">3 Mo. Free Support</strong></span>
                   </span>
                 </div>
 
                 {/* Promo Coupon Pill */}
-                <span className="inline-flex items-center gap-1 bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-amber-300/50 rounded-full px-2.5 py-0.5 text-[11px] font-mono font-bold text-amber-100 transition-colors shadow-sm">
-                  <Tag size={11} className="text-amber-300" />
-                  Code: <strong className="text-white tracking-wider">DIWALI2026</strong>
+                <span className="inline-flex items-center gap-1 bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-amber-300/50 rounded-full px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-[11px] font-mono font-bold text-amber-100 transition-colors shadow-sm shrink-0">
+                  <Tag size={10} className="text-amber-300" />
+                  <span className="hidden sm:inline">Code: </span><strong className="text-white tracking-wider">DIWALI2026</strong>
                 </span>
 
                 {/* Countdown timer */}
-                <div className="hidden lg:flex items-center gap-1 text-[11px] font-mono bg-black/30 border border-amber-400/20 rounded-full px-2.5 py-0.5 text-amber-100">
+                <div className="hidden lg:flex items-center gap-1 text-[11px] font-mono bg-black/30 border border-amber-400/20 rounded-full px-2.5 py-0.5 text-amber-100 shrink-0">
                   <span className="font-bold text-amber-300">{countdown.d}d</span>
                   <span className="opacity-60">:</span>
                   <span className="font-bold text-amber-300">{countdown.h}h</span>
@@ -190,26 +191,29 @@ export default function DiwaliOfferBanner() {
               </div>
 
               {/* Right CTA and close */}
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex items-center gap-1 sm:gap-2 shrink-0">
                 <button
                   onClick={handleCTA}
-                  className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-200 via-amber-100 to-amber-300 hover:from-white hover:to-amber-200 text-amber-950 font-extrabold text-xs sm:text-sm px-3.5 sm:px-4 py-1.5 rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+                  className="inline-flex items-center gap-1 sm:gap-1.5 bg-gradient-to-r from-amber-200 via-amber-100 to-amber-300 hover:from-white hover:to-amber-200 text-amber-950 font-extrabold text-[11px] sm:text-xs md:text-sm px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer whitespace-nowrap"
                 >
-                  <Sparkles size={13} className="text-amber-700" />
-                  <span>Claim Offer</span>
-                  <ArrowRight size={13} />
+                  <Sparkles size={11} className="text-amber-700 shrink-0" />
+                  <span>Claim</span>
+                  <span className="hidden sm:inline">Offer</span>
+                  <ArrowRight size={11} className="shrink-0 hidden xs:inline" />
                 </button>
 
-                <HeaderDiya size={24} />
+                <span className="hidden sm:inline-block">
+                  <HeaderDiya size={22} />
+                </span>
 
                 {/* Dismiss button */}
                 <button
                   onClick={handleDismiss}
-                  className="p-1 rounded-full hover:bg-white/20 transition-colors text-white/80 hover:text-white cursor-pointer ml-1"
+                  className="p-1 sm:p-1.5 rounded-full hover:bg-white/20 transition-colors text-white/80 hover:text-white cursor-pointer ml-0.5 sm:ml-1"
                   aria-label="Minimize Diwali banner"
                   title="Minimize banner"
                 >
-                  <X size={16} />
+                  <X size={15} />
                 </button>
               </div>
             </div>
@@ -219,15 +223,15 @@ export default function DiwaliOfferBanner() {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="fixed top-2 right-4 z-[55]"
+            className="fixed top-2 right-2 sm:right-4 z-[55]"
           >
             <button
               onClick={handleRestore}
-              className="diwali-badge-glow flex items-center gap-1.5 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-bold text-xs px-3 py-1.5 rounded-full shadow-lg hover:scale-105 transition-transform cursor-pointer border border-amber-300"
+              className="diwali-badge-glow flex items-center gap-1.5 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-bold text-[11px] sm:text-xs px-2.5 sm:px-3 py-1.5 rounded-full shadow-lg hover:scale-105 transition-transform cursor-pointer border border-amber-300"
               title="View Diwali 15% OFF Offer"
             >
-              <span className="text-sm">🪔</span>
-              <span>Diwali 15% OFF</span>
+              <span className="text-xs sm:text-sm">🪔</span>
+              <span>15% OFF</span>
             </button>
           </motion.div>
         )}

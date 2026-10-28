@@ -68,31 +68,31 @@ export default function DiwaliLightDiyaWidget() {
 
   return (
     <>
-      {/* Floating Widget at bottom left */}
-      <div className="fixed bottom-5 left-5 z-[45] pointer-events-auto">
+      {/* Floating Widget at bottom left — placed above bottom bar on mobile */}
+      <div className="fixed bottom-24 sm:bottom-6 left-3 sm:left-6 z-[45] pointer-events-auto">
         <motion.button
           type="button"
           onClick={handleLightDiya}
           whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.94 }}
-          className="group relative flex items-center gap-2.5 px-3.5 sm:px-4 py-2.5 rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white font-extrabold text-xs shadow-xl shadow-amber-500/25 border border-amber-300 diwali-badge-glow cursor-pointer"
+          className="group relative flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white font-extrabold text-xs shadow-xl shadow-amber-500/25 border border-amber-300 diwali-badge-glow cursor-pointer"
           title="Click to Light a Diya for Diwali!"
         >
           {/* Animated Diya icon */}
-          <span className="text-xl sm:text-2xl transition-transform group-hover:scale-110 drop-shadow-[0_0_8px_rgba(251,191,36,0.9)]">
+          <span className="text-lg sm:text-2xl transition-transform group-hover:scale-110 drop-shadow-[0_0_8px_rgba(251,191,36,0.9)]">
             🪔
           </span>
 
           <div className="flex flex-col text-left">
-            <span className="leading-tight text-[11px] sm:text-xs">
-              {lit ? "Diya Lighted! ✨" : "Light a Diya 🪔"}
+            <span className="leading-tight text-[10px] sm:text-xs">
+              {lit ? "Diya Lit! ✨" : "Light a Diya 🪔"}
             </span>
-            <span className="text-[9px] text-amber-100 font-mono font-normal">
-              {count.toLocaleString()} lit by visitors
+            <span className="text-[8px] sm:text-[9px] text-amber-100 font-mono font-normal">
+              {count.toLocaleString()} lit
             </span>
           </div>
 
-          <Sparkles size={13} className="text-amber-200 animate-spin" style={{ animationDuration: "6s" }} />
+          <Sparkles size={11} className="text-amber-200 animate-spin shrink-0 hidden xs:inline" style={{ animationDuration: "6s" }} />
         </motion.button>
       </div>
 
@@ -137,7 +137,7 @@ export default function DiwaliLightDiyaWidget() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 10 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-sm rounded-3xl p-6 sm:p-8 bg-gradient-to-b from-[#FFFDF5] via-[#FFF9E6] to-white border border-amber-300 shadow-2xl text-center z-10 diwali-glow-card"
+              className="relative w-full max-w-sm rounded-3xl p-5 sm:p-8 max-h-[90vh] overflow-y-auto bg-gradient-to-b from-[#FFFDF5] via-[#FFF9E6] to-white border border-amber-300 shadow-2xl text-center z-10 diwali-glow-card"
             >
               <button
                 type="button"

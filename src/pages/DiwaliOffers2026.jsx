@@ -474,7 +474,7 @@ export default function DiwaliOffers2026() {
           {/* Headline */}
           <motion.h1
             initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.15 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4"
+            className="text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-3 sm:mb-4"
           >
             🪔 Diwali 2026<br />
             <span className="text-yellow-200">15% OFF + 3 Months Free AMC</span>
@@ -483,7 +483,7 @@ export default function DiwaliOffers2026() {
           {/* Sub-headline */}
           <motion.p
             initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}
-            className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-6"
+            className="text-sm sm:text-lg text-white/90 max-w-2xl mx-auto mb-5 sm:mb-6"
           >
             Web Design · App Development · Custom Software · HRMS/ERP<br className="hidden sm:block" />
             Trusted by <strong>200+ businesses</strong> across India, UAE, UK & USA
@@ -492,9 +492,9 @@ export default function DiwaliOffers2026() {
           {/* Coupon */}
           <motion.div
             initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }}
-            className="flex flex-wrap justify-center items-center gap-3 mb-8"
+            className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 mb-6 sm:mb-8"
           >
-            <span className="text-white/80 text-sm font-medium">Your promo code:</span>
+            <span className="text-white/80 text-xs sm:text-sm font-medium">Your promo code:</span>
             <CouponCopy />
           </motion.div>
 
@@ -502,13 +502,13 @@ export default function DiwaliOffers2026() {
           {!expired && (
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
-              className="flex justify-center gap-3 mb-8"
+              className="flex justify-center gap-2 sm:gap-3 mb-6 sm:mb-8"
               aria-label="Offer countdown timer"
             >
               {[{ v: d, l: "Days" }, { v: h, l: "Hours" }, { v: m, l: "Mins" }, { v: s, l: "Secs" }].map(({ v, l }) => (
-                <div key={l} className="bg-white/20 backdrop-blur rounded-2xl px-4 py-3 min-w-[64px] text-center border border-white/30">
-                  <div className="text-3xl font-extrabold tabular-nums">{String(v).padStart(2, "0")}</div>
-                  <div className="text-xs font-medium text-white/80 mt-1">{l}</div>
+                <div key={l} className="bg-white/20 backdrop-blur rounded-xl sm:rounded-2xl px-2.5 sm:px-4 py-2 sm:py-3 min-w-[54px] sm:min-w-[64px] text-center border border-white/30">
+                  <div className="text-xl sm:text-3xl font-extrabold tabular-nums">{String(v).padStart(2, "0")}</div>
+                  <div className="text-[10px] sm:text-xs font-medium text-white/80 mt-0.5 sm:mt-1">{l}</div>
                 </div>
               ))}
             </motion.div>
@@ -517,21 +517,21 @@ export default function DiwaliOffers2026() {
           {/* CTAs */}
           <motion.div
             initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }}
-            className="flex flex-wrap justify-center gap-4"
+            className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4"
           >
             <button
               onClick={scrollToForm}
-              className="bg-white text-amber-700 hover:bg-amber-50 font-bold px-8 py-4 rounded-2xl text-lg shadow-xl flex items-center gap-2 transition-all hover:scale-105"
+              className="w-full sm:w-auto justify-center bg-white text-amber-700 hover:bg-amber-50 font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl text-base sm:text-lg shadow-xl flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
             >
-              🪔 Claim Diwali Offer
-              <ArrowRight size={20} />
+              <span>🪔 Claim Diwali Offer</span>
+              <ArrowRight size={18} />
             </button>
             <a
               href={wa("🪔 Hi! I want to know about the Diwali 2026 offer. Code: DIWALI2026")}
               target="_blank" rel="noopener noreferrer"
-              className="bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-4 rounded-2xl text-lg flex items-center gap-2 transition-all hover:scale-105"
+              className="w-full sm:w-auto justify-center bg-green-500 hover:bg-green-600 text-white font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl text-base sm:text-lg flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
             >
-              <Phone size={20} /> WhatsApp Us
+              <Phone size={18} /> <span>WhatsApp Us</span>
             </a>
           </motion.div>
         </div>
@@ -638,22 +638,22 @@ export default function DiwaliOffers2026() {
         aria-labelledby="lead-form-heading"
       >
         <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-8 text-white">
-            <div className="text-5xl mb-3">🪔</div>
-            <h2 id="lead-form-heading" className="text-3xl sm:text-4xl font-extrabold mb-3">
+          <div className="text-center mb-6 sm:mb-8 text-white">
+            <div className="text-4xl sm:text-5xl mb-2 sm:mb-3">🪔</div>
+            <h2 id="lead-form-heading" className="text-2xl sm:text-4xl font-extrabold mb-2 sm:mb-3">
               Claim Your Diwali Offer
             </h2>
-            <p className="text-white/80 text-lg">
+            <p className="text-white/85 text-sm sm:text-lg">
               Fill the form below — we'll send your personalised quote within <strong>30 minutes</strong>
             </p>
-            <div className="flex justify-center gap-2 mt-4 flex-wrap">
-              <span className="bg-white/20 border border-white/30 rounded-full px-4 py-1 text-sm font-semibold">✅ 15% OFF Applied</span>
-              <span className="bg-white/20 border border-white/30 rounded-full px-4 py-1 text-sm font-semibold">🎁 3 Months Free AMC</span>
-              <span className="bg-white/20 border border-white/30 rounded-full px-4 py-1 text-sm font-semibold">⚡ 30-Min Response</span>
+            <div className="flex justify-center gap-1.5 sm:gap-2 mt-3 sm:mt-4 flex-wrap">
+              <span className="bg-white/20 border border-white/30 rounded-full px-3 sm:px-4 py-0.5 sm:py-1 text-xs sm:text-sm font-semibold">✅ 15% OFF Applied</span>
+              <span className="bg-white/20 border border-white/30 rounded-full px-3 sm:px-4 py-0.5 sm:py-1 text-xs sm:text-sm font-semibold">🎁 3 Months Free AMC</span>
+              <span className="bg-white/20 border border-white/30 rounded-full px-3 sm:px-4 py-0.5 sm:py-1 text-xs sm:text-sm font-semibold">⚡ 30-Min Response</span>
             </div>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-2xl p-8">
+          <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-8">
             <LeadForm />
           </div>
         </div>

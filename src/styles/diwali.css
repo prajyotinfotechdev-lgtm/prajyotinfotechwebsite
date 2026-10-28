@@ -119,10 +119,26 @@
   animation: mandalaRotate 40s linear infinite;
 }
 
-/* Hide diyas on small screens to avoid clutter */
+/* Hide ambient floating diyas on small screens to avoid clutter */
 @media (max-width: 768px) {
   [class*="diyaFloat"],
   [style*="diyaFloat"] {
     display: none !important;
+  }
+}
+
+/* Mobile Safe Area & Touch UX Support */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+@media (max-width: 640px) {
+  .diwali-glow-card {
+    border-radius: 1.25rem;
+  }
+  .diwali-badge-glow {
+    animation-duration: 3.2s; /* GPU friendly on mobile devices */
   }
 }
