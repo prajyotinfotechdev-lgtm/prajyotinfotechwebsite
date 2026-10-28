@@ -197,9 +197,9 @@ export default function Services() {
         { name: "Services", url: `${SITE_URL}/services` },
       ]} />
       <Seo
-        title="Software Engineering & Digital Transformation Services — Prajyot Infotech"
-        description="Prajyot Infotech provides enterprise web development, cross-platform mobile apps, bespoke ERP/CRM suites, and intelligent workflow automation architectures for high-growth businesses."
-        keywords="custom software development, enterprise web development, mobile app engineering, ERP CRM solutions, business workflow automation, digital transformation"
+        title="Software & Web Development Services — Diwali 2026 Festive Offer | Prajyot Infotech"
+        description="Prajyot Infotech provides enterprise web development, mobile apps & custom ERP/CRM. 🪔 Diwali 2026 Special: 15% OFF + 3 Months Free Support on all services. Code: DIWALI2026."
+        keywords="Diwali software services offer 2026, Diwali web development discount, custom software development, enterprise web development, mobile app engineering, ERP CRM solutions"
         path="/services"
         schema={[...servicesSchemas, faqSchema]}
       />
@@ -237,6 +237,26 @@ export default function Services() {
           </div>
           <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-brand-200/50 blur-3xl" />
         </section>
+
+        {/* 🪔 Diwali Festive Offer Ribbon */}
+        <div className="mt-8 p-5 rounded-3xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white shadow-xl diwali-glow-card flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <span className="text-3xl">🪔</span>
+            <div>
+              <div className="text-xs font-black uppercase text-amber-200 tracking-wider">Diwali Mahotsav 2026 Special</div>
+              <div className="text-sm sm:text-base font-extrabold text-white">Flat 15% OFF on all Web, Mobile & Software Services</div>
+              <div className="text-xs text-amber-100 font-medium">Includes 3 Months Free AMC + Priority Festive Launch • Code: <span className="font-mono font-bold bg-white/20 px-1.5 py-0.5 rounded text-white">DIWALI2026</span></div>
+            </div>
+          </div>
+          <a
+            href={wa(`Hi ${BRAND}, I want to avail the Diwali 15% OFF offer (Code: DIWALI2026) for my business.`)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 px-4 py-2.5 rounded-xl bg-white text-amber-900 font-extrabold text-xs sm:text-sm shadow-md hover:bg-amber-50 hover:scale-105 transition-all"
+          >
+            Claim Offer on WhatsApp →
+          </a>
+        </div>
 
         {/* BENTO BOX GRID */}
         <div className="mt-20">

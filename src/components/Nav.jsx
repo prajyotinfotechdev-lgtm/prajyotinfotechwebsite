@@ -170,6 +170,24 @@ export default function Nav() {
           
           <div className="h-6 w-px bg-slate-200 ml-1"></div>
 
+          <button
+            type="button"
+            onClick={() =>
+              openLeadModal({
+                title: "🪔 Diwali Special Consultation",
+                subtitle: "15% off + 3 months free maintenance on all software & web development projects.",
+                source: "Nav — Diwali 15% OFF Pill",
+                projectType: "Diwali Special Offer",
+                defaultMessage: "Hi, I'm interested in availing the 15% Diwali discount (Code: DIWALI2026) for my project.",
+              })
+            }
+            className="diwali-badge-glow inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-amber-600 to-orange-500 px-3.5 py-2 text-xs font-bold text-white shadow-md shadow-amber-500/20 hover:scale-105 transition-all cursor-pointer"
+            title="Claim Diwali 15% OFF (Code: DIWALI2026)"
+          >
+            <span className="text-sm">🪔</span>
+            <span>15% Off</span>
+          </button>
+
           <Link
             to="/estimate"
             aria-label="Estimate Project"
@@ -180,7 +198,24 @@ export default function Nav() {
         </nav>
 
         {/* Mobile & Tablet controls */}
-        <div className="flex items-center gap-2.5 lg:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
+          <button
+            type="button"
+            onClick={() =>
+              openLeadModal({
+                title: "🪔 Diwali Special Consultation",
+                subtitle: "15% off + 3 months free maintenance on all software & web development projects.",
+                source: "Mobile Nav — Diwali 15% OFF Pill",
+                projectType: "Diwali Special Offer",
+                defaultMessage: "Hi, I'm interested in availing the 15% Diwali discount (Code: DIWALI2026) for my project.",
+              })
+            }
+            className="diwali-badge-glow inline-flex items-center gap-1 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-2.5 py-1.5 text-xs font-bold text-white shadow-sm active:scale-95 cursor-pointer"
+            title="Diwali Offer"
+          >
+            <span>🪔</span>
+            <span>15% Off</span>
+          </button>
           <Link
             to="/estimate"
             aria-label="Estimate Project"
@@ -243,6 +278,30 @@ export default function Nav() {
               className="mx-auto flex max-w-7xl flex-col px-5 py-5 text-sm text-slate-700 max-h-[calc(100dvh-5rem)] overflow-y-auto pb-[max(1.5rem,env(safe-area-inset-bottom))]"
             >
               <h2 id="mobileMenuTitle" className="sr-only">Menu</h2>
+
+              {/* Diwali festive banner card in mobile drawer */}
+              <div
+                onClick={() => {
+                  setOpen(false);
+                  openLeadModal({
+                    title: "🪔 Diwali Special Consultation",
+                    subtitle: "15% off + 3 months free maintenance on all software & web development projects.",
+                    source: "Mobile Drawer — Diwali Card",
+                    projectType: "Diwali Special Offer",
+                    defaultMessage: "Hi, I want to avail the 15% Diwali discount (Code: DIWALI2026) for my project.",
+                  });
+                }}
+                className="mb-4 p-3 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white cursor-pointer shadow-md flex items-center justify-between"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">🪔</span>
+                  <div>
+                    <div className="text-xs font-bold leading-tight">Diwali Offer: 15% OFF</div>
+                    <div className="text-[10px] text-amber-100 font-mono">Code: DIWALI2026 • Free AMC</div>
+                  </div>
+                </div>
+                <span className="px-2 py-1 rounded-lg bg-white/20 text-[10px] font-bold">Claim →</span>
+              </div>
 
               {/* Status badge (moved here for mobile) */}
               <div className="mb-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200/70 text-xs font-medium text-emerald-700 w-fit">

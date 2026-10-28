@@ -53,7 +53,7 @@ export default function CTA() {
 Name: ${form.name.trim()}
 Contact: ${form.contact.trim()}
 Message:
-I'm interested in building a premium website/app for my business. Please share timeline & fixed price.`.trim();
+I'm interested in building a website/app with the Diwali 15% OFF discount (Code: DIWALI2026). Please share timeline & fixed price.`.trim();
 
   // Primary: WhatsApp (with Database Save)
   const handleWhatsApp = async () => {
@@ -168,6 +168,10 @@ I'm interested in building a premium website/app for my business. Please share t
         transition={{ duration: 0.4 }}
         className="mx-auto max-w-4xl text-center"
       >
+        <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-100 border border-amber-300 text-amber-900 text-xs font-bold mb-4 shadow-sm diwali-badge-glow">
+          <span>🪔</span>
+          <span>Diwali Special: 15% OFF + 3 Months Free AMC • Code: DIWALI2026</span>
+        </div>
         <h2 className="text-3xl md:text-5xl font-black tracking-tight text-navy-800">
           Ready to start?
         </h2>

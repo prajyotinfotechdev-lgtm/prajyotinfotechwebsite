@@ -89,6 +89,91 @@ function UICard({ delay, x, y, children, className = "" }) {
   );
 }
 
+/* ─── SLIDE 0 (FESTIVE): "Diwali Special Offer 2026" ───────────────────── */
+function SlideDiwaliVisual({ reduced }) {
+  const perks = [
+    { label: "15% Festive Discount", desc: "Use coupon DIWALI2026", color: "#d97706" },
+    { label: "3 Mo. Free Support", desc: "Complete AMC & updates", color: "#ea580c" },
+    { label: "100% IP Ownership", desc: "Full code & Git handover", color: "#b45309" },
+    { label: "Guaranteed Timeline", desc: "Fast auspicious launch", color: "#059669" },
+  ];
+
+  return (
+    <div className="absolute inset-0 overflow-hidden">
+      <TechnicalGrid opacity={0.03} />
+
+      {/* Warm Diwali ambient radial glow */}
+      <motion.div
+        className="absolute right-0 top-1/4 w-[600px] h-[600px] rounded-full pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, rgba(217, 119, 6, 0.08) 45%, transparent 70%)",
+        }}
+        animate={reduced ? {} : { scale: [1, 1.12, 1], opacity: [0.75, 1, 0.75] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      {/* Floating Diya & Festive Showcase Card (desktop) */}
+      <div className="hidden lg:block absolute right-6 xl:right-14 top-1/2 -translate-y-1/2 w-[430px]">
+        <motion.div
+          className="rounded-3xl p-6 bg-gradient-to-br from-amber-50/95 via-white/95 to-orange-50/90 backdrop-blur-xl border border-amber-300/70 shadow-2xl shadow-amber-500/20 diwali-glow-card"
+          initial={{ opacity: 0, x: 50, scale: 0.95 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          exit={{ opacity: 0, x: 30, scale: 0.98 }}
+          transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: 0.2 }}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between pb-4 border-b border-amber-200/60">
+            <div className="flex items-center gap-2.5">
+              <span className="text-2xl">🪔</span>
+              <div>
+                <div className="text-xs font-black tracking-wide text-amber-900 uppercase">
+                  Diwali Mahotsav 2026
+                </div>
+                <div className="text-[11px] text-amber-700/80 font-medium">Auspicious Digital Beginnings</div>
+              </div>
+            </div>
+            <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-amber-500 text-white shadow-sm diwali-badge-glow">
+              LIMITED SLOTS
+            </span>
+          </div>
+
+          {/* Offer items */}
+          <div className="grid grid-cols-2 gap-3 mt-4">
+            {perks.map((p, i) => (
+              <motion.div
+                key={p.label}
+                className="bg-white/90 rounded-2xl p-3 border border-amber-200/60 shadow-sm hover:border-amber-400 transition-colors"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 + i * 0.1, duration: 0.45, ease: EASE_OUT_EXPO }}
+              >
+                <div className="text-xs font-bold text-slate-800 flex items-center gap-1">
+                  <span className="text-amber-500">✦</span>
+                  {p.label}
+                </div>
+                <div className="text-[10px] text-slate-500 mt-0.5">{p.desc}</div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Coupon banner */}
+          <div className="mt-4 p-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white flex items-center justify-between shadow-md">
+            <div>
+              <div className="text-[10px] uppercase font-bold tracking-wider opacity-90">Festive Promo Code</div>
+              <div className="text-base font-mono font-black tracking-widest text-amber-100">DIWALI2026</div>
+            </div>
+            <div className="text-right">
+              <div className="text-sm font-black">Flat 15% OFF</div>
+              <div className="text-[10px] opacity-90">+ 3 Mo. Free Support</div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── SLIDE 1: "Build software that defines the future" ──────────────────── */
 function Slide1Visual({ reduced }) {
 
@@ -302,6 +387,27 @@ function Slide3Visual({ reduced }) {
 /* ─── SLIDE DATA ──────────────────────────────────────────────────────────── */
 const SLIDES = [
   {
+    id: "diwali",
+    eyebrow: "🪔 Shubh Deepavali 2026 • Festive Offer",
+    headline: ["Celebrate Diwali with", "15% OFF on tech."],
+    accentWord: "15% OFF on tech.",
+    sub: "Light up your venture with high-performance web apps, custom ERP/CRM, and scalable mobile apps. Enjoy 15% festive discount + 3 months free maintenance & zero setup fees.",
+    primaryCTA: {
+      type: "modal",
+      label: "Claim Diwali Offer",
+      modalData: {
+        source: "Diwali 2026 — Hero Slide CTA",
+        title: "🪔 Shubh Deepavali Special Offer",
+        subtitle: "15% off + 3 months free maintenance on all new software & web projects.",
+        projectType: "Diwali Special Package",
+        defaultMessage: "Hi, I'm interested in the Diwali offer — 15% off + 3 months free maintenance. Please share package details.",
+      },
+    },
+    secondaryCTA: { type: "link", to: "/pricing", label: "View Festive Pricing" },
+    Visual: SlideDiwaliVisual,
+    accentGradient: "from-amber-600 via-orange-500 to-amber-700",
+  },
+  {
     id: "flagship",
     eyebrow: "Software Engineering Company",
     headline: ["Build software that", "defines the future."],
@@ -424,10 +530,11 @@ export default function AuroraHero() {
   const handleCTA = (cta) => {
     if (cta.type === "modal") {
       openLeadModal({
-        source: "Hero Section - Book Discovery Call",
-        title: "Book Technical Discovery Call",
-        subtitle: "Schedule a 15-min project scoping session with Prajyot Infotech.",
-        projectType: "Website / Web App Development",
+        source: cta.modalData?.source || "Hero Section - Book Discovery Call",
+        title: cta.modalData?.title || "Book Technical Discovery Call",
+        subtitle: cta.modalData?.subtitle || "Schedule a 15-min project scoping session with Prajyot Infotech.",
+        projectType: cta.modalData?.projectType || "Website / Web App Development",
+        defaultMessage: cta.modalData?.defaultMessage || "",
       });
     }
     if (cta.type === "wa") {
@@ -575,9 +682,9 @@ export default function AuroraHero() {
                         
                         let textClass = "";
                         if (isLastWord) {
-                          textClass = "text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-navy-600";
+                          textClass = slide.accentGradient ? `text-transparent bg-clip-text bg-gradient-to-r ${slide.accentGradient}` : "text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-navy-600";
                         } else if (isAccent) {
-                          textClass = "text-transparent bg-clip-text bg-gradient-to-r from-brand-700 to-brand-600";
+                          textClass = `text-transparent bg-clip-text bg-gradient-to-r ${slide.accentGradient || "from-brand-700 to-brand-600"}`;
                         }
                         
                         return (

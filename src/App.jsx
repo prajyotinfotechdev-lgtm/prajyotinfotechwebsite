@@ -14,6 +14,8 @@ import "./style.css";
 import DiwaliOfferBanner from "./components/DiwaliOfferBanner.jsx";
 import DiwaliGreetingPopup from "./components/DiwaliGreetingPopup.jsx";
 import DiwaliDiyas from "./components/DiwaliDiyas.jsx";
+import DiwaliLightDiyaWidget from "./components/DiwaliLightDiyaWidget.jsx";
+import DiwaliQuickLeadBar from "./components/DiwaliQuickLeadBar.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Work = lazy(() => import("./pages/work.jsx")); // ✅ ensure case matches actual file on disk
@@ -143,6 +145,10 @@ export default function App() {
 
         {/* 🪔 Diwali 2026 — Ambient floating diyas */}
         <DiwaliDiyas />
+        {/* 🪔 Diwali 2026 — Interactive "Light a Diya" Widget */}
+        <DiwaliLightDiyaWidget />
+        {/* 🪔 Diwali 2026 — Pure Lead Capture Sticky Bar */}
+        <DiwaliQuickLeadBar />
 
         {/* Vercel Web Analytics */}
         <Analytics />

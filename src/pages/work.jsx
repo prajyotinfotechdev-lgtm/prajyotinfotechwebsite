@@ -354,6 +354,28 @@ export default function Work() {
       </section>
 
       {/* ══════════════════════════════════════════
+      {/* 🪔 Diwali Festive Callout Banner */}
+      <div className="mx-auto max-w-5xl px-4 -mt-4 mb-8">
+        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white shadow-lg diwali-glow-card flex flex-col sm:flex-row items-center justify-between gap-3 text-left">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl sm:text-3xl">🪔</span>
+            <div>
+              <div className="text-[11px] font-black tracking-wide uppercase text-amber-200">Diwali Mahotsav 2026 Offer</div>
+              <div className="text-xs sm:text-sm font-bold text-white">Start your project this festive season: 15% OFF + 3 Months Free AMC</div>
+            </div>
+          </div>
+          <a
+            href={WA("Hi Prajyot Infotech, I'm interested in the Diwali 15% OFF offer (Code: DIWALI2026) for my project.")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 px-4 py-2 rounded-xl bg-white text-amber-900 font-extrabold text-xs shadow hover:bg-amber-50 hover:scale-105 transition-all"
+          >
+            Claim Diwali Offer →
+          </a>
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════════
           STATS STRIP
           ══════════════════════════════════════════ */}
       <div className="border-y border-slate-200/80 bg-white/70 backdrop-blur-sm">

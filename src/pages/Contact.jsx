@@ -109,9 +109,9 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
         { name: "Contact", url: `${SITE_URL}/contact` },
       ]} />
       <Seo
-        title="Contact Prajyot Infotech — Get a Free Project Consultation"
-        description="Connect with Prajyot Infotech for custom web development, mobile apps, CRM, ERP, and WhatsApp automation. Fast 24-hour turnaround with guaranteed fixed quotes."
-        keywords="contact Prajyot Infotech, hire software developers India, custom software quote, website development contact Pune, offshore web development"
+        title="Contact Prajyot Infotech — Diwali 2026 Free Consultation & 15% OFF"
+        description="Connect with Prajyot Infotech for custom web development, mobile apps, CRM & ERP. 🪔 Diwali 2026 Special: Flat 15% OFF + 3 Months Free Support. Code: DIWALI2026."
+        keywords="Diwali software consultation, contact Prajyot Infotech, hire software developers India, custom software quote, website development contact Pune, Diwali IT offers 2026"
         path="/contact"
         schema={[contactPageSchema, localBusinessSchema]}
       />
@@ -166,6 +166,14 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
                 <h2 className="text-xl font-bold text-navy-950 mb-1">Send a Message</h2>
                 <p className="text-xs text-slate-500 mb-4">Fill out the quick form below for an instant response.</p>
 
+                {/* 🪔 Diwali Offer Notice */}
+                <div className="p-3 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">🪔</span>
+                    <span><strong>Diwali Offer Active:</strong> 15% OFF + 3 Months Free AMC with coupon <strong className="font-mono bg-white px-1.5 py-0.5 rounded border border-amber-300">DIWALI2026</strong></span>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 mb-1">Your Full Name *</label>
@@ -212,6 +220,7 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
                     onChange={onChange}
                     className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500"
                   >
+                    <option value="🪔 Diwali Special (15% OFF + Free AMC)">🪔 Diwali Special (15% OFF + 3 Mo. Free AMC) - Code: DIWALI2026</option>
                     <option value="Website Development">Business / Corporate Website</option>
                     <option value="Mobile App Development">Mobile App (Android & iOS)</option>
                     <option value="E-Commerce Store">E-Commerce Store & Payments</option>

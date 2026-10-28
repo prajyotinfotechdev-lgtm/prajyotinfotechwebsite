@@ -294,6 +294,17 @@ export default function Footer() {
 
 
 
+      {/* 🪔 Diwali Festive Greeting Ribbon */}
+      <div className="relative z-10 border-t border-amber-500/30 bg-gradient-to-r from-amber-950/60 via-amber-900/40 to-amber-950/60 py-3.5 px-4 text-center">
+        <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm text-amber-200">
+          <span className="text-lg">🪔</span>
+          <span className="font-extrabold text-amber-100">शुभ दीपावली!</span>
+          <span className="text-amber-400/80">•</span>
+          <span>Prajyot Infotech wishes everyone a Joyous, Prosperous & Auspicious Diwali! May this festival of lights illuminate new opportunities and digital success.</span>
+          <span className="text-lg">🪔</span>
+        </div>
+      </div>
+
       {/* Bottom bar */}
       <div className="relative z-10 py-6 px-4 bg-[#050810]">
         <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">

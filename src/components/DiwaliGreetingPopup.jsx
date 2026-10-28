@@ -130,15 +130,15 @@ export default function DiwaliGreetingPopup() {
   useEffect(() => {
     if (!isActive) return;
 
-    // Check if already shown
+    // Check if already shown in this session
     try {
-      if (localStorage.getItem(STORAGE_KEY) === "true") return;
+      if (sessionStorage.getItem(STORAGE_KEY) === "true") return;
     } catch {}
 
     const timer = setTimeout(() => {
       setShow(true);
       try {
-        localStorage.setItem(STORAGE_KEY, "true");
+        sessionStorage.setItem(STORAGE_KEY, "true");
       } catch {}
     }, POPUP_DELAY);
 
@@ -294,6 +294,10 @@ export default function DiwaliGreetingPopup() {
                       <span>
                         <strong>Priority delivery</strong> for festive-season launches
                       </span>
+                    </div>
+                    <div className="mt-1 pt-2 border-t border-amber-200/60 flex items-center justify-between text-xs">
+                      <span className="text-amber-900 font-semibold">Festive Coupon:</span>
+                      <span className="font-mono font-extrabold text-amber-800 bg-amber-100/90 border border-amber-300 px-2.5 py-0.5 rounded-md tracking-wider">DIWALI2026</span>
                     </div>
                   </div>
                 </motion.div>

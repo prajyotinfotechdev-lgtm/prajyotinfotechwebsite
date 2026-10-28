@@ -116,9 +116,9 @@ export default function Pricing() {
       <BreadcrumbsLd items={[{ name: "Home", url: "https://www.prajyotinfotech.in/" }, { name: "Pricing", url: "https://www.prajyotinfotech.in/pricing" }]} />
 
       <Seo
-        title="Software & Web Development Pricing — Transparent Plans | Prajyot Infotech"
-        description="Fixed and transparent pricing for website development, mobile apps, and custom software. Domestic and international billing in INR, USD, AED, GBP, EUR. Full code ownership."
-        keywords="website development pricing India, custom software development cost, hire offshore developers India, mobile app pricing, Prajyot Infotech pricing plans"
+        title="Software & Web Development Pricing — Diwali 2026 Special 15% OFF | Prajyot Infotech"
+        description="Transparent software and website development pricing. 🪔 Diwali 2026 Special: Flat 15% OFF + 3 Months Free AMC on all packages. Starter web from ₹25,499 ($339). Code: DIWALI2026."
+        keywords="Diwali website development discount, Diwali software pricing 2026, web design festive offer India, website development pricing India, custom software development cost, mobile app pricing"
         path="/pricing"
         schema={{
           "@context": "https://schema.org",
@@ -161,6 +161,43 @@ export default function Pricing() {
         </div>
       </header>
 
+      {/* 🪔 Diwali 2026 Festive Discount Banner */}
+      <div className="mt-8 relative rounded-3xl p-5 sm:p-7 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white shadow-xl diwali-glow-card overflow-hidden">
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5 text-center md:text-left">
+            <span className="text-3xl sm:text-4xl">🪔</span>
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black/25 text-[11px] font-bold text-amber-200 tracking-wider uppercase mb-1">
+                <Sparkles className="w-3 h-3 text-amber-200" />
+                Diwali Mahotsav Offer 2026
+              </div>
+              <h3 className="text-lg sm:text-2xl font-black">
+                Flat 15% OFF + 3 Months Free AMC on All Packages!
+              </h3>
+              <p className="text-xs sm:text-sm text-amber-100 font-medium">
+                Launch your software or website this festive season. Use code <span className="font-mono font-bold bg-white/20 px-2 py-0.5 rounded text-white">DIWALI2026</span>
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() =>
+              openLeadModal({
+                source: "Pricing Page — Diwali Offer Banner",
+                title: "🪔 Claim 15% Diwali Discount",
+                subtitle: "Applies 15% off + 3 months complimentary maintenance on your chosen plan.",
+                projectType: "Diwali Pricing Offer",
+                defaultMessage: `Hi, I'm on the pricing page and want to claim the 15% Diwali discount (Code: DIWALI2026) for my project in ${currency}.`,
+              })
+            }
+            className="shrink-0 bg-white hover:bg-amber-50 text-amber-900 font-extrabold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-lg hover:scale-105 transition-all cursor-pointer flex items-center gap-2"
+          >
+            <span>Claim 15% Off</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
       {/* Tiers Grid */}
       <section className="mt-12 grid gap-8 lg:grid-cols-3">
         {tiers.map((t) => (
@@ -180,6 +217,10 @@ export default function Pricing() {
 
             <div>
               <div className="flex items-center justify-between">
+                <div className="mb-1.5 inline-flex items-center gap-1 text-[10px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
+                  <span>🪔</span>
+                  <span>Diwali 15% OFF</span>
+                </div>
                 <h3 className="text-xl font-bold text-slate-900">{t.name}</h3>
               </div>
               <div className="mt-3 text-3xl sm:text-4xl font-black text-navy-950 tracking-tight">
