@@ -1,290 +1,244 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, useMotionValue, useSpring } from "framer-motion";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import PortfolioDemoModal from "../components/PortfolioDemoModal.jsx";
-import PortfolioSpotlight from "../components/PortfolioSpotlight.jsx";
 import ProjectEstimator from "../components/ProjectEstimator.jsx";
 import EngineeringProcess from "../components/EngineeringProcess.jsx";
 import TrustGuarantees from "../components/TrustGuarantees.jsx";
 import {
   Search,
-  Grid,
-  Table as TableIcon,
-  Zap,
-  TrendingUp,
-  CheckCircle2,
   ArrowRight,
   ExternalLink,
   MessageSquare,
-  Cpu,
   Sparkles,
   ShieldCheck,
-  Smartphone,
   Layers,
-  Check,
   X,
-  Server,
-  Database,
-  SlidersHorizontal,
-  FileText
+  TrendingUp,
+  Zap,
+  ChevronRight,
+  Globe,
+  Building2,
 } from "lucide-react";
 
-import { PROJECTS, INDUSTRIES, TECH_TAGS } from "../data/projectsData.js";
+import { PROJECTS, INDUSTRIES } from "../data/projectsData.js";
 
 const WA = (text) =>
   `https://wa.me/917020708747?text=${encodeURIComponent(text)}`;
 
-// ─── SVG SCHEMATIC GRAPHICS ──────────────────────────────────────────────────
+// ─── INDUSTRY ICON MAP ──────────────────────────────────────────────────────
+const industryEmoji = {
+  "Luxury Fashion": "👗",
+  "Hospitality":   "🍽️",
+  "Retail":        "📱",
+  "E-Commerce":    "🛒",
+  "Healthcare":    "🏥",
+  "SaaS":          "☁️",
+  "Wholesale":     "📦",
+  "Education":     "🎓",
+  "Real Estate":   "🏗️",
+};
 
-function MockupPhone({ accent, secondary }) {
-  return (
-    <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full pointer-events-none">
-      <defs>
-        <linearGradient id={`gradPhone-${accent.replace("#", "")}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={accent} />
-          <stop offset="100%" stopColor={secondary} />
-        </linearGradient>
-      </defs>
-      <rect x="75" y="10" width="50" height="100" rx="10" fill="#0b1120" stroke={`url(#gradPhone-${accent.replace("#", "")})`} strokeWidth="1.5" />
-      <rect x="85" y="10" width="30" height="4" rx="2" fill="#030712" />
-      <rect x="79" y="18" width="42" height="88" rx="6" fill="#040711" />
-      <rect x="83" y="24" width="34" height="6" rx="2" fill={accent} opacity="0.8" />
-      <rect x="83" y="34" width="22" height="3" rx="1.5" fill={secondary} opacity="0.9" />
-      <rect x="83" y="41" width="34" height="14" rx="3" fill="#1e293b" />
-      <rect x="83" y="59" width="15" height="15" rx="3" fill="#1e293b" />
-      <rect x="102" y="59" width="15" height="15" rx="3" fill="#1e293b" />
-      <rect x="83" y="78" width="34" height="4" rx="2" fill="#334155" />
-      <rect x="83" y="86" width="24" height="4" rx="2" fill="#334155" />
-      <circle cx="145" cy="28" r="2.5" fill={accent} opacity="0.8" />
-      <circle cx="55" cy="85" r="2" fill={secondary} opacity="0.8" />
-    </svg>
-  );
-}
+// ─── STAT COUNTER STRIP ──────────────────────────────────────────────────────
+const STATS = [
+  { value: "9+", label: "Deployed Systems" },
+  { value: "50K+", label: "Daily Active Users" },
+  { value: "100%", label: "IP Ownership Given" },
+  { value: "3–4 wk", label: "Avg. Delivery Sprint" },
+];
 
-function MockupTablet({ accent, secondary }) {
-  return (
-    <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full pointer-events-none">
-      <defs>
-        <linearGradient id={`gradTablet-${accent.replace("#", "")}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={accent} />
-          <stop offset="100%" stopColor={secondary} />
-        </linearGradient>
-      </defs>
-      <rect x="40" y="20" width="120" height="82" rx="8" fill="#0b1120" stroke={`url(#gradTablet-${accent.replace("#", "")})`} strokeWidth="1.5" />
-      <rect x="44" y="24" width="112" height="74" rx="4" fill="#040711" />
-      <rect x="44" y="24" width="26" height="74" fill="#0f172a" />
-      <rect x="48" y="30" width="18" height="4" rx="2" fill={accent} opacity="0.9" />
-      <rect x="48" y="40" width="14" height="3" rx="1.5" fill="#334155" />
-      <rect x="48" y="47" width="14" height="3" rx="1.5" fill="#334155" />
-      <rect x="48" y="54" width="14" height="3" rx="1.5" fill="#334155" />
-      <rect x="76" y="30" width="45" height="6" rx="2" fill={secondary} opacity="0.7" />
-      <rect x="135" y="30" width="17" height="6" rx="2" fill={accent} opacity="0.9" />
-      <rect x="76" y="42" width="38" height="22" rx="3" fill="#1e293b" />
-      <rect x="118" y="42" width="34" height="22" rx="3" fill="#1e293b" />
-      <rect x="76" y="68" width="76" height="24" rx="3" fill="#1e293b" />
-      <circle cx="28" cy="38" r="3" fill={accent} opacity="0.8" />
-      <circle cx="174" cy="65" r="2" fill={secondary} opacity="0.8" />
-    </svg>
-  );
-}
+// ─── PREMIUM PROJECT CARD ─────────────────────────────────────────────────────
+function ProjectCard({ project, index, onOpenDemo, prefersReducedMotion }) {
+  const cardRef = useRef(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 150, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 150, damping: 20 });
 
-function MockupDashboard({ accent, secondary }) {
-  return (
-    <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full pointer-events-none">
-      <defs>
-        <linearGradient id={`gradDash-${accent.replace("#", "")}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={accent} />
-          <stop offset="100%" stopColor={secondary} />
-        </linearGradient>
-      </defs>
-      <rect x="25" y="14" width="150" height="92" rx="6" fill="#0b1120" stroke={`url(#gradDash-${accent.replace("#", "")})`} strokeWidth="1.5" />
-      <rect x="25" y="14" width="150" height="12" fill="#030712" />
-      <circle cx="32" cy="20" r="1.5" fill="#ef4444" />
-      <circle cx="37" cy="20" r="1.5" fill="#f59e0b" />
-      <circle cx="42" cy="20" r="1.5" fill="#10b981" />
-      <rect x="25" y="26" width="150" height="10" fill="#0f172a" />
-      <rect x="32" y="29" width="22" height="4" rx="2" fill={accent} opacity="0.9" />
-      <rect x="32" y="42" width="90" height="38" rx="3" fill="#1e293b" />
-      <path d="M35 70 L55 52 L75 58 L95 44 L115 48" stroke={accent} strokeWidth="2" fill="none" strokeLinejoin="round" />
-      <circle cx="55" cy="52" r="2" fill={secondary} />
-      <circle cx="75" cy="58" r="2" fill={secondary} />
-      <circle cx="95" cy="44" r="2" fill={secondary} />
-      <rect x="128" y="42" width="40" height="16" rx="3" fill="#1e293b" />
-      <rect x="128" y="64" width="40" height="16" rx="3" fill="#1e293b" />
-      <rect x="32" y="86" width="136" height="14" rx="3" fill="#1e293b" />
-      <circle cx="12" cy="48" r="2.5" fill={secondary} opacity="0.8" />
-      <circle cx="188" cy="90" r="2" fill={accent} opacity="0.8" />
-    </svg>
-  );
-}
-
-// ─── 3D INTERACTIVE PROJECT CARD ─────────────────────────────────────────────
-
-function Project3DCard({ project, index, onOpenDemo, prefersReducedMotion }) {
-  const [hovered, setHovered] = useState(false);
-  const Mockup = project.mockupType === "Phone" ? MockupPhone : project.mockupType === "Tablet" ? MockupTablet : MockupDashboard;
+  function handleMouseMove(e) {
+    if (prefersReducedMotion) return;
+    const rect = cardRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    mouseX.set((e.clientX - rect.left - rect.width / 2) / 20);
+    mouseY.set((e.clientY - rect.top - rect.height / 2) / 20);
+  }
+  function handleMouseLeave() {
+    mouseX.set(0);
+    mouseY.set(0);
+  }
 
   return (
     <motion.article
       id={project.id}
-      initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 35 }}
+      ref={cardRef}
+      initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.5, delay: prefersReducedMotion ? 0 : index * 0.06, ease: "easeOut" }}
-      whileHover={prefersReducedMotion ? {} : { y: -8, rotateX: 2.5, rotateY: -2 }}
-      style={{ transformStyle: "preserve-3d", perspective: 1000 }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="group relative flex flex-col rounded-3xl border border-slate-700/70 bg-slate-900/90 shadow-xl shadow-black/40 backdrop-blur-xl overflow-hidden transition-all duration-500 hover:border-slate-500/80 hover:shadow-2xl hover:shadow-brand-500/15 scroll-mt-32"
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: 0.55, delay: prefersReducedMotion ? 0 : index * 0.07, ease: [0.22, 1, 0.36, 1] }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ rotateX: prefersReducedMotion ? 0 : springY, rotateY: prefersReducedMotion ? 0 : springX, transformStyle: "preserve-3d", perspective: 1200 }}
+      className="group relative flex flex-col rounded-2xl border border-white/[0.07] bg-[#0f1420] overflow-hidden scroll-mt-32 transition-colors duration-300 hover:border-white/[0.14] cursor-default"
     >
-      {/* Top Preview Canvas */}
-      <div className={`relative h-60 overflow-hidden bg-gradient-to-br ${project.gradient} bg-slate-950 flex items-center justify-center`}>
-        {/* Subtle schematic grid */}
-        <div
-          className="absolute inset-0 opacity-[0.06]"
+      {/* ── Coloured Top Accent Strip ── */}
+      <div
+        className="h-[3px] w-full shrink-0"
+        style={{ background: `linear-gradient(90deg, ${project.accent}, ${project.secondary})` }}
+      />
+
+      {/* ── Visual Hero Area ── */}
+      <div className="relative h-52 overflow-hidden bg-[#070b14] flex items-center justify-center">
+        {/* Ambient blob */}
+        <motion.div
+          animate={prefersReducedMotion ? {} : { scale: [1, 1.2, 1], opacity: [0.15, 0.28, 0.15] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
+          className="absolute rounded-full pointer-events-none"
           style={{
-            backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)",
-            backgroundSize: "28px 28px"
+            width: 220, height: 220,
+            background: `radial-gradient(circle, ${project.accent}55, transparent 70%)`,
+            filter: "blur(40px)",
+            top: "50%", left: "50%",
+            transform: "translate(-50%, -50%)",
           }}
         />
 
-        {/* Ambient Glow Orb */}
-        <motion.div
-          animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.35, 0.2] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full pointer-events-none"
-          style={{ background: `radial-gradient(circle, ${project.accent}, transparent 70%)`, filter: "blur(30px)" }}
+        {/* Grid dots */}
+        <div
+          className="absolute inset-0 opacity-[0.035]"
+          style={{
+            backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px)",
+            backgroundSize: "22px 22px",
+          }}
         />
 
-        {/* 3D Mockup Component */}
-        <motion.div
-          animate={hovered && !prefersReducedMotion ? { y: -6, scale: 1.05 } : { y: 0, scale: 1 }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
-          className="w-full h-full absolute inset-0 flex items-center justify-center p-6"
-          style={{ transformStyle: "preserve-3d" }}
-        >
-          <Mockup accent={project.accent} secondary={project.secondary} />
-        </motion.div>
-
-        {/* Badges */}
+        {/* Industry Badge */}
         <div className="absolute top-4 left-4 z-10">
-          <span className={`inline-flex items-center rounded-full bg-gradient-to-r ${project.tagColor} px-3 py-1 text-[11px] font-bold text-white shadow-md`}>
+          <span
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold text-white backdrop-blur-md shadow-lg"
+            style={{ background: `linear-gradient(135deg, ${project.accent}cc, ${project.secondary}cc)` }}
+          >
+            <span>{industryEmoji[project.tag] || "💡"}</span>
             {project.tag}
           </span>
         </div>
 
+        {/* Year */}
         <div className="absolute top-4 right-4 z-10">
-          <span className="rounded-full bg-slate-950/70 border border-slate-700/80 backdrop-blur-md px-2.5 py-0.5 text-[11px] font-mono font-semibold text-slate-300">
-            {project.year}
-          </span>
+          <span className="text-[11px] font-mono text-white/40 tabular-nums">{project.year}</span>
         </div>
 
-        {/* Hover Glint Effect */}
+        {/* Logo or big metric */}
+        <div className="relative z-10 flex flex-col items-center justify-center gap-2 text-center px-6">
+          {project.logo ? (
+            <img
+              src={project.logo}
+              alt={`${project.client} logo`}
+              className="w-16 h-16 rounded-full object-cover shadow-xl"
+              style={{ boxShadow: `0 0 32px ${project.accent}55` }}
+            />
+          ) : (
+            <div
+              className="text-5xl font-black tabular-nums leading-none tracking-tight"
+              style={{ color: project.accent, textShadow: `0 0 40px ${project.accent}80` }}
+            >
+              {project.metrics.value}
+            </div>
+          )}
+          <p className="text-[11px] text-white/40 font-mono uppercase tracking-widest">
+            {project.logo ? project.client : project.metrics.label}
+          </p>
+        </div>
+
+        {/* Shimmer on hover */}
         <motion.div
-          animate={hovered && !prefersReducedMotion ? { opacity: 1, x: "200%" } : { opacity: 0, x: "-100%" }}
-          transition={{ duration: 0.6 }}
-          className="absolute inset-y-0 -left-1/4 w-1/3 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none"
+          initial={{ x: "-110%", opacity: 0 }}
+          whileHover={{ x: "220%", opacity: 1 }}
+          transition={{ duration: 0.75 }}
+          className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-transparent via-white/[0.06] to-transparent skew-x-12 pointer-events-none"
         />
 
-        {/* Live Simulator Quick Launch Pill */}
-        <div className="absolute bottom-3 right-3 z-10">
-          <button
-            onClick={() => onOpenDemo(project)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950/85 hover:bg-brand-600 text-white border border-slate-700/80 hover:border-brand-500 font-bold text-[11px] backdrop-blur-md shadow-lg transition cursor-pointer"
+        {/* Live site pill — only if liveUrl exists */}
+        {project.liveUrl && (
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="absolute bottom-3 right-3 z-10 flex items-center gap-1 px-2.5 py-1.5 rounded-xl backdrop-blur-md border border-white/10 bg-white/[0.06] hover:bg-white/[0.12] text-white/70 hover:text-white text-[11px] font-semibold transition"
           >
-            <Zap className="w-3 h-3 text-amber-400" />
-            Live Demo
-          </button>
-        </div>
+            <Globe className="w-3 h-3" />
+            Live Site
+          </a>
+        )}
       </div>
 
-      {/* Card Body */}
-      <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            {project.logo ? (
-              <img
-                src={project.logo}
-                alt={`${project.client} logo`}
-                className="w-7 h-7 rounded-full object-cover border border-amber-400/40 shadow-sm shrink-0"
-              />
-            ) : null}
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between text-[11px] text-slate-400 font-mono">
-                <span className="truncate">{project.client}</span>
-                <span className="text-emerald-400 font-semibold shrink-0 ml-1">{project.scale}</span>
-              </div>
-            </div>
+      {/* ── Card Body ── */}
+      <div className="flex flex-col flex-1 p-5 gap-4">
+        {/* Client & Scale */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 min-w-0">
+            <Building2 className="w-3.5 h-3.5 text-white/25 shrink-0" />
+            <span className="text-[11px] text-white/45 font-mono truncate">{project.client}</span>
           </div>
-
-          <div className="flex items-start justify-between gap-2">
-            <h3 className="text-lg font-black text-white leading-snug group-hover:text-brand-300 transition-colors">
-              {project.title}
-            </h3>
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={`Visit live website: ${project.liveUrl}`}
-                className="p-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 transition shrink-0"
-              >
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            )}
-          </div>
-
-          <p className="mt-2 text-xs text-slate-400 leading-relaxed line-clamp-2">
-            {project.shortDesc}
-          </p>
-
-          {/* Key Metric Highlight */}
-          <div className="mt-4 rounded-2xl border border-slate-800 bg-slate-950/80 px-4 py-3 flex items-center justify-between">
-            <div>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wide font-medium">{project.metrics.label}</p>
-              <p className="text-xl font-black text-white mt-0.5">{project.metrics.value}</p>
-            </div>
-            <div className="text-right">
-              <span className="text-[10px] text-slate-500 block font-mono">Benchmark</span>
-              <span className="text-[10px] text-brand-300 font-medium">{project.metrics.sub}</span>
-            </div>
-          </div>
-
-          {/* Tech Stack Pills */}
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            {project.stack.slice(0, 4).map((tech) => (
-              <span
-                key={tech}
-                className="rounded-lg border border-slate-800 bg-slate-950 px-2 py-0.5 text-[10px] font-mono font-medium text-slate-300"
-              >
-                {tech}
-              </span>
-            ))}
-            {project.stack.length > 4 && (
-              <span className="rounded-lg border border-slate-800 bg-slate-950 px-2 py-0.5 text-[10px] font-mono font-medium text-slate-500">
-                +{project.stack.length - 4}
-              </span>
-            )}
-          </div>
+          <span className="text-[10px] text-emerald-400 font-mono shrink-0 ml-2">{project.scale}</span>
         </div>
 
-        {/* Actions Row */}
-        <div className="pt-2 border-t border-slate-800 flex items-center justify-between gap-2">
+        {/* Title */}
+        <h3 className="text-[15px] font-bold text-white leading-snug group-hover:text-white transition-colors line-clamp-2">
+          {project.title}
+        </h3>
+
+        {/* Description */}
+        <p className="text-[12px] text-white/45 leading-relaxed line-clamp-2 flex-1">
+          {project.shortDesc}
+        </p>
+
+        {/* Key result pill */}
+        <div
+          className="flex items-center gap-2.5 px-3 py-2 rounded-xl"
+          style={{ background: `${project.accent}12`, border: `1px solid ${project.accent}25` }}
+        >
+          <TrendingUp className="w-3.5 h-3.5 shrink-0" style={{ color: project.accent }} />
+          <span className="text-[11px] font-semibold" style={{ color: project.accent }}>
+            {project.metrics.value}
+          </span>
+          <span className="text-[11px] text-white/40">{project.metrics.sub}</span>
+        </div>
+
+        {/* Stack pills */}
+        <div className="flex flex-wrap gap-1.5">
+          {project.stack.slice(0, 4).map((tech) => (
+            <span
+              key={tech}
+              className="px-2 py-0.5 rounded-md text-[10px] font-mono text-white/40 bg-white/[0.04] border border-white/[0.06]"
+            >
+              {tech}
+            </span>
+          ))}
+          {project.stack.length > 4 && (
+            <span className="px-2 py-0.5 rounded-md text-[10px] font-mono text-white/25 bg-white/[0.03] border border-white/[0.05]">
+              +{project.stack.length - 4}
+            </span>
+          )}
+        </div>
+
+        {/* Action row */}
+        <div className="flex items-center gap-2 pt-1 border-t border-white/[0.06]">
           <button
             onClick={() => onOpenDemo(project)}
-            className="flex-1 bg-brand-600 hover:bg-brand-500 text-white font-bold py-2.5 px-3 rounded-xl text-xs transition cursor-pointer flex items-center justify-center gap-1.5 shadow-md shadow-brand-600/20"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[12px] font-semibold transition cursor-pointer text-white/70 hover:text-white bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.07] hover:border-white/[0.14]"
           >
-            <Zap className="w-3.5 h-3.5 text-amber-300" />
-            Launch Live Demo
+            <Zap className="w-3.5 h-3.5" style={{ color: project.accent }} />
+            Case Study
           </button>
           <a
-            href={WA(`Hi Prajyot Infotech, I saw the ${project.title} on your portfolio and want to build a similar platform.`)}
+            href={WA(`Hi Prajyot Infotech, I saw the ${project.title} on your portfolio — I'd love to build something similar.`)}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`WhatsApp inquiry about ${project.title}`}
-            className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition"
+            className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 hover:border-emerald-500/40 transition"
           >
             <MessageSquare className="w-4 h-4 text-emerald-400" />
           </a>
@@ -294,123 +248,94 @@ function Project3DCard({ project, index, onOpenDemo, prefersReducedMotion }) {
   );
 }
 
-// ─── ENTERPRISE COMPARISON MATRIX VIEW ───────────────────────────────────────
-
-function EnterpriseMatrixView({ projects, onOpenDemo }) {
+// ─── CLEAN STATS STRIP ────────────────────────────────────────────────────────
+function StatsStrip() {
   return (
-    <div className="overflow-x-auto rounded-3xl border border-slate-700/80 bg-slate-900/90 shadow-2xl backdrop-blur-xl">
-      <table className="w-full text-left text-xs border-collapse">
-        <thead>
-          <tr className="border-b border-slate-800 bg-slate-950/80 text-slate-400 font-mono text-[11px] uppercase tracking-wider">
-            <th className="py-4 px-6">System / Client</th>
-            <th className="py-4 px-4">Industry</th>
-            <th className="py-4 px-4">Architecture Pattern</th>
-            <th className="py-4 px-4">Production Scale</th>
-            <th className="py-4 px-4">Verified ROI</th>
-            <th className="py-4 px-4">Core Stack</th>
-            <th className="py-4 px-6 text-right">Interactive Test</th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-slate-800/60 text-slate-300">
-          {projects.map((p) => (
-            <tr key={p.id} className="hover:bg-slate-800/40 transition group">
-              <td className="py-4 px-6">
-                <div className="flex items-center gap-2.5">
-                  {p.logo && (
-                    <img
-                      src={p.logo}
-                      alt={`${p.client} logo`}
-                      className="w-7 h-7 rounded-full object-cover border border-amber-400/40 shadow shrink-0"
-                    />
-                  )}
-                  <div>
-                    <div className="font-bold text-white text-sm group-hover:text-brand-300 transition flex items-center gap-1.5">
-                      {p.title}
-                      {p.liveUrl && (
-                        <a
-                          href={p.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-amber-400 hover:text-amber-300"
-                          title={`Visit ${p.liveUrl}`}
-                        >
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
-                    </div>
-                    <div className="text-[10px] text-slate-400 font-mono mt-0.5">{p.client}</div>
-                  </div>
-                </div>
-              </td>
-              <td className="py-4 px-4">
-                <span className={`inline-flex items-center rounded-full bg-gradient-to-r ${p.tagColor} px-2.5 py-0.5 text-[10px] font-bold text-white`}>
-                  {p.tag}
-                </span>
-              </td>
-              <td className="py-4 px-4 font-mono text-[11px] text-indigo-300">
-                {p.architecture}
-              </td>
-              <td className="py-4 px-4 font-mono text-[11px] text-slate-300">
-                {p.scale}
-              </td>
-              <td className="py-4 px-4">
-                <span className="font-black text-emerald-400 text-sm block">{p.metrics.value}</span>
-                <span className="text-[10px] text-slate-400 block">{p.metrics.label}</span>
-              </td>
-              <td className="py-4 px-4">
-                <div className="flex flex-wrap gap-1 max-w-xs">
-                  {p.stack.slice(0, 3).map((s) => (
-                    <span key={s} className="bg-slate-950 border border-slate-800 px-1.5 py-0.5 rounded text-[9px] font-mono text-slate-400">
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </td>
-              <td className="py-4 px-6 text-right">
-                <button
-                  onClick={() => onOpenDemo(p)}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-md shadow-brand-600/20 transition cursor-pointer"
-                >
-                  <Zap className="w-3.5 h-3.5 text-amber-300" />
-                  Test Simulator
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="border-y border-white/[0.06] bg-[#080c15]">
+      <div className="mx-auto max-w-7xl px-4 py-6 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+        {STATS.map((s, i) => (
+          <motion.div
+            key={s.label}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, delay: i * 0.08 }}
+            className="flex flex-col gap-0.5"
+          >
+            <span className="text-2xl font-black text-white tabular-nums">{s.value}</span>
+            <span className="text-[11px] text-white/40 font-mono uppercase tracking-wide">{s.label}</span>
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 }
 
-// ─── MAIN PORTFOLIO PAGE COMPONENT ───────────────────────────────────────────
+// ─── INDUSTRY FILTER STRIP ────────────────────────────────────────────────────
+function FilterBar({ activeTag, setActiveTag, searchQuery, setSearchQuery }) {
+  const tags = ["All", ...INDUSTRIES.filter((i) => i !== "All")];
+  return (
+    <div className="sticky top-16 z-30 bg-[#080c15]/90 backdrop-blur-2xl border-b border-white/[0.06]">
+      <div className="mx-auto max-w-7xl px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        {/* Search */}
+        <div className="relative shrink-0 w-full sm:w-60">
+          <Search className="w-3.5 h-3.5 text-white/30 absolute left-3 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            placeholder="Search projects…"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl pl-9 pr-8 py-2 text-xs text-white placeholder-white/25 focus:outline-none focus:border-white/20 transition"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60"
+            >
+              <X className="w-3 h-3" />
+            </button>
+          )}
+        </div>
 
+        {/* Industry pills */}
+        <div className="flex gap-1.5 overflow-x-auto no-scrollbar pb-0.5 flex-1">
+          {tags.map((tag) => (
+            <button
+              key={tag}
+              onClick={() => setActiveTag(tag)}
+              className={`shrink-0 px-3 py-1.5 rounded-full text-[11px] font-semibold transition cursor-pointer whitespace-nowrap ${
+                activeTag === tag
+                  ? "bg-white text-[#080c15] shadow"
+                  : "bg-white/[0.04] text-white/45 hover:text-white/80 hover:bg-white/[0.07] border border-white/[0.07]"
+              }`}
+            >
+              {industryEmoji[tag] ? `${industryEmoji[tag]} ` : ""}{tag}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── MAIN WORK PAGE ───────────────────────────────────────────────────────────
 export default function Work() {
   const [activeTag, setActiveTag] = useState("All");
-  const [activeTech, setActiveTech] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [viewMode, setViewMode] = useState("grid"); // grid | matrix
   const [selectedProject, setSelectedProject] = useState(null);
   const prefersReducedMotion = useReducedMotion();
 
-  // Smooth scroll to targeted project anchor from hash
   useEffect(() => {
     if (window.location.hash) {
       const targetId = window.location.hash.replace("#", "");
       const el = document.getElementById(targetId);
-      if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 150);
-      }
+      if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 150);
     }
   }, []);
 
-  // Filter pipeline
   const filtered = useMemo(() => {
     return PROJECTS.filter((p) => {
       const matchIndustry = activeTag === "All" || p.tag === activeTag;
-      const matchTech = activeTech === "All" || p.stack.includes(activeTech);
       const q = searchQuery.toLowerCase().trim();
       const matchSearch =
         !q ||
@@ -419,15 +344,9 @@ export default function Work() {
         p.tag.toLowerCase().includes(q) ||
         p.client.toLowerCase().includes(q) ||
         p.stack.some((s) => s.toLowerCase().includes(q));
-
-      return matchIndustry && matchTech && matchSearch;
+      return matchIndustry && matchSearch;
     });
-  }, [activeTag, activeTech, searchQuery]);
-
-  const handleOpenDemoById = (id) => {
-    const found = PROJECTS.find((p) => p.id === id);
-    if (found) setSelectedProject(found);
-  };
+  }, [activeTag, searchQuery]);
 
   const itemListLd = {
     "@context": "https://schema.org",
@@ -437,13 +356,12 @@ export default function Work() {
         "@id": "https://www.prajyotinfotech.in/work/#webpage",
         "url": "https://www.prajyotinfotech.in/work",
         "name": "Enterprise Software Engineering Portfolio | Prajyot Infotech",
-        "description": "Production software applications built by Prajyot Infotech — Restaurant QR & KDS, Mobile Shop POS Billing, Clinic EHR, E-Commerce, and Multi-tenant SaaS.",
+        "description": "Production software applications built by Prajyot Infotech.",
         "isPartOf": { "@id": "https://www.prajyotinfotech.in/#website" }
       },
       {
         "@type": "ItemList",
         "name": "Prajyot Infotech — Enterprise Software Portfolio",
-        "description": "Production software applications deployed for businesses across India.",
         "itemListElement": PROJECTS.map((p, i) => ({
           "@type": "ListItem",
           "position": i + 1,
@@ -456,248 +374,222 @@ export default function Work() {
   };
 
   return (
-    <div className="bg-[#0b0f19] min-h-screen text-slate-100 selection:bg-brand-500/30 selection:text-white">
+    <div
+      className="min-h-screen text-white selection:bg-white/20"
+      style={{ background: "linear-gradient(180deg, #06090f 0%, #080c15 100%)" }}
+    >
       <BreadcrumbsLd
         items={[
           { name: "Home", url: "https://www.prajyotinfotech.in/" },
-          { name: "Portfolio & Engineering Work", url: "https://www.prajyotinfotech.in/work" },
+          { name: "Portfolio", url: "https://www.prajyotinfotech.in/work" },
         ]}
       />
       <Seo
-        title="Software Portfolio & Live Demos — Restaurant, POS Billing, Clinic, E-Commerce | Prajyot Infotech"
-        description="Explore Prajyot Infotech's enterprise software portfolio: Restaurant QR & KDS, Mobile POS Billing with IMEI, Clinic Management SaaS, E-Commerce, and Multi-Tenant SaaS. Test interactive live demos."
-        keywords="software development portfolio, restaurant management software, mobile shop billing POS, clinic EHR software, custom SaaS developers Pune India, React enterprise apps, Prajyot Infotech work"
+        title="Software Portfolio — 9+ Enterprise Systems | Prajyot Infotech"
+        description="Explore Prajyot Infotech's enterprise software portfolio: Luxury E-Commerce, Restaurant QR & KDS, Mobile POS Billing, Clinic EHR, and Multi-Tenant SaaS."
+        keywords="software development portfolio, restaurant management, mobile shop billing, clinic EHR, custom SaaS developers Pune India, Prajyot Infotech"
         path="/work"
         schema={itemListLd}
       />
 
-      {/* HERO SECTION */}
-      <section className="relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-24 px-4">
-        {/* Cyber luxury background mesh */}
+      {/* ── HERO ── */}
+      <section className="relative overflow-hidden pt-28 pb-20 px-4">
+        {/* background noise texture */}
         <div
-          className="absolute inset-0 opacity-[0.05] pointer-events-none"
+          className="absolute inset-0 opacity-[0.025] pointer-events-none"
           style={{
-            backgroundImage: "linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)",
-            backgroundSize: "48px 48px"
+            backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E\")",
           }}
         />
 
-        {/* Ambient Gradient Glows */}
-        <div className="absolute top-10 left-1/4 w-96 h-96 rounded-full bg-brand-600/20 blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-10 right-1/4 w-96 h-96 rounded-full bg-indigo-600/20 blur-[140px] pointer-events-none" />
+        {/* Glow blobs */}
+        <div className="absolute top-0 left-1/3 w-[600px] h-[600px] rounded-full bg-blue-600/[0.06] blur-[120px] pointer-events-none -translate-x-1/2" />
+        <div className="absolute bottom-0 right-1/3 w-[400px] h-[400px] rounded-full bg-violet-600/[0.06] blur-[100px] pointer-events-none translate-x-1/2" />
 
-        <div className="relative mx-auto max-w-7xl">
+        <div className="relative mx-auto max-w-4xl text-center">
           <motion.div
-            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 25 }}
+            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65 }}
-            className="text-center max-w-3xl mx-auto"
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-brand-400/30 bg-brand-500/10 px-4 py-1.5 text-xs font-bold text-brand-300 backdrop-blur-md mb-6 shadow-inner">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              PRODUCTION-GRADE SOFTWARE ENGINEERING
+            {/* Eyebrow */}
+            <div className="inline-flex items-center gap-2 mb-6 px-3.5 py-1.5 rounded-full border border-white/[0.1] bg-white/[0.04] text-[11px] font-semibold text-white/60 tracking-widest uppercase backdrop-blur-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              Production-Grade Engineering
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white tracking-tight leading-tight">
-              Software That Powers{" "}
-              <span className="bg-gradient-to-r from-brand-300 via-indigo-300 to-cyan-300 bg-clip-text text-transparent">
-                Real Enterprise Revenue
+            <h1 className="text-[clamp(2.4rem,6vw,4.5rem)] font-black leading-[1.06] tracking-tight text-white">
+              Real software.{" "}
+              <span
+                className="bg-clip-text text-transparent"
+                style={{ backgroundImage: "linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #34d399 100%)" }}
+              >
+                Real results.
               </span>
             </h1>
 
-            <p className="mt-6 text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
-              We design, build, and deploy production software systems for Indian businesses — from high-throughput QR restaurant platforms to IMEI retail POS and healthcare EHRs. Test the live interactive simulators below.
+            <p className="mt-5 text-[15px] sm:text-[17px] text-white/45 leading-relaxed max-w-2xl mx-auto">
+              9+ deployed enterprise systems across hospitality, retail, healthcare, and luxury fashion —
+              all built, shipped, and owned by our clients.
             </p>
+
+            {/* CTA Row */}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <a
+                href="#portfolio"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#080c15] text-sm font-bold hover:bg-white/90 transition shadow-lg shadow-white/10"
+              >
+                View All Projects
+                <ArrowRight className="w-4 h-4" />
+              </a>
+              <a
+                href={WA("Hi Prajyot Infotech, I reviewed your portfolio and want to discuss a project.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/[0.12] bg-white/[0.05] text-sm font-semibold text-white/70 hover:text-white hover:bg-white/[0.09] transition"
+              >
+                <MessageSquare className="w-4 h-4 text-emerald-400" />
+                Discuss a Project
+              </a>
+            </div>
           </motion.div>
-
-          {/* Quick Anchor Navigation Dock */}
-          <div className="mt-8 flex flex-wrap justify-center gap-2 text-xs">
-            <a href="#showcase" className="bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-700/80 px-4 py-2 rounded-xl transition flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-brand-400" />
-              <span>Explore 8+ Live Demos</span>
-            </a>
-            <a href="#process" className="bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-700/80 px-4 py-2 rounded-xl transition flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-indigo-400" />
-              <span>4-Step Engineering Lifecycle</span>
-            </a>
-            <a href="#guarantees" className="bg-slate-900/90 hover:bg-slate-800 text-slate-300 border border-slate-700/80 px-4 py-2 rounded-xl transition flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>5 Enterprise Guarantees</span>
-            </a>
-            <a href="#estimator" className="bg-brand-600/20 hover:bg-brand-600/30 text-brand-300 border border-brand-500/40 px-4 py-2 rounded-xl transition flex items-center gap-1.5 font-bold">
-              <Cpu className="w-3.5 h-3.5 text-brand-400" />
-              <span>Scope & Sprint Calculator</span>
-            </a>
-          </div>
         </div>
       </section>
 
-      {/* FEATURED FLAGSHIP SPOTLIGHT (Interactive Sandbox) */}
-      <PortfolioSpotlight onOpenDemo={handleOpenDemoById} />
+      {/* ── STATS ── */}
+      <StatsStrip />
 
-      {/* CONTROLS & FILTERING DOCK */}
-      <section id="showcase" className="sticky top-16 z-30 border-y border-slate-800 bg-slate-950/85 backdrop-blur-2xl py-4 px-4">
-        <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4">
-          {/* Search Bar */}
-          <div className="relative w-full md:w-72">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="Search by system or tech..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-500 transition"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            )}
-          </div>
+      {/* ── FILTER BAR ── */}
+      <FilterBar
+        activeTag={activeTag}
+        setActiveTag={setActiveTag}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
 
-          {/* Industry Filter Pills */}
-          <div className="flex gap-1.5 overflow-x-auto w-full md:w-auto no-scrollbar py-1">
-            {INDUSTRIES.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => setActiveTag(tag)}
-                className={`shrink-0 rounded-xl px-3.5 py-1.5 text-xs font-semibold transition cursor-pointer ${
-                  activeTag === tag
-                    ? "bg-brand-600 text-white shadow-md shadow-brand-500/30"
-                    : "bg-slate-900 text-slate-400 hover:text-white border border-slate-800"
-                }`}
-              >
-                {tag}
-              </button>
-            ))}
-          </div>
+      {/* ── PROJECT GRID ── */}
+      <main id="portfolio" className="mx-auto max-w-7xl px-4 py-16 space-y-20">
 
-          {/* View Mode Switcher */}
-          <div className="flex items-center gap-1 bg-slate-900 border border-slate-800 p-1 rounded-xl self-end md:self-auto shrink-0">
+        {/* Count indicator */}
+        <div className="flex items-center justify-between">
+          <p className="text-[12px] text-white/30 font-mono">
+            {filtered.length} project{filtered.length !== 1 ? "s" : ""}
+            {activeTag !== "All" ? ` in ${activeTag}` : ""}
+          </p>
+          {(activeTag !== "All" || searchQuery) && (
             <button
-              onClick={() => setViewMode("grid")}
-              className={`p-1.5 rounded-lg transition cursor-pointer ${
-                viewMode === "grid" ? "bg-brand-600 text-white shadow" : "text-slate-400 hover:text-white"
-              }`}
-              aria-label="Grid 3D view"
-              title="3D Card Showcase"
+              onClick={() => { setActiveTag("All"); setSearchQuery(""); }}
+              className="text-[11px] text-white/30 hover:text-white/60 flex items-center gap-1 transition"
             >
-              <Grid className="w-4 h-4" />
+              <X className="w-3 h-3" /> Clear filters
             </button>
-            <button
-              onClick={() => setViewMode("matrix")}
-              className={`p-1.5 rounded-lg transition cursor-pointer ${
-                viewMode === "matrix" ? "bg-brand-600 text-white shadow" : "text-slate-400 hover:text-white"
-              }`}
-              aria-label="Enterprise Matrix view"
-              title="Enterprise Comparison Matrix"
-            >
-              <TableIcon className="w-4 h-4" />
-            </button>
-          </div>
+          )}
         </div>
 
-        {/* Secondary Tech Stack Filter Strip */}
-        <div className="mx-auto max-w-7xl mt-3 pt-3 border-t border-slate-800/80 flex items-center gap-2 overflow-x-auto no-scrollbar text-xs">
-          <span className="text-slate-500 font-mono text-[11px] shrink-0">Filter by Technology:</span>
-          {TECH_TAGS.map((t) => (
-            <button
-              key={t}
-              onClick={() => setActiveTech(t)}
-              className={`shrink-0 px-2.5 py-0.5 rounded-lg font-mono text-[11px] transition cursor-pointer ${
-                activeTech === t
-                  ? "bg-indigo-500/20 text-indigo-300 border border-indigo-500/50 font-bold"
-                  : "bg-slate-900/60 text-slate-400 hover:text-slate-200 border border-slate-800"
-              }`}
+        <AnimatePresence mode="wait">
+          {filtered.length === 0 ? (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-center py-24 rounded-2xl border border-white/[0.06] bg-white/[0.02]"
             >
-              {t}
-            </button>
-          ))}
+              <p className="text-lg font-bold text-white">No projects match</p>
+              <p className="text-sm text-white/40 mt-1">Try clearing your filters</p>
+              <button
+                onClick={() => { setActiveTag("All"); setSearchQuery(""); }}
+                className="mt-5 px-5 py-2 rounded-full bg-white text-[#080c15] font-bold text-sm"
+              >
+                Clear filters
+              </button>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="grid"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+            >
+              {filtered.map((project, i) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  index={i}
+                  onOpenDemo={setSelectedProject}
+                  prefersReducedMotion={prefersReducedMotion}
+                />
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* ── Divider ── */}
+        <div className="border-t border-white/[0.05]" />
+
+        {/* ── Engineering Lifecycle ── */}
+        <div id="process">
+          <EngineeringProcess />
         </div>
-      </section>
 
-      {/* MAIN PORTFOLIO GRID / MATRIX */}
-      <main className="mx-auto max-w-7xl px-4 py-12 space-y-16">
-        {filtered.length === 0 ? (
-          <div className="text-center py-20 bg-slate-900/40 rounded-3xl border border-slate-800">
-            <p className="text-lg font-bold text-white">No projects found matching your filter</p>
-            <p className="text-xs text-slate-400 mt-1">Try resetting the search keyword or selecting "All" tags.</p>
-            <button
-              onClick={() => {
-                setActiveTag("All");
-                setActiveTech("All");
-                setSearchQuery("");
-              }}
-              className="mt-4 px-4 py-2 rounded-xl bg-brand-600 text-white font-bold text-xs"
-            >
-              Reset Filters
-            </button>
-          </div>
-        ) : viewMode === "grid" ? (
-          <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((project, i) => (
-              <Project3DCard
-                key={project.id}
-                project={project}
-                index={i}
-                onOpenDemo={setSelectedProject}
-                prefersReducedMotion={prefersReducedMotion}
-              />
-            ))}
-          </div>
-        ) : (
-          <EnterpriseMatrixView
-            projects={filtered}
-            onOpenDemo={setSelectedProject}
-          />
-        )}
-
-        {/* 4-STEP TRANSPARENT ENGINEERING LIFECYCLE */}
-        <EngineeringProcess />
-
-        {/* 5 ENTERPRISE GUARANTEES & COMPARISON MATRIX */}
+        {/* ── Trust Guarantees ── */}
         <div id="guarantees">
           <TrustGuarantees />
         </div>
 
-        {/* INTERACTIVE SCOPE & SPRINT ESTIMATOR */}
-        <ProjectEstimator />
+        {/* ── Scope Estimator ── */}
+        <div id="estimator">
+          <ProjectEstimator />
+        </div>
 
-        {/* BOTTOM ENTERPRISE CTA */}
-        <div className="rounded-3xl border border-slate-700/80 bg-gradient-to-r from-brand-900/60 via-slate-950 to-indigo-950/60 p-8 sm:p-12 text-center relative shadow-2xl overflow-hidden">
-          <div className="relative z-10 max-w-2xl mx-auto space-y-4">
-            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-              Ready to Build Your Custom Software?
+        {/* ── Bottom CTA ── */}
+        <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] text-center px-6 py-14 sm:py-20">
+          {/* Glass background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-violet-600/8 to-emerald-600/10" />
+          <div
+            className="absolute inset-0 opacity-[0.02]"
+            style={{
+              backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px)",
+              backgroundSize: "24px 24px",
+            }}
+          />
+
+          <div className="relative z-10 max-w-xl mx-auto space-y-5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.05] text-[11px] text-white/50 uppercase tracking-widest">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              Fixed price · Full IP ownership
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight tracking-tight">
+              Ready to ship your next system?
             </h2>
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-              Speak directly with our senior software architect. We provide fixed-price quotes, defined 3-4 week milestones, and 100% intellectual property ownership.
+            <p className="text-[14px] text-white/45 leading-relaxed">
+              We deliver in 3–4 week sprints with a defined scope, milestone payments, and 60-day bug warranty.
             </p>
-            <div className="pt-2 flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-3 pt-2">
               <a
-                href={WA("Hi Prajyot Infotech, I have reviewed your portfolio and I would like to schedule an architecture consultation for my company.")}
+                href={WA("Hi Prajyot Infotech, I reviewed your portfolio and would like a quote for my project.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black px-7 py-3.5 rounded-xl shadow-lg shadow-emerald-500/20 transition cursor-pointer text-xs sm:text-sm flex items-center gap-2"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-400 hover:bg-emerald-300 text-[#080c15] font-bold text-sm transition shadow-lg shadow-emerald-400/20"
               >
                 <MessageSquare className="w-4 h-4" />
-                Chat with Lead Architect on WhatsApp
+                WhatsApp Us Now
               </a>
               <Link
                 to="/estimate"
-                className="bg-slate-900/90 hover:bg-slate-800 text-white border border-slate-700 font-bold px-7 py-3.5 rounded-xl transition text-xs sm:text-sm flex items-center gap-2"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/[0.12] bg-white/[0.05] hover:bg-white/[0.09] text-white font-semibold text-sm transition"
               >
-                Calculate Instant Cost Estimate
-                <ArrowRight className="w-4 h-4" />
+                Get an Instant Estimate
+                <ChevronRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
         </div>
       </main>
 
-      {/* FULLSCREEN INTERACTIVE DEMO MODAL */}
+      {/* ── DEMO MODAL ── */}
       <PortfolioDemoModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
