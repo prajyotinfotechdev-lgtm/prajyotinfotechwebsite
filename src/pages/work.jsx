@@ -1,6 +1,6 @@
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence, useReducedMotion, useMotionValue, useSpring } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import PortfolioDemoModal from "../components/PortfolioDemoModal.jsx";
@@ -12,15 +12,11 @@ import {
   ArrowRight,
   ExternalLink,
   MessageSquare,
-  Sparkles,
-  ShieldCheck,
-  Layers,
   X,
   TrendingUp,
-  Zap,
   ChevronRight,
   Globe,
-  Building2,
+  Eye,
 } from "lucide-react";
 
 import { PROJECTS, INDUSTRIES } from "../data/projectsData.js";
@@ -28,219 +24,194 @@ import { PROJECTS, INDUSTRIES } from "../data/projectsData.js";
 const WA = (text) =>
   `https://wa.me/917020708747?text=${encodeURIComponent(text)}`;
 
-// ─── INDUSTRY ICON MAP ──────────────────────────────────────────────────────
-const industryEmoji = {
-  "Luxury Fashion": "👗",
-  "Hospitality":   "🍽️",
-  "Retail":        "📱",
-  "E-Commerce":    "🛒",
-  "Healthcare":    "🏥",
-  "SaaS":          "☁️",
-  "Wholesale":     "📦",
-  "Education":     "🎓",
-  "Real Estate":   "🏗️",
-};
+// ─── CARD COMPONENT ──────────────────────────────────────────────────────────
 
-// ─── STAT COUNTER STRIP ──────────────────────────────────────────────────────
-const STATS = [
-  { value: "9+", label: "Deployed Systems" },
-  { value: "50K+", label: "Daily Active Users" },
-  { value: "100%", label: "IP Ownership Given" },
-  { value: "3–4 wk", label: "Avg. Delivery Sprint" },
-];
-
-// ─── PREMIUM PROJECT CARD ─────────────────────────────────────────────────────
 function ProjectCard({ project, index, onOpenDemo, prefersReducedMotion }) {
-  const cardRef = useRef(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 150, damping: 20 });
-  const springY = useSpring(mouseY, { stiffness: 150, damping: 20 });
-
-  function handleMouseMove(e) {
-    if (prefersReducedMotion) return;
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    mouseX.set((e.clientX - rect.left - rect.width / 2) / 20);
-    mouseY.set((e.clientY - rect.top - rect.height / 2) / 20);
-  }
-  function handleMouseLeave() {
-    mouseX.set(0);
-    mouseY.set(0);
-  }
-
   return (
     <motion.article
       id={project.id}
-      ref={cardRef}
-      initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 40 }}
+      initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.12 }}
-      transition={{ duration: 0.55, delay: prefersReducedMotion ? 0 : index * 0.07, ease: [0.22, 1, 0.36, 1] }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ rotateX: prefersReducedMotion ? 0 : springY, rotateY: prefersReducedMotion ? 0 : springX, transformStyle: "preserve-3d", perspective: 1200 }}
-      className="group relative flex flex-col rounded-2xl border border-white/[0.07] bg-[#0f1420] overflow-hidden scroll-mt-32 transition-colors duration-300 hover:border-white/[0.14] cursor-default"
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{
+        duration: 0.5,
+        delay: prefersReducedMotion ? 0 : index * 0.06,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="group relative flex flex-col rounded-2xl bg-white border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-brand-500/8 hover:-translate-y-1 transition-all duration-500 overflow-hidden scroll-mt-32"
     >
-      {/* ── Coloured Top Accent Strip ── */}
+      {/* ── Coloured accent bar ── */}
       <div
-        className="h-[3px] w-full shrink-0"
-        style={{ background: `linear-gradient(90deg, ${project.accent}, ${project.secondary})` }}
+        className="h-1 w-full"
+        style={{
+          background: `linear-gradient(90deg, ${project.accent}, ${project.secondary})`,
+        }}
       />
 
-      {/* ── Visual Hero Area ── */}
-      <div className="relative h-52 overflow-hidden bg-[#070b14] flex items-center justify-center">
-        {/* Ambient blob */}
-        <motion.div
-          animate={prefersReducedMotion ? {} : { scale: [1, 1.2, 1], opacity: [0.15, 0.28, 0.15] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
-          className="absolute rounded-full pointer-events-none"
+      {/* ── Visual hero area ── */}
+      <div
+        className="relative h-48 sm:h-52 flex items-center justify-center overflow-hidden"
+        style={{
+          background: `linear-gradient(135deg, ${project.accent}0d, ${project.secondary}0d, #f8fafc)`,
+        }}
+      >
+        {/* Soft radial glow */}
+        <div
+          className="absolute w-40 h-40 rounded-full blur-3xl opacity-30 pointer-events-none"
           style={{
-            width: 220, height: 220,
-            background: `radial-gradient(circle, ${project.accent}55, transparent 70%)`,
-            filter: "blur(40px)",
-            top: "50%", left: "50%",
+            background: `radial-gradient(circle, ${project.accent}40, transparent 70%)`,
+            top: "50%",
+            left: "50%",
             transform: "translate(-50%, -50%)",
           }}
         />
 
-        {/* Grid dots */}
+        {/* Subtle dot pattern */}
         <div
-          className="absolute inset-0 opacity-[0.035]"
+          className="absolute inset-0 opacity-[0.04]"
           style={{
-            backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px)",
-            backgroundSize: "22px 22px",
+            backgroundImage:
+              "radial-gradient(circle, #64748b 0.5px, transparent 0.5px)",
+            backgroundSize: "18px 18px",
           }}
         />
 
-        {/* Industry Badge */}
-        <div className="absolute top-4 left-4 z-10">
+        {/* Industry pill */}
+        <div className="absolute top-3 left-3 z-10">
           <span
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold text-white backdrop-blur-md shadow-lg"
-            style={{ background: `linear-gradient(135deg, ${project.accent}cc, ${project.secondary}cc)` }}
+            className="inline-block px-2.5 py-1 rounded-full text-[11px] font-bold text-white shadow-sm"
+            style={{
+              background: `linear-gradient(135deg, ${project.accent}, ${project.secondary})`,
+            }}
           >
-            <span>{industryEmoji[project.tag] || "💡"}</span>
             {project.tag}
           </span>
         </div>
 
         {/* Year */}
-        <div className="absolute top-4 right-4 z-10">
-          <span className="text-[11px] font-mono text-white/40 tabular-nums">{project.year}</span>
-        </div>
+        <span className="absolute top-3.5 right-3.5 text-[11px] font-semibold text-slate-400 z-10">
+          {project.year}
+        </span>
 
-        {/* Logo or big metric */}
-        <div className="relative z-10 flex flex-col items-center justify-center gap-2 text-center px-6">
+        {/* Center content — logo or metric */}
+        <div className="relative z-10 flex flex-col items-center gap-1.5 px-6 text-center">
           {project.logo ? (
-            <img
+            <motion.img
               src={project.logo}
               alt={`${project.client} logo`}
-              className="w-16 h-16 rounded-full object-cover shadow-xl"
-              style={{ boxShadow: `0 0 32px ${project.accent}55` }}
+              className="w-16 h-16 rounded-2xl object-cover shadow-lg border-2 border-white"
+              whileHover={prefersReducedMotion ? {} : { scale: 1.08 }}
+              transition={{ type: "spring", stiffness: 300, damping: 18 }}
             />
           ) : (
             <div
-              className="text-5xl font-black tabular-nums leading-none tracking-tight"
-              style={{ color: project.accent, textShadow: `0 0 40px ${project.accent}80` }}
+              className="text-4xl font-black tabular-nums"
+              style={{ color: project.accent }}
             >
               {project.metrics.value}
             </div>
           )}
-          <p className="text-[11px] text-white/40 font-mono uppercase tracking-widest">
+          <p className="text-[11px] text-slate-500 font-medium tracking-wide">
             {project.logo ? project.client : project.metrics.label}
           </p>
         </div>
 
-        {/* Shimmer on hover */}
-        <motion.div
-          initial={{ x: "-110%", opacity: 0 }}
-          whileHover={{ x: "220%", opacity: 1 }}
-          transition={{ duration: 0.75 }}
-          className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-transparent via-white/[0.06] to-transparent skew-x-12 pointer-events-none"
-        />
-
-        {/* Live site pill — only if liveUrl exists */}
+        {/* Live site badge */}
         {project.liveUrl && (
           <a
             href={project.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="absolute bottom-3 right-3 z-10 flex items-center gap-1 px-2.5 py-1.5 rounded-xl backdrop-blur-md border border-white/10 bg-white/[0.06] hover:bg-white/[0.12] text-white/70 hover:text-white text-[11px] font-semibold transition"
+            className="absolute bottom-3 right-3 z-10 flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/90 border border-slate-200 text-[11px] font-semibold text-slate-600 hover:text-brand-700 hover:border-brand-300 transition shadow-sm backdrop-blur-sm"
           >
             <Globe className="w-3 h-3" />
-            Live Site
+            Visit Live
           </a>
         )}
       </div>
 
-      {/* ── Card Body ── */}
-      <div className="flex flex-col flex-1 p-5 gap-4">
-        {/* Client & Scale */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 min-w-0">
-            <Building2 className="w-3.5 h-3.5 text-white/25 shrink-0" />
-            <span className="text-[11px] text-white/45 font-mono truncate">{project.client}</span>
-          </div>
-          <span className="text-[10px] text-emerald-400 font-mono shrink-0 ml-2">{project.scale}</span>
+      {/* ── Card body ── */}
+      <div className="flex flex-col flex-1 p-5 gap-3">
+        {/* Client + Scale */}
+        <div className="flex items-center justify-between text-[11px]">
+          <span className="text-slate-400 font-medium truncate">
+            {project.client}
+          </span>
+          <span className="text-brand-600 font-semibold shrink-0 ml-2 text-[10px]">
+            {project.scale}
+          </span>
         </div>
 
         {/* Title */}
-        <h3 className="text-[15px] font-bold text-white leading-snug group-hover:text-white transition-colors line-clamp-2">
+        <h3 className="text-base font-bold text-navy-800 leading-snug group-hover:text-brand-700 transition-colors line-clamp-2">
           {project.title}
         </h3>
 
         {/* Description */}
-        <p className="text-[12px] text-white/45 leading-relaxed line-clamp-2 flex-1">
+        <p className="text-[13px] text-slate-500 leading-relaxed line-clamp-2 flex-1">
           {project.shortDesc}
         </p>
 
-        {/* Key result pill */}
+        {/* Key result highlight */}
         <div
-          className="flex items-center gap-2.5 px-3 py-2 rounded-xl"
-          style={{ background: `${project.accent}12`, border: `1px solid ${project.accent}25` }}
+          className="flex items-center gap-2 px-3 py-2 rounded-xl"
+          style={{
+            background: `${project.accent}0a`,
+            border: `1px solid ${project.accent}20`,
+          }}
         >
-          <TrendingUp className="w-3.5 h-3.5 shrink-0" style={{ color: project.accent }} />
-          <span className="text-[11px] font-semibold" style={{ color: project.accent }}>
+          <TrendingUp
+            className="w-3.5 h-3.5 shrink-0"
+            style={{ color: project.accent }}
+          />
+          <span
+            className="text-[12px] font-bold"
+            style={{ color: project.accent }}
+          >
             {project.metrics.value}
           </span>
-          <span className="text-[11px] text-white/40">{project.metrics.sub}</span>
+          <span className="text-[11px] text-slate-500">
+            {project.metrics.sub}
+          </span>
         </div>
 
-        {/* Stack pills */}
+        {/* Tech stack */}
         <div className="flex flex-wrap gap-1.5">
           {project.stack.slice(0, 4).map((tech) => (
             <span
               key={tech}
-              className="px-2 py-0.5 rounded-md text-[10px] font-mono text-white/40 bg-white/[0.04] border border-white/[0.06]"
+              className="px-2 py-0.5 rounded-md text-[10px] font-medium text-slate-500 bg-slate-100 border border-slate-200/80"
             >
               {tech}
             </span>
           ))}
           {project.stack.length > 4 && (
-            <span className="px-2 py-0.5 rounded-md text-[10px] font-mono text-white/25 bg-white/[0.03] border border-white/[0.05]">
+            <span className="px-2 py-0.5 rounded-md text-[10px] font-medium text-slate-400 bg-slate-50 border border-slate-100">
               +{project.stack.length - 4}
             </span>
           )}
         </div>
 
-        {/* Action row */}
-        <div className="flex items-center gap-2 pt-1 border-t border-white/[0.06]">
+        {/* Actions */}
+        <div className="flex items-center gap-2 pt-2 mt-auto border-t border-slate-100">
           <button
             onClick={() => onOpenDemo(project)}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[12px] font-semibold transition cursor-pointer text-white/70 hover:text-white bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.07] hover:border-white/[0.14]"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[12px] font-semibold transition cursor-pointer text-brand-700 bg-brand-50 hover:bg-brand-100 border border-brand-200/60 hover:border-brand-300"
           >
-            <Zap className="w-3.5 h-3.5" style={{ color: project.accent }} />
-            Case Study
+            <Eye className="w-3.5 h-3.5" />
+            View Case Study
           </button>
           <a
-            href={WA(`Hi Prajyot Infotech, I saw the ${project.title} on your portfolio — I'd love to build something similar.`)}
+            href={WA(
+              `Hi Prajyot Infotech, I saw your "${project.title}" project and want to discuss building something similar.`
+            )}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`WhatsApp inquiry about ${project.title}`}
-            className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 hover:border-emerald-500/40 transition"
+            className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/60 hover:border-emerald-300 transition"
           >
-            <MessageSquare className="w-4 h-4 text-emerald-400" />
+            <MessageSquare className="w-4 h-4 text-emerald-600" />
           </a>
         </div>
       </div>
@@ -248,77 +219,8 @@ function ProjectCard({ project, index, onOpenDemo, prefersReducedMotion }) {
   );
 }
 
-// ─── CLEAN STATS STRIP ────────────────────────────────────────────────────────
-function StatsStrip() {
-  return (
-    <div className="border-y border-white/[0.06] bg-[#080c15]">
-      <div className="mx-auto max-w-7xl px-4 py-6 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
-        {STATS.map((s, i) => (
-          <motion.div
-            key={s.label}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45, delay: i * 0.08 }}
-            className="flex flex-col gap-0.5"
-          >
-            <span className="text-2xl font-black text-white tabular-nums">{s.value}</span>
-            <span className="text-[11px] text-white/40 font-mono uppercase tracking-wide">{s.label}</span>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// ─── INDUSTRY FILTER STRIP ────────────────────────────────────────────────────
-function FilterBar({ activeTag, setActiveTag, searchQuery, setSearchQuery }) {
-  const tags = ["All", ...INDUSTRIES.filter((i) => i !== "All")];
-  return (
-    <div className="sticky top-16 z-30 bg-[#080c15]/90 backdrop-blur-2xl border-b border-white/[0.06]">
-      <div className="mx-auto max-w-7xl px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        {/* Search */}
-        <div className="relative shrink-0 w-full sm:w-60">
-          <Search className="w-3.5 h-3.5 text-white/30 absolute left-3 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            placeholder="Search projects…"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-white/[0.04] border border-white/[0.08] rounded-xl pl-9 pr-8 py-2 text-xs text-white placeholder-white/25 focus:outline-none focus:border-white/20 transition"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery("")}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60"
-            >
-              <X className="w-3 h-3" />
-            </button>
-          )}
-        </div>
-
-        {/* Industry pills */}
-        <div className="flex gap-1.5 overflow-x-auto no-scrollbar pb-0.5 flex-1">
-          {tags.map((tag) => (
-            <button
-              key={tag}
-              onClick={() => setActiveTag(tag)}
-              className={`shrink-0 px-3 py-1.5 rounded-full text-[11px] font-semibold transition cursor-pointer whitespace-nowrap ${
-                activeTag === tag
-                  ? "bg-white text-[#080c15] shadow"
-                  : "bg-white/[0.04] text-white/45 hover:text-white/80 hover:bg-white/[0.07] border border-white/[0.07]"
-              }`}
-            >
-              {industryEmoji[tag] ? `${industryEmoji[tag]} ` : ""}{tag}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ─── MAIN WORK PAGE ───────────────────────────────────────────────────────────
+
 export default function Work() {
   const [activeTag, setActiveTag] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
@@ -327,9 +229,14 @@ export default function Work() {
 
   useEffect(() => {
     if (window.location.hash) {
-      const targetId = window.location.hash.replace("#", "");
-      const el = document.getElementById(targetId);
-      if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 150);
+      const el = document.getElementById(
+        window.location.hash.replace("#", "")
+      );
+      if (el)
+        setTimeout(
+          () => el.scrollIntoView({ behavior: "smooth", block: "start" }),
+          150
+        );
     }
   }, []);
 
@@ -354,101 +261,91 @@ export default function Work() {
       {
         "@type": "WebPage",
         "@id": "https://www.prajyotinfotech.in/work/#webpage",
-        "url": "https://www.prajyotinfotech.in/work",
-        "name": "Enterprise Software Engineering Portfolio | Prajyot Infotech",
-        "description": "Production software applications built by Prajyot Infotech.",
-        "isPartOf": { "@id": "https://www.prajyotinfotech.in/#website" }
+        url: "https://www.prajyotinfotech.in/work",
+        name: "Enterprise Software Engineering Portfolio | Prajyot Infotech",
+        description:
+          "Production software applications built by Prajyot Infotech.",
+        isPartOf: { "@id": "https://www.prajyotinfotech.in/#website" },
       },
       {
         "@type": "ItemList",
-        "name": "Prajyot Infotech — Enterprise Software Portfolio",
-        "itemListElement": PROJECTS.map((p, i) => ({
+        name: "Prajyot Infotech — Enterprise Software Portfolio",
+        itemListElement: PROJECTS.map((p, i) => ({
           "@type": "ListItem",
-          "position": i + 1,
-          "name": p.title,
-          "description": p.shortDesc,
-          "url": `https://www.prajyotinfotech.in/work#${p.id}`,
+          position: i + 1,
+          name: p.title,
+          description: p.shortDesc,
+          url: `https://www.prajyotinfotech.in/work#${p.id}`,
         })),
-      }
-    ]
+      },
+    ],
   };
 
   return (
-    <div
-      className="min-h-screen text-white selection:bg-white/20"
-      style={{ background: "linear-gradient(180deg, #06090f 0%, #080c15 100%)" }}
-    >
+    <div className="min-h-screen bg-gradient-to-b from-white via-slate-50/60 to-white text-navy-800">
       <BreadcrumbsLd
         items={[
           { name: "Home", url: "https://www.prajyotinfotech.in/" },
-          { name: "Portfolio", url: "https://www.prajyotinfotech.in/work" },
+          { name: "Our Work", url: "https://www.prajyotinfotech.in/work" },
         ]}
       />
       <Seo
-        title="Software Portfolio — 9+ Enterprise Systems | Prajyot Infotech"
-        description="Explore Prajyot Infotech's enterprise software portfolio: Luxury E-Commerce, Restaurant QR & KDS, Mobile POS Billing, Clinic EHR, and Multi-Tenant SaaS."
-        keywords="software development portfolio, restaurant management, mobile shop billing, clinic EHR, custom SaaS developers Pune India, Prajyot Infotech"
+        title="Our Work — 9+ Enterprise Systems Delivered | Prajyot Infotech"
+        description="Explore Prajyot Infotech's portfolio: Luxury E-Commerce, Restaurant QR & KDS, POS Billing, Clinic EHR, Multi-Tenant SaaS and more. Real clients, real results."
+        keywords="software development portfolio, restaurant management, POS billing, clinic EHR, custom SaaS, Prajyot Infotech"
         path="/work"
         schema={itemListLd}
       />
 
-      {/* ── HERO ── */}
-      <section className="relative overflow-hidden pt-28 pb-20 px-4">
-        {/* background noise texture */}
-        <div
-          className="absolute inset-0 opacity-[0.025] pointer-events-none"
-          style={{
-            backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E\")",
-          }}
-        />
+      {/* ══════════════════════════════════════════
+          HERO SECTION
+          ══════════════════════════════════════════ */}
+      <section className="relative overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20 px-4">
+        {/* Decorative blobs */}
+        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-brand-200/30 blur-[100px] pointer-events-none" />
+        <div className="absolute -bottom-32 -right-32 w-80 h-80 rounded-full bg-indigo-200/25 blur-[90px] pointer-events-none" />
 
-        {/* Glow blobs */}
-        <div className="absolute top-0 left-1/3 w-[600px] h-[600px] rounded-full bg-blue-600/[0.06] blur-[120px] pointer-events-none -translate-x-1/2" />
-        <div className="absolute bottom-0 right-1/3 w-[400px] h-[400px] rounded-full bg-violet-600/[0.06] blur-[100px] pointer-events-none translate-x-1/2" />
-
-        <div className="relative mx-auto max-w-4xl text-center">
+        <div className="relative mx-auto max-w-3xl text-center">
           <motion.div
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
             {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 mb-6 px-3.5 py-1.5 rounded-full border border-white/[0.1] bg-white/[0.04] text-[11px] font-semibold text-white/60 tracking-widest uppercase backdrop-blur-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Production-Grade Engineering
+            <div className="inline-flex items-center gap-2 mb-5 px-3.5 py-1.5 rounded-full border border-brand-200 bg-brand-50 text-[11px] font-bold text-brand-700 uppercase tracking-widest">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Our Portfolio
             </div>
 
-            <h1 className="text-[clamp(2.4rem,6vw,4.5rem)] font-black leading-[1.06] tracking-tight text-white">
-              Real software.{" "}
-              <span
-                className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #34d399 100%)" }}
-              >
-                Real results.
-              </span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.08] tracking-tight">
+              Work that speaks{" "}
+              <span className="text-gradient">for itself</span>
             </h1>
 
-            <p className="mt-5 text-[15px] sm:text-[17px] text-white/45 leading-relaxed max-w-2xl mx-auto">
-              9+ deployed enterprise systems across hospitality, retail, healthcare, and luxury fashion —
-              all built, shipped, and owned by our clients.
+            <p className="mt-5 text-base sm:text-lg text-slate-500 leading-relaxed max-w-2xl mx-auto">
+              9 enterprise systems deployed across hospitality, retail,
+              healthcare, and fashion — delivering measurable results for real
+              Indian businesses.
             </p>
 
-            {/* CTA Row */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            {/* CTA */}
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
               <a
                 href="#portfolio"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#080c15] text-sm font-bold hover:bg-white/90 transition shadow-lg shadow-white/10"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-brand-700 hover:bg-brand-800 text-white text-sm font-bold shadow-brand transition"
               >
-                View All Projects
+                Explore Projects
                 <ArrowRight className="w-4 h-4" />
               </a>
               <a
-                href={WA("Hi Prajyot Infotech, I reviewed your portfolio and want to discuss a project.")}
+                href={WA(
+                  "Hi Prajyot Infotech, I reviewed your portfolio and want to discuss a project."
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/[0.12] bg-white/[0.05] text-sm font-semibold text-white/70 hover:text-white hover:bg-white/[0.09] transition"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-200 bg-white text-sm font-semibold text-slate-600 hover:text-brand-700 hover:border-brand-300 transition shadow-sm"
               >
-                <MessageSquare className="w-4 h-4 text-emerald-400" />
+                <MessageSquare className="w-4 h-4 text-emerald-500" />
                 Discuss a Project
               </a>
             </div>
@@ -456,30 +353,105 @@ export default function Work() {
         </div>
       </section>
 
-      {/* ── STATS ── */}
-      <StatsStrip />
+      {/* ══════════════════════════════════════════
+          STATS STRIP
+          ══════════════════════════════════════════ */}
+      <div className="border-y border-slate-200/80 bg-white/70 backdrop-blur-sm">
+        <div className="mx-auto max-w-5xl px-4 py-6 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+          {[
+            { value: "9+", label: "Systems Delivered" },
+            { value: "50K+", label: "Active Users" },
+            { value: "100%", label: "IP Ownership" },
+            { value: "3–4 wk", label: "Avg Sprint" },
+          ].map((s, i) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.07 }}
+              className="flex flex-col gap-0.5"
+            >
+              <span className="text-2xl font-black text-navy-800 tabular-nums">
+                {s.value}
+              </span>
+              <span className="text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
+                {s.label}
+              </span>
+            </motion.div>
+          ))}
+        </div>
+      </div>
 
-      {/* ── FILTER BAR ── */}
-      <FilterBar
-        activeTag={activeTag}
-        setActiveTag={setActiveTag}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-      />
+      {/* ══════════════════════════════════════════
+          FILTER BAR
+          ══════════════════════════════════════════ */}
+      <div className="sticky top-16 z-30 bg-white/85 backdrop-blur-xl border-b border-slate-200/70">
+        <div className="mx-auto max-w-7xl px-4 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          {/* Search */}
+          <div className="relative shrink-0 w-full sm:w-56">
+            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              placeholder="Search projects…"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-8 py-2 text-xs text-navy-800 placeholder-slate-400 focus:outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-100 transition"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            )}
+          </div>
 
-      {/* ── PROJECT GRID ── */}
-      <main id="portfolio" className="mx-auto max-w-7xl px-4 py-16 space-y-20">
+          {/* Industry pills */}
+          <div className="flex gap-1.5 overflow-x-auto no-scrollbar pb-0.5 flex-1">
+            {INDUSTRIES.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => setActiveTag(tag)}
+                className={`shrink-0 px-3.5 py-1.5 rounded-full text-[12px] font-semibold transition cursor-pointer whitespace-nowrap ${
+                  activeTag === tag
+                    ? "bg-brand-700 text-white shadow-brand"
+                    : "bg-slate-100 text-slate-500 hover:text-brand-700 hover:bg-brand-50 border border-slate-200/80"
+                }`}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
 
-        {/* Count indicator */}
+      {/* ══════════════════════════════════════════
+          PROJECT GRID
+          ══════════════════════════════════════════ */}
+      <main id="portfolio" className="mx-auto max-w-7xl px-4 py-14 space-y-20">
+        {/* Result count */}
         <div className="flex items-center justify-between">
-          <p className="text-[12px] text-white/30 font-mono">
-            {filtered.length} project{filtered.length !== 1 ? "s" : ""}
-            {activeTag !== "All" ? ` in ${activeTag}` : ""}
+          <p className="text-[13px] text-slate-400 font-medium">
+            Showing{" "}
+            <span className="text-navy-800 font-bold">{filtered.length}</span>{" "}
+            project{filtered.length !== 1 ? "s" : ""}
+            {activeTag !== "All" && (
+              <span>
+                {" "}
+                in{" "}
+                <span className="text-brand-600 font-semibold">{activeTag}</span>
+              </span>
+            )}
           </p>
           {(activeTag !== "All" || searchQuery) && (
             <button
-              onClick={() => { setActiveTag("All"); setSearchQuery(""); }}
-              className="text-[11px] text-white/30 hover:text-white/60 flex items-center gap-1 transition"
+              onClick={() => {
+                setActiveTag("All");
+                setSearchQuery("");
+              }}
+              className="text-[12px] text-slate-400 hover:text-brand-600 flex items-center gap-1 transition font-medium"
             >
               <X className="w-3 h-3" /> Clear filters
             </button>
@@ -493,15 +465,22 @@ export default function Work() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-center py-24 rounded-2xl border border-white/[0.06] bg-white/[0.02]"
+              className="text-center py-24 rounded-2xl border border-slate-200 bg-slate-50"
             >
-              <p className="text-lg font-bold text-white">No projects match</p>
-              <p className="text-sm text-white/40 mt-1">Try clearing your filters</p>
+              <p className="text-lg font-bold text-navy-800">
+                No projects found
+              </p>
+              <p className="text-sm text-slate-400 mt-1">
+                Try a different search or filter
+              </p>
               <button
-                onClick={() => { setActiveTag("All"); setSearchQuery(""); }}
-                className="mt-5 px-5 py-2 rounded-full bg-white text-[#080c15] font-bold text-sm"
+                onClick={() => {
+                  setActiveTag("All");
+                  setSearchQuery("");
+                }}
+                className="mt-5 px-5 py-2 rounded-full bg-brand-700 text-white font-bold text-sm shadow-brand"
               >
-                Clear filters
+                Show all projects
               </button>
             </motion.div>
           ) : (
@@ -510,8 +489,8 @@ export default function Work() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+              transition={{ duration: 0.25 }}
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
             >
               {filtered.map((project, i) => (
                 <ProjectCard
@@ -527,9 +506,9 @@ export default function Work() {
         </AnimatePresence>
 
         {/* ── Divider ── */}
-        <div className="border-t border-white/[0.05]" />
+        <div className="border-t border-slate-200/60" />
 
-        {/* ── Engineering Lifecycle ── */}
+        {/* ── Engineering Process ── */}
         <div id="process">
           <EngineeringProcess />
         </div>
@@ -539,47 +518,46 @@ export default function Work() {
           <TrustGuarantees />
         </div>
 
-        {/* ── Scope Estimator ── */}
+        {/* ── Project Estimator ── */}
         <div id="estimator">
           <ProjectEstimator />
         </div>
 
         {/* ── Bottom CTA ── */}
-        <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] text-center px-6 py-14 sm:py-20">
-          {/* Glass background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-violet-600/8 to-emerald-600/10" />
+        <div className="relative overflow-hidden rounded-3xl border border-brand-200/60 bg-gradient-to-br from-brand-50 via-white to-indigo-50 text-center px-6 py-14 sm:py-20 shadow-lg shadow-brand-100/40">
+          {/* Dot pattern */}
           <div
-            className="absolute inset-0 opacity-[0.02]"
+            className="absolute inset-0 opacity-[0.04] pointer-events-none"
             style={{
-              backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px)",
-              backgroundSize: "24px 24px",
+              backgroundImage:
+                "radial-gradient(circle, #7c3aed 0.5px, transparent 0.5px)",
+              backgroundSize: "20px 20px",
             }}
           />
 
           <div className="relative z-10 max-w-xl mx-auto space-y-5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.05] text-[11px] text-white/50 uppercase tracking-widest">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              Fixed price · Full IP ownership
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight tracking-tight">
-              Ready to ship your next system?
+            <h2 className="text-3xl sm:text-4xl font-black text-navy-800 leading-tight tracking-tight">
+              Ready to build your next system?
             </h2>
-            <p className="text-[14px] text-white/45 leading-relaxed">
-              We deliver in 3–4 week sprints with a defined scope, milestone payments, and 60-day bug warranty.
+            <p className="text-[15px] text-slate-500 leading-relaxed">
+              We deliver in 3–4 week sprints with defined scope, milestone
+              payments, and a 60-day bug warranty. You own 100% of the code.
             </p>
             <div className="flex flex-wrap justify-center gap-3 pt-2">
               <a
-                href={WA("Hi Prajyot Infotech, I reviewed your portfolio and would like a quote for my project.")}
+                href={WA(
+                  "Hi Prajyot Infotech, I reviewed your portfolio and would like a quote for my project."
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-400 hover:bg-emerald-300 text-[#080c15] font-bold text-sm transition shadow-lg shadow-emerald-400/20"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm transition shadow-lg shadow-emerald-200/50"
               >
                 <MessageSquare className="w-4 h-4" />
-                WhatsApp Us Now
+                WhatsApp Us
               </a>
               <Link
                 to="/estimate"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/[0.12] bg-white/[0.05] hover:bg-white/[0.09] text-white font-semibold text-sm transition"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-slate-200 bg-white hover:bg-brand-50 text-navy-800 font-semibold text-sm transition shadow-sm hover:border-brand-300"
               >
                 Get an Instant Estimate
                 <ChevronRight className="w-4 h-4" />
@@ -589,7 +567,7 @@ export default function Work() {
         </div>
       </main>
 
-      {/* ── DEMO MODAL ── */}
+      {/* ── Demo Modal ── */}
       <PortfolioDemoModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
