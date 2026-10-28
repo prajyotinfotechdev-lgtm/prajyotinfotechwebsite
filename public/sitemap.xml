@@ -5,6 +5,18 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
+  <!-- 🪔 Diwali 2026 Campaign Landing Page — Highest Priority -->
+  <url>
+    <loc>https://www.prajyotinfotech.in/diwali-offers-2026</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.prajyotinfotech.in/videos/Logo.jpg</image:loc>
+      <image:title>Diwali 2026 Web Design Offer — 15% OFF + 3 Months Free AMC | Prajyot Infotech</image:title>
+    </image:image>
+  </url>
+
   <!-- Core Strategic Pages -->
   <url>
     <loc>https://www.prajyotinfotech.in/</loc>

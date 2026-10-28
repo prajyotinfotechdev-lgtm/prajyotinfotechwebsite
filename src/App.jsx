@@ -38,6 +38,7 @@ const HrmsPricingPage = lazy(() => import("./pages/hrms/HrmsPricingPage.jsx"));
 const HrmsResourcesPage = lazy(() => import("./pages/hrms/HrmsResourcesPage.jsx"));
 const SiteVisitsPage = lazy(() => import("./pages/SiteVisitsPage.jsx"));
 const OibuzLandingPage = lazy(() => import("./pages/OibuzLandingPage.jsx"));
+const DiwaliOffers2026 = lazy(() => import("./pages/DiwaliOffers2026.jsx")); // 🪔 Diwali 2026 SEO Landing
 
 import HelpBot from "./components/HelpBot.jsx";
 import FloatingWhatsApp from "./components/FloatingWhatsApp.jsx";
@@ -109,6 +110,9 @@ export default function App() {
               <Route path="/products/hrms/resources" element={<PageWrapper><HrmsResourcesPage /></PageWrapper>} />
               <Route path="/site-visits" element={<PageWrapper><SiteVisitsPage /></PageWrapper>} />
               <Route path="/oibuz" element={<PageWrapper><OibuzLandingPage /></PageWrapper>} />
+
+              {/* 🥪 Diwali 2026 SEO Landing Page */}
+              <Route path="/diwali-offers-2026" element={<PageWrapper><DiwaliOffers2026 /></PageWrapper>} />
 
               <Route path="/articles" element={<PageWrapper><Articles /></PageWrapper>} />
               <Route path="/glossary" element={<PageWrapper><TechGlossary /></PageWrapper>} />

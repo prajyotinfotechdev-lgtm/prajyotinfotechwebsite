@@ -300,7 +300,14 @@ export default function Footer() {
           <span className="text-lg">🪔</span>
           <span className="font-extrabold text-amber-100">शुभ दीपावली!</span>
           <span className="text-amber-400/80">•</span>
-          <span>Prajyot Infotech wishes everyone a Joyous, Prosperous & Auspicious Diwali! May this festival of lights illuminate new opportunities and digital success.</span>
+          <span>Prajyot Infotech wishes everyone a Joyous, Prosperous & Auspicious Diwali!</span>
+          <span className="text-amber-400/80">•</span>
+          <Link
+            to="/diwali-offers-2026"
+            className="inline-flex items-center gap-1 font-bold text-amber-300 underline hover:text-white decoration-amber-400/50 underline-offset-2"
+          >
+            Explore Diwali 2026 Offers (15% OFF + Free AMC) →
+          </Link>
           <span className="text-lg">🪔</span>
         </div>
       </div>
