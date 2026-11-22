@@ -319,21 +319,6 @@ I'm interested in getting a Free Business Technology Audit from Prajyot Infotech
           We'll never spam. Your details are used only to contact you about your project.
         </p>
       </motion.div>
-
-      {/* Optional JSON-LD to hint contact method (SEO) */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ContactPoint",
-            contactType: "sales",
-            areaServed: "IN",
-            availableLanguage: ["en", "hi"],
-            url: "https://wa.me/" + WHATSAPP_NUMBER,
-          }),
-        }}
-      />
     </section>
   );
 }

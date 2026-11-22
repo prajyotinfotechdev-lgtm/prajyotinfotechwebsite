@@ -193,7 +193,7 @@ export default function Features({
               "@type": "ListItem",
               position: i + 1,
               name: it.title,
-              url: it.href || "https://www.prajyotinfotech.in/services",
+              item: it.href ? (it.href.startsWith("http") ? it.href : `https://www.prajyotinfotech.in${it.href}`) : "https://www.prajyotinfotech.in/services",
             })),
           }),
         }}

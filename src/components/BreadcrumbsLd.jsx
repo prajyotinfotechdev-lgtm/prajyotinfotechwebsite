@@ -22,15 +22,25 @@ export default function Breadcrumbs({
   };
 
   const listForLd = useMemo(() => {
+    const origin = baseUrl || (typeof window !== "undefined" ? window.location.origin : "https://www.prajyotinfotech.in");
+    const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
+    const currentUrl = typeof window !== "undefined" ? window.location.href : `${origin}${currentPath}`;
+
     const list = items
-      .map((it, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        name: String(it.name || "").trim(),
-        item: abs(it.url || it.to || null),
-      }))
-      .map((it) => (it.item ? it : { position: it.position, name: it.name, "@type": "ListItem" }))
-      .filter((it) => it.name);
+      .map((it, i) => {
+        const isLast = i === items.length - 1;
+        let itemUrl = abs(it.url || it.to || null);
+        if (!itemUrl && isLast) {
+          itemUrl = currentUrl;
+        }
+        return {
+          "@type": "ListItem",
+          position: i + 1,
+          name: String(it.name || "").trim(),
+          item: itemUrl || `${origin}${it.to || it.url || ""}`,
+        };
+      })
+      .filter((it) => it.name && it.item);
 
     // Don’t emit LD if it’s a single crumb (not useful)
     if (list.length < 2) return null;

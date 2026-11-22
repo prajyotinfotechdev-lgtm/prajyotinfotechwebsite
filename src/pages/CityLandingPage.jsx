@@ -311,26 +311,29 @@ export default function CityLandingPage({ cityId }) {
         <section className="py-12 px-4 bg-slate-100/70 border-t border-slate-200">
           <div className="max-w-5xl mx-auto text-center">
             <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">
-              Explore All Regional & Global Hubs
+              Explore Our Regional Engineering Hubs
             </h3>
-            <div className="flex flex-wrap justify-center gap-2">
-              {Object.keys(CITIES_DATA).map((cKey) => {
-                const cItem = CITIES_DATA[cKey];
-                const isActive = cityKey === cKey;
-                return (
-                  <Link
-                    key={cKey}
-                    to={`/software-company-in-${cKey}`}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                      isActive
-                        ? "bg-brand-600 text-white shadow-sm"
-                        : "bg-white text-slate-700 hover:bg-slate-200 border border-slate-200"
-                    }`}
-                  >
-                    {cItem.name}
-                  </Link>
-                );
-              })}
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link
+                to="/software-company-in-pune"
+                className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
+                  cityKey === "pune"
+                    ? "bg-brand-600 text-white shadow-sm"
+                    : "bg-white text-slate-700 hover:bg-slate-200 border border-slate-200"
+                }`}
+              >
+                Pune (Engineering Headquarters)
+              </Link>
+              <Link
+                to="/software-company-in-latur"
+                className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
+                  cityKey === "latur"
+                    ? "bg-brand-600 text-white shadow-sm"
+                    : "bg-white text-slate-700 hover:bg-slate-200 border border-slate-200"
+                }`}
+              >
+                Latur (Regional Operations &amp; AgriTech Hub)
+              </Link>
             </div>
           </div>
         </section>

@@ -143,20 +143,6 @@ function TiltCard({ children, index, variants }) {
 export default function Testimonials() {
   const prefersReducedMotion = useReducedMotion();
 
-  const schema = useMemo(() => ({
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Client Testimonials — Prajyot Infotech",
-    itemListElement: DATA.map((q, i) => ({
-      "@type": "Review",
-      position: i + 1,
-      author: { "@type": "Person", name: q.name },
-      reviewBody: q.quote,
-      reviewRating: { "@type": "Rating", ratingValue: q.rating, bestRating: 5, worstRating: 1 },
-      itemReviewed: { "@type": "Organization", name: "Prajyot Infotech" },
-    })),
-  }), []);
-
   const container = {
     hidden: { opacity: 0 },
     show: { opacity: 1, transition: prefersReducedMotion ? {} : { staggerChildren: 0.08 } },
@@ -168,8 +154,6 @@ export default function Testimonials() {
 
   return (
     <section className="relative mx-auto max-w-7xl px-4 py-16 md:py-24" aria-labelledby="testimonialsTitle">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-
       <div className="relative rounded-3xl border border-slate-200/80 bg-white p-8 md:p-12 shadow-lg shadow-brand-500/5 overflow-hidden">
         {/* Background glow */}
         <div aria-hidden className="pointer-events-none absolute inset-0 rounded-3xl" style={{ background: "radial-gradient(80% 120% at 100% 0%, rgba(124,58,237,0.06), transparent 60%)" }} />
