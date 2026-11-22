@@ -1,4 +1,4 @@
-// src/components/Nav.jsx
+﻿// src/components/Nav.jsx
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
@@ -170,23 +170,14 @@ export default function Nav() {
           
           <div className="h-6 w-px bg-slate-200 ml-1"></div>
 
-          <button
-            type="button"
-            onClick={() =>
-              openLeadModal({
-                title: "🪔 Diwali Special Consultation",
-                subtitle: "15% off + 3 months free maintenance on all software & web development projects.",
-                source: "Nav — Diwali 15% OFF Pill",
-                projectType: "Diwali Special Offer",
-                defaultMessage: "Hi, I'm interested in availing the 15% Diwali discount (Code: DIWALI2026) for my project.",
-              })
-            }
-            className="diwali-badge-glow inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-amber-600 to-orange-500 px-3.5 py-2 text-xs font-bold text-white shadow-md shadow-amber-500/20 hover:scale-105 transition-all cursor-pointer"
-            title="Claim Diwali 15% OFF (Code: DIWALI2026)"
+          <Link
+            to="/free-business-tech-audit"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-brand-600 to-navy-700 px-3.5 py-2 text-xs font-bold text-white shadow-md shadow-brand-500/20 hover:scale-105 transition-all"
+            title="Free Business Technology Audit"
           >
-            <span className="text-sm">🪔</span>
-            <span>15% Off</span>
-          </button>
+            <span className="text-sm">🚀</span>
+            <span>Free Tech Audit</span>
+          </Link>
 
           <Link
             to="/estimate"
@@ -199,23 +190,14 @@ export default function Nav() {
 
         {/* Mobile & Tablet controls */}
         <div className="flex items-center gap-2 lg:hidden">
-          <button
-            type="button"
-            onClick={() =>
-              openLeadModal({
-                title: "🪔 Diwali Special Consultation",
-                subtitle: "15% off + 3 months free maintenance on all software & web development projects.",
-                source: "Mobile Nav — Diwali 15% OFF Pill",
-                projectType: "Diwali Special Offer",
-                defaultMessage: "Hi, I'm interested in availing the 15% Diwali discount (Code: DIWALI2026) for my project.",
-              })
-            }
-            className="diwali-badge-glow inline-flex items-center gap-1 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-2.5 py-1.5 text-xs font-bold text-white shadow-sm active:scale-95 cursor-pointer"
-            title="Diwali Offer"
+          <Link
+            to="/free-business-tech-audit"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-brand-600 to-navy-700 px-3.5 py-2 text-xs font-bold text-white shadow-md shadow-brand-500/20 hover:scale-105 transition-all"
+            title="Free Business Technology Audit"
           >
-            <span>🪔</span>
-            <span>15% Off</span>
-          </button>
+            <span className="text-sm">🚀</span>
+            <span>Free Tech Audit</span>
+          </Link>
           <Link
             to="/estimate"
             aria-label="Estimate Project"
@@ -279,29 +261,21 @@ export default function Nav() {
             >
               <h2 id="mobileMenuTitle" className="sr-only">Menu</h2>
 
-              {/* Diwali festive banner card in mobile drawer */}
-              <div
-                onClick={() => {
-                  setOpen(false);
-                  openLeadModal({
-                    title: "🪔 Diwali Special Consultation",
-                    subtitle: "15% off + 3 months free maintenance on all software & web development projects.",
-                    source: "Mobile Drawer — Diwali Card",
-                    projectType: "Diwali Special Offer",
-                    defaultMessage: "Hi, I want to avail the 15% Diwali discount (Code: DIWALI2026) for my project.",
-                  });
-                }}
-                className="mb-4 p-3 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white cursor-pointer shadow-md flex items-center justify-between"
+              {/* 2027 Business Growth Campaign card in mobile drawer */}
+              <Link
+                to="/free-business-tech-audit"
+                onClick={() => setOpen(false)}
+                className="mb-4 p-3 rounded-2xl bg-gradient-to-r from-brand-600 via-brand-700 to-navy-700 text-white cursor-pointer shadow-md flex items-center justify-between"
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-xl">🪔</span>
+                  <span className="text-xl">🚀</span>
                   <div>
-                    <div className="text-xs font-bold leading-tight">Diwali Dhamaka: 15% OFF</div>
-                    <div className="text-[10px] text-amber-100 font-mono">Code: DIWALI2026 • +3 Mo. Free AMC</div>
+                    <div className="text-xs font-bold leading-tight">2027 Business Growth</div>
+                    <div className="text-[10px] text-brand-100">Free Business Technology Audit</div>
                   </div>
                 </div>
-                <span className="px-2.5 py-1 rounded-lg bg-white/20 hover:bg-white/30 text-[10px] font-bold">Claim →</span>
-              </div>
+                <span className="px-2.5 py-1 rounded-lg bg-white/20 hover:bg-white/30 text-[10px] font-bold">Audit →</span>
+              </Link>
 
               {/* Status badge (moved here for mobile) */}
               <div className="mb-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200/70 text-xs font-medium text-emerald-700 w-fit">

@@ -4,7 +4,7 @@ Allow: /assets/
 Allow: /images/
 Allow: /icons/
 Allow: /videos/
-Allow: /diwali-offers-2026
+Allow: /free-business-tech-audit
 
 # Exclude private admin portal from search crawlers
 Disallow: /careers/manage
@@ -13,7 +13,7 @@ Disallow: /admin
 # Googlebot — Diwali 2026 campaign page: crawl-delay 0 = index ASAP
 User-agent: Googlebot
 Allow: /
-Allow: /diwali-offers-2026
+Allow: /free-business-tech-audit
 Crawl-delay: 0
 
 User-agent: Googlebot-Image
@@ -23,7 +23,7 @@ Allow: /videos/
 
 User-agent: Bingbot
 Allow: /
-Allow: /diwali-offers-2026
+Allow: /free-business-tech-audit
 
 User-agent: Slurp
 Allow: /

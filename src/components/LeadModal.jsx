@@ -1,4 +1,4 @@
-// src/components/LeadModal.jsx
+﻿// src/components/LeadModal.jsx
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -27,7 +27,7 @@ import { createLead } from "../utils/leadStorage.js";
 const WHATSAPP_NUMBER = "917020708747";
 
 const PROJECT_TYPES = [
-  { label: "🪔 Diwali Special (15% OFF + 3 Mo. Free AMC)", badge: "Code: DIWALI2026" },
+  { label: "Free Business Tech Audit (2027 Campaign)", badge: "Complimentary" },
   { label: "Oibuz Construction HRMS", badge: "Flagship SaaS" },
   { label: "Website / Web App Development", badge: "High Speed" },
   { label: "Enterprise ERP / CRM Suite", badge: "Custom Logic" },

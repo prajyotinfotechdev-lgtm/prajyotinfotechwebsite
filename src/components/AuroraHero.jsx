@@ -89,83 +89,82 @@ function UICard({ delay, x, y, children, className = "" }) {
   );
 }
 
-/* ─── SLIDE 0 (FESTIVE): "Diwali Special Offer 2026" ───────────────────── */
-function SlideDiwaliVisual({ reduced }) {
-  const perks = [
-    { label: "15% Festive Discount", desc: "Use coupon DIWALI2026", color: "#d97706" },
-    { label: "3 Mo. Free Support", desc: "Complete AMC & updates", color: "#ea580c" },
-    { label: "100% IP Ownership", desc: "Full code & Git handover", color: "#b45309" },
-    { label: "Guaranteed Timeline", desc: "Fast auspicious launch", color: "#059669" },
+/* ─── SLIDE 0 (2027 CAMPAIGN): "Get Your Business 2027-Ready" ─────────── */
+function Slide2027Visual({ reduced }) {
+  const paths = [
+    { label: "Custom Software", desc: "Web & mobile apps built for you", color: "#7c3aed", icon: "⚙️" },
+    { label: "OIBUZ Construction", desc: "Smart HRMS for site teams", color: "#1e2756", icon: "🏗️" },
+    { label: "Process Automation", desc: "Eliminate manual work at scale", color: "#059669", icon: "⚡" },
   ];
 
   return (
     <div className="absolute inset-0 overflow-hidden">
-      <TechnicalGrid opacity={0.03} />
+      <TechnicalGrid opacity={0.04} />
 
-      {/* Warm Diwali ambient radial glow */}
+      {/* Purple brand ambient radial glow */}
       <motion.div
         className="absolute right-0 top-1/4 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, rgba(217, 119, 6, 0.08) 45%, transparent 70%)",
+            "radial-gradient(circle, rgba(124,58,237,0.14) 0%, rgba(30,39,86,0.06) 50%, transparent 70%)",
         }}
-        animate={reduced ? {} : { scale: [1, 1.12, 1], opacity: [0.75, 1, 0.75] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        animate={reduced ? {} : { scale: [1, 1.1, 1], opacity: [0.75, 1, 0.75] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Floating Diya & Festive Showcase Card (desktop) */}
+      {/* 2027 Campaign Showcase Card (desktop) */}
       <div className="hidden lg:block absolute right-6 xl:right-14 top-1/2 -translate-y-1/2 w-[430px]">
         <motion.div
-          className="rounded-3xl p-6 bg-gradient-to-br from-amber-50/95 via-white/95 to-orange-50/90 backdrop-blur-xl border border-amber-300/70 shadow-2xl shadow-amber-500/20 diwali-glow-card"
+          className="rounded-3xl p-6 bg-white/95 backdrop-blur-xl border border-brand-200/70 shadow-2xl shadow-brand-500/15"
           initial={{ opacity: 0, x: 50, scale: 0.95 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           exit={{ opacity: 0, x: 30, scale: 0.98 }}
           transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: 0.2 }}
         >
           {/* Header */}
-          <div className="flex items-center justify-between pb-4 border-b border-amber-200/60">
+          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <div className="flex items-center gap-2.5">
-              <span className="text-2xl">🪔</span>
+              <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-600 to-navy-700 flex items-center justify-center text-white text-sm font-black">27</span>
               <div>
-                <div className="text-xs font-black tracking-wide text-amber-900 uppercase">
-                  Diwali Mahotsav 2026
+                <div className="text-xs font-black tracking-wide text-navy-800 uppercase">
+                  2027 Business Growth
                 </div>
-                <div className="text-[11px] text-amber-700/80 font-medium">Auspicious Digital Beginnings</div>
+                <div className="text-[11px] text-slate-500 font-medium">Free Business Technology Audit</div>
               </div>
             </div>
-            <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-amber-500 text-white shadow-sm diwali-badge-glow">
-              LIMITED SLOTS
+            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-brand-100 text-brand-700 border border-brand-200">
+              FREE AUDIT
             </span>
           </div>
 
-          {/* Offer items */}
-          <div className="grid grid-cols-2 gap-3 mt-4">
-            {perks.map((p, i) => (
+          {/* Three solution paths */}
+          <div className="flex flex-col gap-2.5 mt-4">
+            {paths.map((p, i) => (
               <motion.div
                 key={p.label}
-                className="bg-white/90 rounded-2xl p-3 border border-amber-200/60 shadow-sm hover:border-amber-400 transition-colors"
+                className="bg-slate-50 rounded-2xl p-3 border border-slate-100 shadow-sm hover:border-brand-200 transition-colors flex items-center gap-3"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 + i * 0.1, duration: 0.45, ease: EASE_OUT_EXPO }}
               >
-                <div className="text-xs font-bold text-slate-800 flex items-center gap-1">
-                  <span className="text-amber-500">✦</span>
-                  {p.label}
+                <span className="text-lg">{p.icon}</span>
+                <div>
+                  <div className="text-xs font-bold text-slate-800">{p.label}</div>
+                  <div className="text-[10px] text-slate-500 mt-0.5">{p.desc}</div>
                 </div>
-                <div className="text-[10px] text-slate-500 mt-0.5">{p.desc}</div>
               </motion.div>
             ))}
           </div>
 
-          {/* Coupon banner */}
-          <div className="mt-4 p-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white flex items-center justify-between shadow-md">
+          {/* Audit CTA strip */}
+          <div className="mt-4 p-3.5 rounded-2xl bg-gradient-to-r from-brand-600 to-navy-700 text-white flex items-center justify-between shadow-md">
             <div>
-              <div className="text-[10px] uppercase font-bold tracking-wider opacity-90">Festive Promo Code</div>
-              <div className="text-base font-mono font-black tracking-widest text-amber-100">DIWALI2026</div>
+              <div className="text-[10px] uppercase font-bold tracking-wider opacity-90">Complimentary</div>
+              <div className="text-sm font-black">Business Technology Audit</div>
             </div>
             <div className="text-right">
-              <div className="text-sm font-black">Flat 15% OFF</div>
-              <div className="text-[10px] opacity-90">+ 3 Mo. Free Support</div>
+              <div className="text-xs font-bold opacity-90">No cost.</div>
+              <div className="text-[10px] opacity-80">No commitment.</div>
             </div>
           </div>
         </motion.div>
@@ -387,25 +386,19 @@ function Slide3Visual({ reduced }) {
 /* ─── SLIDE DATA ──────────────────────────────────────────────────────────── */
 const SLIDES = [
   {
-    id: "diwali",
-    eyebrow: "🪔 Shubh Deepavali 2026 • Festive Offer",
-    headline: ["Celebrate Diwali with", "15% OFF on tech."],
-    accentWord: "15% OFF on tech.",
-    sub: "Light up your venture with high-performance web apps, custom ERP/CRM, and scalable mobile apps. Enjoy 15% festive discount + 3 months free maintenance & zero setup fees.",
+    id: "growth2027",
+    eyebrow: "2027 Business Growth Campaign",
+    headline: ["Get Your Business", "2027-Ready."],
+    accentWord: "2027-Ready.",
+    sub: "Build smarter. Automate better. Grow faster. Discover how digital technology and intelligent business systems can help your business operate more efficiently.",
     primaryCTA: {
-      type: "modal",
-      label: "Claim Diwali Offer",
-      modalData: {
-        source: "Diwali 2026 — Hero Slide CTA",
-        title: "🪔 Shubh Deepavali Special Offer",
-        subtitle: "15% off + 3 months free maintenance on all new software & web projects.",
-        projectType: "Diwali Special Package",
-        defaultMessage: "Hi, I'm interested in the Diwali offer — 15% off + 3 months free maintenance. Please share package details.",
-      },
+      type: "link",
+      to: "/free-business-tech-audit",
+      label: "Get Your Free Business Audit",
     },
-    secondaryCTA: { type: "link", to: "/pricing", label: "View Festive Pricing" },
-    Visual: SlideDiwaliVisual,
-    accentGradient: "from-amber-600 via-orange-500 to-amber-700",
+    secondaryCTA: { type: "link", to: "/services", label: "Explore Our Solutions" },
+    Visual: Slide2027Visual,
+    accentGradient: "from-brand-700 via-brand-600 to-navy-600",
   },
   {
     id: "flagship",
@@ -623,36 +616,24 @@ export default function AuroraHero() {
               </Link>
             </motion.div>
 
-            {/* 🪔 Diwali 2026 offer badge — auto-hides after Nov 30 */}
-            {Date.now() < new Date("2026-11-30T23:59:59+05:30").getTime() && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2, ease: EASE_OUT_EXPO }}
+            {/* 2027 Business Growth Campaign Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2, ease: EASE_OUT_EXPO }}
+            >
+              <Link
+                to="/free-business-tech-audit"
+                className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold rounded-full px-3.5 py-1.5 cursor-pointer transition-all duration-300 hover:scale-105 bg-brand-50 border border-brand-200 text-brand-800 shadow-sm"
               >
-                <span
-                  onClick={() => openLeadModal({
-                    title: "🪔 Diwali Special Consultation — Limited Slots",
-                    subtitle: "Start your new project on an auspicious note! 15% off + 3 months free maintenance.",
-                    source: "Diwali 2026 — Hero Badge",
-                    defaultMessage: "Hi, I saw the Diwali offer and I'm interested!",
-                  })}
-                  className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold rounded-full px-3.5 py-1.5 cursor-pointer transition-all duration-300 hover:scale-105 diwali-badge-glow"
-                  style={{
-                    background: "linear-gradient(135deg, #FFFBEB, #FEF3C7)",
-                    border: "1px solid rgba(251,191,36,0.4)",
-                    color: "#92400E",
-                  }}
-                >
-                  <span className="text-sm">🪔</span>
-                  <span>Diwali Offer Live</span>
-                  <span className="relative flex size-1.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-60" />
-                    <span className="relative inline-flex rounded-full size-1.5 bg-amber-500" />
-                  </span>
+                <span className="text-sm">🚀</span>
+                <span>2027 Business Growth Campaign</span>
+                <span className="relative flex size-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-60" />
+                  <span className="relative inline-flex rounded-full size-1.5 bg-brand-500" />
                 </span>
-              </motion.div>
-            )}
+              </Link>
+            </motion.div>
           </div>
 
           {/* Slide content */}
@@ -766,21 +747,24 @@ export default function AuroraHero() {
                   )}
                 </motion.div>
 
-                {/* 🥪 Mobile Diwali Perks Pill (Visible on mobile only for Diwali slide) */}
-                {slide.id === "diwali" && (
+                {/* Mobile 2027 Campaign Pill (Visible on mobile only for growth2027 slide) */}
+                {slide.id === "growth2027" && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.75, duration: 0.4 }}
-                    className="lg:hidden mt-4 p-2.5 rounded-2xl bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-amber-500/15 border border-amber-300/60 flex items-center justify-between gap-2 text-xs"
+                    className="lg:hidden mt-4 p-2.5 rounded-2xl bg-gradient-to-r from-brand-600/10 via-brand-500/8 to-navy-700/10 border border-brand-200/60 flex items-center justify-between gap-2 text-xs"
                   >
-                    <div className="flex items-center gap-1.5 font-bold text-amber-950 text-[11px]">
-                      <span>🥪</span>
-                      <span>15% OFF + 3 Months Free AMC</span>
+                    <div className="flex items-center gap-1.5 font-bold text-brand-900 text-[11px]">
+                      <span>🚀</span>
+                      <span>Free Business Audit — Get 2027-Ready</span>
                     </div>
-                    <div className="font-mono font-bold bg-gradient-to-r from-amber-600 to-orange-600 text-white px-2 py-0.5 rounded-lg text-[10px] tracking-wider shrink-0 shadow-sm">
-                      DIWALI2026
-                    </div>
+                    <Link
+                      to="/free-business-tech-audit"
+                      className="font-semibold bg-gradient-to-r from-brand-600 to-navy-700 text-white px-2 py-0.5 rounded-lg text-[10px] tracking-wider shrink-0 shadow-sm"
+                    >
+                      FREE AUDIT
+                    </Link>
                   </motion.div>
                 )}
               </motion.div>

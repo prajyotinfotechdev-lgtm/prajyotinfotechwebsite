@@ -1,12 +1,10 @@
-// src/pages/Home.jsx
+﻿// src/pages/Home.jsx
 import React, { lazy, Suspense, useState } from "react";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 
 // Eagerly load Hero for best LCP
 import AuroraHero from "../components/AuroraHero.jsx";
-import DiwaliHomeBanner from "../components/DiwaliHomeBanner.jsx";
-
 // Lazy load everything below the fold
 const Marquee = lazy(() => import("../components/Marquee.jsx"));
 const Features = lazy(() => import("../components/Features.jsx"));
@@ -45,9 +43,9 @@ export default function Home() {
       <BreadcrumbsLd items={[{ name: "Home", url: "https://www.prajyotinfotech.in/" }]} />
 
       <Seo
-        title="Prajyot Infotech — Software & Web Development Company | Diwali 2026 Offers"
-        description="Prajyot Infotech engineers high-performance web apps, mobile apps & custom ERPs. 🪔 Diwali 2026 Special: Flat 15% OFF + 3 Months Free AMC on all projects. Code: DIWALI2026."
-        keywords="Diwali software offers 2026, Diwali website development discount, Diwali web design offers Pune India, custom software development Diwali sale, software engineering company India, custom software development, enterprise web development, mobile app development, ERP CRM development"
+        title="Prajyot Infotech — Software & Web Development Company | Get 2027-Ready"
+        description="Prajyot Infotech engineers high-performance web apps, mobile apps & custom ERPs for growing businesses. Get a free business technology audit and get 2027-ready."
+        keywords="free business technology audit, custom software development Pune India, enterprise web development, mobile app development, ERP CRM solutions, business automation 2027"
         path="/"
         image="/og/og-default.jpg"
         schema={[
@@ -113,15 +111,15 @@ export default function Home() {
             "mainEntity": [
               {
                 "@type": "Question",
-                "name": "What are the Diwali 2026 software and website development offers at Prajyot Infotech?",
+                "name": "What is the Free Business Technology Audit by Prajyot Infotech?",
                 "acceptedAnswer": {
-                  "text": "For Diwali 2026, Prajyot Infotech provides a Flat 15% discount + 3 months free maintenance and bug warranty on all custom website development, mobile apps (Android/iOS), enterprise ERP/CRM suites, and business automation systems using promo code DIWALI2026."
+                  "text": "Prajyot Infotech offers a complimentary business technology audit to help businesses identify digital gaps, automation opportunities, and technology improvements. Submit the form at prajyotinfotech.in/free-business-tech-audit to get started."
                 }
               },
               {
-                "name": "How do I claim the 15% Diwali discount for my project?",
+                "name": "How can Prajyot Infotech help my business get 2027-ready?",
                 "acceptedAnswer": {
-                  "text": "Simply submit a quote request on our website or contact us on WhatsApp (+91 70207 08747) mentioning coupon code DIWALI2026. Your fixed-scope proposal will include the 15% discount and 3 months complimentary maintenance."
+                  "text": "We help businesses build smarter with custom software, automate manual processes, and implement scalable digital systems. Book your free audit to get a personalised roadmap."
                 }
               },
               {
@@ -185,9 +183,7 @@ export default function Home() {
         {/* 1. HERO — with stats bar. Eagerly loaded for best LCP */}
         <AuroraHero />
 
-        {/* 🪔 Diwali 2026 Special Showcase Banner */}
-        <DiwaliHomeBanner />
-
+        
         {/* 2. SERVICES MARQUEE — visual rhythm breaker */}
         <Suspense fallback={<div className="h-16 border-y border-slate-200 bg-white animate-pulse" />}>
           <Marquee />

@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Link } from "react-router-dom";
 import { Trophy, Zap } from "lucide-react";
 import Logo from "./Logo.jsx";
@@ -294,21 +294,20 @@ export default function Footer() {
 
 
 
-      {/* 🪔 Diwali Festive Greeting Ribbon */}
-      <div className="relative z-10 border-t border-amber-500/30 bg-gradient-to-r from-amber-950/60 via-amber-900/40 to-amber-950/60 py-3.5 px-4 text-center">
-        <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm text-amber-200">
-          <span className="text-lg">🪔</span>
-          <span className="font-extrabold text-amber-100">शुभ दीपावली!</span>
-          <span className="text-amber-400/80">•</span>
-          <span>Prajyot Infotech wishes everyone a Joyous, Prosperous & Auspicious Diwali!</span>
-          <span className="text-amber-400/80">•</span>
+      {/* 2027 Business Growth Ribbon */}
+      <div className="relative z-10 border-t border-brand-500/30 bg-gradient-to-r from-navy-950 via-brand-950/70 to-navy-950 py-3.5 px-4 text-center">
+        <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm text-brand-200">
+          <span className="text-base">🚀</span>
+          <span className="font-extrabold text-white">Get Your Business 2027-Ready</span>
+          <span className="text-brand-400/80">•</span>
+          <span>Complimentary technology audit & digital roadmap for growing businesses.</span>
+          <span className="text-brand-400/80">•</span>
           <Link
-            to="/diwali-offers-2026"
-            className="inline-flex items-center gap-1 font-bold text-amber-300 underline hover:text-white decoration-amber-400/50 underline-offset-2"
+            to="/free-business-tech-audit"
+            className="inline-flex items-center gap-1 font-bold text-brand-300 underline hover:text-white decoration-brand-400/50 underline-offset-2"
           >
-            Explore Diwali 2026 Offers (15% OFF + Free AMC) →
+            Claim Your Free Audit →
           </Link>
-          <span className="text-lg">🪔</span>
         </div>
       </div>
 

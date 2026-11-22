@@ -4,6 +4,7 @@ import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import ProcessRoadmap from "../components/ProcessRoadmap.jsx";
 import SiteVisitsGallery from "../components/SiteVisitsGallery.jsx";
+import LeadershipTeam from "../components/LeadershipTeam.jsx";
 
 
 const WA_NUMBER = "917020708747";
@@ -279,6 +280,35 @@ export default function About() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: BRAND, url: SITE_URL, logo: LOGO_URL,
+    founder: [
+      {
+        "@type": "Person",
+        name: "Prajyot Kankal",
+        jobTitle: "Founder"
+      },
+      {
+        "@type": "Person",
+        name: "Sanket Kshirsagar",
+        jobTitle: "Co-Founder"
+      }
+    ],
+    employee: [
+      {
+        "@type": "Person",
+        name: "Prajyot Kankal",
+        jobTitle: "Founder"
+      },
+      {
+        "@type": "Person",
+        name: "Sanket Kshirsagar",
+        jobTitle: "Co-Founder"
+      },
+      {
+        "@type": "Person",
+        name: "Sneha Kalekar",
+        jobTitle: "Head of Marketing & Operations"
+      }
+    ],
     contactPoint: [{ "@type": "ContactPoint", contactType: "customer support", telephone: "+917020708747", email: EMAIL, areaServed: "IN", availableLanguage: ["en", "hi"] }],
     sameAs: SOCIALS,
   };
@@ -565,6 +595,9 @@ export default function About() {
             </Reveal>
           </div>
         </section>
+
+        {/* ═══ MEET OUR LEADERSHIP TEAM ═══ */}
+        <LeadershipTeam />
 
         {/* ═══ PROCESS ═══ */}
         <ProcessRoadmap />

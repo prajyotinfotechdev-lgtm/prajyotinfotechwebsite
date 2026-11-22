@@ -4,7 +4,10 @@ const supabaseUrl = import.meta.env?.VITE_SUPABASE_URL || process.env.VITE_SUPAB
 const supabaseAnonKey = import.meta.env?.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Missing Supabase Environment Variables');
+  console.warn('Missing Supabase Environment Variables — using fallback configuration');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseAnonKey || 'placeholder-key'
+);

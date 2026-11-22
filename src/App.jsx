@@ -7,15 +7,7 @@ import Nav from "./components/Nav.jsx";
 import Footer from "./components/Footer.jsx";
 import { Analytics } from "@vercel/analytics/react";
 import "./styles/responsive.css";
-import "./styles/diwali.css";
 import "./style.css";
-
-// 🪔 Diwali 2026 Campaign Components (auto-hide after Nov 30)
-import DiwaliOfferBanner from "./components/DiwaliOfferBanner.jsx";
-import DiwaliGreetingPopup from "./components/DiwaliGreetingPopup.jsx";
-import DiwaliDiyas from "./components/DiwaliDiyas.jsx";
-import DiwaliLightDiyaWidget from "./components/DiwaliLightDiyaWidget.jsx";
-import DiwaliQuickLeadBar from "./components/DiwaliQuickLeadBar.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Work = lazy(() => import("./pages/work.jsx")); // ✅ ensure case matches actual file on disk
@@ -38,7 +30,9 @@ const HrmsPricingPage = lazy(() => import("./pages/hrms/HrmsPricingPage.jsx"));
 const HrmsResourcesPage = lazy(() => import("./pages/hrms/HrmsResourcesPage.jsx"));
 const SiteVisitsPage = lazy(() => import("./pages/SiteVisitsPage.jsx"));
 const OibuzLandingPage = lazy(() => import("./pages/OibuzLandingPage.jsx"));
-const DiwaliOffers2026 = lazy(() => import("./pages/DiwaliOffers2026.jsx")); // 🪔 Diwali 2026 SEO Landing
+// 2027 Business Growth Campaign
+const FreeBusinessAudit = lazy(() => import("./pages/FreeBusinessAudit.jsx"));
+const ThankYou = lazy(() => import("./pages/ThankYou.jsx"));
 
 import HelpBot from "./components/HelpBot.jsx";
 import FloatingWhatsApp from "./components/FloatingWhatsApp.jsx";
@@ -87,9 +81,6 @@ export default function App() {
         {/* ↑ overflow-clip prevents mobile sideways scroll without breaking position: sticky */}
         <ScrollToTop />
 
-        {/* 🪔 Diwali 2026 — Sticky offer banner above Nav */}
-        {!hideGlobalNav && <DiwaliOfferBanner />}
-
         {!hideGlobalNav && <Nav />}
 
         <Suspense fallback={<div className="flex h-screen items-center justify-center text-brand-500">Loading...</div>}>
@@ -111,8 +102,11 @@ export default function App() {
               <Route path="/site-visits" element={<PageWrapper><SiteVisitsPage /></PageWrapper>} />
               <Route path="/oibuz" element={<PageWrapper><OibuzLandingPage /></PageWrapper>} />
 
-              {/* 🥪 Diwali 2026 SEO Landing Page */}
-              <Route path="/diwali-offers-2026" element={<PageWrapper><DiwaliOffers2026 /></PageWrapper>} />
+              {/* 2027 Business Growth Campaign */}
+              <Route path="/free-business-tech-audit" element={<PageWrapper><FreeBusinessAudit /></PageWrapper>} />
+              <Route path="/thank-you" element={<PageWrapper><ThankYou /></PageWrapper>} />
+              {/* Redirect legacy Diwali URL to new audit landing page */}
+              <Route path="/diwali-offers-2026" element={<PageWrapper><FreeBusinessAudit /></PageWrapper>} />
 
               <Route path="/articles" element={<PageWrapper><Articles /></PageWrapper>} />
               <Route path="/glossary" element={<PageWrapper><TechGlossary /></PageWrapper>} />
@@ -143,16 +137,6 @@ export default function App() {
 
         {/* Global Lead Capture Modal */}
         <LeadModal />
-
-        {/* 🪔 Diwali 2026 — One-time greeting popup */}
-        <DiwaliGreetingPopup />
-
-        {/* 🪔 Diwali 2026 — Ambient floating diyas */}
-        <DiwaliDiyas />
-        {/* 🪔 Diwali 2026 — Interactive "Light a Diya" Widget */}
-        <DiwaliLightDiyaWidget />
-        {/* 🪔 Diwali 2026 — Pure Lead Capture Sticky Bar */}
-        <DiwaliQuickLeadBar />
 
         {/* Vercel Web Analytics */}
         <Analytics />

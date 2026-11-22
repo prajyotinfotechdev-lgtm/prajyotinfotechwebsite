@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+﻿import React, { useMemo, useState } from "react";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import { createLead } from "../utils/leadStorage.js";
@@ -109,9 +109,9 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
         { name: "Contact", url: `${SITE_URL}/contact` },
       ]} />
       <Seo
-        title="Contact Prajyot Infotech — Diwali 2026 Free Consultation & 15% OFF"
-        description="Connect with Prajyot Infotech for custom web development, mobile apps, CRM & ERP. 🪔 Diwali 2026 Special: Flat 15% OFF + 3 Months Free Support. Code: DIWALI2026."
-        keywords="Diwali software consultation, contact Prajyot Infotech, hire software developers India, custom software quote, website development contact Pune, Diwali IT offers 2026"
+        title="Contact Prajyot Infotech — Get Your Free Tech Consultation"
+        description="Connect with Prajyot Infotech for custom web development, mobile apps, CRM, ERP & automation. Request your free 2027 business technology audit today."
+        keywords="contact Prajyot Infotech, hire software developers India, custom software quote, website development contact Pune, business tech audit"
         path="/contact"
         schema={[contactPageSchema, localBusinessSchema]}
       />
@@ -166,12 +166,13 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
                 <h2 className="text-xl font-bold text-navy-950 mb-1">Send a Message</h2>
                 <p className="text-xs text-slate-500 mb-4">Fill out the quick form below for an instant response.</p>
 
-                {/* 🪔 Diwali Offer Notice */}
-                <div className="p-3 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs flex items-center justify-between gap-2">
+                {/* 2027 Business Growth Campaign Notice */}
+                <div className="p-3 rounded-2xl bg-brand-50 border border-brand-200 text-brand-900 text-xs flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-lg">🪔</span>
-                    <span><strong>Diwali Offer Active:</strong> 15% OFF + 3 Months Free AMC with coupon <strong className="font-mono bg-white px-1.5 py-0.5 rounded border border-amber-300">DIWALI2026</strong></span>
+                    <span className="text-lg">🚀</span>
+                    <span><strong>2027 Business Growth:</strong> Complimentary Business Technology Audit available.</span>
                   </div>
+                  <Link to="/free-business-tech-audit" className="font-bold underline text-brand-700 text-[11px] shrink-0">Get Audit →</Link>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -220,7 +221,7 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
                     onChange={onChange}
                     className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500"
                   >
-                    <option value="🪔 Diwali Special (15% OFF + Free AMC)">🪔 Diwali Special (15% OFF + 3 Mo. Free AMC) - Code: DIWALI2026</option>
+                    <option value="Free Business Tech Audit (2027 Campaign)">Free Business Tech Audit (2027 Campaign)</option>
                     <option value="Website Development">Business / Corporate Website</option>
                     <option value="Mobile App Development">Mobile App (Android & iOS)</option>
                     <option value="E-Commerce Store">E-Commerce Store & Payments</option>
