@@ -1,6 +1,6 @@
 // App.jsx
 import React, { useEffect, useState, Suspense, lazy } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
 import Nav from "./components/Nav.jsx";
@@ -106,7 +106,27 @@ export default function App() {
               <Route path="/free-business-tech-audit" element={<PageWrapper><FreeBusinessAudit /></PageWrapper>} />
               <Route path="/thank-you" element={<PageWrapper><ThankYou /></PageWrapper>} />
               {/* Redirect legacy Diwali URL to new audit landing page */}
-              <Route path="/diwali-offers-2026" element={<PageWrapper><FreeBusinessAudit /></PageWrapper>} />
+              <Route path="/diwali-offers-2026" element={<Navigate to="/free-business-tech-audit" replace />} />
+
+              {/* Retained Location Pages (Genuine Value & Business Presence) */}
+              <Route path="/software-company-in-pune" element={<PageWrapper><CityLandingPage cityId="pune" /></PageWrapper>} />
+              <Route path="/software-company-in-latur" element={<PageWrapper><CityLandingPage cityId="latur" /></PageWrapper>} />
+
+              {/* Consolidated Location Redirects (Maharashtra satellite markets -> Pune HQ) */}
+              <Route path="/software-company-in-mumbai" element={<Navigate to="/software-company-in-pune" replace />} />
+              <Route path="/software-company-in-navi-mumbai" element={<Navigate to="/software-company-in-pune" replace />} />
+              <Route path="/software-company-in-thane" element={<Navigate to="/software-company-in-pune" replace />} />
+              <Route path="/software-company-in-nashik" element={<Navigate to="/software-company-in-pune" replace />} />
+              <Route path="/software-company-in-aurangabad" element={<Navigate to="/software-company-in-pune" replace />} />
+              <Route path="/software-company-in-nagpur" element={<Navigate to="/software-company-in-pune" replace />} />
+
+              {/* Consolidated Location Redirects (Non-Maharashtra / Outstation -> Core Services) */}
+              <Route path="/software-company-in-bangalore" element={<Navigate to="/services" replace />} />
+              <Route path="/software-company-in-delhi" element={<Navigate to="/services" replace />} />
+              <Route path="/software-company-in-hyderabad" element={<Navigate to="/services" replace />} />
+              <Route path="/software-company-in-usa" element={<Navigate to="/services" replace />} />
+              <Route path="/software-company-in-uk" element={<Navigate to="/services" replace />} />
+              <Route path="/software-company-in-uae" element={<Navigate to="/services" replace />} />
 
               <Route path="/articles" element={<PageWrapper><Articles /></PageWrapper>} />
               <Route path="/glossary" element={<PageWrapper><TechGlossary /></PageWrapper>} />

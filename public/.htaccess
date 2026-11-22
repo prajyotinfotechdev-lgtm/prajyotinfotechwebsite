@@ -1,6 +1,13 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # 301 Permanent Redirects for legacy/consolidated pages
+  RewriteRule ^diwali-offers-2026/?$ /free-business-tech-audit [R=301,L]
+  RewriteRule ^software-company-in-(mumbai|navi-mumbai|thane|nashik|aurangabad|nagpur)/?$ /software-company-in-pune [R=301,L]
+  RewriteRule ^software-company-in-(bangalore|delhi|hyderabad|usa|uk|uae)/?$ /services [R=301,L]
+
+  # Standard SPA fallback
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d

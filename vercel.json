@@ -1,7 +1,76 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/diwali-offers-2026",
+      "destination": "/free-business-tech-audit",
+      "permanent": true
+    },
+    {
+      "source": "/software-company-in-mumbai",
+      "destination": "/software-company-in-pune",
+      "permanent": true
+    },
+    {
+      "source": "/software-company-in-navi-mumbai",
+      "destination": "/software-company-in-pune",
+      "permanent": true
+    },
+    {
+      "source": "/software-company-in-thane",
+      "destination": "/software-company-in-pune",
+      "permanent": true
+    },
+    {
+      "source": "/software-company-in-nashik",
+      "destination": "/software-company-in-pune",
+      "permanent": true
+    },
+    {
+      "source": "/software-company-in-aurangabad",
+      "destination": "/software-company-in-pune",
+      "permanent": true
+    },
+    {
+      "source": "/software-company-in-nagpur",
+      "destination": "/software-company-in-pune",
+      "permanent": true
+    },
+    {
+      "source": "/software-company-in-bangalore",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/software-company-in-delhi",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/software-company-in-hyderabad",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/software-company-in-usa",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/software-company-in-uk",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/software-company-in-uae",
+      "destination": "/services",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!assets|images|icons|videos|og|audio|.*\\..*).*)",
       "destination": "/index.html"
     }
   ],

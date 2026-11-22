@@ -1,1 +1,17 @@
+# 301 Permanent Redirects for consolidated doorway/thin location pages
+/diwali-offers-2026 /free-business-tech-audit 301!
+/software-company-in-mumbai /software-company-in-pune 301!
+/software-company-in-navi-mumbai /software-company-in-pune 301!
+/software-company-in-thane /software-company-in-pune 301!
+/software-company-in-nashik /software-company-in-pune 301!
+/software-company-in-aurangabad /software-company-in-pune 301!
+/software-company-in-nagpur /software-company-in-pune 301!
+/software-company-in-bangalore /services 301!
+/software-company-in-delhi /services 301!
+/software-company-in-hyderabad /services 301!
+/software-company-in-usa /services 301!
+/software-company-in-uk /services 301!
+/software-company-in-uae /services 301!
+
+# SPA Fallback for client-side routing
 /* /index.html 200

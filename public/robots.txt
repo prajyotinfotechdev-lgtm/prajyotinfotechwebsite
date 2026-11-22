@@ -10,7 +10,7 @@ Allow: /free-business-tech-audit
 Disallow: /careers/manage
 Disallow: /admin
 
-# Googlebot — Diwali 2026 campaign page: crawl-delay 0 = index ASAP
+# Googlebot — 2027 Business Growth campaign page: crawl-delay 0 = index ASAP
 User-agent: Googlebot
 Allow: /
 Allow: /free-business-tech-audit

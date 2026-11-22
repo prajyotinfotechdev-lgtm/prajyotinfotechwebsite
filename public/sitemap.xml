@@ -5,7 +5,19 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-  <!-- 🚀 2027 Business Growth Campaign — Free Business Tech Audit -->
+  <!-- 1. Homepage — Primary Brand & Strategic Hub -->
+  <url>
+    <loc>https://www.prajyotinfotech.in/</loc>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.prajyotinfotech.in/videos/Logo.jpg</image:loc>
+      <image:title>Prajyot Infotech — Software Engineering &amp; Web Development Company</image:title>
+    </image:image>
+  </url>
+
+  <!-- 2. 2027 Business Growth Campaign — Free Business Technology Audit -->
   <url>
     <loc>https://www.prajyotinfotech.in/free-business-tech-audit</loc>
     <lastmod>2026-11-22</lastmod>
@@ -17,156 +29,81 @@
     </image:image>
   </url>
 
-  <!-- Core Strategic Pages -->
+  <!-- 3. Core Company & Services Pages -->
   <url>
-    <loc>https://www.prajyotinfotech.in/</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://www.prajyotinfotech.in/videos/Logo.jpg</image:loc>
-      <image:title>Prajyot Infotech — Software Engineering Company</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/work</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>daily</changefreq>
+    <loc>https://www.prajyotinfotech.in/about</loc>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://www.prajyotinfotech.in/services</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/work</loc>
+    <lastmod>2026-11-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://www.prajyotinfotech.in/pricing</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
     <loc>https://www.prajyotinfotech.in/estimate</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-22</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.prajyotinfotech.in/contact</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- 4. Location Strategic Pages (Retained Genuine Regional Presence) -->
+  <url>
+    <loc>https://www.prajyotinfotech.in/software-company-in-pune</loc>
+    <lastmod>2026-11-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://www.prajyotinfotech.in/about</loc>
-    <lastmod>2026-10-28</lastmod>
+    <loc>https://www.prajyotinfotech.in/software-company-in-latur</loc>
+    <lastmod>2026-11-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
+  </url>
+
+  <!-- 5. Flagship SaaS & Knowledge Base -->
+  <url>
+    <loc>https://www.prajyotinfotech.in/products/hrms</loc>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
   </url>
   <url>
     <loc>https://www.prajyotinfotech.in/articles</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/careers</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-11-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://www.prajyotinfotech.in/glossary</loc>
-    <lastmod>2026-10-28</lastmod>
+    <loc>https://www.prajyotinfotech.in/careers</loc>
+    <lastmod>2026-11-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
-
-  <!-- High-Intent Regional Location Landing Pages -->
   <url>
-    <loc>https://www.prajyotinfotech.in/software-company-in-pune</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
+    <loc>https://www.prajyotinfotech.in/glossary</loc>
+    <lastmod>2026-11-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
   </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/software-company-in-mumbai</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
-  </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/software-company-in-bangalore</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.88</priority>
-  </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/software-company-in-hyderabad</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.88</priority>
-  </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/software-company-in-delhi</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.88</priority>
-  </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/software-company-in-latur</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.88</priority>
-  </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/software-company-in-nagpur</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/software-company-in-nashik</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/software-company-in-aurangabad</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/software-company-in-thane</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/software-company-in-navi-mumbai</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/software-company-in-usa</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/software-company-in-uae</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.prajyotinfotech.in/software-company-in-uk</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
 </urlset>
