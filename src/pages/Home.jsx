@@ -115,16 +115,20 @@ export default function Home() {
                 "@type": "Question",
                 "name": "What is the Free Business Technology Audit by Prajyot Infotech?",
                 "acceptedAnswer": {
+                  "@type": "Answer",
                   "text": "Prajyot Infotech offers a complimentary business technology audit to help businesses identify digital gaps, automation opportunities, and technology improvements. Submit the form at prajyotinfotech.in/free-business-tech-audit to get started."
                 }
               },
               {
+                "@type": "Question",
                 "name": "How can Prajyot Infotech help my business get 2027-ready?",
                 "acceptedAnswer": {
+                  "@type": "Answer",
                   "text": "We help businesses build smarter with custom software, automate manual processes, and implement scalable digital systems. Book your free audit to get a personalised roadmap."
                 }
               },
               {
+                "@type": "Question",
                 "name": "What services does Prajyot Infotech provide?",
                 "acceptedAnswer": {
                   "@type": "Answer",
