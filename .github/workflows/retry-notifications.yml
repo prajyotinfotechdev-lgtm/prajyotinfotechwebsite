@@ -46,3 +46,4 @@ jobs:
           fi
 
           echo "Automated retry worker executed successfully: $HTTP_BODY"
+
