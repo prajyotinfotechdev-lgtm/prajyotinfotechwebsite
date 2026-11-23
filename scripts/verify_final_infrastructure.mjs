@@ -9,47 +9,54 @@ const connectionString =
   process.env.DATABASE_URL ||
   'postgresql://postgres.ougwbrpjpkbymjagssyq:Consistent@Supabase@123@aws-0-ap-south-1.pooler.supabase.com:6543/postgres';
 
-function request({ method = 'GET', path = '/api/leads', headers = {}, body = null }) {
-  return new Promise((resolve, reject) => {
-    const data = body ? JSON.stringify(body) : null;
-    const reqHeaders = {
-      ...headers,
-      ...(data ? { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) } : {})
-    };
+async function request({ method = 'GET', path = '/api/leads', headers = {}, body = null }, retries = 3) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      return await new Promise((resolve, reject) => {
+        const data = body ? JSON.stringify(body) : null;
+        const reqHeaders = {
+          ...headers,
+          ...(data ? { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) } : {})
+        };
 
-    const req = https.request(
-      {
-        hostname: PROD_HOST,
-        port: 443,
-        path,
-        method,
-        headers: reqHeaders,
-        timeout: 15000
-      },
-      res => {
-        let responseBody = '';
-        res.on('data', chunk => (responseBody += chunk));
-        res.on('end', () => {
-          let parsed;
-          try {
-            parsed = JSON.parse(responseBody);
-          } catch {
-            parsed = responseBody;
+        const req = https.request(
+          {
+            hostname: PROD_HOST,
+            port: 443,
+            path,
+            method,
+            headers: reqHeaders,
+            timeout: 15000
+          },
+          res => {
+            let responseBody = '';
+            res.on('data', chunk => (responseBody += chunk));
+            res.on('end', () => {
+              let parsed;
+              try {
+                parsed = JSON.parse(responseBody);
+              } catch {
+                parsed = responseBody;
+              }
+              resolve({ status: res.statusCode, headers: res.headers, body: parsed });
+            });
           }
-          resolve({ status: res.statusCode, headers: res.headers, body: parsed });
+        );
+
+        req.on('error', reject);
+        req.on('timeout', () => {
+          req.destroy();
+          reject(new Error('Request timed out'));
         });
-      }
-    );
 
-    req.on('error', reject);
-    req.on('timeout', () => {
-      req.destroy();
-      reject(new Error('Request timed out'));
-    });
-
-    if (data) req.write(data);
-    req.end();
-  });
+        if (data) req.write(data);
+        req.end();
+      });
+    } catch (err) {
+      if (attempt === retries) throw err;
+      await new Promise(r => setTimeout(r, 1000));
+    }
+  }
 }
 
 async function runVerification() {
