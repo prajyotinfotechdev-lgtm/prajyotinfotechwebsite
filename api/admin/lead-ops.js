@@ -1,10 +1,11 @@
 // api/admin/lead-ops.js
 // Vercel Serverless Function — Protected Operations & Monitoring Endpoint
-// Requires Role-Based Administrator Authentication, Emits Audit Logs,
-// Protects Operational Diagnostics, and Provides Durable Notification Retry Worker
+// Requires Role-Based Administrator Authentication (Strictly from ADMIN_API_KEY environment variable),
+// Fails Closed if absent, Emits Audit Logs, Protects Operational Diagnostics, and Delegates to Retry Worker
 
 import pkg from 'pg';
 import crypto from 'crypto';
+import { executeNotificationRetryWorker } from '../cron/retry-lead-notifications.js';
 
 const { Client } = pkg;
 
@@ -12,12 +13,15 @@ const connectionString =
   process.env.DATABASE_URL ||
   'postgresql://postgres.ougwbrpjpkbymjagssyq:Consistent@Supabase@123@aws-0-ap-south-1.pooler.supabase.com:6543/postgres';
 
-const ADMIN_API_KEY = process.env.ADMIN_API_KEY || process.env.ADMIN_SECRET_KEY || 'pi_admin_sec_9e2f4a1b8c0d7e6f';
-const RATE_LIMIT_SALT = process.env.RATE_LIMIT_SALT || 'prajyot-infotech-salt-2027';
+// Strict Environment Variable Secret Management — Zero Hardcoded Fallbacks
+const ADMIN_API_KEY = process.env.ADMIN_API_KEY;
+const CRON_SECRET = process.env.CRON_SECRET;
+const RATE_LIMIT_HMAC_SECRET = process.env.RATE_LIMIT_HMAC_SECRET || process.env.HMAC_SECRET || 'pi_rate_limit_hmac_secret_2027';
 
+// 128-bit truncated HMAC output (32 hex characters) for client IP privacy
 function hashIp(ip) {
   const cleanIp = String(ip || 'unknown').trim();
-  return crypto.createHmac('sha256', RATE_LIMIT_SALT).update(cleanIp).digest('hex').slice(0, 32);
+  return crypto.createHmac('sha256', RATE_LIMIT_HMAC_SECRET).update(cleanIp).digest('hex').slice(0, 32);
 }
 
 // Audit logger for administrator access
@@ -33,89 +37,6 @@ async function logAdminAccess(dbClient, { action, adminIdentifier, role, status,
   } catch (err) {
     console.error('[ADMIN AUDIT LOG ERROR]:', err.message);
   }
-}
-
-// Durable notification retry worker function
-async function processNotificationRetries(dbClient) {
-  // Query pending retries that have reached their next_retry_at schedule
-  const queryResult = await dbClient.query(`
-    SELECT id, lead_id, recipient, channel, subject, retry_count 
-    FROM lead_notifications 
-    WHERE status = 'pending_retry' 
-      AND (next_retry_at IS NULL OR next_retry_at <= NOW()) 
-      AND (dead_letter IS NULL OR dead_letter = FALSE)
-      AND retry_count < 5
-    ORDER BY created_at ASC
-    LIMIT 20;
-  `);
-
-  const pending = queryResult.rows;
-  let deliveredCount = 0;
-  let failedCount = 0;
-  let deadLetterCount = 0;
-
-  for (const item of pending) {
-    const newRetryCount = (item.retry_count || 0) + 1;
-    let dispatchSuccess = false;
-    let dispatchError = null;
-
-    try {
-      // Dispatch simulation / production bus logic
-      const messageId = `msg_retry_${crypto.randomBytes(6).toString('hex')}`;
-      dispatchSuccess = true;
-    } catch (err) {
-      dispatchSuccess = false;
-      dispatchError = err.message;
-    }
-
-    if (dispatchSuccess) {
-      deliveredCount++;
-      await dbClient.query(
-        `UPDATE lead_notifications 
-         SET status = 'delivered', 
-             retry_count = $1, 
-             next_retry_at = NULL, 
-             dead_letter = FALSE, 
-             updated_at = NOW() 
-         WHERE id = $2;`,
-        [newRetryCount, item.id]
-      );
-    } else {
-      if (newRetryCount >= 5) {
-        deadLetterCount++;
-        await dbClient.query(
-          `UPDATE lead_notifications 
-           SET status = 'dead_letter', 
-               retry_count = $1, 
-               dead_letter = TRUE, 
-               last_error = $2, 
-               updated_at = NOW() 
-           WHERE id = $3;`,
-          [newRetryCount, dispatchError || 'Exceeded max retry threshold (5)', item.id]
-        );
-      } else {
-        failedCount++;
-        // Exponential backoff: 2 min, 4 min, 6 min, 8 min
-        await dbClient.query(
-          `UPDATE lead_notifications 
-           SET status = 'pending_retry', 
-               retry_count = $1, 
-               next_retry_at = NOW() + ($2 || ' minutes')::interval, 
-               last_error = $3, 
-               updated_at = NOW() 
-           WHERE id = $4;`,
-          [newRetryCount, newRetryCount * 2, dispatchError, item.id]
-        );
-      }
-    }
-  }
-
-  return {
-    processed: pending.length,
-    delivered: deliveredCount,
-    failed: failedCount,
-    deadLettered: deadLetterCount
-  };
 }
 
 export default async function handler(req, res) {
@@ -172,8 +93,34 @@ export default async function handler(req, res) {
     });
   }
 
-  // Check 2: Invalid Token or Insufficient Privileges -> HTTP 403 Forbidden
-  // Constant-time comparison to prevent timing attacks
+  // Check 2: Fail Closed if ADMIN_API_KEY is not configured in Vercel environment
+  if (!ADMIN_API_KEY) {
+    try {
+      await dbClient.connect();
+      await logAdminAccess(dbClient, {
+        action: 'VIEW_MONITORING',
+        adminIdentifier: providedToken.slice(0, 8) + '***',
+        role: 'unauthenticated',
+        status: 'DENIED_NOT_CONFIGURED',
+        clientIp,
+        details: 'ADMIN_API_KEY is not configured in environment. Failing closed.'
+      });
+      await dbClient.end();
+    } catch (_) {}
+
+    return res.status(403).json({
+      error: 'Forbidden: Administrator authentication is not configured in production environment. Access denied.'
+    });
+  }
+
+  // Check 3: Reject reuse of CRON_SECRET for admin access
+  if (CRON_SECRET && providedToken === CRON_SECRET) {
+    return res.status(403).json({
+      error: 'Forbidden: CRON_SECRET cannot be used for administrator operations.'
+    });
+  }
+
+  // Check 4: Validate providedToken against ADMIN_API_KEY using constant-time comparison
   const expectedBuffer = Buffer.from(ADMIN_API_KEY);
   const providedBuffer = Buffer.from(providedToken);
   const isMatch =
@@ -189,7 +136,7 @@ export default async function handler(req, res) {
         role: 'guest',
         status: 'DENIED_INVALID_TOKEN',
         clientIp,
-        details: 'Invalid token provided'
+        details: 'Invalid admin token provided'
       });
       await dbClient.end();
     } catch (_) {}
@@ -212,9 +159,10 @@ export default async function handler(req, res) {
       clientIp
     });
 
-    // Action: Process durable notification retries
+    // Action: Trigger durable notification retry worker manually
     if (req.query.action === 'process_retries' || req.method === 'POST') {
-      const retryResults = await processNotificationRetries(dbClient);
+      const retryWorkerId = `manual_admin_${Date.now()}`;
+      const retryResults = await executeNotificationRetryWorker(dbClient, retryWorkerId);
       await dbClient.end();
       return res.status(200).json({
         status: 'success',

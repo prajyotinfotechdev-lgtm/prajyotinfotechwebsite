@@ -12,12 +12,23 @@ const connectionString =
   process.env.DATABASE_URL ||
   'postgresql://postgres.ougwbrpjpkbymjagssyq:Consistent@Supabase@123@aws-0-ap-south-1.pooler.supabase.com:6543/postgres';
 
-const RATE_LIMIT_SALT = process.env.RATE_LIMIT_SALT || 'prajyot-infotech-salt-2027';
+const RATE_LIMIT_HMAC_SECRET = process.env.RATE_LIMIT_HMAC_SECRET || process.env.HMAC_SECRET || 'pi_rate_limit_hmac_secret_2027';
 
-// Keyed One-Way Hashing for IP Addresses (Minimizes Stored IP Data & Privacy Compliance)
+/**
+ * Keyed Pseudo-Anonymous Hash for IP Addresses
+ *
+ * Computes an HMAC-SHA256 digest of the client IP address using a dedicated secret key,
+ * truncated to 32 hexadecimal characters (128 bits).
+ *
+ * Cryptographic rationale:
+ * 128 bits provides strong collision resistance (birthday bound of 2^64 requests),
+ * completely prevents rainbow-table and dictionary inversion of client IP addresses,
+ * ensures zero storage of raw PII / IP data in the database, and minimizes the
+ * index and storage footprint in the api_rate_limits table.
+ */
 function hashIp(ip) {
   const cleanIp = String(ip || 'unknown').trim();
-  return crypto.createHmac('sha256', RATE_LIMIT_SALT).update(cleanIp).digest('hex').slice(0, 32);
+  return crypto.createHmac('sha256', RATE_LIMIT_HMAC_SECRET).update(cleanIp).digest('hex').slice(0, 32);
 }
 
 // PII Masking Utilities for Safe Logging
@@ -56,13 +67,10 @@ async function logApiError(dbClient, { endpoint = '/api/leads', statusCode, erro
   }
 }
 
-// Multi-Instance Atomic Shared Rate Limiting via PostgreSQL with Auto-Expiry
+// Multi-Instance Atomic Shared Rate Limiting via PostgreSQL (Cleanup moved to scheduled cron)
 async function checkSharedRateLimit(dbClient, clientIp) {
   const maxRequestsPerWindow = 15; // 15 requests per 10 minutes
   const ipKey = hashIp(clientIp);
-
-  // Auto-expire and clean up rate limit records older than 1 hour
-  await dbClient.query("DELETE FROM api_rate_limits WHERE window_start_at < NOW() - INTERVAL '1 hour';").catch(() => {});
 
   const query = `
     INSERT INTO api_rate_limits (ip, request_count, window_start_at, updated_at)

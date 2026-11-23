@@ -1,6 +1,12 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "crons": [
+    {
+      "path": "/api/cron/retry-lead-notifications",
+      "schedule": "* * * * *"
+    }
+  ],
   "redirects": [
     {
       "source": "/diwali-offers-2026",
