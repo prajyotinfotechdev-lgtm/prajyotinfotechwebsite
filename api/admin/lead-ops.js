@@ -235,11 +235,12 @@ export default async function handler(req, res) {
     `);
 
     // 2. Active leads count in last 24 hours (No customer details exposed)
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
     const leadsStats = await dbClient.query(`
       SELECT COUNT(*) AS total_24h
       FROM leads 
-      WHERE created_at > (NOW() - INTERVAL '24 hours');
-    `);
+      WHERE created_at > $1;
+    `, [twentyFourHoursAgo]);
 
     // 3. Sanitized error summary (grouped by error_type, without stack traces or customer PII)
     const errorStats = await dbClient.query(`
