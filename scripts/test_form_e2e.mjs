@@ -81,31 +81,43 @@ async function testLeadForm() {
   const thankYouTitle = await page.$eval('h1', el => el.innerText);
   console.log('Thank You Greeting:', thankYouTitle);
 
-  const personalizedGreeting = thankYouTitle.includes('[TEST-LEAD]');
-  console.log('Personalized Lead Greeting Verified:', personalizedGreeting ? 'PASS' : 'FAIL');
+  const greetingPassed = thankYouTitle.includes('Thank You');
+  console.log('Privacy-Safe Lead Greeting Verified:', greetingPassed ? 'PASS' : 'FAIL');
 
   const waLink = await page.$eval('a[href*="wa.me"]', el => el.href).catch(() => 'NONE');
   console.log('WhatsApp acknowledgment quick-link present:', waLink !== 'NONE' ? 'PASS' : 'FAIL');
 
-  // 6. Verify Analytics Conversion Event with Test Filter
+  // 6. Verify Analytics Conversion Event with Test Filter (No artificial monetary value, No PII)
   console.log('\n--- 3. Analytics Conversion Event Verification ---');
   const leadEvent = analyticsEvents.find(e => e.eventName === 'generate_lead');
   console.log('Analytics generate_lead event fired:', leadEvent ? 'PASS' : 'FAIL');
   if (leadEvent) {
-    console.log('Event details (Notice debug_mode and traffic_type=test):', JSON.stringify(leadEvent, null, 2));
+    console.log('Event details:', JSON.stringify(leadEvent, null, 2));
+    const noMonetaryValue = leadEvent.eventParams.value === undefined && leadEvent.eventParams.currency === undefined;
+    console.log('No artificial monetary value assigned (value/currency omitted):', noMonetaryValue ? 'PASS' : 'FAIL');
+    const noPiiInAnalytics = !leadEvent.eventParams.fullName && !leadEvent.eventParams.email && !leadEvent.eventParams.whatsappNumber;
+    console.log('Zero PII in analytics event parameters:', noPiiInAnalytics ? 'PASS' : 'FAIL');
+    const hasTestFlags = leadEvent.eventParams.debug_mode === true && leadEvent.eventParams.traffic_type === 'test';
+    console.log('GA4 test-traffic isolation flags present (debug_mode & traffic_type=test):', hasTestFlags ? 'PASS' : 'FAIL');
   }
 
-  // 7. Verify Safe Session Storage & No PII in LocalStorage
+  // 7. Verify Safe Session Storage & No PII in LocalStorage/SessionStorage
   const storageData = await page.evaluate(() => {
+    const rawSession = window.sessionStorage.getItem('latest_lead_submission');
+    const parsedSession = rawSession ? JSON.parse(rawSession) : null;
     return {
-      sessionSubmission: window.sessionStorage.getItem('latest_lead_submission'),
+      parsedSession,
+      hasFullNameInSession: Boolean(parsedSession?.fullName),
+      hasContactInSession: Boolean(parsedSession?.whatsappNumber || parsedSession?.email),
       hasLocalLeadsBackup: Boolean(window.localStorage.getItem('local_leads_backup')),
       submitCount: window.localStorage.getItem('lead_submit_count'),
       lastSubmit: window.localStorage.getItem('last_lead_submit')
     };
   });
-  console.log('\n--- 4. Safe Storage Audit ---');
-  console.log('SessionStorage confirmation metadata present:', Boolean(storageData.sessionSubmission) ? 'PASS' : 'FAIL');
+  console.log('\n--- 4. Privacy & Safe Storage Audit ---');
+  console.log('SessionStorage confirmation metadata present:', Boolean(storageData.parsedSession) ? 'PASS' : 'FAIL');
+  console.log('fullName completely eliminated from sessionStorage:', !storageData.hasFullNameInSession ? 'PASS' : 'FAIL');
+  console.log('Contact info completely eliminated from sessionStorage:', !storageData.hasContactInSession ? 'PASS' : 'FAIL');
   console.log('Sensitive PII in localStorage eliminated:', !storageData.hasLocalLeadsBackup ? 'PASS (Zero PII stored)' : 'FAIL');
 
   // 8. Test Duplicate Submission Prevention (Submitting identical contact again)
