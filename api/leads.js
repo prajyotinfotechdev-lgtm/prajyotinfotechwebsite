@@ -1,6 +1,7 @@
 // api/leads.js
-// Vercel Serverless Function — Lead Ingestion, Atomic Rate Limiting, Transactional Concurrency Control,
-// Persistent Storage, Retryable Sales Notification Bus & Production Monitoring
+// Vercel Serverless Function — Public Lead Ingestion Endpoint
+// Implements Strict Method Enforcement (POST only), Keyed IP Hashing, Atomic Rate Limiting,
+// Advisory Lock Concurrency Defense, Persistent Storage & Reliable Notification Enqueueing
 
 import pkg from 'pg';
 import crypto from 'crypto';
@@ -11,7 +12,15 @@ const connectionString =
   process.env.DATABASE_URL ||
   'postgresql://postgres.ougwbrpjpkbymjagssyq:Consistent@Supabase@123@aws-0-ap-south-1.pooler.supabase.com:6543/postgres';
 
-// PII Masking Utilities for Safe Logging & Privacy Compliance
+const RATE_LIMIT_SALT = process.env.RATE_LIMIT_SALT || 'prajyot-infotech-salt-2027';
+
+// Keyed One-Way Hashing for IP Addresses (Minimizes Stored IP Data & Privacy Compliance)
+function hashIp(ip) {
+  const cleanIp = String(ip || 'unknown').trim();
+  return crypto.createHmac('sha256', RATE_LIMIT_SALT).update(cleanIp).digest('hex').slice(0, 32);
+}
+
+// PII Masking Utilities for Safe Logging
 function maskEmail(email) {
   if (!email || typeof email !== 'string') return '***';
   const parts = email.split('@');
@@ -29,35 +38,32 @@ function maskPhone(phone) {
   return digits.slice(0, 4) + '*'.repeat(Math.min(6, digits.length - 4));
 }
 
-function maskIp(ip) {
-  if (!ip || typeof ip !== 'string') return 'unknown';
-  if (ip.includes('.')) {
-    const parts = ip.split('.');
-    if (parts.length === 4) return `${parts[0]}.${parts[1]}.***.***`;
-  }
-  return ip.slice(0, 8) + '***';
-}
-
-// Production Error Logger
+// Safe Operational Error Logger
 async function logApiError(dbClient, { endpoint = '/api/leads', statusCode, errorType, errorMessage, clientIp, contact }) {
   try {
     const logId = `err_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`;
     const maskedContact = contact ? (contact.includes('@') ? maskEmail(contact) : maskPhone(contact)) : null;
+    const ipIdentifier = hashIp(clientIp);
 
     await dbClient.query(
       `INSERT INTO api_error_logs (
         id, endpoint, status_code, error_type, error_message, masked_ip, masked_contact, created_at
       ) VALUES ($1, $2, $3, $4, $5, $6, $7, NOW());`,
-      [logId, endpoint, statusCode, errorType, String(errorMessage).slice(0, 500), maskIp(clientIp), maskedContact]
+      [logId, endpoint, statusCode, errorType, String(errorMessage).slice(0, 300), ipIdentifier, maskedContact]
     );
   } catch (err) {
     console.error('[API LOGGING ERROR]:', err.message);
   }
 }
 
-// Multi-Instance Atomic Shared Rate Limiting via PostgreSQL
+// Multi-Instance Atomic Shared Rate Limiting via PostgreSQL with Auto-Expiry
 async function checkSharedRateLimit(dbClient, clientIp) {
   const maxRequestsPerWindow = 15; // 15 requests per 10 minutes
+  const ipKey = hashIp(clientIp);
+
+  // Auto-expire and clean up rate limit records older than 1 hour
+  await dbClient.query("DELETE FROM api_rate_limits WHERE window_start_at < NOW() - INTERVAL '1 hour';").catch(() => {});
+
   const query = `
     INSERT INTO api_rate_limits (ip, request_count, window_start_at, updated_at)
     VALUES ($1, 1, NOW(), NOW())
@@ -74,7 +80,7 @@ async function checkSharedRateLimit(dbClient, clientIp) {
       updated_at = NOW()
     RETURNING request_count, window_start_at;
   `;
-  const result = await dbClient.query(query, [clientIp]);
+  const result = await dbClient.query(query, [ipKey]);
   const currentCount = result.rows[0]?.request_count || 1;
   return {
     allowed: currentCount <= maxRequestsPerWindow,
@@ -83,7 +89,7 @@ async function checkSharedRateLimit(dbClient, clientIp) {
   };
 }
 
-// Retryable Sales Notification Dispatcher
+// Dispatch Notification with Retry
 async function dispatchNotificationWithRetry(notificationData, maxRetries = 2) {
   let attempt = 0;
   let lastError = null;
@@ -92,7 +98,7 @@ async function dispatchNotificationWithRetry(notificationData, maxRetries = 2) {
     attempt++;
     try {
       if (notificationData.simulateFailure) {
-        throw new Error('Simulated upstream notification dispatch failure for QA verification');
+        throw new Error('Simulated upstream dispatch failure for QA verification');
       }
 
       const dispatchResult = {
@@ -120,7 +126,7 @@ export default async function handler(req, res) {
   // CORS & Security headers
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-CSRF-Token, X-Simulate-Failure');
   res.setHeader('X-Content-Type-Options', 'nosniff');
 
@@ -128,50 +134,20 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
+  // 1. Critical Public API Security Fix: Strictly enforce POST
+  // Disallow all unauthenticated GET, HEAD, PUT, DELETE requests without exposing any internal state
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return res.status(405).json({
+      error: 'Method Not Allowed. Use POST to submit inquiries.'
+    });
+  }
+
   const clientIp =
     req.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
     req.headers['x-real-ip'] ||
     req.socket?.remoteAddress ||
     'unknown';
-
-  // GET: Production Monitoring & Alert Verification
-  if (req.method === 'GET') {
-    const dbClient = new Client({ connectionString, ssl: { rejectUnauthorized: false } });
-    try {
-      await dbClient.connect();
-      const failedNotifs = await dbClient.query(`
-        SELECT id, lead_id, recipient, channel, status, retry_count, last_error, created_at 
-        FROM lead_notifications 
-        WHERE status = 'failed' 
-        ORDER BY created_at DESC 
-        LIMIT 10;
-      `);
-      const recentErrors = await dbClient.query(`
-        SELECT id, endpoint, status_code, error_type, error_message, masked_ip, created_at 
-        FROM api_error_logs 
-        ORDER BY created_at DESC 
-        LIMIT 10;
-      `);
-      await dbClient.end();
-
-      return res.status(200).json({
-        status: 'healthy',
-        timestamp: new Date().toISOString(),
-        alerts: {
-          failedNotificationsCount: failedNotifs.rowCount,
-          failedNotifications: failedNotifs.rows,
-          recentErrors: recentErrors.rows
-        }
-      });
-    } catch (e) {
-      if (dbClient) await dbClient.end().catch(() => {});
-      return res.status(500).json({ error: e.message });
-    }
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed. Use POST.' });
-  }
 
   // Connect to PostgreSQL
   const dbClient = new Client({
@@ -182,13 +158,13 @@ export default async function handler(req, res) {
   try {
     await dbClient.connect();
 
-    // 1. Multi-Instance Shared Atomic Rate Limiting
+    // 2. Multi-Instance Shared Atomic Rate Limiting (Keyed Hash)
     const rateLimit = await checkSharedRateLimit(dbClient, clientIp);
     if (!rateLimit.allowed) {
       await logApiError(dbClient, {
         statusCode: 429,
         errorType: 'RATE_LIMIT_EXCEEDED',
-        errorMessage: `IP exceeded rate limit ceiling (${rateLimit.count}/${rateLimit.max})`,
+        errorMessage: `Request rate limit ceiling exceeded`,
         clientIp
       });
       await dbClient.end();
@@ -199,9 +175,9 @@ export default async function handler(req, res) {
 
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body || {};
 
-    // 2. Anti-spam Honeypot Check
+    // 3. Anti-spam Honeypot Check
     if (body.honeypot && String(body.honeypot).trim() !== '') {
-      console.warn(`[SPAM BLOCKED] Honeypot triggered from IP: ${maskIp(clientIp)}`);
+      console.warn(`[SPAM BLOCKED] Honeypot triggered from IP hash: ${hashIp(clientIp)}`);
       await logApiError(dbClient, {
         statusCode: 400,
         errorType: 'HONEYPOT_SPAM_BLOCKED',
@@ -212,7 +188,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Invalid submission request.' });
     }
 
-    // 3. Strict Backend Input Validation & Sanitization
+    // 4. Strict Backend Input Validation & Sanitization
     const fullName = String(body.name || body.fullName || '').trim();
     const businessName = String(body.businessName || '').trim();
     const whatsappNumber = String(body.whatsappNumber || '').replace(/[^\d+]/g, '').trim();
@@ -255,7 +231,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Please describe your business challenge or requirements (minimum 10 characters).' });
     }
 
-    // 4. Concurrency Control & Duplicate Prevention using Transaction Advisory Lock
+    // 5. Concurrency Control & Duplicate Prevention using Transaction Advisory Lock
     await dbClient.query('BEGIN');
 
     // Acquire transaction-level advisory lock on contact hash to prevent race conditions during concurrent submissions
@@ -290,7 +266,7 @@ export default async function handler(req, res) {
       });
     }
 
-    // 5. Generate Server Lead ID & Timestamp
+    // 6. Generate Server Lead ID & Timestamp
     const serverLeadId = `lead_srv_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`;
     const createdAt = new Date().toISOString();
     const formattedContact = `${whatsappNumber} | ${email}`;
@@ -309,7 +285,7 @@ export default async function handler(req, res) {
 
     const formattedMessage = messageParts.join(' | ');
 
-    // 6. Execute Persistent Database Insertion & COMMIT (Lead is NEVER silently lost)
+    // 7. Execute Persistent Database Insertion & COMMIT (Lead is NEVER silently lost)
     const insertResult = await dbClient.query(
       `INSERT INTO leads (
         id, name, contact, project_type, budget, message, source, status, created_at
@@ -331,7 +307,7 @@ export default async function handler(req, res) {
     await dbClient.query('COMMIT');
     const createdLead = insertResult.rows[0];
 
-    // 7. Dispatch Sales Notification with Retry & Persist Audit Status
+    // 8. Dispatch Sales Notification with Retry & Persist Queue Status
     const notificationId = `notif_srv_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`;
     const salesRecipient = 'hr@prajyotinfotech.in';
     const notificationChannel = 'sales_ops_email';
@@ -359,8 +335,8 @@ export default async function handler(req, res) {
     if (dispatch.success) {
       await dbClient.query(
         `INSERT INTO lead_notifications (
-          id, lead_id, recipient, channel, subject, payload, status, retry_count, last_error, provider_response, created_at, updated_at
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);`,
+          id, lead_id, recipient, channel, subject, payload, status, retry_count, next_retry_at, dead_letter, last_error, provider_response, created_at, updated_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14);`,
         [
           notificationId,
           serverLeadId,
@@ -371,17 +347,20 @@ export default async function handler(req, res) {
           'delivered',
           dispatch.attempts - 1,
           null,
+          false,
+          null,
           JSON.stringify(dispatch.response),
           createdAt,
           createdAt
         ]
       );
     } else {
-      // Record failure for alerting & retry, but do NOT lose lead
+      // Enqueue into durable retry queue with next_retry_at
+      const nextRetryAt = new Date(Date.now() + 2 * 60 * 1000).toISOString(); // 2 minutes
       await dbClient.query(
         `INSERT INTO lead_notifications (
-          id, lead_id, recipient, channel, subject, payload, status, retry_count, last_error, provider_response, created_at, updated_at
-        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);`,
+          id, lead_id, recipient, channel, subject, payload, status, retry_count, next_retry_at, dead_letter, last_error, provider_response, created_at, updated_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14);`,
         [
           notificationId,
           serverLeadId,
@@ -389,10 +368,12 @@ export default async function handler(req, res) {
           notificationChannel,
           notificationSubject,
           notificationPayload,
-          'failed',
+          'pending_retry',
           dispatch.attempts,
+          nextRetryAt,
+          false,
           dispatch.error,
-          JSON.stringify({ status: 'failed', error: dispatch.error }),
+          JSON.stringify({ status: 'pending_retry', error: dispatch.error }),
           createdAt,
           new Date().toISOString()
         ]
@@ -402,7 +383,7 @@ export default async function handler(req, res) {
       await logApiError(dbClient, {
         statusCode: 500,
         errorType: 'NOTIFICATION_DISPATCH_FAILURE',
-        errorMessage: `Lead ${serverLeadId} notification failed after ${dispatch.attempts} attempts: ${dispatch.error}`,
+        errorMessage: `Notification queued for background retry: ${dispatch.error}`,
         clientIp,
         contact: email
       });
@@ -410,7 +391,7 @@ export default async function handler(req, res) {
 
     await dbClient.end();
 
-    // 8. Return Verified Success Response (Lead creation and notification status tracked separately)
+    // 9. Return Verified Success Response (Customer inquiry safely confirmed)
     return res.status(201).json({
       success: true,
       leadId: createdLead.id,
@@ -420,11 +401,9 @@ export default async function handler(req, res) {
       projectType: createdLead.project_type,
       notification: {
         notificationId,
-        status: dispatch.success ? 'delivered' : 'failed_queued_for_retry',
+        status: dispatch.success ? 'delivered' : 'pending_retry',
         recipient: salesRecipient,
-        channel: notificationChannel,
-        attempts: dispatch.attempts,
-        error: dispatch.success ? null : 'Notification queued for automated ops retry'
+        channel: notificationChannel
       }
     });
 
@@ -445,6 +424,7 @@ export default async function handler(req, res) {
     }
 
     console.error('[API LEADS ERROR]:', error.message);
+    // Generic public error response — zero credential or stack leak
     return res.status(500).json({
       error: 'An error occurred while processing your application. Please try again or message our engineering leads directly via WhatsApp.'
     });

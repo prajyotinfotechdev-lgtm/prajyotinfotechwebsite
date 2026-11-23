@@ -179,7 +179,7 @@ export default function LeadQualificationForm({
 
       const createdRecord = await createLead(leadPayload);
 
-      // Google Analytics conversion event with test-lead filtering (No artificial monetary value, No PII)
+      // Google Analytics conversion event with test-traffic isolation (Zero PII, No artificial value, No internal IDs)
       if (typeof window !== "undefined" && typeof window.gtag === "function") {
         try {
           const isTestLead =
@@ -189,7 +189,6 @@ export default function LeadQualificationForm({
           window.gtag("event", "generate_lead", {
             event_category: "2027_campaign",
             event_label: formData.requirementType,
-            lead_id: createdRecord?.id || "unknown",
             debug_mode: isTestLead,
             traffic_type: isTestLead ? "test" : "production",
             qa_test_lead: isTestLead,
