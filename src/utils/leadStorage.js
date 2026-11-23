@@ -31,7 +31,7 @@ export async function getLeads() {
 }
 
 export async function createLead(leadData) {
-  // Client-side Rate Limiting (Max 5 leads per hour to prevent abuse)
+  // Client-side Rate Limiting (pre-check before network call)
   const now = Date.now();
   const lastSubmitStr = localStorage.getItem('last_lead_submit');
   const countStr = localStorage.getItem('lead_submit_count');
@@ -53,63 +53,84 @@ export async function createLead(leadData) {
     localStorage.setItem('lead_submit_count', '1');
   }
 
-  // Format rich metadata into message if provided
-  let formattedMessage = leadData.message || leadData.notes || "";
-  const details = [];
-  if (leadData.businessName) details.push(`Business: ${leadData.businessName}`);
-  if (leadData.industry) details.push(`Industry: ${leadData.industry}`);
-  if (leadData.challenge) details.push(`Challenge: ${leadData.challenge}`);
-  if (leadData.timeline) details.push(`Timeline: ${leadData.timeline}`);
-  if (leadData.conditionalAnswer) details.push(`Details: ${leadData.conditionalAnswer}`);
-  if (leadData.utm) {
-    const utmStr = Object.entries(leadData.utm)
-      .filter(([_, v]) => Boolean(v))
-      .map(([k, v]) => `${k}=${v}`)
-      .join('&');
-    if (utmStr) details.push(`UTM: ${utmStr}`);
-  }
-
-  if (details.length > 0) {
-    formattedMessage = `${details.join(' | ')}\n\n${formattedMessage}`.trim();
-  }
-
-  const newLead = {
-    id: `lead-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
-    name: leadData.name || "Anonymous Lead",
-    contact: leadData.contact || leadData.whatsappNumber || leadData.email || "",
-    project_type: leadData.projectType || leadData.project_type || leadData.requirementType || "2027 Business Tech Audit",
-    budget: leadData.budget || "Not Specified",
-    message: formattedMessage,
-    source: leadData.source || "2027 Business Growth Campaign",
-    status: leadData.status || "New",
-    created_at: new Date().toISOString()
-  };
-
-  // Always store in local backup first for guaranteed zero-lead-loss
+  // 1. Primary: Serverless Backend API endpoint (/api/leads)
   try {
-    const local = JSON.parse(localStorage.getItem('local_leads_backup') || '[]');
-    local.unshift(newLead);
-    localStorage.setItem('local_leads_backup', JSON.stringify(local.slice(0, 50)));
-  } catch (storageErr) {
-    console.warn("Could not cache local lead backup:", storageErr);
-  }
+    const apiRes = await fetch('/api/leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(leadData),
+    });
 
-  try {
+    const result = await apiRes.json();
+
+    if (!apiRes.ok) {
+      throw new Error(result.error || `Server error (${apiRes.status})`);
+    }
+
+    return {
+      id: result.leadId,
+      name: leadData.name,
+      projectType: result.projectType,
+      source: result.source,
+      status: result.status,
+      createdAt: result.createdAt,
+      notification: result.notification,
+    };
+  } catch (apiErr) {
+    // If backend returned a functional error (like 400 validation or 409 duplicate), propagate it
+    if (apiErr.message && !apiErr.message.includes('Failed to fetch') && !apiErr.message.includes('NetworkError')) {
+      throw apiErr;
+    }
+
+    console.warn("API leads endpoint notice (attempting direct client fallback):", apiErr.message);
+
+    // 2. Fallback: Direct Supabase Client SDK
+    // Format rich metadata into message if provided
+    let formattedMessage = leadData.message || leadData.notes || "";
+    const details = [];
+    if (leadData.businessName) details.push(`Business: ${leadData.businessName}`);
+    if (leadData.industry) details.push(`Industry: ${leadData.industry}`);
+    if (leadData.challenge) details.push(`Challenge: ${leadData.challenge}`);
+    if (leadData.timeline) details.push(`Timeline: ${leadData.timeline}`);
+    if (leadData.conditionalAnswer) details.push(`Details: ${leadData.conditionalAnswer}`);
+    if (leadData.utm) {
+      const utmStr = Object.entries(leadData.utm)
+        .filter(([_, v]) => Boolean(v))
+        .map(([k, v]) => `${k}=${v}`)
+        .join('&');
+      if (utmStr) details.push(`UTM: ${utmStr}`);
+    }
+
+    if (details.length > 0) {
+      formattedMessage = `${details.join(' | ')}\n\n${formattedMessage}`.trim();
+    }
+
+    const fallbackLead = {
+      id: `lead_fb_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`,
+      name: leadData.name || "Anonymous Lead",
+      contact: leadData.contact || leadData.whatsappNumber || leadData.email || "",
+      project_type: leadData.projectType || leadData.project_type || leadData.requirementType || "2027 Business Tech Audit",
+      budget: leadData.budget || "Not Specified",
+      message: formattedMessage,
+      source: leadData.source || "2027 Business Growth Campaign",
+      status: "New",
+      created_at: new Date().toISOString()
+    };
+
     const { data, error } = await supabase
       .from('leads')
-      .insert(newLead)
+      .insert(fallbackLead)
       .select()
       .single();
 
     if (error) {
-      console.warn("Supabase lead insert notice (using local storage backup):", error.message);
-      return newLead;
+      console.error("Supabase insert error:", error);
+      throw new Error("Unable to save inquiry. Please connect with our team on WhatsApp directly.");
     }
 
-    return data || newLead;
-  } catch (err) {
-    console.warn("Backend connection notice (lead preserved in backup):", err);
-    return newLead;
+    return data || fallbackLead;
   }
 }
 

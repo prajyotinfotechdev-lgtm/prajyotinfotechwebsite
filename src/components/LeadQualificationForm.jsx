@@ -177,23 +177,30 @@ export default function LeadQualificationForm({
         message: `Business Name: ${formData.businessName.trim()}\nIndustry: ${formData.industry}\nRequirement: ${formData.requirementType}\nTimeline: ${formData.projectTimeline}\nSpecific Details: ${formData.conditionalDetails || "N/A"}\nBusiness Challenge: ${formData.currentChallenge.trim()}`,
       };
 
-      await createLead(leadPayload);
+      const createdRecord = await createLead(leadPayload);
 
-      // Google Analytics conversion event
+      // Google Analytics conversion event with test-lead filtering
       if (typeof window !== "undefined" && typeof window.gtag === "function") {
         try {
+          const isTestLead =
+            formData.fullName.includes("[TEST-LEAD]") ||
+            formData.businessName.includes("[TEST-DO-NOT-PROCESS]");
+
           window.gtag("event", "generate_lead", {
             event_category: "2027_campaign",
             event_label: formData.requirementType,
             value: 1,
             currency: "INR",
+            debug_mode: isTestLead,
+            traffic_type: isTestLead ? "test" : "production",
+            qa_test_lead: isTestLead,
           });
         } catch (gtagErr) {
           console.warn("Analytics event notice:", gtagErr);
         }
       }
 
-      // Store submission snapshot for the Thank You page
+      // Store submission snapshot for the Thank You page in session memory
       if (typeof window !== "undefined" && window.sessionStorage) {
         window.sessionStorage.setItem(
           "latest_lead_submission",
@@ -201,9 +208,8 @@ export default function LeadQualificationForm({
             fullName: formData.fullName.trim(),
             businessName: formData.businessName.trim(),
             requirementType: formData.requirementType,
-            whatsappNumber: formData.whatsappNumber.trim(),
-            email: formData.email.trim(),
-            submittedAt: new Date().toISOString(),
+            leadId: createdRecord?.id || null,
+            submittedAt: createdRecord?.createdAt || new Date().toISOString(),
           })
         );
       }
