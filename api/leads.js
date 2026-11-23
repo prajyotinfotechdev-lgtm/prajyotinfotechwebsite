@@ -12,23 +12,33 @@ const connectionString =
   process.env.DATABASE_URL ||
   'postgresql://postgres.ougwbrpjpkbymjagssyq:Consistent@Supabase@123@aws-0-ap-south-1.pooler.supabase.com:6543/postgres';
 
-const RATE_LIMIT_HMAC_SECRET = process.env.RATE_LIMIT_HMAC_SECRET || process.env.HMAC_SECRET || 'pi_rate_limit_hmac_secret_2027';
+// Strict Environment Variable Secret Management — Zero Hardcoded Fallbacks
+function getRateLimitHmacSecret() {
+  return process.env.RATE_LIMIT_HMAC_SECRET;
+}
 
 /**
  * Keyed Pseudo-Anonymous Hash for IP Addresses
  *
- * Computes an HMAC-SHA256 digest of the client IP address using a dedicated secret key,
- * truncated to 32 hexadecimal characters (128 bits).
+ * Computes an HMAC-SHA256 digest of the client IP address using the dedicated
+ * RATE_LIMIT_HMAC_SECRET environment variable, truncated to 32 hexadecimal characters (128 bits).
  *
  * Cryptographic rationale:
- * 128 bits provides strong collision resistance (birthday bound of 2^64 requests),
- * completely prevents rainbow-table and dictionary inversion of client IP addresses,
- * ensures zero storage of raw PII / IP data in the database, and minimizes the
- * index and storage footprint in the api_rate_limits table.
+ * The 32-character hexadecimal identifier represents a 128-bit truncated HMAC output
+ * (16 bytes = 128 bits = 32 hex chars). This provides strong collision resistance
+ * (birthday bound of 2^64 requests), completely prevents rainbow-table and dictionary
+ * inversion of client IP addresses, ensures zero storage of raw PII / IP data in the
+ * database, and minimizes the index and storage footprint in the api_rate_limits table.
+ *
+ * If RATE_LIMIT_HMAC_SECRET is missing, fails safely without crashing or leaking secrets.
  */
 function hashIp(ip) {
+  const secret = getRateLimitHmacSecret();
+  if (!secret) {
+    throw new Error('RATE_LIMIT_HMAC_SECRET is not configured');
+  }
   const cleanIp = String(ip || 'unknown').trim();
-  return crypto.createHmac('sha256', RATE_LIMIT_HMAC_SECRET).update(cleanIp).digest('hex').slice(0, 32);
+  return crypto.createHmac('sha256', secret).update(cleanIp).digest('hex').slice(0, 32);
 }
 
 // PII Masking Utilities for Safe Logging
@@ -148,6 +158,17 @@ export default async function handler(req, res) {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({
       error: 'Method Not Allowed. Use POST to submit inquiries.'
+    });
+  }
+
+  // 2. Strict Dedicated HMAC Secret Requirement (P0 Security Hardening)
+  // Require RATE_LIMIT_HMAC_SECRET from environment variables — zero hardcoded fallbacks.
+  // Fail safely with HTTP 503 Service Unavailable if absent, without leaking internals or crashing.
+  const rateLimitHmacSecret = getRateLimitHmacSecret();
+  if (!rateLimitHmacSecret) {
+    console.error('[CRITICAL CONFIG] Dedicated RATE_LIMIT_HMAC_SECRET is missing in environment variables. Failing safely.');
+    return res.status(503).json({
+      error: 'Service Unavailable: Rate limit configuration unavailable.'
     });
   }
 

@@ -14,14 +14,38 @@ const connectionString =
   'postgresql://postgres.ougwbrpjpkbymjagssyq:Consistent@Supabase@123@aws-0-ap-south-1.pooler.supabase.com:6543/postgres';
 
 // Strict Environment Variable Secret Management — Zero Hardcoded Fallbacks
-const ADMIN_API_KEY = process.env.ADMIN_API_KEY;
-const CRON_SECRET = process.env.CRON_SECRET;
-const RATE_LIMIT_HMAC_SECRET = process.env.RATE_LIMIT_HMAC_SECRET || process.env.HMAC_SECRET || 'pi_rate_limit_hmac_secret_2027';
+function getAdminApiKey() {
+  return process.env.ADMIN_API_KEY;
+}
 
-// 128-bit truncated HMAC output (32 hex characters) for client IP privacy
+function getCronSecret() {
+  return process.env.CRON_SECRET;
+}
+
+function getRateLimitHmacSecret() {
+  return process.env.RATE_LIMIT_HMAC_SECRET;
+}
+
+/**
+ * Keyed Pseudo-Anonymous Hash for IP Addresses
+ *
+ * Computes an HMAC-SHA256 digest of the client IP address using the dedicated
+ * RATE_LIMIT_HMAC_SECRET environment variable, truncated to 32 hexadecimal characters (128 bits).
+ *
+ * Cryptographic rationale:
+ * The 32-character hexadecimal identifier represents a 128-bit truncated HMAC output
+ * (16 bytes = 128 bits = 32 hex chars). This provides strong collision resistance
+ * (birthday bound of 2^64 requests), completely prevents rainbow-table and dictionary
+ * inversion of client IP addresses, ensures zero storage of raw PII / IP data in the
+ * database, and minimizes the index and storage footprint in audit logs.
+ */
 function hashIp(ip) {
+  const secret = getRateLimitHmacSecret();
+  if (!secret) {
+    return 'unconfigured_hmac';
+  }
   const cleanIp = String(ip || 'unknown').trim();
-  return crypto.createHmac('sha256', RATE_LIMIT_HMAC_SECRET).update(cleanIp).digest('hex').slice(0, 32);
+  return crypto.createHmac('sha256', secret).update(cleanIp).digest('hex').slice(0, 32);
 }
 
 // Audit logger for administrator access
@@ -93,8 +117,11 @@ export default async function handler(req, res) {
     });
   }
 
+  const adminApiKey = getAdminApiKey();
+  const cronSecret = getCronSecret();
+
   // Check 2: Fail Closed if ADMIN_API_KEY is not configured in Vercel environment
-  if (!ADMIN_API_KEY) {
+  if (!adminApiKey) {
     try {
       await dbClient.connect();
       await logAdminAccess(dbClient, {
@@ -114,14 +141,14 @@ export default async function handler(req, res) {
   }
 
   // Check 3: Reject reuse of CRON_SECRET for admin access
-  if (CRON_SECRET && providedToken === CRON_SECRET) {
+  if (cronSecret && providedToken === cronSecret) {
     return res.status(403).json({
       error: 'Forbidden: CRON_SECRET cannot be used for administrator operations.'
     });
   }
 
   // Check 4: Validate providedToken against ADMIN_API_KEY using constant-time comparison
-  const expectedBuffer = Buffer.from(ADMIN_API_KEY);
+  const expectedBuffer = Buffer.from(adminApiKey);
   const providedBuffer = Buffer.from(providedToken);
   const isMatch =
     expectedBuffer.length === providedBuffer.length &&
@@ -172,6 +199,18 @@ export default async function handler(req, res) {
       });
     }
 
+    // Action: Purge legacy rate limits during secret rotation
+    if (req.query.action === 'purge_rate_limits') {
+      const purgeResult = await dbClient.query('DELETE FROM api_rate_limits;');
+      await dbClient.end();
+      return res.status(200).json({
+        status: 'success',
+        timestamp: new Date().toISOString(),
+        action: 'rate_limits_purged',
+        purgedRows: purgeResult.rowCount || 0
+      });
+    }
+
     // Default Action: Minimum necessary operational diagnostics
     // 1. Aggregated notification counts
     const notifStats = await dbClient.query(`
@@ -181,6 +220,15 @@ export default async function handler(req, res) {
         COUNT(*) FILTER (WHERE status = 'failed' OR dead_letter = TRUE) AS dead_letter_count
       FROM lead_notifications;
     `);
+
+    // 1b. Stale-job monitoring: detect notifications that remain due but unprocessed (>15 min overdue)
+    const staleJobs = await dbClient.query(`
+      SELECT COUNT(*) AS stale_due_count
+      FROM lead_notifications
+      WHERE status = 'pending_retry'
+        AND next_retry_at < (NOW() - INTERVAL '15 minutes');
+    `);
+    const staleDueCount = parseInt(staleJobs.rows[0]?.stale_due_count || '0', 10);
 
     // 2. Active leads count in last 24 hours (No customer details exposed)
     const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
@@ -211,7 +259,7 @@ export default async function handler(req, res) {
 
     const row = notifStats.rows[0] || {};
     return res.status(200).json({
-      status: 'healthy',
+      status: staleDueCount > 0 ? 'degraded' : 'healthy',
       role: 'admin',
       timestamp: new Date().toISOString(),
       operationalMetrics: {
@@ -219,8 +267,16 @@ export default async function handler(req, res) {
         notificationsDelivered: parseInt(row.delivered_count || '0', 10),
         notificationsPendingRetry: parseInt(row.pending_retry_count || '0', 10),
         notificationsDeadLetter: parseInt(row.dead_letter_count || '0', 10),
+        staleDueNotifications: staleDueCount,
         activeRateLimitWindows: parseInt(rateLimitsCount.rows[0]?.active_windows || '0', 10)
       },
+      alerts: staleDueCount > 0 ? [
+        {
+          severity: 'warning',
+          code: 'STALE_UNPROCESSED_NOTIFICATIONS',
+          message: `${staleDueCount} notification(s) have been due for more than 15 minutes without being processed by retry workers.`
+        }
+      ] : [],
       errorSummaryLast24h: errorStats.rows.map(r => ({
         errorType: r.error_type,
         occurrences: parseInt(r.count, 10),

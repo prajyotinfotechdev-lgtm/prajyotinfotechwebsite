@@ -1,0 +1,48 @@
+name: Automated Lead Notifications Retry Worker
+
+on:
+  schedule:
+    # Trigger every 5 minutes to service backoff intervals (2, 4, 6, 8 min)
+    # Required on Vercel Hobby plan where native Cron is restricted to daily executions
+    - cron: '*/5 * * * *'
+  workflow_dispatch: # Enable manual on-demand execution
+
+jobs:
+  dispatch-retry-worker:
+    name: Invoke Lead Notification Retry Worker
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Trigger Protected Retry Endpoint
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          ENDPOINT_URL: https://www.prajyotinfotech.in/api/cron/retry-lead-notifications
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "::error::CRON_SECRET repository secret is not provisioned. Automated retry scheduler cannot proceed."
+            exit 1
+          fi
+
+          echo "Triggering automated notification retry worker at $ENDPOINT_URL..."
+
+          # Mask secret to ensure it never leaks into workflow logs
+          echo "::add-mask::$CRON_SECRET"
+
+          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" \
+            -X GET "$ENDPOINT_URL" \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            -H "User-Agent: GitHub-Actions-RetryScheduler/1.0" \
+            --connect-timeout 10 \
+            --max-time 30)
+
+          HTTP_BODY=$(echo "$RESPONSE" | sed -e '$d')
+          HTTP_STATUS=$(echo "$RESPONSE" | tail -n1 | cut -d':' -f2)
+
+          echo "Status: $HTTP_STATUS"
+
+          if [ "$HTTP_STATUS" -ne 200 ]; then
+            echo "::error::Automated retry invocation failed with HTTP $HTTP_STATUS: $HTTP_BODY"
+            exit 1
+          fi
+
+          echo "Automated retry worker executed successfully: $HTTP_BODY"
