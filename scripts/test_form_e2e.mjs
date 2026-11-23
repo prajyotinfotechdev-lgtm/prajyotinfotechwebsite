@@ -28,8 +28,15 @@ async function testLeadForm() {
     };
   });
 
+  page.on('console', m => console.log('BROWSER_LOG:', m.type(), m.text()));
+  page.on('pageerror', err => console.log('BROWSER_PAGE_ERROR:', err));
+
   console.log('Navigating to https://www.prajyotinfotech.in/free-business-tech-audit ...');
   await page.goto('https://www.prajyotinfotech.in/free-business-tech-audit', { waitUntil: 'networkidle2' });
+  await page.evaluate(() => {
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+  });
 
   // 1. Verify page elements
   const h1 = await page.$eval('h1', el => el.innerText);
@@ -104,6 +111,11 @@ async function testLeadForm() {
   // 8. Test Duplicate Submission Prevention (Submitting identical contact again)
   console.log('\n--- 5. Duplicate Submission Prevention on Live Site ---');
   await page.goto('https://www.prajyotinfotech.in/free-business-tech-audit', { waitUntil: 'networkidle2' });
+  await page.evaluate(() => {
+    // Reset client rate limiter counter so the request reaches the server for backend duplicate detection
+    window.localStorage.removeItem('lead_submit_count');
+    window.localStorage.removeItem('last_lead_submit');
+  });
   await page.type('input[name="fullName"]', '[TEST-LEAD] Duplicate Test');
   await page.type('input[name="businessName"]', '[TEST-DO-NOT-PROCESS] Duplicate Test Org');
   await page.type('input[name="whatsappNumber"]', testPhone);
@@ -112,12 +124,16 @@ async function testLeadForm() {
 
   const submitBtn2 = await page.$('button[type="submit"]');
   await submitBtn2.click();
-  await new Promise(r => setTimeout(r, 1500));
+  
+  // Wait for 409 response and alert to appear on screen
+  await page.waitForFunction(() => {
+    const el = document.querySelector('[role="alert"]');
+    return el && el.innerText && el.innerText.includes('inquiry for this contact was received recently');
+  }, { timeout: 10000 });
 
   const duplicateBlockedText = await page.evaluate(() => {
-    const alerts = [...document.querySelectorAll('[role="alert"], div')];
-    const match = alerts.find(el => el.innerText && el.innerText.includes('inquiry for this contact was received recently'));
-    return match ? match.innerText : '';
+    const el = document.querySelector('[role="alert"]');
+    return el ? el.innerText : '';
   });
   console.log('Duplicate submission blocked by backend:', duplicateBlockedText.includes('inquiry for this contact was received recently') ? 'PASS' : 'FAIL');
   console.log('Server message returned to user:', duplicateBlockedText);
