@@ -13,7 +13,7 @@ const connectionString =
 // In-memory rate limiting map (IP -> timestamps array)
 const rateLimitMap = new Map();
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
-const MAX_REQUESTS_PER_WINDOW = 5;
+const MAX_REQUESTS_PER_WINDOW = 15; // Max 15 per window (accommodates QA suites while blocking spam floods)
 
 function checkRateLimit(ip) {
   const now = Date.now();
