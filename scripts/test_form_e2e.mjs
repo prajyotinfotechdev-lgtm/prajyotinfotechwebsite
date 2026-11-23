@@ -97,6 +97,8 @@ async function testLeadForm() {
     console.log('No artificial monetary value assigned (value/currency omitted):', noMonetaryValue ? 'PASS' : 'FAIL');
     const noPiiInAnalytics = !leadEvent.eventParams.fullName && !leadEvent.eventParams.email && !leadEvent.eventParams.whatsappNumber;
     console.log('Zero PII in analytics event parameters:', noPiiInAnalytics ? 'PASS' : 'FAIL');
+    const noLeadIdInAnalytics = leadEvent.eventParams.lead_id === undefined;
+    console.log('Internal lead IDs eliminated from GA4 event parameters:', noLeadIdInAnalytics ? 'PASS' : 'FAIL');
     const hasTestFlags = leadEvent.eventParams.debug_mode === true && leadEvent.eventParams.traffic_type === 'test';
     console.log('GA4 test-traffic isolation flags present (debug_mode & traffic_type=test):', hasTestFlags ? 'PASS' : 'FAIL');
   }
