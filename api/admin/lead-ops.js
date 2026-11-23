@@ -5,7 +5,7 @@
 
 import pkg from 'pg';
 import crypto from 'crypto';
-import { executeNotificationRetryWorker } from '../cron/retry-lead-notifications.js';
+import { executeNotificationRetryWorker } from '../../src/lib/retryWorker.js';
 
 const { Client } = pkg;
 
