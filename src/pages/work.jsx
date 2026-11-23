@@ -195,12 +195,19 @@ function ProjectCard({ project, index, onOpenDemo, prefersReducedMotion }) {
 
         {/* Actions */}
         <div className="flex items-center gap-2 pt-2 mt-auto border-t border-slate-100">
-          <button
-            onClick={() => onOpenDemo(project)}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[12px] font-semibold transition cursor-pointer text-brand-700 bg-brand-50 hover:bg-brand-100 border border-brand-200/60 hover:border-brand-300"
+          <Link
+            to={`/work/${project.id}`}
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[12px] font-semibold transition text-brand-700 bg-brand-50 hover:bg-brand-100 border border-brand-200/60 hover:border-brand-300"
           >
             <Eye className="w-3.5 h-3.5" />
-            View Case Study
+            Case Study
+          </Link>
+          <button
+            onClick={() => onOpenDemo(project)}
+            title="Open Interactive Demo Simulator"
+            className="px-3 py-2.5 rounded-xl text-[12px] font-semibold transition cursor-pointer text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200"
+          >
+            Demo
           </button>
           <a
             href={WA(
@@ -275,7 +282,7 @@ export default function Work() {
           position: i + 1,
           name: p.title,
           description: p.shortDesc,
-          url: `https://www.prajyotinfotech.in/work#${p.id}`,
+          url: `https://www.prajyotinfotech.in/work/${p.id}`,
         })),
       },
     ],

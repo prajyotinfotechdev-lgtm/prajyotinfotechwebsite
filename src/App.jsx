@@ -19,6 +19,15 @@ const Pricing = lazy(() => import("./pages/Pricing.jsx"));
 const Estimate = lazy(() => import("./pages/Estimate.jsx"));
 const CityLandingPage = lazy(() => import("./pages/CityLandingPage.jsx"));
 const Articles = lazy(() => import("./pages/Articles.jsx"));
+const ArticleDetail = lazy(() => import("./pages/ArticleDetail.jsx"));
+const CaseStudyDetail = lazy(() => import("./pages/CaseStudyDetail.jsx"));
+const ServiceDetail = lazy(() => import("./pages/ServiceDetail.jsx"));
+const ConstructionLeakageCalculator = lazy(() => import("./pages/ConstructionLeakageCalculator.jsx"));
+const WebsiteTechChecker = lazy(() => import("./pages/WebsiteTechChecker.jsx"));
+const Testimonials = lazy(() => import("./pages/Testimonials.jsx"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.jsx"));
+const TermsOfService = lazy(() => import("./pages/TermsOfService.jsx"));
+const FAQ = lazy(() => import("./pages/FAQ.jsx"));
 const TechGlossary = lazy(() => import("./pages/TechGlossary.jsx"));
 const Careers = lazy(() => import("./pages/Careers.jsx"));
 const CareerManager = lazy(() => import("./pages/CareerManager.jsx"));
@@ -88,8 +97,10 @@ export default function App() {
             <Routes location={location} key={location.pathname}>
               <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
               <Route path="/pricing" element={<PageWrapper><Pricing /></PageWrapper>} />
-              <Route path="/work" element={<PageWrapper><Work /></PageWrapper>} />
               <Route path="/services" element={<PageWrapper><Services /></PageWrapper>} />
+              <Route path="/services/:serviceId" element={<PageWrapper><ServiceDetail /></PageWrapper>} />
+              <Route path="/work" element={<PageWrapper><Work /></PageWrapper>} />
+              <Route path="/work/:id" element={<PageWrapper><CaseStudyDetail /></PageWrapper>} />
               <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
               <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
               <Route path="/estimate" element={<PageWrapper><Estimate /></PageWrapper>} />
@@ -110,12 +121,12 @@ export default function App() {
 
               {/* Retained Location Pages (Genuine Value & Business Presence) */}
               <Route path="/software-company-in-pune" element={<PageWrapper><CityLandingPage cityId="pune" /></PageWrapper>} />
+              <Route path="/software-company-in-mumbai" element={<PageWrapper><CityLandingPage cityId="mumbai" /></PageWrapper>} />
               <Route path="/software-company-in-latur" element={<PageWrapper><CityLandingPage cityId="latur" /></PageWrapper>} />
 
               {/* Consolidated Location Redirects (Maharashtra satellite markets -> Pune HQ) */}
-              <Route path="/software-company-in-mumbai" element={<Navigate to="/software-company-in-pune" replace />} />
-              <Route path="/software-company-in-navi-mumbai" element={<Navigate to="/software-company-in-pune" replace />} />
-              <Route path="/software-company-in-thane" element={<Navigate to="/software-company-in-pune" replace />} />
+              <Route path="/software-company-in-navi-mumbai" element={<Navigate to="/software-company-in-mumbai" replace />} />
+              <Route path="/software-company-in-thane" element={<Navigate to="/software-company-in-mumbai" replace />} />
               <Route path="/software-company-in-nashik" element={<Navigate to="/software-company-in-pune" replace />} />
               <Route path="/software-company-in-aurangabad" element={<Navigate to="/software-company-in-pune" replace />} />
               <Route path="/software-company-in-nagpur" element={<Navigate to="/software-company-in-pune" replace />} />
@@ -129,6 +140,13 @@ export default function App() {
               <Route path="/software-company-in-uae" element={<Navigate to="/services" replace />} />
 
               <Route path="/articles" element={<PageWrapper><Articles /></PageWrapper>} />
+              <Route path="/articles/:id" element={<PageWrapper><ArticleDetail /></PageWrapper>} />
+              <Route path="/tools/construction-leakage-calculator" element={<PageWrapper><ConstructionLeakageCalculator /></PageWrapper>} />
+              <Route path="/tools/website-tech-checker" element={<PageWrapper><WebsiteTechChecker /></PageWrapper>} />
+              <Route path="/testimonials" element={<PageWrapper><Testimonials /></PageWrapper>} />
+              <Route path="/privacy" element={<PageWrapper><PrivacyPolicy /></PageWrapper>} />
+              <Route path="/terms" element={<PageWrapper><TermsOfService /></PageWrapper>} />
+              <Route path="/faq" element={<PageWrapper><FAQ /></PageWrapper>} />
               <Route path="/glossary" element={<PageWrapper><TechGlossary /></PageWrapper>} />
               <Route path="/careers" element={<PageWrapper><Careers /></PageWrapper>} />
               <Route path="/careers/manage" element={<PageWrapper><CareerManager /></PageWrapper>} />

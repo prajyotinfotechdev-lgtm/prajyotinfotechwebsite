@@ -7,6 +7,7 @@ import { Mail, Phone, MapPin, Clock, ShieldCheck, CheckCircle2, Calendar, Messag
 const WHATSAPP_NUMBER = "917020708747";
 const BRAND = "Prajyot Infotech";
 const SITE_URL = "https://www.prajyotinfotech.in";
+const wa = (msg) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", contact: "", message: "", projectType: "Website / App Development" });
@@ -87,19 +88,41 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
     "email": "hr@prajyotinfotech.in",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "Shivaji Nagar & FC Road IT Corridor",
       "addressLocality": "Pune",
       "addressRegion": "Maharashtra",
+      "postalCode": "411001",
       "addressCountry": "IN"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": "18.5204",
-      "longitude": "73.8567"
+      "latitude": 18.5204,
+      "longitude": 73.8567
     },
-    "areaServed": ["India", "United States", "United Kingdom", "United Arab Emirates"],
+    "hasMap": "https://maps.google.com/?q=Pune,+Maharashtra,+India",
+    "areaServed": [
+      { "@type": "City", "name": "Pune" },
+      { "@type": "City", "name": "Mumbai" },
+      { "@type": "City", "name": "Latur" },
+      { "@type": "Country", "name": "India" },
+      { "@type": "Country", "name": "United States" },
+      { "@type": "Country", "name": "United Kingdom" },
+      { "@type": "Country", "name": "United Arab Emirates" }
+    ],
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "opens": "09:00",
+        "closes": "19:00"
+      }
+    ],
+    "sameAs": [
+      "https://github.com/Prajyot-Infotech",
+      "https://www.linkedin.com/company/prajyot-infotech"
+    ],
     "availableLanguage": ["English", "Hindi", "Marathi"],
     "priceRange": "₹₹",
-    "openingHours": "Mo-Sa 09:00-19:00",
   };
 
   return (
@@ -354,6 +377,72 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
             </div>
           </div>
         </div>
+      
+        {/* Local SEO & Google Maps Section */}
+        <section className="mt-16 bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm">
+          <div className="max-w-3xl mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-bold mb-3">
+              <MapPin className="w-3.5 h-3.5 text-brand-600" />
+              <span>Physical Presence & Regional Delivery Hubs</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              Headquartered in Pune, Engineering for the Globe
+            </h2>
+            <p className="mt-2 text-slate-600 text-sm sm:text-base">
+              While 95% of our client sprints and architecture reviews run smoothly over GitHub and Slack, you are always welcome to schedule an in-person discovery workshop at our Pune HQ or regional offices.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100">
+              <div className="size-8 rounded-xl bg-brand-100 text-brand-700 font-bold flex items-center justify-center text-xs mb-3">
+                HQ
+              </div>
+              <h3 className="font-bold text-slate-900 text-sm mb-1">Pune Headquarters</h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-2">
+                Shivaji Nagar & FC Road IT Corridor, Pune, Maharashtra 411001, India.
+              </p>
+              <div className="text-[11px] font-semibold text-brand-700">Software Architecture & Client Strategy</div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100">
+              <div className="size-8 rounded-xl bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-xs mb-3">
+                HUB
+              </div>
+              <h3 className="font-bold text-slate-900 text-sm mb-1">Latur Regional Delivery Hub</h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-2">
+                Ausa Road IT Sector, Latur, Maharashtra 413512, India.
+              </p>
+              <div className="text-[11px] font-semibold text-purple-700">Quality Assurance, Testing & Support</div>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100">
+              <div className="size-8 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-xs mb-3">
+                24/7
+              </div>
+              <h3 className="font-bold text-slate-900 text-sm mb-1">Working & Inquiry Hours</h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-2">
+                Monday – Saturday: 9:00 AM – 7:00 PM IST.<br />
+                Emergency client production support available 24/7.
+              </p>
+              <div className="text-[11px] font-semibold text-emerald-700">Response Guaranteed in &lt; 24h</div>
+            </div>
+          </div>
+
+          {/* Accessible Google Map Embed */}
+          <div className="w-full h-80 rounded-2xl overflow-hidden border border-slate-200 shadow-inner">
+            <iframe
+              title="Prajyot Infotech Pune Office Location Map"
+              src="https://maps.google.com/maps?q=Pune%2C%20Maharashtra%2C%20India&t=&z=13&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </section>
       </main>
     </>
   );

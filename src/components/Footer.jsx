@@ -189,12 +189,11 @@ export default function Footer() {
               Engineering Services
             </h4>
             <ul className="space-y-3 text-slate-400 text-xs">
-              <li><Link to="/services#business-websites"      className="hover:text-slate-200 transition-colors">Bespoke Web Applications</Link></li>
-              <li><Link to="/services#mobile-app-development" className="hover:text-slate-200 transition-colors">Mobile Apps (iOS &amp; Android)</Link></li>
-              <li><Link to="/services#crm-development"        className="hover:text-slate-200 transition-colors">Enterprise ERP &amp; CRM</Link></li>
-              <li><Link to="/services#billing-erp-software"   className="hover:text-slate-200 transition-colors">Cloud SaaS Platforms</Link></li>
-              <li><Link to="/services#whatsapp-automation"    className="hover:text-slate-200 transition-colors">Intelligent Workflows</Link></li>
-              <li><Link to="/services#ecommerce-development"  className="hover:text-slate-200 transition-colors">High-Throughput E-Commerce</Link></li>
+              <li><Link to="/services/custom-software-development" className="hover:text-slate-200 transition-colors">Custom Software Development</Link></li>
+              <li><Link to="/services/enterprise-erp-crm" className="hover:text-slate-200 transition-colors">Enterprise ERP &amp; Custom CRM</Link></li>
+              <li><Link to="/services/mobile-app-development" className="hover:text-slate-200 transition-colors">Mobile Apps (iOS &amp; Android)</Link></li>
+              <li><Link to="/services/whatsapp-automation" className="hover:text-slate-200 transition-colors">WhatsApp Business Automation</Link></li>
+              <li><Link to="/services" className="hover:text-slate-200 transition-colors">All Engineering Capabilities</Link></li>
             </ul>
           </div>
           <div>
@@ -217,6 +216,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li><Link to="/contact" className="hover:text-slate-200 transition-colors">Direct Contact</Link></li>
+              <li><Link to="/faq" className="hover:text-slate-200 transition-colors">FAQ</Link></li>
             </ul>
           </div>
           <div>
@@ -237,10 +237,11 @@ export default function Footer() {
                   <span>Project Cost Estimator</span>
                 </Link>
               </li>
-              <li><Link to="/articles"  className="hover:text-slate-200 transition-colors">Tech Architecture Lab</Link></li>
-              <li><Link to="/glossary"  className="hover:text-slate-200 transition-colors">Software Engineering Glossary</Link></li>
-              <li><a href="#architecture-blueprint" className="hover:text-slate-200 transition-colors">Cloud Topology Blueprint</a></li>
-              <li><a href="#roi-calculator"         className="hover:text-slate-200 transition-colors">Automation ROI Calculator</a></li>
+              <li><Link to="/articles" className="hover:text-slate-200 transition-colors">Articles &amp; Architecture Lab</Link></li>
+              <li><Link to="/tools/website-tech-checker" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><span className="text-sky-400">⚡</span>Website Speed Checker</Link></li>
+              <li><Link to="/tools/construction-leakage-calculator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><span className="text-amber-400">🏗️</span>Leakage Calculator</Link></li>
+              <li><Link to="/testimonials" className="hover:text-slate-200 transition-colors">Client Reviews & Success Stories</Link></li>
+              <li><Link to="/glossary" className="hover:text-slate-200 transition-colors">Software Engineering Glossary</Link></li>
             </ul>
           </div>
         </nav>

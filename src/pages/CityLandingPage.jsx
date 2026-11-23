@@ -10,6 +10,14 @@ const BRAND = "Prajyot Infotech";
 const SITE_URL = "https://www.prajyotinfotech.in";
 const WA_NUMBER = "917020708747";
 const EMAIL = "hr@prajyotinfotech.in";
+
+const SERVICE_SLUG_MAP = [
+  "/services/custom-software-development",
+  "/services/mobile-app-development",
+  "/services/enterprise-erp-crm",
+  "/services/whatsapp-automation",
+];
+
 const wa = (text) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 
 export default function CityLandingPage({ cityId }) {
@@ -216,13 +224,22 @@ export default function CityLandingPage({ cityId }) {
               {data.tailoredServices.map((service, idx) => (
                 <div
                   key={idx}
-                  className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-brand-300 transition-all group"
+                  className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-brand-300 transition-all group flex flex-col justify-between"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold text-sm mb-4 group-hover:bg-brand-600 group-hover:text-white transition-colors">
-                    0{idx + 1}
+                  <div>
+                    <div className="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold text-sm mb-4 group-hover:bg-brand-600 group-hover:text-white transition-colors">
+                      0{idx + 1}
+                    </div>
+                    <h3 className="text-lg font-bold text-navy-900 mb-2">{service.title}</h3>
+                    <p className="text-slate-600 text-sm leading-relaxed">{service.desc}</p>
                   </div>
-                  <h3 className="text-lg font-bold text-navy-900 mb-2">{service.title}</h3>
-                  <p className="text-slate-600 text-sm leading-relaxed">{service.desc}</p>
+                  <Link
+                    to={SERVICE_SLUG_MAP[idx % SERVICE_SLUG_MAP.length]}
+                    className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-brand-600 hover:text-brand-800 transition-colors group-hover:translate-x-0.5 transform duration-150"
+                  >
+                    <span>View Architecture & Pricing</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
                 </div>
               ))}
             </div>
@@ -304,6 +321,40 @@ export default function CityLandingPage({ cityId }) {
               </p>
             </div>
             <QuoteEstimator />
+          </div>
+        </section>
+
+        
+        {/* FREE DIAGNOSTIC TOOLS FOR REGIONAL BUSINESSES */}
+        <section className="py-12 px-4 bg-gradient-to-r from-slate-900 via-navy-950 to-indigo-950 text-white">
+          <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="max-w-xl">
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-400">Complimentary Engineering Utilities</span>
+              <h3 className="text-xl sm:text-2xl font-bold mt-1 mb-2">Free Performance & Operations Audit Tools</h3>
+              <p className="text-slate-300 text-xs sm:text-sm">
+                Benchmark your company's digital performance or calculate ghost-labor losses with our free interactive browser tools.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3 shrink-0">
+              <Link
+                to="/tools/website-tech-checker"
+                className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-bold text-white transition-colors"
+              >
+                ⚡ Website Speed Checker
+              </Link>
+              <Link
+                to="/tools/construction-leakage-calculator"
+                className="px-4 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/30 text-xs font-bold text-amber-300 transition-colors"
+              >
+                🏗️ Construction Leakage Calculator
+              </Link>
+              <Link
+                to="/free-business-tech-audit"
+                className="px-4 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-xs font-bold text-white shadow-lg transition-colors"
+              >
+                🚀 Free Tech Audit
+              </Link>
+            </div>
           </div>
         </section>
 

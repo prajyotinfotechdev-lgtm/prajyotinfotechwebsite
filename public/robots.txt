@@ -4,29 +4,42 @@ Allow: /assets/
 Allow: /images/
 Allow: /icons/
 Allow: /videos/
+Allow: /services/
+Allow: /work/
+Allow: /articles/
+Allow: /tools/
 Allow: /free-business-tech-audit
 
 # Exclude private admin portal from search crawlers
 Disallow: /careers/manage
 Disallow: /admin
 
-# Googlebot — 2027 Business Growth campaign page: crawl-delay 0 = index ASAP
+# Googlebot — crawl-delay 0 = index immediately
 User-agent: Googlebot
 Allow: /
-Allow: /free-business-tech-audit
 Crawl-delay: 0
+
+# Bingbot
+User-agent: Bingbot
+Allow: /
 
 User-agent: Googlebot-Image
 Allow: /images/
 Allow: /og/
 Allow: /videos/
 
-User-agent: Bingbot
+# AI Search Crawlers (AEO Optimization)
+User-agent: GPTBot
 Allow: /
-Allow: /free-business-tech-audit
+Allow: /llms.txt
 
-User-agent: Slurp
+User-agent: PerplexityBot
 Allow: /
+Allow: /llms.txt
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
 
 # Canonical Host
 Host: https://www.prajyotinfotech.in

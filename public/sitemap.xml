@@ -8,7 +8,7 @@
   <!-- 1. Homepage — Primary Brand & Strategic Hub -->
   <url>
     <loc>https://www.prajyotinfotech.in/</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -20,7 +20,7 @@
   <!-- 2. 2027 Business Growth Campaign — Free Business Technology Audit -->
   <url>
     <loc>https://www.prajyotinfotech.in/free-business-tech-audit</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -32,37 +32,37 @@
   <!-- 3. Core Company & Services Pages -->
   <url>
     <loc>https://www.prajyotinfotech.in/about</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://www.prajyotinfotech.in/services</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://www.prajyotinfotech.in/work</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://www.prajyotinfotech.in/pricing</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
     <loc>https://www.prajyotinfotech.in/estimate</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.prajyotinfotech.in/contact</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -70,39 +70,175 @@
   <!-- 4. Location Strategic Pages (Retained Genuine Regional Presence) -->
   <url>
     <loc>https://www.prajyotinfotech.in/software-company-in-pune</loc>
-    <lastmod>2026-11-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/software-company-in-mumbai</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://www.prajyotinfotech.in/software-company-in-latur</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
-  <!-- 5. Flagship SaaS & Knowledge Base -->
+  <!-- 5. Service Silo Pages (High-Intent Commercial Keywords) -->
   <url>
-    <loc>https://www.prajyotinfotech.in/products/hrms</loc>
-    <lastmod>2026-11-22</lastmod>
+    <loc>https://www.prajyotinfotech.in/services/custom-software-development</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/services/enterprise-erp-crm</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/services/mobile-app-development</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/services/whatsapp-automation</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- 6. Client Case Studies (Proof & Long-Tail Ranking) -->
+  <url>
+    <loc>https://www.prajyotinfotech.in/work/sagya-lehengas</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/work/restaurant-management</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/work/mobile-shop-management</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- 7. Social Proof & Trust Pages -->
+  <url>
+    <loc>https://www.prajyotinfotech.in/testimonials</loc>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://www.prajyotinfotech.in/articles</loc>
-    <lastmod>2026-11-22</lastmod>
+    <loc>https://www.prajyotinfotech.in/faq</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/privacy</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.40</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/terms</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.40</priority>
+  </url>
+
+  <!-- 8. Interactive Free Tools & Traffic Magnets -->
+  <url>
+    <loc>https://www.prajyotinfotech.in/tools/construction-leakage-calculator</loc>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/tools/website-tech-checker</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- 8. Technical Engineering Articles & Research -->
+  <url>
+    <loc>https://www.prajyotinfotech.in/articles</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/articles/sub-second-page-speed</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/articles/ai-whatsapp-automation</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/articles/what-is-an-api</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
+    <loc>https://www.prajyotinfotech.in/articles/responsive-design</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/articles/erp-vs-spreadsheets</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/articles/cost-of-custom-software-india</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/articles/whatsapp-business-api-india</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- 9. Flagship SaaS & Knowledge Base -->
+  <url>
+    <loc>https://www.prajyotinfotech.in/products/hrms</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
     <loc>https://www.prajyotinfotech.in/careers</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
     <loc>https://www.prajyotinfotech.in/glossary</loc>
-    <lastmod>2026-11-22</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.70</priority>
   </url>

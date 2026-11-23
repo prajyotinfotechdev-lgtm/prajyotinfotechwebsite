@@ -1,4 +1,4 @@
-﻿// src/components/Nav.jsx
+// src/components/Nav.jsx
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
@@ -17,9 +17,20 @@ const navConfig = [
     label: "Products",
     dropdown: [
       { to: "/products/hrms", label: "Oibuz HRMS", badge: "Flagship", desc: "Connected workforce & HR platform." },
+      { to: "/tools/construction-leakage-calculator", label: "Leakage Calculator", badge: "Free Tool", desc: "Calculate ghost-labor & site cash loss." },
+      { to: "/tools/website-tech-checker", label: "Speed & Tech Checker", badge: "Free Tool", desc: "Audit Core Web Vitals, speed & stack." },
     ]
   },
-  { to: "/services", label: "Services" },
+  {
+    label: "Services",
+    dropdown: [
+      { to: "/services/custom-software-development", label: "Custom Software", desc: "Tailored web platforms & cloud microservices." },
+      { to: "/services/enterprise-erp-crm", label: "ERP & Custom CRM", desc: "Automate billing, inventory, and workflows." },
+      { to: "/services/mobile-app-development", label: "Mobile Apps", desc: "React Native & Flutter iOS/Android apps." },
+      { to: "/services/whatsapp-automation", label: "WhatsApp Automation", desc: "Meta Cloud API chat workflows & CRM sync." },
+      { to: "/services", label: "All Capabilities", desc: "Explore our full technology capability suite." },
+    ]
+  },
   { to: "/work", label: "Work" },
   {
     label: "Company",
@@ -28,6 +39,8 @@ const navConfig = [
       { to: "/site-visits", label: "Client Deliveries", desc: "Photos & videos from client site visits & training." },
       { to: "/careers", label: "Careers", desc: "Join our fast-growing engineering team." },
       { to: "/articles", label: "Articles", desc: "Engineering deep-dives and tech insights." },
+      { to: "/testimonials", label: "Client Reviews", desc: "4.9★ verified success stories." },
+      { to: "/faq", label: "FAQ", desc: "Pricing, timelines, and project questions answered." },
       { to: "/pricing", label: "Pricing", desc: "Transparent, flexible engagement models." },
     ]
   }

@@ -21,6 +21,8 @@ const EngineeringProcess = lazy(() => import("../components/EngineeringProcess.j
 const HrmsSpotlight = lazy(() => import("../components/HrmsSpotlight.jsx"));
 const BrandAudioStory = lazy(() => import("../components/BrandAudioStory.jsx"));
 const SiteVisitsGallery = lazy(() => import("../components/SiteVisitsGallery.jsx"));
+const TrustGuarantees = lazy(() => import("../components/TrustGuarantees.jsx"));
+const FreeToolsShowcase = lazy(() => import("../components/FreeToolsShowcase.jsx"));
 
 
 const SectionSkeleton = ({ className = "" }) => (
@@ -183,6 +185,29 @@ export default function Home() {
         {/* 1. HERO — with stats bar. Eagerly loaded for best LCP */}
         <AuroraHero />
 
+        {/* 1.5 EXECUTIVE TRUST & SLA BAR */}
+        <section aria-label="Enterprise Engineering Assurances" className="bg-slate-900 border-y border-slate-800 py-3.5 px-4 text-xs relative z-20">
+          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-slate-300 font-medium">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-white font-bold">100% Full IP Transfer:</span> Complete Git Repository on Day 1
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-amber-400 font-bold">⚡</span>
+              <span className="text-white font-bold">Sub-Second SLA:</span> Core Web Vitals LCP &lt; 0.8s
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-brand-400 font-bold">🛡️</span>
+              <span className="text-white font-bold">60-Day Warranty:</span> Post-Launch Bug Coverage
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-indigo-400 font-bold">🏢</span>
+              <span className="text-white font-bold">Engineering Base:</span> Pune HQ &amp; Regional Latur Hub
+            </div>
+          </div>
+        </section>
+
+
         
         {/* 2. SERVICES MARQUEE — visual rhythm breaker */}
         <Suspense fallback={<div className="h-16 border-y border-slate-200 bg-white animate-pulse" />}>
@@ -240,6 +265,11 @@ export default function Home() {
           </Suspense>
         </div>
 
+        {/* 7.35 ENTERPRISE CLIENT GUARANTEES & VENDOR COMPARISON */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <TrustGuarantees />
+        </Suspense>
+
         {/* 7.5 REAL ON-SITE DELIVERIES & SOFTWARE TRAINING SHOWCASE */}
         <Suspense fallback={<SectionSkeleton />}>
           <SiteVisitsGallery
@@ -255,6 +285,11 @@ export default function Home() {
         {/* 8. INTERACTIVE TECH LAB & ARTICLES — engineering authority */}
         <Suspense fallback={<SectionSkeleton />}>
           <ArticlesPreview />
+        </Suspense>
+
+        {/* 8.5 FREE TOOLS SHOWCASE — traffic magnet + lead magnets */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <FreeToolsShowcase />
         </Suspense>
 
         {/* 9. CTA — final conversion point */}
