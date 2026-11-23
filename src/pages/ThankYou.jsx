@@ -36,9 +36,9 @@ export default function ThankYou() {
   }, []);
 
   const getWaUrl = () => {
-    const name = leadDetails?.fullName ? leadDetails.fullName : "there";
     const biz = leadDetails?.businessName ? ` for ${leadDetails.businessName}` : "";
-    const text = `Hi Prajyot Infotech, my name is ${name}. I just submitted my 2027 Business Tech Audit request${biz} on your website. Looking forward to connecting!`;
+    const ref = leadDetails?.leadId ? ` (Ref: ${leadDetails.leadId})` : "";
+    const text = `Hi Prajyot Infotech, I just submitted my 2027 Business Tech Audit request${biz}${ref} on your website. Looking forward to connecting!`;
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
   };
 
@@ -77,7 +77,7 @@ export default function ThankYou() {
             </div>
 
             <h1 className="text-3xl sm:text-5xl font-black text-navy-950 tracking-tight">
-              Thank You, {leadDetails?.fullName ? leadDetails.fullName.split(" ")[0] : "Partner"}!
+              Thank You{leadDetails?.businessName ? `, ${leadDetails.businessName}` : ""}!
             </h1>
 
             <p className="mt-3 text-slate-600 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
@@ -85,21 +85,35 @@ export default function ThankYou() {
               {leadDetails?.businessName ? ` for ${leadDetails.businessName}` : ""}. Our principal engineering team is already reviewing your details.
             </p>
 
-            {/* Personalized confirmation summary */}
+            {/* Privacy-Hardened Confirmation Summary (Zero PII stored or rendered) */}
             {leadDetails && (
               <div className="mt-6 p-4 rounded-2xl bg-slate-50 border border-slate-200/80 max-w-lg mx-auto text-left text-xs text-slate-600 space-y-1.5">
-                <div className="flex justify-between">
-                  <span className="font-semibold text-slate-500">Business / Project:</span>
-                  <span className="font-bold text-slate-900">{leadDetails.businessName}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold text-slate-500">Selected Path:</span>
-                  <span className="font-bold text-brand-700">{leadDetails.requirementType}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold text-slate-500">Contact Method:</span>
-                  <span className="font-mono text-slate-800">{leadDetails.whatsappNumber}</span>
-                </div>
+                {leadDetails.leadId && (
+                  <div className="flex justify-between">
+                    <span className="font-semibold text-slate-500">Audit Reference ID:</span>
+                    <span className="font-mono font-bold text-slate-900">{leadDetails.leadId}</span>
+                  </div>
+                )}
+                {leadDetails.businessName && (
+                  <div className="flex justify-between">
+                    <span className="font-semibold text-slate-500">Business / Project:</span>
+                    <span className="font-bold text-slate-900">{leadDetails.businessName}</span>
+                  </div>
+                )}
+                {leadDetails.requirementType && (
+                  <div className="flex justify-between">
+                    <span className="font-semibold text-slate-500">Selected Path:</span>
+                    <span className="font-bold text-brand-700">{leadDetails.requirementType}</span>
+                  </div>
+                )}
+                {leadDetails.submittedAt && (
+                  <div className="flex justify-between">
+                    <span className="font-semibold text-slate-500">Received At:</span>
+                    <span className="font-mono text-slate-600">
+                      {new Date(leadDetails.submittedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  </div>
+                )}
               </div>
             )}
 

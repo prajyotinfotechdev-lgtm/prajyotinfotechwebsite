@@ -179,7 +179,7 @@ export default function LeadQualificationForm({
 
       const createdRecord = await createLead(leadPayload);
 
-      // Google Analytics conversion event with test-lead filtering
+      // Google Analytics conversion event with test-lead filtering (No artificial monetary value, No PII)
       if (typeof window !== "undefined" && typeof window.gtag === "function") {
         try {
           const isTestLead =
@@ -189,8 +189,7 @@ export default function LeadQualificationForm({
           window.gtag("event", "generate_lead", {
             event_category: "2027_campaign",
             event_label: formData.requirementType,
-            value: 1,
-            currency: "INR",
+            lead_id: createdRecord?.id || "unknown",
             debug_mode: isTestLead,
             traffic_type: isTestLead ? "test" : "production",
             qa_test_lead: isTestLead,
@@ -200,12 +199,12 @@ export default function LeadQualificationForm({
         }
       }
 
-      // Store submission snapshot for the Thank You page in session memory
+      // Store non-sensitive submission snapshot for the Thank You page in session memory
+      // Privacy Hardening: fullName and contact details are strictly excluded
       if (typeof window !== "undefined" && window.sessionStorage) {
         window.sessionStorage.setItem(
           "latest_lead_submission",
           JSON.stringify({
-            fullName: formData.fullName.trim(),
             businessName: formData.businessName.trim(),
             requirementType: formData.requirementType,
             leadId: createdRecord?.id || null,
