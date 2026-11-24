@@ -5,6 +5,11 @@ import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import {
   Building2,
+  Printer,
+  Share2,
+  Copy,
+  Check,
+  Download,
   Users,
   AlertTriangle,
   TrendingDown,
@@ -21,6 +26,7 @@ const WA_NUMBER = "917020708747";
 
 export default function ConstructionLeakageCalculator() {
   const { openLeadModal } = useLeadModal();
+  const [copied, setCopied] = useState(false);
 
   const [activeSites, setActiveSites] = useState(3);
   const [workersPerSite, setWorkersPerSite] = useState(45);
@@ -58,6 +64,35 @@ export default function ConstructionLeakageCalculator() {
       oibuzAnnualSavings,
     };
   }, [activeSites, workersPerSite, avgDailyWage, workingDays]);
+
+  
+  const handlePrintAudit = () => {
+    window.print();
+  };
+
+  const handleShareWhatsApp = () => {
+    const text = encodeURIComponent(
+      `Construction Site Leakage Audit - Prajyot Infotech\n` +
+      `----------------------------------------------\n` +
+      `Active Sites: ${activeSites} | Deployed Workers: ${calculations.totalWorkers}\n` +
+      `Estimated Monthly Cash Leakage: ₹${calculations.totalMonthlyLeakage.toLocaleString("en-IN")}\n` +
+      `Potential Annual OIBUZ Recovery: ₹${calculations.oibuzAnnualSavings.toLocaleString("en-IN")}\n\n` +
+      `Calculate your project leakage free:\nhttps://www.prajyotinfotech.in/tools/construction-leakage-calculator`
+    );
+    window.open(`https://wa.me/?text=${text}`, "_blank");
+  };
+
+  const handleCopySummary = () => {
+    const text =
+      `Construction Site Leakage Audit\n` +
+      `Sites: ${activeSites} | Workers: ${calculations.totalWorkers}\n` +
+      `Monthly Leakage: ₹${calculations.totalMonthlyLeakage.toLocaleString("en-IN")}\n` +
+      `Projected Annual Recovery: ₹${calculations.oibuzAnnualSavings.toLocaleString("en-IN")}\n` +
+      `https://www.prajyotinfotech.in/tools/construction-leakage-calculator`;
+    navigator.clipboard?.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const pageUrl = "https://www.prajyotinfotech.in/tools/construction-leakage-calculator";
 
@@ -239,6 +274,37 @@ export default function ConstructionLeakageCalculator() {
               <span className="text-xs text-emerald-200/80 block mt-1">
                 Recovered through GPS Geofenced mobile muster rolls
               </span>
+            </div>
+          </div>
+
+
+          {/* Viral Share & Print Toolbar */}
+          <div className="mt-8 pt-6 border-t border-slate-800 flex flex-wrap items-center justify-between gap-4 no-print">
+            <div className="text-xs text-slate-400">
+              Need to present this leakage breakdown to your management or partners?
+            </div>
+            <div className="flex flex-wrap gap-2.5">
+              <button
+                onClick={handleShareWhatsApp}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer"
+              >
+                <Share2 className="w-3.5 h-3.5" />
+                Share on WhatsApp
+              </button>
+              <button
+                onClick={handlePrintAudit}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
+              >
+                <Printer className="w-3.5 h-3.5" />
+                Export PDF Report
+              </button>
+              <button
+                onClick={handleCopySummary}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
+              >
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? "Copied" : "Copy"}
+              </button>
             </div>
           </div>
 

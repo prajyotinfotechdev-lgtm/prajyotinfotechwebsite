@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import { Link } from "react-router-dom";
-import { Trophy, Zap, Gauge, Calculator, Sparkles } from "lucide-react";
+import { Trophy, Zap, Gauge, Calculator, Sparkles, FileText } from "lucide-react";
 import Logo from "./Logo.jsx";
 
 const BRAND         = "Prajyot Infotech";
@@ -240,6 +240,7 @@ export default function Footer() {
               <li><Link to="/articles" className="hover:text-slate-200 transition-colors">Articles &amp; Architecture Lab</Link></li>
               <li><Link to="/tools/website-tech-checker" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><Gauge className="w-3.5 h-3.5 text-sky-400 shrink-0" />Website Speed Checker</Link></li>
               <li><Link to="/tools/construction-leakage-calculator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><Calculator className="w-3.5 h-3.5 text-amber-400 shrink-0" />Leakage Calculator</Link></li>
+              <li><Link to="/tools/gst-invoice-generator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><FileText className="w-3.5 h-3.5 text-emerald-400 shrink-0" />Free GST Invoice Maker</Link></li>
               <li><Link to="/testimonials" className="hover:text-slate-200 transition-colors">Client Reviews & Success Stories</Link></li>
               <li><Link to="/glossary" className="hover:text-slate-200 transition-colors">Software Engineering Glossary</Link></li>
             </ul>

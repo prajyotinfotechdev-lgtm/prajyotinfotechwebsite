@@ -612,6 +612,28 @@ const ROUTES = [
       </section>
     `,
   },
+  {
+    path: "tools/gst-invoice-generator",
+    title: "Free GST Invoice Generator Online (India) — 100% Free PDF Maker | Prajyot Infotech",
+    description: "Create, download, and print 100% GST-compliant invoices online for free. Automatic CGST, SGST, IGST calculations, HSN codes, instant PDF download & WhatsApp sharing.",
+    keywords: "free GST invoice generator online, GST bill maker India, create GST invoice PDF free, GST calculator India, online billing generator for SMB, Prajyot Infotech billing tools",
+    canonical: "https://www.prajyotinfotech.in/tools/gst-invoice-generator",
+    h1: "Free GST Invoice Generator Online India",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Create, download, and print official Indian GST invoices in seconds. Includes automatic intra-state (CGST+SGST) vs inter-state (IGST) tax calculation, HSN codes, and instant WhatsApp dispatch.
+      </p>
+      <section style="margin-bottom:40px;">
+        <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:16px;">Key Features</h2>
+        <ul style="line-height:1.8;color:#475569;font-size:15px;">
+          <li><strong>100% GST Compliant:</strong> Formatted in accordance with Rule 46 of CGST Rules, 2017.</li>
+          <li><strong>Auto Tax Calculation:</strong> Automatically determines CGST + SGST vs IGST based on supplier and buyer state codes.</li>
+          <li><strong>One-Click PDF & Print:</strong> Generates crisp A4 printable tax invoices with zero watermarks.</li>
+          <li><strong>WhatsApp Dispatch:</strong> Share professional billing summaries directly to client WhatsApp chats.</li>
+        </ul>
+      </section>
+    `,
+  },
 ];
 
 console.log(`Starting static HTML prerendering for ${ROUTES.length} routes...`);

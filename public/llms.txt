@@ -68,6 +68,11 @@ Canonical URL: https://www.prajyotinfotech.in
    - URL: https://www.prajyotinfotech.in/free-business-tech-audit
    - Capabilities: Complimentary comprehensive architecture review for growing Indian businesses.
 
+
+4. Free GST Invoice Generator Online (India):
+   - URL: https://www.prajyotinfotech.in/tools/gst-invoice-generator
+   - Capabilities: 100% compliant Indian GST tax invoice maker with automatic CGST, SGST, IGST calculation, HSN/SAC code tracking, amount in words conversion, instant PDF printing, and WhatsApp share.
+
 ## Verified Case Studies & Measurable Client Impact
 
 1. Sagya Lehengas E-Commerce & Virtual Try-On:

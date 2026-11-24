@@ -19,6 +19,7 @@ const navConfig = [
       { to: "/products/hrms", label: "Oibuz HRMS", badge: "Flagship", desc: "Connected workforce & HR platform." },
       { to: "/tools/construction-leakage-calculator", label: "Leakage Calculator", badge: "Free Tool", desc: "Calculate ghost-labor & site cash loss." },
       { to: "/tools/website-tech-checker", label: "Speed & Tech Checker", badge: "Free Tool", desc: "Audit Core Web Vitals, speed & stack." },
+      { to: "/tools/gst-invoice-generator", label: "GST Invoice Generator", badge: "Free Tool", desc: "Create, print & download GST invoices free." },
     ]
   },
   {

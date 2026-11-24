@@ -5,6 +5,10 @@ import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import {
   Globe,
+  Printer,
+  Share2,
+  Copy,
+  Check,
   Search,
   Gauge,
   CheckCircle2,
@@ -31,6 +35,7 @@ export default function WebsiteTechChecker() {
   const [urlInput, setUrlInput] = useState("");
   const [isScanning, setIsScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
+  const [copied, setCopied] = useState(false);
   const [auditResult, setAuditResult] = useState(null);
 
   const scanSteps = [
@@ -133,6 +138,36 @@ export default function WebsiteTechChecker() {
     } finally {
       setIsScanning(false);
     }
+  };
+
+  
+  const handlePrintAudit = () => {
+    window.print();
+  };
+
+  const handleShareWhatsApp = () => {
+    if (!auditResult) return;
+    const text = encodeURIComponent(
+      `Website Performance & Technology Audit for ${auditResult.url}\n` +
+      `------------------------------------------------------\n` +
+      `Lighthouse Speed Score: ${auditResult.cwvScore}/100\n` +
+      `Page Load Latency (LCP): ${auditResult.loadTime}s\n` +
+      `Primary CMS / Framework: ${auditResult.cms}\n` +
+      `Security & SSL: ${auditResult.securityScore}\n\n` +
+      `Run a free speed & tech audit on your website:\nhttps://www.prajyotinfotech.in/tools/website-tech-checker`
+    );
+    window.open(`https://wa.me/?text=${text}`, "_blank");
+  };
+
+  const handleCopySummary = () => {
+    if (!auditResult) return;
+    const text =
+      `Website Audit: ${auditResult.url}\n` +
+      `Score: ${auditResult.cwvScore}/100 | LCP: ${auditResult.loadTime}s | CMS: ${auditResult.cms}\n` +
+      `https://www.prajyotinfotech.in/tools/website-tech-checker`;
+    navigator.clipboard?.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const pageUrl = "https://www.prajyotinfotech.in/tools/website-tech-checker";
@@ -351,6 +386,37 @@ export default function WebsiteTechChecker() {
                       </span>
                     </div>
                   ))}
+                </div>
+              </div>
+
+
+              {/* Action Toolbar for Audit */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 flex flex-wrap items-center justify-between gap-4 mb-8 no-print">
+                <div className="text-xs text-slate-300">
+                  Share this technical benchmark with your engineering team or developers:
+                </div>
+                <div className="flex flex-wrap gap-2.5">
+                  <button
+                    onClick={handleShareWhatsApp}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer"
+                  >
+                    <Share2 className="w-3.5 h-3.5" />
+                    Share on WhatsApp
+                  </button>
+                  <button
+                    onClick={handlePrintAudit}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
+                  >
+                    <Printer className="w-3.5 h-3.5" />
+                    Export PDF Audit
+                  </button>
+                  <button
+                    onClick={handleCopySummary}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
+                  >
+                    {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copied ? "Copied" : "Copy"}
+                  </button>
                 </div>
               </div>
 

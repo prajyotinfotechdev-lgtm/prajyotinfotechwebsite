@@ -1,7 +1,7 @@
 // src/components/FreeToolsShowcase.jsx
 import React from "react";
 import { Link } from "react-router-dom";
-import { Zap, Calculator, ArrowRight, ExternalLink, Sparkles, Building2, HardHat, Gauge } from "lucide-react";
+import { Zap, Calculator, ArrowRight, ExternalLink, Sparkles, Building2, HardHat, Gauge, FileText } from "lucide-react";
 
 const tools = [
   {
@@ -40,6 +40,24 @@ const tools = [
     ],
     icon: <Calculator className="w-6 h-6 text-amber-600" />,
   },
+  {
+    iconKey: "gst",
+    badge: "Free Online Tool",
+    badgeColor: "bg-emerald-100 text-emerald-700 border-emerald-200",
+    title: "Free GST Invoice Generator Online",
+    desc: "Create, download & print 100% compliant Indian GST invoices in seconds. Includes automated CGST, SGST & IGST calculations, HSN codes, and instant WhatsApp dispatch.",
+    to: "/tools/gst-invoice-generator",
+    cta: "Create GST Invoice Free",
+    ctaColor: "bg-emerald-600 hover:bg-emerald-700 text-white",
+    borderColor: "border-emerald-200 hover:border-emerald-400",
+    bgAccent: "from-emerald-50 to-white",
+    stats: [
+      { label: "GST Compliance", value: "100%" },
+      { label: "State Codes", value: "28+" },
+      { label: "Cost", value: "₹0 Free" },
+    ],
+    icon: <FileText className="w-6 h-6 text-emerald-600" />,
+  },
 ];
 
 export default function FreeToolsShowcase() {
@@ -64,7 +82,7 @@ export default function FreeToolsShowcase() {
         </div>
 
         {/* Tool Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {tools.map((tool) => (
             <div
               key={tool.to}

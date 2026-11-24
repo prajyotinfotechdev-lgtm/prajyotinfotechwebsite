@@ -172,6 +172,13 @@
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
+  <url>
+    <loc>https://www.prajyotinfotech.in/tools/gst-invoice-generator</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
 
   <!-- 8. Technical Engineering Articles & Research -->
   <url>

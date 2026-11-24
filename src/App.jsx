@@ -24,6 +24,7 @@ const CaseStudyDetail = lazy(() => import("./pages/CaseStudyDetail.jsx"));
 const ServiceDetail = lazy(() => import("./pages/ServiceDetail.jsx"));
 const ConstructionLeakageCalculator = lazy(() => import("./pages/ConstructionLeakageCalculator.jsx"));
 const WebsiteTechChecker = lazy(() => import("./pages/WebsiteTechChecker.jsx"));
+const GstInvoiceGenerator = lazy(() => import("./pages/GstInvoiceGenerator.jsx"));
 const Testimonials = lazy(() => import("./pages/Testimonials.jsx"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.jsx"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService.jsx"));
@@ -143,6 +144,7 @@ export default function App() {
               <Route path="/articles/:id" element={<PageWrapper><ArticleDetail /></PageWrapper>} />
               <Route path="/tools/construction-leakage-calculator" element={<PageWrapper><ConstructionLeakageCalculator /></PageWrapper>} />
               <Route path="/tools/website-tech-checker" element={<PageWrapper><WebsiteTechChecker /></PageWrapper>} />
+              <Route path="/tools/gst-invoice-generator" element={<PageWrapper><GstInvoiceGenerator /></PageWrapper>} />
               <Route path="/testimonials" element={<PageWrapper><Testimonials /></PageWrapper>} />
               <Route path="/privacy" element={<PageWrapper><PrivacyPolicy /></PageWrapper>} />
               <Route path="/terms" element={<PageWrapper><TermsOfService /></PageWrapper>} />
