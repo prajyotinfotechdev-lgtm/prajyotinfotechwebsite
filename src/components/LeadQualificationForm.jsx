@@ -440,7 +440,7 @@ export default function LeadQualificationForm({
               className="p-4 rounded-2xl bg-amber-50/60 border border-amber-200/80"
             >
               <label htmlFor={`oibuz-sites-${formId}`} className="block text-xs font-bold text-amber-950 mb-1">
-                🏗️ Construction Scope: Number of Active Job Sites / Staff
+                Construction Scope: Number of Active Job Sites / Staff
               </label>
               <select
                 id={`oibuz-sites-${formId}`}
@@ -468,7 +468,7 @@ export default function LeadQualificationForm({
               className="p-4 rounded-2xl bg-emerald-50/60 border border-emerald-200/80"
             >
               <label htmlFor={`auto-tools-${formId}`} className="block text-xs font-bold text-emerald-950 mb-1">
-                ⚡ Process Automation: What manual tools are slowing you down?
+                Process Automation: What manual tools are slowing you down?
               </label>
               <input
                 id={`auto-tools-${formId}`}
@@ -492,7 +492,7 @@ export default function LeadQualificationForm({
               className="p-4 rounded-2xl bg-brand-50/60 border border-brand-200/80"
             >
               <label htmlFor={`soft-target-${formId}`} className="block text-xs font-bold text-brand-950 mb-1">
-                💻 Software Platform Target
+                Software Platform Target
               </label>
               <select
                 id={`soft-target-${formId}`}

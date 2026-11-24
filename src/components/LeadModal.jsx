@@ -114,11 +114,11 @@ export default function LeadModal() {
   const openWhatsAppConfirmation = () => {
     const waText = encodeURIComponent(
       `Hi Prajyot Infotech! I just submitted an inquiry on your website.\n\n` +
-        `👤 Name: ${form.name.trim()}\n` +
-        `📞 Contact: ${form.contact.trim()}\n` +
-        `🚀 Project: ${form.projectType}\n` +
-        `💰 Budget: ${form.budget}\n` +
-        `💬 Notes: ${form.message.trim() || "Ready for technical discovery session."}`
+        `- Name: ${form.name.trim()}\n` +
+        `- Contact: ${form.contact.trim()}\n` +
+        `- Project Scope: ${form.projectType}\n` +
+        `- Budget: ${form.budget}\n` +
+        `- Notes: ${form.message.trim() || "Ready for technical discovery session."}`
     );
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waText}`, "_blank", "noopener,noreferrer");
   };

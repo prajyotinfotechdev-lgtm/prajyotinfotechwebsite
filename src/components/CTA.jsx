@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
 
 import { createLead } from "../utils/leadStorage.js";
 
@@ -169,7 +170,7 @@ I'm interested in getting a Free Business Technology Audit from Prajyot Infotech
         className="mx-auto max-w-4xl text-center"
       >
         <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-100 border border-brand-200 text-brand-800 text-xs font-bold mb-4 shadow-sm">
-          <span>🚀</span>
+          <Sparkles className="w-3.5 h-3.5 text-brand-600 shrink-0" />
           <span>2027 Business Growth Campaign — Free Business Technology Audit</span>
         </div>
         <h2 className="text-3xl md:text-5xl font-black tracking-tight text-navy-800">

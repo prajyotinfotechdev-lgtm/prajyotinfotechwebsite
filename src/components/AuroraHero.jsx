@@ -92,9 +92,9 @@ function UICard({ delay, x, y, children, className = "" }) {
 /* ─── SLIDE 0 (2027 CAMPAIGN): "Get Your Business 2027-Ready" ─────────── */
 function Slide2027Visual({ reduced }) {
   const paths = [
-    { label: "Custom Software", desc: "Web & mobile apps built for you", color: "#7c3aed", icon: "⚙️" },
-    { label: "OIBUZ Construction", desc: "Smart HRMS for site teams", color: "#1e2756", icon: "🏗️" },
-    { label: "Process Automation", desc: "Eliminate manual work at scale", color: "#059669", icon: "⚡" },
+    { label: "Custom Software", desc: "Web & mobile apps built for you", color: "#7c3aed", iconType: "code" },
+    { label: "OIBUZ Construction", desc: "Smart HRMS for site teams", color: "#1e2756", iconType: "building" },
+    { label: "Process Automation", desc: "Eliminate manual work at scale", color: "#059669", iconType: "zap" },
   ];
 
   return (
@@ -147,7 +147,17 @@ function Slide2027Visual({ reduced }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 + i * 0.1, duration: 0.45, ease: EASE_OUT_EXPO }}
               >
-                <span className="text-lg">{p.icon}</span>
+                <span className="size-8 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${p.color}18`, color: p.color }}>
+                  {p.iconType === "code" && (
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                  )}
+                  {p.iconType === "building" && (
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M8 10h.01"/><path d="M16 10h.01"/><path d="M8 14h.01"/><path d="M16 14h.01"/></svg>
+                  )}
+                  {p.iconType === "zap" && (
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  )}
+                </span>
                 <div>
                   <div className="text-xs font-bold text-slate-800">{p.label}</div>
                   <div className="text-[10px] text-slate-500 mt-0.5">{p.desc}</div>
@@ -626,7 +636,7 @@ export default function AuroraHero() {
                 to="/free-business-tech-audit"
                 className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold rounded-full px-3.5 py-1.5 cursor-pointer transition-all duration-300 hover:scale-105 bg-brand-50 border border-brand-200 text-brand-800 shadow-sm"
               >
-                <span className="text-sm">🚀</span>
+                <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
                 <span>2027 Business Growth Campaign</span>
                 <span className="relative flex size-1.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-60" />
@@ -756,7 +766,7 @@ export default function AuroraHero() {
                     className="lg:hidden mt-4 p-2.5 rounded-2xl bg-gradient-to-r from-brand-600/10 via-brand-500/8 to-navy-700/10 border border-brand-200/60 flex items-center justify-between gap-2 text-xs"
                   >
                     <div className="flex items-center gap-1.5 font-bold text-brand-900 text-[11px]">
-                      <span>🚀</span>
+                      <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
                       <span>Free Business Audit — Get 2027-Ready</span>
                     </div>
                     <Link

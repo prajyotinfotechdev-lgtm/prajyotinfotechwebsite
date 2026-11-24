@@ -1,5 +1,6 @@
 ﻿// src/pages/Home.jsx
 import React, { lazy, Suspense, useState } from "react";
+import { Zap, ShieldCheck, Building2 } from "lucide-react";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 
@@ -197,15 +198,15 @@ export default function Home() {
               <span className="text-white font-bold">100% Full IP Transfer:</span> Complete Git Repository on Day 1
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-amber-400 font-bold">⚡</span>
+              <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" />
               <span className="text-white font-bold">Sub-Second SLA:</span> Core Web Vitals LCP &lt; 0.8s
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-brand-400 font-bold">🛡️</span>
+              <ShieldCheck className="w-3.5 h-3.5 text-brand-400 shrink-0" />
               <span className="text-white font-bold">60-Day Warranty:</span> Post-Launch Bug Coverage
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-indigo-400 font-bold">🏢</span>
+              <Building2 className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
               <span className="text-white font-bold">Engineering Base:</span> Pune HQ &amp; Regional Latur Hub
             </div>
           </div>

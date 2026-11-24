@@ -171,7 +171,7 @@ export default function Testimonials() {
       />
       <Seo
         title="Client Reviews & Success Stories | Prajyot Infotech — Rated 4.9/5"
-        description="Read verified client success stories and project reviews from Prajyot Infotech. 4.9★ average across 48+ projects. See measurable ROI from real businesses in Maharashtra, India and globally."
+        description="Read verified client success stories and project reviews from Prajyot Infotech. 4.9/5 average across 48+ projects. See measurable ROI from real businesses in Maharashtra, India and globally."
         keywords="Prajyot Infotech reviews, client testimonials Pune, software development company reviews India, Prajyot Infotech success stories, software company rating Maharashtra"
         path="/testimonials"
         schema={[aggregateSchema]}

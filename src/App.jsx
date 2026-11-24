@@ -10,7 +10,7 @@ import "./styles/responsive.css";
 import "./style.css";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
-const Work = lazy(() => import("./pages/work.jsx")); // ✅ ensure case matches actual file on disk
+const Work = lazy(() => import("./pages/work.jsx")); // ensure case matches actual file on disk
 const Services = lazy(() => import("./pages/Services.jsx"));
 const About = lazy(() => import("./pages/About.jsx"));
 const Contact = lazy(() => import("./pages/Contact.jsx"));

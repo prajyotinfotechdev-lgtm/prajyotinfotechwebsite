@@ -1,11 +1,11 @@
 // src/components/FreeToolsShowcase.jsx
 import React from "react";
 import { Link } from "react-router-dom";
-import { Zap, Calculator, ArrowRight, ExternalLink } from "lucide-react";
+import { Zap, Calculator, ArrowRight, ExternalLink, Sparkles, Building2, HardHat, Gauge } from "lucide-react";
 
 const tools = [
   {
-    emoji: "⚡",
+    iconKey: "speed",
     badge: "Free Online Tool",
     badgeColor: "bg-sky-100 text-sky-700 border-sky-200",
     title: "Website Speed & Tech Stack Inspector",
@@ -23,7 +23,7 @@ const tools = [
     icon: <Zap className="w-6 h-6 text-sky-600" />,
   },
   {
-    emoji: "🏗️",
+    iconKey: "construction",
     badge: "Free HRMS Tool",
     badgeColor: "bg-amber-100 text-amber-700 border-amber-200",
     title: "Construction Ghost-Labor & Cash Leakage Calculator",
@@ -76,12 +76,10 @@ export default function FreeToolsShowcase() {
                   <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${tool.badgeColor}`}>
                     {tool.badge}
                   </div>
-                  <div className="size-10 rounded-2xl bg-white/80 shadow-sm border border-slate-200/80 flex items-center justify-center">
-                    {tool.icon}
-                  </div>
+
                 </div>
 
-                <div className="text-3xl mb-3">{tool.emoji}</div>
+                <div className="w-12 h-12 rounded-2xl bg-white shadow-sm border border-slate-200/80 flex items-center justify-center mb-4">{tool.icon}</div>
 
                 <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mb-3 leading-tight">
                   {tool.title}
@@ -131,7 +129,7 @@ export default function FreeToolsShowcase() {
             to="/free-business-tech-audit"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 text-white font-bold text-sm shadow-lg shadow-brand-900/20 hover:-translate-y-0.5 hover:shadow-xl transition-all"
           >
-            🚀 Get Your Free Full Business Tech Audit
+            <Sparkles className="w-4 h-4 text-brand-200 shrink-0 inline mr-1" /> Get Your Free Full Business Tech Audit
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

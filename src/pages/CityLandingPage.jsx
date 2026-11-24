@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
-import { MapPin, CheckCircle2, ArrowRight, ShieldCheck, Zap, Globe, Sparkles } from "lucide-react";
+import { MapPin, CheckCircle2, ArrowRight, ShieldCheck, Zap, Globe, Sparkles, Gauge, Calculator } from "lucide-react";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import QuoteEstimator from "../components/QuoteEstimator.jsx";
 import { CITIES_DATA } from "../data/citiesData.js";
@@ -338,21 +338,24 @@ export default function CityLandingPage({ cityId }) {
             <div className="flex flex-wrap gap-3 shrink-0">
               <Link
                 to="/tools/website-tech-checker"
-                className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-bold text-white transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-bold text-white transition-colors"
               >
-                ⚡ Website Speed Checker
+                <Gauge className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                <span>Website Speed Checker</span>
               </Link>
               <Link
                 to="/tools/construction-leakage-calculator"
-                className="px-4 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/30 text-xs font-bold text-amber-300 transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/30 text-xs font-bold text-amber-300 transition-colors"
               >
-                🏗️ Construction Leakage Calculator
+                <Calculator className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <span>Leakage Calculator</span>
               </Link>
               <Link
                 to="/free-business-tech-audit"
-                className="px-4 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-xs font-bold text-white shadow-lg transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-xs font-bold text-white shadow-lg transition-colors"
               >
-                🚀 Free Tech Audit
+                <Sparkles className="w-3.5 h-3.5 text-brand-200 shrink-0" />
+                <span>Free Tech Audit</span>
               </Link>
             </div>
           </div>

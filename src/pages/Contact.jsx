@@ -2,7 +2,7 @@
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import { createLead } from "../utils/leadStorage.js";
-import { Mail, Phone, MapPin, Clock, ShieldCheck, CheckCircle2, Calendar, MessageSquare, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, ShieldCheck, CheckCircle2, Calendar, MessageSquare, Send, Sparkles } from "lucide-react";
 
 const WHATSAPP_NUMBER = "917020708747";
 const BRAND = "Prajyot Infotech";
@@ -192,7 +192,7 @@ ${(form.message || "Hi, I want to discuss a new software/web development project
                 {/* 2027 Business Growth Campaign Notice */}
                 <div className="p-3 rounded-2xl bg-brand-50 border border-brand-200 text-brand-900 text-xs flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-lg">🚀</span>
+                    <Sparkles className="w-4 h-4 text-brand-600 shrink-0" />
                     <span><strong>2027 Business Growth:</strong> Complimentary Business Technology Audit available.</span>
                   </div>
                   <Link to="/free-business-tech-audit" className="font-bold underline text-brand-700 text-[11px] shrink-0">Get Audit →</Link>

@@ -550,11 +550,11 @@ export default function HelpBot({
   const openWhatsAppNow = () => {
     const waText = encodeURIComponent(
       `Hi Prajyot Infotech! I was on your website AI Assistant:\n\n` +
-        (form.name ? `👤 Name: ${form.name}\n` : "") +
-        (form.contact ? `📞 Contact: ${form.contact}\n` : "") +
-        (form.project ? `🚀 Project: ${form.project}\n` : "") +
-        (form.budget ? `💰 Budget: ${form.budget}\n` : "") +
-        (form.timeline ? `⏱️ Timeline: ${form.timeline}\n` : "") +
+        (form.name ? `- Name: ${form.name}\n` : "") +
+        (form.contact ? `- Contact: ${form.contact}\n` : "") +
+        (form.project ? `- Project Scope: ${form.project}\n` : "") +
+        (form.budget ? `- Budget: ${form.budget}\n` : "") +
+        (form.timeline ? `- Timeline: ${form.timeline}\n` : "") +
         `\nI'd like to discuss custom development for my project.`
     );
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waText}`, "_blank", "noopener,noreferrer");
@@ -564,13 +564,13 @@ export default function HelpBot({
     const summaryText =
       `PRAJYOT INFOTECH - PROJECT SCOPE BLUEPRINT\n` +
       `==========================================\n` +
-      `👤 Client: ${form.name || "Inquirer"}\n` +
-      `📞 Contact: ${form.contact || "Provided on WhatsApp"}\n` +
-      `🚀 Scope: ${form.project || "Custom Development"}\n` +
-      `💎 Investment: ${form.budget || "Discussing"}\n` +
-      (form.timeline ? `⏱️ Timeline: ${form.timeline}\n` : "") +
-      `⚡ SLA: Review within 2 business hours\n` +
-      `🌐 https://prajyotinfotech.in | WhatsApp: +91 7020708747`;
+      `Client: ${form.name || "Inquirer"}\n` +
+      `- Contact: ${form.contact || "Provided on WhatsApp"}\n` +
+      `Project Scope: ${form.project || "Custom Development"}\n` +
+      `Investment: ${form.budget || "Discussing"}\n` +
+      (form.timeline ? `- Timeline: ${form.timeline}\n` : "") +
+      `Guaranteed SLA: Review within 2 business hours\n` +
+      `Website: https://prajyotinfotech.in | WhatsApp: +91 7020708747`;
 
     navigator.clipboard?.writeText(summaryText).then(() => {
       setCopied(true);

@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import { Link } from "react-router-dom";
-import { Trophy, Zap } from "lucide-react";
+import { Trophy, Zap, Gauge, Calculator, Sparkles } from "lucide-react";
 import Logo from "./Logo.jsx";
 
 const BRAND         = "Prajyot Infotech";
@@ -238,8 +238,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li><Link to="/articles" className="hover:text-slate-200 transition-colors">Articles &amp; Architecture Lab</Link></li>
-              <li><Link to="/tools/website-tech-checker" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><span className="text-sky-400">⚡</span>Website Speed Checker</Link></li>
-              <li><Link to="/tools/construction-leakage-calculator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><span className="text-amber-400">🏗️</span>Leakage Calculator</Link></li>
+              <li><Link to="/tools/website-tech-checker" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><Gauge className="w-3.5 h-3.5 text-sky-400 shrink-0" />Website Speed Checker</Link></li>
+              <li><Link to="/tools/construction-leakage-calculator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><Calculator className="w-3.5 h-3.5 text-amber-400 shrink-0" />Leakage Calculator</Link></li>
               <li><Link to="/testimonials" className="hover:text-slate-200 transition-colors">Client Reviews & Success Stories</Link></li>
               <li><Link to="/glossary" className="hover:text-slate-200 transition-colors">Software Engineering Glossary</Link></li>
             </ul>
@@ -298,7 +298,7 @@ export default function Footer() {
       {/* 2027 Business Growth Ribbon */}
       <div className="relative z-10 border-t border-brand-500/30 bg-gradient-to-r from-navy-950 via-brand-950/70 to-navy-950 py-3.5 px-4 text-center">
         <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm text-brand-200">
-          <span className="text-base">🚀</span>
+          <Sparkles className="w-4 h-4 text-brand-300 inline-block mr-1 shrink-0" />
           <span className="font-extrabold text-white">Get Your Business 2027-Ready</span>
           <span className="text-brand-400/80">•</span>
           <span>Complimentary technology audit & digital roadmap for growing businesses.</span>

@@ -455,8 +455,7 @@ const ROUTES = [
   },
   {
     path: "testimonials",
-    title: "Client Reviews & Success Stories — 4.9★ Rated | Prajyot Infotech",
-    title: "Client Reviews & Success Stories — 4.9★ Rated | Prajyot Infotech",
+    title: "Client Reviews & Success Stories — 4.9/5 Rated | Prajyot Infotech",
     description: "Read verified reviews from 48+ happy clients. Prajyot Infotech is rated 4.9/5 for custom software, web development, mobile apps & ERP delivery in India.",
     keywords: "Prajyot Infotech reviews, client testimonials Pune, software development company reviews India, 4.9 star rated software company Maharashtra",
     canonical: "https://www.prajyotinfotech.in/testimonials",

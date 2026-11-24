@@ -1,4 +1,5 @@
 ﻿import React from "react";
+import { Sparkles } from "lucide-react";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import QuoteEstimator from "../components/QuoteEstimator.jsx";
@@ -23,7 +24,7 @@ export default function Estimate() {
       <main className="py-24 px-4 bg-slate-50 min-h-[80vh] flex flex-col items-center justify-center">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-800 text-xs font-bold mb-4 shadow-sm">
-            <span>🚀</span>
+            <Sparkles className="w-3.5 h-3.5 text-brand-600 shrink-0" />
             <span>2027 Business Growth Campaign — Free Technical Scoping</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-navy-900 mb-6 tracking-tight">

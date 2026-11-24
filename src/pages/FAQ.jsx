@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
-import { ChevronDown, MessageSquare, ArrowRight } from "lucide-react";
+import { ChevronDown, MessageSquare, ArrowRight, Rocket, CreditCard, Code2, ShieldCheck, Globe, HelpCircle } from "lucide-react";
 
 const SITE_URL = "https://www.prajyotinfotech.in";
 const BRAND = "Prajyot Infotech";
@@ -12,7 +12,7 @@ const WA = "917020708747";
 const FAQ_DATA = [
   {
     category: "Getting Started",
-    icon: "🚀",
+    iconKey: "getting-started",
     questions: [
       {
         q: "How do I start a project with Prajyot Infotech?",
@@ -30,7 +30,7 @@ const FAQ_DATA = [
   },
   {
     category: "Pricing & Payments",
-    icon: "💰",
+    iconKey: "pricing",
     questions: [
       {
         q: "How much does custom software development cost in India?",
@@ -52,7 +52,7 @@ const FAQ_DATA = [
   },
   {
     category: "Technology & Delivery",
-    icon: "⚙️",
+    iconKey: "tech",
     questions: [
       {
         q: "How long does it take to build a custom website or app?",
@@ -74,7 +74,7 @@ const FAQ_DATA = [
   },
   {
     category: "IP Ownership & Legal",
-    icon: "⚖️",
+    iconKey: "legal",
     questions: [
       {
         q: "Who owns the code and software after delivery?",
@@ -92,7 +92,7 @@ const FAQ_DATA = [
   },
   {
     category: "Location & Remote Work",
-    icon: "🌍",
+    iconKey: "location",
     questions: [
       {
         q: "Where is Prajyot Infotech located?",
@@ -148,6 +148,24 @@ function FaqItem({ q, a }) {
   );
 }
 
+
+const renderCategoryIcon = (key) => {
+  switch (key) {
+    case "getting-started":
+      return <Rocket className="w-4 h-4 text-brand-600" />;
+    case "pricing":
+      return <CreditCard className="w-4 h-4 text-emerald-600" />;
+    case "tech":
+      return <Code2 className="w-4 h-4 text-indigo-600" />;
+    case "legal":
+      return <ShieldCheck className="w-4 h-4 text-amber-600" />;
+    case "location":
+      return <Globe className="w-4 h-4 text-cyan-600" />;
+    default:
+      return <HelpCircle className="w-4 h-4 text-brand-600" />;
+  }
+};
+
 export default function FAQ() {
   const [activeCategory, setActiveCategory] = useState("All");
   const categories = ["All", ...FAQ_DATA.map((c) => c.category)];
@@ -173,7 +191,7 @@ export default function FAQ() {
         {/* Hero */}
         <div className="text-center max-w-2xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-bold mb-4">
-            <span>💬</span>
+            <HelpCircle className="w-4 h-4 text-brand-600" />
             {FAQ_DATA.flatMap((c) => c.questions).length} Questions Answered
           </div>
           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
@@ -206,7 +224,9 @@ export default function FAQ() {
           {displayed.map((group) => (
             <div key={group.category}>
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-2xl">{group.icon}</span>
+                <div className="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center shrink-0">
+                  {renderCategoryIcon(group.iconKey)}
+                </div>
                 <h2 className="text-lg font-black text-slate-900">{group.category}</h2>
               </div>
               <div className="space-y-3">
@@ -220,7 +240,9 @@ export default function FAQ() {
 
         {/* Still have questions CTA */}
         <div className="rounded-3xl bg-gradient-to-br from-slate-900 to-navy-950 p-8 sm:p-10 text-center text-white">
-          <div className="text-3xl mb-3">🤔</div>
+          <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-white mx-auto mb-4">
+            <HelpCircle className="w-6 h-6 text-brand-300" />
+          </div>
           <h2 className="text-2xl font-black mb-2">Still Have a Question?</h2>
           <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto">
             Our technical team responds to all inquiries within 24 hours. Ask us anything about your project.

@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Zap } from "lucide-react";
+import { Zap, Sparkles } from "lucide-react";
 import Logo from "./Logo.jsx";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
 
@@ -39,7 +39,7 @@ const navConfig = [
       { to: "/site-visits", label: "Client Deliveries", desc: "Photos & videos from client site visits & training." },
       { to: "/careers", label: "Careers", desc: "Join our fast-growing engineering team." },
       { to: "/articles", label: "Articles", desc: "Engineering deep-dives and tech insights." },
-      { to: "/testimonials", label: "Client Reviews", desc: "4.9★ verified success stories." },
+      { to: "/testimonials", label: "Client Reviews", desc: "4.9/5 verified client reviews." },
       { to: "/faq", label: "FAQ", desc: "Pricing, timelines, and project questions answered." },
       { to: "/pricing", label: "Pricing", desc: "Transparent, flexible engagement models." },
     ]
@@ -188,7 +188,7 @@ export default function Nav() {
             className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-brand-600 to-navy-700 px-3.5 py-2 text-xs font-bold text-white shadow-md shadow-brand-500/20 hover:scale-105 transition-all"
             title="Free Business Technology Audit"
           >
-            <span className="text-sm">🚀</span>
+            <Sparkles className="w-3.5 h-3.5 text-brand-200 shrink-0" />
             <span>Free Tech Audit</span>
           </Link>
 
@@ -208,7 +208,7 @@ export default function Nav() {
             className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-brand-600 to-navy-700 px-3.5 py-2 text-xs font-bold text-white shadow-md shadow-brand-500/20 hover:scale-105 transition-all"
             title="Free Business Technology Audit"
           >
-            <span className="text-sm">🚀</span>
+            <Sparkles className="w-3.5 h-3.5 text-brand-200 shrink-0" />
             <span>Free Tech Audit</span>
           </Link>
           <Link
@@ -281,7 +281,7 @@ export default function Nav() {
                 className="mb-4 p-3 rounded-2xl bg-gradient-to-r from-brand-600 via-brand-700 to-navy-700 text-white cursor-pointer shadow-md flex items-center justify-between"
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-xl">🚀</span>
+                  <div className="w-7 h-7 rounded-lg bg-white/20 flex items-center justify-center text-white shrink-0"><Sparkles className="w-3.5 h-3.5 text-brand-100" /></div>
                   <div>
                     <div className="text-xs font-bold leading-tight">2027 Business Growth</div>
                     <div className="text-[10px] text-brand-100">Free Business Technology Audit</div>
