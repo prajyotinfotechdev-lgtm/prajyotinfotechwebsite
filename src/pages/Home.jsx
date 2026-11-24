@@ -1,6 +1,5 @@
 ﻿// src/pages/Home.jsx
 import React, { lazy, Suspense, useState } from "react";
-import { Zap, ShieldCheck, Building2 } from "lucide-react";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 
@@ -190,30 +189,6 @@ export default function Home() {
         {/* 1. HERO — with stats bar. Eagerly loaded for best LCP */}
         <AuroraHero />
 
-        {/* 1.5 EXECUTIVE TRUST & SLA BAR */}
-        <section aria-label="Enterprise Engineering Assurances" className="bg-slate-900 border-y border-slate-800 py-3.5 px-4 text-xs relative z-20">
-          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-slate-300 font-medium">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-white font-bold">100% Full IP Transfer:</span> Complete Git Repository on Day 1
-            </div>
-            <div className="flex items-center gap-2">
-              <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-              <span className="text-white font-bold">Sub-Second SLA:</span> Core Web Vitals LCP &lt; 0.8s
-            </div>
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="w-3.5 h-3.5 text-brand-400 shrink-0" />
-              <span className="text-white font-bold">60-Day Warranty:</span> Post-Launch Bug Coverage
-            </div>
-            <div className="flex items-center gap-2">
-              <Building2 className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
-              <span className="text-white font-bold">Engineering Base:</span> Pune HQ &amp; Regional Latur Hub
-            </div>
-          </div>
-        </section>
-
-
-        
         {/* 2. SERVICES MARQUEE — visual rhythm breaker */}
         <Suspense fallback={<div className="h-16 border-y border-slate-200 bg-white animate-pulse" />}>
           <Marquee />
