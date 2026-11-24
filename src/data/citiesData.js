@@ -6,6 +6,125 @@
  */
 
 export const CITIES_DATA = {
+  "chakan-bhosari": {
+    name: "Chakan & Bhosari MIDC",
+    state: "Maharashtra",
+    country: "India",
+    currency: "INR",
+    heroBadge: "PCMC Industrial Corridor · Bhosari & Chakan MIDC",
+    heroTitle: "Industrial ERP & Custom Software Company in Chakan & Bhosari MIDC",
+    heroSubtitle: "Empowering auto-ancillary manufacturers, heavy fabrication units, and engineering plants across Chakan, Bhosari, and Talwade with custom shop-floor ERPs, barcode inventory tracking, and automated GST billing.",
+    callout: "Built for Maharashtra's industrial capital. On-site engineering visits across Bhosari & Chakan within 2 hours.",
+    marketOverview: [
+      "The Chakan and Bhosari MIDC industrial corridors represent Maharashtra's premier automotive and heavy manufacturing heartland, housing over 4,000 tier-1, tier-2, and tier-3 component suppliers, fabrication yards, and machining units.",
+      "Most growing plants have outgrown basic accounting software like Tally and fragmented Excel logs. They face severe operational leakage from untracked raw material scrap, manual paper job cards, and delayed dispatch scheduling.",
+      "Prajyot Infotech provides specialized industrial digitization: cloud-hosted manufacturing ERPs, mobile barcode scanners for storekeepers, machine downtime logging, and automated WhatsApp dispatch alerts that connect the shop floor directly to the executive boardroom."
+    ],
+    tailoredServices: [
+      {
+        title: "Plant ERP & Bill of Materials (BOM)",
+        desc: "Automate multi-stage production routing, raw material wastage tracking, sub-assembly scheduling, and automatic scrap reconciliation for fabrication & CNC plants."
+      },
+      {
+        title: "Mobile Barcode & QR Inventory Scanning",
+        desc: "Eliminate manual dispatch errors with Android mobile apps that scan incoming raw material coils and verify finished goods pallets before truck loading."
+      },
+      {
+        title: "Machine Maintenance & Downtime Tracking",
+        desc: "Real-time logging of breakdown hours, preventive maintenance schedules, and spare parts inventory to maximize machine uptime."
+      },
+      {
+        title: "Automated GST & E-Way Bill Integration",
+        desc: "Instant generation of GST-compliant invoices and one-click E-Way Bill dispatch notifications to transport drivers and clients via WhatsApp."
+      }
+    ],
+    keyIndustries: [
+      { name: "Automotive & Auto-Ancillary Parts", detail: "Vendor portals, batch logs, press shop production tracking" },
+      { name: "Heavy Fabrication & CNC Machining", detail: "Stage-wise job cards, cutting plan optimization, worker logs" },
+      { name: "Plastic Molding & Die Casting", detail: "Mold life tracking, cycle time analysis, reject rate metrics" },
+      { name: "Industrial Warehousing & 3PL Logistics", detail: "Pallet location tracking, bin allocation, dispatch FIFO" }
+    ],
+    whyChooseUs: [
+      "Engineers visit your Chakan or Bhosari factory in person within 2 hours for plant walkthroughs.",
+      "100% full source code ownership on Day 1 — zero recurring per-user SaaS license fees.",
+      "Works on low-cost Android mobile devices on the shop floor with full offline caching.",
+      "Seamless integration with your existing Tally accounting system for chartered accountant filing."
+    ],
+    faqs: [
+      {
+        q: "Can your engineers visit our factory in Chakan or Bhosari MIDC?",
+        a: "Yes. Our engineering headquarters is based in Kharadi, Pune, and our senior industrial architects regularly conduct on-site discovery sessions across Chakan MIDC (Phases 1-4), Bhosari MIDC, Talwade, and Moshi to inspect your shop-floor workflow firsthand."
+      },
+      {
+        q: "Can our storekeepers and machine operators use this software on mobile phones?",
+        a: "Yes. We design ultra-intuitive touch interfaces with native Marathi, Hindi, and English options. Storekeepers can scan barcodes and record material inward/outward with single-tap Android devices without touching a desktop computer."
+      },
+      {
+        q: "How does your Custom ERP handle our existing Tally data?",
+        a: "We maintain a two-way synchronization bridge. Your daily inventory, production orders, and dispatches are tracked in real-time inside the ERP, and verified financial journals auto-post into Tally for your CA's audit and GST filing."
+      }
+    ]
+  },
+  "hinjewadi": {
+    name: "Hinjewadi IT Park",
+    state: "Maharashtra",
+    country: "India",
+    currency: "INR",
+    heroBadge: "Rajiv Gandhi Infotech Park · Hinjewadi Phase 1, 2 & 3",
+    heroTitle: "Startup MVP & Enterprise Software Engineering in Hinjewadi, Pune",
+    heroSubtitle: "Partnering with tech startups, scale-ups, and consulting firms in Hinjewadi and Baner to build high-concurrency React/Next.js web apps, cross-platform mobile apps, and scalable cloud microservices.",
+    callout: "Senior engineering talent without bloated agency overhead. Meeting tech founders across Hinjewadi and Baner.",
+    marketOverview: [
+      "Hinjewadi's Rajiv Gandhi Infotech Park is Maharashtra's premier software powerhouse, hosting global technology centers and hundreds of ambitious seed and Series-A funded technology startups.",
+      "Founders and product managers in Hinjewadi need more than junior outsourcing; they need senior engineering partners who understand clean architecture, microservices, sub-second Core Web Vitals, and cloud-native scalability.",
+      "Prajyot Infotech delivers dedicated agile pods, rapid 4-week MVP development, and battle-tested React/Node/PostgreSQL architectures that scale smoothly from initial launch to 100,000+ active users."
+    ],
+    tailoredServices: [
+      {
+        title: "Rapid Startup MVP Sprints (4-6 Weeks)",
+        desc: "Turn your PRD and wireframes into a production-grade web or mobile MVP ready for investor demos and pilot customer onboarding."
+      },
+      {
+        title: "Sub-Second Web Applications (React / Next.js)",
+        desc: "Lighthouse 95+ performance architectures with edge caching, serverless microservices, and instantaneous client-side navigation."
+      },
+      {
+        title: "Cross-Platform Mobile Apps (Flutter & React Native)",
+        desc: "Smooth 60fps mobile applications compiled to native ARM machine code for iOS and Android with live WebSocket real-time feeds."
+      },
+      {
+        title: "Dedicated Engineering Pods & Team Augmentation",
+        desc: "Deploy senior full-stack engineers in Pune who integrate directly into your Git workflows, CI/CD pipelines, and Jira sprints."
+      }
+    ],
+    keyIndustries: [
+      { name: "SaaS & B2B Technology Startups", detail: "Multi-tenant RBAC, Stripe/Razorpay billing, analytics" },
+      { name: "FinTech & WealthTech Platforms", detail: "Bank-grade data encryption, KYC pipelines, UPI Autopay" },
+      { name: "Logistics & Supply Chain Tech", detail: "Fleet dispatch tracking, geofencing, route optimization" },
+      { name: "HealthTech & Telemedicine", detail: "HIPAA-aligned encrypted records, live video consults, prescriptions" }
+    ],
+    whyChooseUs: [
+      "Senior full-stack architects with hands-on experience in React, Node.js, Python, and PostgreSQL.",
+      "Complete IP and repository transfer on Day 1 with clean Git commits and documentation.",
+      "Sprint delivery cadence with weekly demos, staging previews, and transparent Jira/GitHub tracking.",
+      "Physical proximity: Meet our technical director at our Kharadi office or across Hinjewadi/Baner."
+    ],
+    faqs: [
+      {
+        q: "How fast can you build and launch a venture-ready MVP?",
+        a: "Our rapid MVP sprint takes 4 to 6 weeks. We focus on your core value proposition, architect scalable database schemas, integrate authentication and payments, and deliver a fully functional product that you can show to investors and early adopters."
+      },
+      {
+        q: "Can your team work with our existing in-house CTO or engineering lead?",
+        a: "Yes. We frequently operate as an accelerated engineering pod reporting directly to an in-house CTO or Product Manager, adhering to your coding standards, PR reviews, and automated CI/CD pipelines."
+      },
+      {
+        q: "What tech stack do you recommend for high-performance SaaS?",
+        a: "We primarily build with TypeScript, Next.js / React on the frontend, Node.js or Python (FastAPI) on the backend, PostgreSQL with Prisma/Drizzle ORM, Redis for edge caching, and Docker containers hosted on AWS or GCP."
+      }
+    ]
+  },
+
   pune: {
     name: "Pune",
     state: "Maharashtra",

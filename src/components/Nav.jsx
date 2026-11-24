@@ -19,6 +19,7 @@ const navConfig = [
       { to: "/products/hrms", label: "Oibuz HRMS", badge: "Flagship", desc: "Connected workforce & HR platform." },
       { to: "/tools/construction-leakage-calculator", label: "Leakage Calculator", badge: "Free Tool", desc: "Calculate ghost-labor & site cash loss." },
       { to: "/tools/website-tech-checker", label: "Speed & Tech Checker", badge: "Free Tool", desc: "Audit Core Web Vitals, speed & stack." },
+      { to: "/tools/app-cost-calculator", label: "App Cost Calculator", badge: "2026 Index", desc: "Instant iOS & Android development quote." },
       { to: "/tools/gst-invoice-generator", label: "GST Invoice Generator", badge: "Free Tool", desc: "Create, print & download GST invoices free." },
     ]
   },
@@ -40,6 +41,7 @@ const navConfig = [
       { to: "/site-visits", label: "Client Deliveries", desc: "Photos & videos from client site visits & training." },
       { to: "/careers", label: "Careers", desc: "Join our fast-growing engineering team." },
       { to: "/articles", label: "Articles", desc: "Engineering deep-dives and tech insights." },
+      { to: "/resources/software-rfp-template", label: "Software RFP Kit", desc: "Customizable B2B RFP & SOW template." },
       { to: "/testimonials", label: "Client Reviews", desc: "4.9/5 verified client reviews." },
       { to: "/faq", label: "FAQ", desc: "Pricing, timelines, and project questions answered." },
       { to: "/pricing", label: "Pricing", desc: "Transparent, flexible engagement models." },

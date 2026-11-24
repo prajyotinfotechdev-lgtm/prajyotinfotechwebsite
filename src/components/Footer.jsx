@@ -240,7 +240,11 @@ export default function Footer() {
               <li><Link to="/articles" className="hover:text-slate-200 transition-colors">Articles &amp; Architecture Lab</Link></li>
               <li><Link to="/tools/website-tech-checker" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><Gauge className="w-3.5 h-3.5 text-sky-400 shrink-0" />Website Speed Checker</Link></li>
               <li><Link to="/tools/construction-leakage-calculator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><Calculator className="w-3.5 h-3.5 text-amber-400 shrink-0" />Leakage Calculator</Link></li>
+              <li><Link to="/tools/app-cost-calculator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><Calculator className="w-3.5 h-3.5 text-violet-400 shrink-0" />App Cost Calculator</Link></li>
               <li><Link to="/tools/gst-invoice-generator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><FileText className="w-3.5 h-3.5 text-emerald-400 shrink-0" />Free GST Invoice Maker</Link></li>
+              <li><Link to="/resources/software-rfp-template" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5 text-brand-400 shrink-0" />Software RFP &amp; SOW Kit</Link></li>
+              <li><Link to="/compare/tally-vs-custom-erp" className="hover:text-slate-200 transition-colors">Compare: Tally vs Custom ERP</Link></li>
+              <li><Link to="/compare/wordpress-vs-custom-software" className="hover:text-slate-200 transition-colors">Compare: WordPress vs Custom App</Link></li>
               <li><Link to="/testimonials" className="hover:text-slate-200 transition-colors">Client Reviews & Success Stories</Link></li>
               <li><Link to="/glossary" className="hover:text-slate-200 transition-colors">Software Engineering Glossary</Link></li>
             </ul>
@@ -295,6 +299,27 @@ export default function Footer() {
       </div>
 
 
+
+      
+      {/* Regional Engineering Corridors Bar */}
+      <div className="relative z-10 border-t border-slate-800/60 bg-slate-900/60 py-4 px-4">
+        <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
+          <div className="flex items-center gap-2 font-semibold text-slate-300">
+            <span>Regional Industrial &amp; Tech Hubs:</span>
+          </div>
+          <div className="flex flex-wrap items-center gap-4 text-[11px]">
+            <Link to="/software-company-in-pune" className="hover:text-brand-300 transition-colors">Pune HQ (Kharadi)</Link>
+            <span className="text-slate-700">•</span>
+            <Link to="/software-company-in-chakan-bhosari" className="hover:text-brand-300 transition-colors font-medium text-slate-300">Chakan &amp; Bhosari MIDC</Link>
+            <span className="text-slate-700">•</span>
+            <Link to="/software-company-in-hinjewadi" className="hover:text-brand-300 transition-colors font-medium text-slate-300">Hinjewadi Tech Park</Link>
+            <span className="text-slate-700">•</span>
+            <Link to="/software-company-in-mumbai" className="hover:text-brand-300 transition-colors">Mumbai Hub</Link>
+            <span className="text-slate-700">•</span>
+            <Link to="/software-company-in-latur" className="hover:text-brand-300 transition-colors">Latur Regional Hub</Link>
+          </div>
+        </div>
+      </div>
 
       {/* 2027 Business Growth Ribbon */}
       <div className="relative z-10 border-t border-brand-500/30 bg-gradient-to-r from-navy-950 via-brand-950/70 to-navy-950 py-3.5 px-4 text-center">

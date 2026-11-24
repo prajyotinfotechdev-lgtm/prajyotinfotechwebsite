@@ -634,8 +634,122 @@ const ROUTES = [
       </section>
     `,
   },
-];
+  {
+    path: "tools/app-cost-calculator",
+    title: "Mobile App Development Cost Calculator India 2026 — Instant Scope & Pricing | Prajyot Infotech",
+    description: "Calculate accurate mobile app development costs in India for iOS & Android. Configure Flutter, React Native, GPS tracking, Razorpay, and admin portals with instant WhatsApp scope export.",
+    keywords: "mobile app development cost in India, cost to build an app Pune, app development price calculator 2026, Flutter app cost India, React Native development cost",
+    canonical: "https://www.prajyotinfotech.in/tools/app-cost-calculator",
+    h1: "Mobile App Development Cost Calculator India 2026",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Configure your target platform (Flutter, React Native, iOS, Android), user authentication, live feature modules, and admin portal to calculate an instant, transparent development budget in INR.
+      </p>
+      <section style="margin-bottom:40px;">
+        <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:16px;">2026 Mobile App Rate Index in India</h2>
+        <p style="font-size:15px;color:#475569;line-height:1.8;">
+          Cross-platform Flutter and React Native business apps typically range from ₹2,00,000 to ₹5,50,000 with 100% full source code ownership on Day 1 and 60 days of bug warranty.
+        </p>
+      </section>
+    `,
+  },
+  {
+    path: "compare/tally-vs-custom-erp",
+    title: "Tally vs Custom ERP Software (2026 Comparison) — When to Upgrade | Prajyot Infotech",
+    description: "Detailed technical & commercial comparison between Tally and Custom ERP software for Indian manufacturers and distributors. Compare multi-branch inventory, mobile access, production BOM, and TCO.",
+    keywords: "Tally vs custom ERP, replace Tally with custom software, manufacturing ERP Pune, Tally limitations inventory, custom ERP vs Tally Prime 2026",
+    canonical: "https://www.prajyotinfotech.in/compare/tally-vs-custom-erp",
+    h1: "Tally vs Custom ERP Software — The 2026 Architectural Guide",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Tally is unmatched for chartered accountants and GST tax filing, but when your factory or distribution business scales past 20 employees, single-user bottlenecks and lack of real-time mobile tracking create expensive operational friction.
+      </p>
+      <section style="margin-bottom:40px;">
+        <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:16px;">The Modern Hybrid Architecture</h2>
+        <p style="font-size:15px;color:#475569;line-height:1.8;">
+          Run daily inventory, barcode dispatch, and shop-floor work orders on Prajyot Infotech's Custom ERP, and automatically sync ledger journals into Tally for CA compliance.
+        </p>
+      </section>
+    `,
+  },
+  {
+    path: "compare/wordpress-vs-custom-software",
+    title: "WordPress vs Custom Web Application (2026 Architectural Guide) | Prajyot Infotech",
+    description: "Comprehensive comparison between WordPress/WooCommerce and custom React/Next.js software. Analyze Core Web Vitals speed, security vulnerabilities, plugin fragility, and 3-year TCO.",
+    keywords: "WordPress vs custom software, migrate WordPress to React, why custom software is better than WordPress, WordPress speed vs custom code, custom web application Pune",
+    canonical: "https://www.prajyotinfotech.in/compare/wordpress-vs-custom-software",
+    h1: "WordPress vs Custom Web Applications — Speed, Security & TCO",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        If your website drives core revenue, relying on 35 third-party PHP plugins is an existential liability. Custom React/Next.js architectures deliver sub-second LCP (<0.8s) and zero plugin security exploits.
+      </p>
+      <section style="margin-bottom:40px;">
+        <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:16px;">Core Web Vitals & Conversion Impact</h2>
+        <p style="font-size:15px;color:#475569;line-height:1.8;">
+          Sub-second load times cut Google Ads bounce rates by 40% and dramatically increase mobile conversion rates across Maharashtra and India.
+        </p>
+      </section>
+    `,
+  },
+  {
+    path: "resources/software-rfp-template",
+    title: "Software RFP Template & Scope of Work (SOW) Kit 2026 | Prajyot Infotech",
+    description: "Free downloadable and interactive Software RFP & Scope of Work template for Indian businesses. Learn how to scope web apps, mobile apps, and ERPs with fixed pricing and 100% IP transfer.",
+    keywords: "software RFP template India, scope of work template web app, ERP requirements document template, how to write software RFP, software tender template Pune",
+    canonical: "https://www.prajyotinfotech.in/resources/software-rfp-template",
+    h1: "Enterprise Software Request for Proposal (RFP) & SOW Kit 2026",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Eliminate scope creep and open-ended hourly billing. Use our 6-part procurement framework to specify performance SLAs, 100% source code ownership, and 60-day bug warranties.
+      </p>
+      <section style="margin-bottom:40px;">
+        <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:16px;">Interactive SOW Generator</h2>
+        <p style="font-size:15px;color:#475569;line-height:1.8;">
+          Customize your requirements, generate a formal RFP document, and submit it for a guaranteed 24-hour fixed-price engineering proposal.
+        </p>
+      </section>
+    `,
+  },
+  {
+    path: "software-company-in-chakan-bhosari",
+    title: "Industrial ERP & Custom Software Company in Chakan & Bhosari MIDC | Prajyot Infotech",
+    description: "Prajyot Infotech provides plant ERPs, barcode inventory tracking, machine downtime logging, and GST e-invoicing for auto-ancillary and manufacturing units in Chakan & Bhosari MIDC.",
+    keywords: "ERP software company Chakan MIDC, manufacturing software Bhosari, industrial software company PCMC, auto ancillary ERP Pune, factory inventory barcode scanning",
+    canonical: "https://www.prajyotinfotech.in/software-company-in-chakan-bhosari",
+    h1: "Industrial ERP & Custom Software Engineering in Chakan & Bhosari MIDC",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Headquartered in Pune with rapid on-site plant visits across Bhosari and Chakan MIDC. We build rugged, touch-optimized shop-floor ERPs, barcode scanners, and automated GST billing systems.
+      </p>
+      <section style="margin-bottom:40px;">
+        <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:16px;">Tailored for Heavy Manufacturing & Auto-Ancillary</h2>
+        <p style="font-size:15px;color:#475569;line-height:1.8;">
+          Automate multi-stage Bill of Materials (BOM), scrap tracking, machine downtime, and WhatsApp dispatch alerts with 100% source code ownership.
+        </p>
+      </section>
+    `,
+  },
+  {
+    path: "software-company-in-hinjewadi",
+    title: "Startup MVP & Enterprise Software Engineering in Hinjewadi, Pune | Prajyot Infotech",
+    description: "Partnering with tech startups, scale-ups, and consulting firms in Hinjewadi IT Park Phase 1-3 to build high-concurrency React/Next.js web apps, mobile apps, and cloud microservices.",
+    keywords: "software company Hinjewadi, startup MVP development Pune, React Next.js developers Hinjewadi, mobile app developers Rajiv Gandhi Infotech Park, dedicated engineering pods Pune",
+    canonical: "https://www.prajyotinfotech.in/software-company-in-hinjewadi",
+    h1: "Startup MVP & Enterprise Software Engineering in Hinjewadi, Pune",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Senior full-stack engineering pods in Pune. We build venture-ready React/Node/PostgreSQL MVPs in 4 to 6 weeks with sub-second performance SLAs and 100% source code ownership on Day 1.
+      </p>
+      <section style="margin-bottom:40px;">
+        <h2 style="font-size:24px;font-weight:800;color:#0f172a;margin-bottom:16px;">Agile Sprints for Funded Startups</h2>
+        <p style="font-size:15px;color:#475569;line-height:1.8;">
+          Clean microservices, Prisma/Drizzle ORMs, WebSocket real-time feeds, and automated CI/CD pipelines ready for investor due diligence.
+        </p>
+      </section>
+    `,
+  },
 
+];
 console.log(`Starting static HTML prerendering for ${ROUTES.length} routes...`);
 
 let count = 0;

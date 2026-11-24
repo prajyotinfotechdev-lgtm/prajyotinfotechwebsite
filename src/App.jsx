@@ -42,6 +42,10 @@ const SiteVisitsPage = lazy(() => import("./pages/SiteVisitsPage.jsx"));
 const OibuzLandingPage = lazy(() => import("./pages/OibuzLandingPage.jsx"));
 // 2027 Business Growth Campaign
 const FreeBusinessAudit = lazy(() => import("./pages/FreeBusinessAudit.jsx"));
+const AppCostCalculator = lazy(() => import("./pages/AppCostCalculator.jsx"));
+const TallyVsCustomErp = lazy(() => import("./pages/TallyVsCustomErp.jsx"));
+const WordpressVsCustomSoftware = lazy(() => import("./pages/WordpressVsCustomSoftware.jsx"));
+const SoftwareRfpTemplate = lazy(() => import("./pages/SoftwareRfpTemplate.jsx"));
 const ThankYou = lazy(() => import("./pages/ThankYou.jsx"));
 
 import HelpBot from "./components/HelpBot.jsx";
@@ -145,6 +149,12 @@ export default function App() {
               <Route path="/tools/construction-leakage-calculator" element={<PageWrapper><ConstructionLeakageCalculator /></PageWrapper>} />
               <Route path="/tools/website-tech-checker" element={<PageWrapper><WebsiteTechChecker /></PageWrapper>} />
               <Route path="/tools/gst-invoice-generator" element={<PageWrapper><GstInvoiceGenerator /></PageWrapper>} />
+              <Route path="/tools/app-cost-calculator" element={<PageWrapper><AppCostCalculator /></PageWrapper>} />
+              <Route path="/compare/tally-vs-custom-erp" element={<PageWrapper><TallyVsCustomErp /></PageWrapper>} />
+              <Route path="/compare/wordpress-vs-custom-software" element={<PageWrapper><WordpressVsCustomSoftware /></PageWrapper>} />
+              <Route path="/resources/software-rfp-template" element={<PageWrapper><SoftwareRfpTemplate /></PageWrapper>} />
+              <Route path="/software-company-in-chakan-bhosari" element={<PageWrapper><CityLandingPage cityId="chakan-bhosari" /></PageWrapper>} />
+              <Route path="/software-company-in-hinjewadi" element={<PageWrapper><CityLandingPage cityId="hinjewadi" /></PageWrapper>} />
               <Route path="/testimonials" element={<PageWrapper><Testimonials /></PageWrapper>} />
               <Route path="/privacy" element={<PageWrapper><PrivacyPolicy /></PageWrapper>} />
               <Route path="/terms" element={<PageWrapper><TermsOfService /></PageWrapper>} />

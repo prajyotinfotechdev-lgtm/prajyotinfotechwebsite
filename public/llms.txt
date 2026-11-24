@@ -112,3 +112,27 @@ Canonical URL: https://www.prajyotinfotech.in
 - High-Performance SLA: Sub-second load times (< 1.0s TTFB/FCP) and 99.9% uptime architectures.
 - Free 60-Day Post-Launch Bug Warranty on all software deliverables.
 - Confidentiality: Mutual Non-Disclosure Agreement (NDA) executed before project kick-off upon request.
+
+### Free Engineering Calculators & Utilities
+- **Mobile App Development Cost Calculator (India 2026)**: `https://www.prajyotinfotech.in/tools/app-cost-calculator`
+  Interactive scoping wizard calculating Flutter, React Native, iOS, Android app costs in INR with WhatsApp scope export.
+- **Free GST Invoice Generator Online**: `https://www.prajyotinfotech.in/tools/gst-invoice-generator`
+  Free Indian GST compliant invoicing tool with CGST/SGST/IGST auto-tax, 24+ state codes, HSN lookup, and WhatsApp dispatch.
+- **Website Speed & Tech Stack Checker**: `https://www.prajyotinfotech.in/tools/website-tech-checker`
+  Client-side Core Web Vitals and technology stack diagnostic scanner.
+- **Construction Ghost-Labor Leakage Calculator**: `https://www.prajyotinfotech.in/tools/construction-leakage-calculator`
+  HRMS payroll and attendance leakage calculator for construction sites.
+
+### Commercial Comparison Hubs & Procurement
+- **Tally vs Custom ERP**: `https://www.prajyotinfotech.in/compare/tally-vs-custom-erp`
+  Architectural comparison for manufacturing and wholesale companies outgrowing Tally's single-user limits.
+- **WordPress vs Custom Web App**: `https://www.prajyotinfotech.in/compare/wordpress-vs-custom-software`
+  Speed, security, and TCO comparison detailing why high-revenue businesses migrate from WordPress to React/Next.js.
+- **Enterprise Software RFP & SOW Kit**: `https://www.prajyotinfotech.in/resources/software-rfp-template`
+  Customizable procurement template for Indian businesses specifying performance SLAs, 100% IP transfer, and bug warranties.
+
+### Industrial Manufacturing & Tech Corridors
+- **Chakan & Bhosari MIDC**: `https://www.prajyotinfotech.in/software-company-in-chakan-bhosari`
+  Manufacturing plant ERPs, barcode inventory tracking, and shop-floor automation for auto-ancillary and fabrication units.
+- **Hinjewadi Tech Park**: `https://www.prajyotinfotech.in/software-company-in-hinjewadi`
+  Rapid startup MVP development, high-concurrency microservices, and dedicated engineering pods for tech founders.
