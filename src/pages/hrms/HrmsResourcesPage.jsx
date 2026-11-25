@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import HrmsHeader from "../../components/HrmsHeader.jsx";
 import HrmsFooter from "../../components/HrmsFooter.jsx";
+import OibuzTrialCtaPair from "../../components/OibuzTrialCtaPair.jsx";
 import Seo from "../../components/Seo.jsx";
 import { useLeadModal } from "../../context/LeadModalContext.jsx";
 
@@ -248,11 +249,12 @@ export default function HrmsResourcesPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.22, duration: 0.4 }}
-              className="flex flex-row w-full sm:w-auto gap-3 items-center"
             >
-              <button
-                type="button"
-                onClick={() =>
+              <OibuzTrialCtaPair
+                source="hrms_resources_hero"
+                showHint={true}
+                secondaryLabel="Book a Demo"
+                onSecondaryClick={() =>
                   openLeadModal({
                     source: "Resources Page - Hero CTA",
                     title: "Schedule Oibuz Technical Walkthrough",
@@ -260,17 +262,7 @@ export default function HrmsResourcesPage() {
                     projectType: "Oibuz Construction HRMS",
                   })
                 }
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white font-bold px-7 sm:px-8 py-3.5 rounded-xl transition-all shadow-lg shadow-blue-700/25 hover:shadow-xl hover:-translate-y-0.5 min-h-[48px] text-sm sm:text-base cursor-pointer whitespace-nowrap"
-              >
-                Book a Demo <ArrowRight className="w-4 h-4 shrink-0 stroke-[2.5]" />
-              </button>
-
-              <Link
-                to="/products/hrms/features"
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-semibold px-5 sm:px-7 py-3.5 rounded-xl transition-all min-h-[48px] text-sm sm:text-base text-center whitespace-nowrap shadow-xs hover:border-blue-300"
-              >
-                Explore Features
-              </Link>
+              />
             </motion.div>
           </div>
         </div>
@@ -532,27 +524,21 @@ export default function HrmsResourcesPage() {
           <p className="text-slate-300 text-base sm:text-lg mb-8 max-w-xl mx-auto">
             Schedule a 15-minute technical walkthrough to see attendance verification, timesheets, and HR payroll workflows in real time.
           </p>
-          <div className="flex flex-row w-full sm:w-auto justify-center gap-3">
-            <button
-              onClick={() =>
-                openLeadModal({
-                  source: "Resources Page - Final Bottom CTA",
-                  title: "Book Oibuz Technical Walkthrough",
-                  subtitle: "Schedule a 15-min product walkthrough tailored to your operations.",
-                  projectType: "Oibuz Construction HRMS",
-                })
-              }
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold text-sm sm:text-base shadow-lg shadow-blue-600/30 transition-all cursor-pointer whitespace-nowrap"
-            >
-              Book a Demo <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-            </button>
-            <Link
-              to="/products/hrms/pricing"
-              className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-200 font-semibold text-sm sm:text-base transition-all whitespace-nowrap"
-            >
-              View Pricing
-            </Link>
-          </div>
+          <OibuzTrialCtaPair
+            source="hrms_resources_bottom"
+            align="center"
+            dark={true}
+            showHint={true}
+            secondaryLabel="Book a Demo"
+            onSecondaryClick={() =>
+              openLeadModal({
+                source: "Resources Page - Final Bottom CTA",
+                title: "Book Oibuz Technical Walkthrough",
+                subtitle: "Schedule a 15-min product walkthrough tailored to your operations.",
+                projectType: "Oibuz Construction HRMS",
+              })
+            }
+          />
         </div>
       </section>
 

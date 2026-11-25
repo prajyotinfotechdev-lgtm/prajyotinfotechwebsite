@@ -15,6 +15,7 @@ import {
   Check,
 } from "lucide-react";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
+import { getOibuzRegisterUrl, trackOibuzTrialClick } from "../utils/oibuzLinks.js";
 
 const PLANS = [
   {
@@ -83,6 +84,7 @@ function SpotlightPricingCard({
   plan,
   isSelected,
   onSelect,
+  onBookDemo,
   onHover,
 }) {
   const Icon = plan.icon;
@@ -265,21 +267,39 @@ function SpotlightPricingCard({
         </div>
       </div>
 
-      {/* Card Action Button with Shimmer Light Sweep */}
-      <div className="relative z-10 pt-2">
-        <button
-          type="button"
+      {/* Card Action Buttons: Self-Serve Free Trial + Guided Demo Link */}
+      <div className="relative z-10 pt-2 space-y-2.5">
+        <a
+          href={getOibuzRegisterUrl({ source: `pricing_card_${plan.id}`, plan: plan.id })}
+          target="_blank"
+          rel="noopener noreferrer"
           onClick={(e) => {
             e.stopPropagation();
-            onSelect();
+            trackOibuzTrialClick(`pricing_card_${plan.id}`, plan.id);
+            onSelect?.();
           }}
-          className={`relative overflow-hidden w-full py-4 px-6 rounded-2xl font-black text-sm sm:text-base flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer min-h-[52px] group-hover:scale-[1.01] ${plan.ctaGradient}`}
+          className={`relative overflow-hidden w-full py-4 px-6 rounded-2xl font-black text-sm sm:text-base flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer min-h-[52px] group-hover:scale-[1.01] ${plan.ctaGradient}`}
         >
           {/* Subtle Shimmer Sweep Highlight */}
           <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform" />
 
-          <span className="relative z-10">Choose {plan.name}</span>
-          <ArrowRight className="w-4 h-4 stroke-[2.5] transition-transform duration-300 group-hover:translate-x-1" />
+          <span className="relative z-10">Start Free Trial</span>
+          <ArrowUpRight className="w-4 h-4 stroke-[2.5] relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </a>
+
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onBookDemo?.();
+          }}
+          className={`w-full text-center text-xs font-semibold py-1.5 rounded-lg transition-colors cursor-pointer ${
+            isDark
+              ? "text-slate-400 hover:text-cyan-300"
+              : "text-slate-500 hover:text-blue-700"
+          }`}
+        >
+          Or Request a Guided Demo →
         </button>
       </div>
     </motion.div>
@@ -485,7 +505,11 @@ export default function OibuzPricingSection({
               key={plan.id}
               plan={plan}
               isSelected={activePlanId === plan.id}
-              onSelect={() => handlePlanClick(plan)}
+              onSelect={() => {
+                setSelectedPlanId(plan.id);
+                if (onSelectPlan) onSelectPlan(plan);
+              }}
+              onBookDemo={() => handlePlanClick(plan)}
               onHover={() => setSelectedPlanId(plan.id)}
             />
           ))}

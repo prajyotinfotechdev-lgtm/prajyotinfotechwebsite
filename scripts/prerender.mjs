@@ -234,14 +234,17 @@ const ROUTES = [
   },
   {
     path: "products/hrms",
-    title: "OIBUZ — Construction HRMS & Field Workforce Management Software | Prajyot Infotech",
-    description: "OIBUZ is the premier construction HRMS software for tracking site labor attendance with GPS geofencing, muster roll automation, and material requisitions.",
-    keywords: "OIBUZ, construction HRMS, construction site attendance software, labor management software India, contractor muster roll app",
+    title: "OIBUZ — Construction HRMS & Field Workforce Management Software | Start Free Trial",
+    description: "OIBUZ is the premier construction HRMS software for tracking site labor attendance with GPS geofencing, muster roll automation, and automated payroll. Start your free self-setup trial at oibuz.in/register.",
+    keywords: "OIBUZ, construction HRMS, construction site attendance software, labor management software India, contractor muster roll app, oibuz free trial",
     canonical: "https://www.prajyotinfotech.in/products/hrms",
     h1: "OIBUZ — Construction HRMS & Field Workforce Management Software",
     content: `
-      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:24px;">
         Stop ghost labor and site cash leakages. OIBUZ empowers real estate builders, infrastructure contractors, and EPC firms with geofenced mobile attendance, subcontractor billing, and real-time site muster rolls.
+      </p>
+      <p style="margin-bottom:32px;">
+        <a href="https://www.oibuz.in/register" style="display:inline-block;background:#059669;color:#ffffff;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:800;font-size:15px;">Start Free Trial on OIBUZ.in &rarr;</a>
       </p>
     `,
   },

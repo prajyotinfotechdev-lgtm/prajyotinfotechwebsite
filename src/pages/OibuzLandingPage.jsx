@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
 import {
   Users, MapPin, Clock, Calendar, FileText, CreditCard,
-  CheckCircle, ChevronDown, ArrowRight, Menu, X, Building2,
+  CheckCircle, ChevronDown, ArrowRight, ArrowUpRight, Menu, X, Building2,
   Smartphone, Receipt, BarChart3, Shield, Lock, Bell,
   HardHat, Settings, Eye, Workflow,
   UserCheck, AlertCircle, ChevronRight,
@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import OibuzAudioStory from "../components/OibuzAudioStory";
 import OibuzPricingSection from "../components/OibuzPricingSection";
+import OibuzSelfServeCard from "../components/OibuzSelfServeCard";
+import { getOibuzRegisterUrl, trackOibuzTrialClick } from "../utils/oibuzLinks.js";
 
 /* ─── UTILITIES ───────────────────────────────────────────────────────────── */
 function useScrollReveal(threshold = 0.1) {
@@ -97,24 +99,36 @@ function OibuzHeader({ onDemoClick }) {
           </nav>
 
           {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2.5">
             <button
               onClick={onDemoClick}
               id="nav-demo-btn"
-              className="flex items-center gap-2 bg-[#1a3a6b] hover:bg-[#15305a] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-all hover:shadow-lg whitespace-nowrap"
+              className="flex items-center gap-1.5 border border-slate-200 hover:border-blue-300 bg-white text-[#1a3a6b] text-sm font-semibold px-4 py-2.5 rounded-lg transition-all whitespace-nowrap cursor-pointer"
             >
-              Book a Demo <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
+              Book a Demo
             </button>
+            <a
+              href={getOibuzRegisterUrl({ source: "oibuz_landing_nav" })}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackOibuzTrialClick("oibuz_landing_nav")}
+              className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-bold px-5 py-2.5 rounded-lg transition-all hover:shadow-lg whitespace-nowrap"
+            >
+              Start Free Trial <ArrowUpRight className="w-3.5 h-3.5 flex-shrink-0" />
+            </a>
           </div>
 
           {/* Mobile: optional small CTA + hamburger */}
           <div className="flex lg:hidden items-center gap-2">
-            <button
-              onClick={onDemoClick}
-              className="hidden sm:flex items-center gap-1.5 bg-[#1a3a6b] text-white text-xs font-semibold px-4 py-2.5 rounded-lg"
+            <a
+              href={getOibuzRegisterUrl({ source: "oibuz_landing_mobile_nav" })}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackOibuzTrialClick("oibuz_landing_mobile_nav")}
+              className="flex items-center gap-1 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold px-3.5 py-2 rounded-lg whitespace-nowrap"
             >
-              Book Demo
-            </button>
+              Free Trial <ArrowUpRight className="w-3 h-3" />
+            </a>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="p-2.5 text-slate-700 rounded-lg hover:bg-slate-100 transition-colors"
@@ -155,10 +169,19 @@ function OibuzHeader({ onDemoClick }) {
                   {l.label}
                 </a>
               ))}
-              <div className="pt-3 border-t border-slate-100">
+              <div className="pt-3 border-t border-slate-100 space-y-2">
+                <a
+                  href={getOibuzRegisterUrl({ source: "oibuz_landing_drawer" })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => { trackOibuzTrialClick("oibuz_landing_drawer"); setMenuOpen(false); }}
+                  className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-sm font-bold py-3.5 rounded-xl min-h-[48px]"
+                >
+                  Start Free Trial <ArrowUpRight className="w-4 h-4" />
+                </a>
                 <button
                   onClick={() => { onDemoClick(); setMenuOpen(false); }}
-                  className="w-full flex items-center justify-center gap-2 bg-[#1a3a6b] text-white text-sm font-semibold py-3.5 rounded-xl min-h-[48px]"
+                  className="w-full flex items-center justify-center gap-2 bg-[#1a3a6b] text-white text-sm font-semibold py-3 rounded-xl min-h-[44px]"
                 >
                   Book a Demo <ArrowRight className="w-4 h-4" />
                 </button>
@@ -930,20 +953,29 @@ function HeroSection({ onDemoClick }) {
             </motion.div>
 
             {/* Primary CTAs */}
-            <motion.div variants={fadeUp} className="flex flex-row w-full sm:w-auto gap-2 sm:gap-3 mb-7">
-              <button
-                onClick={onDemoClick}
-                id="hero-demo-btn"
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#1a3a6b] hover:bg-[#15305a] text-white font-semibold px-6 sm:px-8 py-3.5 rounded-xl transition-all hover:shadow-xl hover:-translate-y-0.5 min-h-[48px] text-[13px] sm:text-base whitespace-nowrap shadow-lg shadow-blue-900/15"
-              >
-                Book a Demo <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-              </button>
-              <a
-                href="#platform"
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 border border-[#1a3a6b]/20 text-[#1a3a6b] font-semibold px-5 sm:px-7 py-3.5 rounded-xl hover:bg-white/80 transition-all min-h-[48px] text-[13px] sm:text-base text-center whitespace-nowrap bg-white/50 backdrop-blur-sm"
-              >
-                Explore Platform
-              </a>
+            <motion.div variants={fadeUp} className="mb-7 space-y-2.5">
+              <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-2.5 sm:gap-3">
+                <a
+                  href={getOibuzRegisterUrl({ source: "oibuz_landing_hero" })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackOibuzTrialClick("oibuz_landing_hero")}
+                  id="hero-trial-btn"
+                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold px-6 sm:px-8 py-3.5 rounded-xl transition-all hover:shadow-xl hover:-translate-y-0.5 min-h-[48px] text-sm sm:text-base whitespace-nowrap shadow-lg shadow-emerald-700/20"
+                >
+                  Start Free Trial <ArrowUpRight className="w-4 h-4 flex-shrink-0" />
+                </a>
+                <button
+                  onClick={onDemoClick}
+                  id="hero-demo-btn"
+                  className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#1a3a6b] hover:bg-[#15305a] text-white font-semibold px-6 sm:px-7 py-3.5 rounded-xl transition-all hover:shadow-lg min-h-[48px] text-sm sm:text-base whitespace-nowrap"
+                >
+                  Book a Demo <ArrowRight className="w-4 h-4 flex-shrink-0" />
+                </button>
+              </div>
+              <p className="text-[11px] font-semibold text-slate-500">
+                ✓ Setup your company workspace yourself in 2 mins &bull; No credit card required
+              </p>
             </motion.div>
 
             {/* Feature Pills */}
@@ -1515,13 +1547,22 @@ function ProductShowcase({ onDemoClick }) {
             </div>
           </motion.div>
 
-          <motion.div variants={fadeUp} className="text-center mt-8 sm:mt-9">
+          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row justify-center items-center gap-3 mt-8 sm:mt-9">
+            <a
+              href={getOibuzRegisterUrl({ source: "oibuz_landing_showcase" })}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackOibuzTrialClick("oibuz_landing_showcase")}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold px-6 sm:px-8 py-3.5 rounded-xl transition-all hover:shadow-xl hover:-translate-y-0.5 min-h-[48px]"
+            >
+              Start Free Trial <ArrowUpRight className="w-4 h-4 flex-shrink-0" />
+            </a>
             <button
               onClick={onDemoClick}
               id="showcase-demo-btn"
-              className="inline-flex items-center gap-2 bg-[#1a3a6b] hover:bg-[#15305a] text-white font-semibold px-6 sm:px-8 py-3.5 rounded-xl transition-all hover:shadow-xl hover:-translate-y-0.5 min-h-[48px]"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#1a3a6b] hover:bg-[#15305a] text-white font-semibold px-6 sm:px-8 py-3.5 rounded-xl transition-all hover:shadow-xl hover:-translate-y-0.5 min-h-[48px]"
             >
-              Book a Demo to See the Full Platform <ArrowRight className="w-4 h-4 flex-shrink-0" />
+              Book a Demo <ArrowRight className="w-4 h-4 flex-shrink-0" />
             </button>
           </motion.div>
         </motion.div>
@@ -2083,7 +2124,16 @@ function FinalCTA({ onDemoClick }) {
             See how Oibuz fits your employees, projects, sites and approval workflows.
           </motion.p>
 
-          <motion.div variants={fadeUp} className="flex flex-row flex-wrap items-center justify-center gap-2.5 sm:gap-4 mb-8 sm:mb-10">
+          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 mb-8 sm:mb-10">
+            <a
+              href={getOibuzRegisterUrl({ source: "oibuz_landing_final_cta" })}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackOibuzTrialClick("oibuz_landing_final_cta")}
+              className="flex items-center justify-center gap-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold px-8 sm:px-9 py-4 rounded-xl text-base transition-all hover:shadow-2xl hover:-translate-y-0.5 min-h-[52px]"
+            >
+              Start Free Trial <ArrowUpRight className="w-4 h-4 flex-shrink-0" />
+            </a>
             <button
               onClick={onDemoClick}
               id="final-cta-btn"
@@ -2095,7 +2145,7 @@ function FinalCTA({ onDemoClick }) {
               href="https://wa.me/917020708747"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 border border-white/20 hover:border-white/40 text-white font-semibold px-8 sm:px-9 py-4 rounded-xl text-base hover:bg-white/5 transition-all min-h-[52px]"
+              className="flex items-center justify-center gap-2 border border-white/20 hover:border-white/40 text-white font-semibold px-7 sm:px-8 py-4 rounded-xl text-base hover:bg-white/5 transition-all min-h-[52px]"
             >
               Talk to Our Team
             </a>
@@ -2131,9 +2181,13 @@ function DemoForm() {
         <motion.div ref={ref} initial="hidden" animate={inView ? "visible" : "hidden"} variants={stagger}>
           <motion.div variants={fadeUp} className="text-center mb-8 sm:mb-10">
             <span className="text-xs font-bold tracking-widest text-[#2563eb] uppercase block mb-3">Get Started</span>
-            <h2 className="font-extrabold text-[#0f1f3d] mb-3" style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)" }}>Request a Demo</h2>
-            <p className="text-sm sm:text-base text-slate-500">Tell us about your workforce and we will show you how Oibuz fits your operations.</p>
+            <h2 className="font-extrabold text-[#0f1f3d] mb-3" style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)" }}>Request a Demo or Self-Setup Free Trial</h2>
+            <p className="text-sm sm:text-base text-slate-500">Create your workspace yourself right now or tell us about your workforce for a guided walkthrough.</p>
           </motion.div>
+
+          <div className="mb-7">
+            <OibuzSelfServeCard source="oibuz_landing_demo_section" />
+          </div>
 
           {submitted ? (
             <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className="bg-white rounded-2xl p-8 sm:p-10 text-center border border-green-100 shadow-sm">

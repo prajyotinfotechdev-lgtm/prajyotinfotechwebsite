@@ -4,11 +4,12 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { OIBUZ_AUDIO_URL, STORY_SCENES } from "./OibuzStoryData";
+import { getOibuzRegisterUrl, trackOibuzTrialClick } from "../utils/oibuzLinks.js";
 import {
   Play, Pause, RotateCcw, Volume2, VolumeX, Maximize2, Minimize2,
   HardHat, MapPin, Users, Clock, Calendar, CreditCard,
   FileSpreadsheet, FileText, CheckCircle2, AlertCircle, Sparkles,
-  Building2, ArrowRight, ShieldCheck, Check, Smartphone, Layers,
+  Building2, ArrowRight, ArrowUpRight, ShieldCheck, Check, Smartphone, Layers,
   Camera, Zap, CheckCheck, Radio, Headphones, UserCheck, Bell,
   BarChart3, Receipt, Workflow, TrendingUp, ChevronRight,
 } from "lucide-react";
@@ -693,9 +694,19 @@ function SceneBrandPayoff({ time, onDemoClick, onReplay }) {
           <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-10 sm:h-12 w-auto object-contain mx-auto brightness-0 invert" />
           <p className="text-sm font-black text-blue-300 tracking-[0.3em] uppercase">Connect the Work.</p>
           <p className="text-xs text-white/50 max-w-xs mx-auto">Workforce & Business Management Built for Construction</p>
-          <div className="flex flex-wrap justify-center gap-3 pt-1">
+          <div className="flex flex-wrap justify-center gap-2.5 sm:gap-3 pt-1">
+            <a
+              href={getOibuzRegisterUrl({ source: "audio_story_payoff" })}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackOibuzTrialClick("audio_story_payoff")}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-900/30 transition-all hover:-translate-y-px"
+            >
+              <span>Start Free Trial</span>
+              <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+            </a>
             <button onClick={onDemoClick}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-900/30 transition-all hover:-translate-y-px">
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-900/30 transition-all hover:-translate-y-px">
               <span>Book a Live Demo</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5]" />
             </button>
@@ -1015,15 +1026,26 @@ export default function OibuzAudioStory({ onDemoClick }) {
         </div>
 
         {/* ── CTA row ── */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-5 rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-5 rounded-2xl border border-slate-200 bg-white shadow-sm">
           <div>
             <p className="font-extrabold text-[#0f1f3d] text-base sm:text-lg mb-0.5">Ready to connect your workforce?</p>
-            <p className="text-slate-500 text-xs sm:text-sm">See Oibuz in action with a personalized live demo for your sites.</p>
+            <p className="text-slate-500 text-xs sm:text-sm">Set up your OIBUZ workspace yourself in 2 minutes or book a guided demo.</p>
           </div>
-          <button onClick={onDemoClick}
-            className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#1a3a6b] hover:bg-[#15305a] text-white font-bold text-sm shadow-lg shadow-blue-900/15 transition-all hover:-translate-y-px hover:shadow-xl whitespace-nowrap">
-            Book a Live Demo <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-          </button>
+          <div className="flex flex-col sm:flex-row gap-2.5 shrink-0">
+            <a
+              href={getOibuzRegisterUrl({ source: "audio_story_bar" })}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackOibuzTrialClick("audio_story_bar")}
+              className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-600/20 transition-all hover:-translate-y-px whitespace-nowrap"
+            >
+              Start Free Trial <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+            </a>
+            <button onClick={onDemoClick}
+              className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-[#1a3a6b] hover:bg-[#15305a] text-white font-bold text-sm shadow-lg shadow-blue-900/15 transition-all hover:-translate-y-px hover:shadow-xl whitespace-nowrap">
+              Book a Demo <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+            </button>
+          </div>
         </div>
       </div>
     </section>

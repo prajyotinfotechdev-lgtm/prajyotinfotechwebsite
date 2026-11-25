@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import ThreeDeviceStack from "./ThreeDeviceStack.jsx";
+import { getOibuzRegisterUrl, trackOibuzTrialClick } from "../utils/oibuzLinks.js";
 import {
   HardHat,
   MapPin,
@@ -11,6 +12,7 @@ import {
   Building2,
   CreditCard,
   ArrowRight,
+  ArrowUpRight,
   ShieldCheck,
   CheckCircle2,
   Sparkles,
@@ -133,20 +135,40 @@ export default function HrmsSpotlight() {
             </div>
 
             {/* Action CTAs */}
-            <div className="pt-3 flex flex-row flex-wrap items-center gap-2.5 sm:gap-4">
-              <Link
-                to="/products/hrms"
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 sm:px-7 py-3 sm:py-4 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 text-white font-bold text-xs sm:text-base shadow-[0_10px_30px_-10px_rgba(124,58,237,0.4)] hover:shadow-[0_15px_35px_-5px_rgba(124,58,237,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap"
-              >
-                <span>Explore Hero Product &rarr;</span>
-              </Link>
+            <div className="pt-3 space-y-2.5">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3.5">
+                <a
+                  href={getOibuzRegisterUrl({ source: "home_spotlight" })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackOibuzTrialClick("home_spotlight")}
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white font-bold text-sm sm:text-base shadow-[0_10px_30px_-10px_rgba(5,150,105,0.45)] hover:shadow-[0_15px_35px_-5px_rgba(5,150,105,0.55)] hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap"
+                >
+                  <span>Start Free Trial</span>
+                  <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+                </a>
 
-              <Link
-                to="/products/hrms#demo-request-form"
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-3 sm:py-4 rounded-2xl bg-white hover:bg-purple-50/80 border border-purple-200 text-purple-900 text-xs sm:text-base font-semibold shadow-sm hover:border-purple-300 transition whitespace-nowrap"
-              >
-                <span>Book Live Product Demo</span>
-              </Link>
+                <Link
+                  to="/products/hrms"
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-sm sm:text-base shadow-md hover:opacity-95 transition whitespace-nowrap"
+                >
+                  <span>Explore OIBUZ</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600 pt-0.5">
+                <Link
+                  to="/products/hrms#demo-form"
+                  className="font-semibold text-purple-800 hover:text-purple-600 underline underline-offset-4"
+                >
+                  Or Book a 15-min Guided Demo →
+                </Link>
+                <span className="text-slate-300 hidden sm:inline">•</span>
+                <span className="text-[11px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/70 px-2.5 py-0.5 rounded-full">
+                  Setup your site in 2 mins • No credit card needed
+                </span>
+              </div>
             </div>
 
             <div className="flex items-center gap-2 text-xs font-mono text-slate-500 pt-1">

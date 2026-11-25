@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
+import { getOibuzRegisterUrl, trackOibuzTrialClick } from "../utils/oibuzLinks.js";
 
 export default function HrmsFooter() {
   const { openLeadModal } = useLeadModal();
@@ -34,6 +35,15 @@ export default function HrmsFooter() {
                   {item.label}
                 </Link>
               ))}
+              <a
+                href={getOibuzRegisterUrl({ source: "hrms_footer_nav" })}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackOibuzTrialClick("hrms_footer_nav")}
+                className="block text-sm text-emerald-400 hover:text-emerald-300 font-semibold transition-colors"
+              >
+                Start Free Trial →
+              </a>
             </div>
           </div>
 
@@ -59,6 +69,15 @@ export default function HrmsFooter() {
         <div className="border-t border-slate-800 pt-6 flex flex-row flex-wrap items-center justify-between gap-3">
           <p className="text-slate-500 text-xs">© {new Date().getFullYear()} Oibuz · Prajyot Infotech. All rights reserved.</p>
           <div className="flex items-center gap-4">
+            <a
+              href={getOibuzRegisterUrl({ source: "hrms_footer_bottom" })}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackOibuzTrialClick("hrms_footer_bottom")}
+              className="text-xs text-emerald-400 hover:text-emerald-300 font-bold transition-colors"
+            >
+              Start Free Trial →
+            </a>
             <button
               onClick={() =>
                 openLeadModal({

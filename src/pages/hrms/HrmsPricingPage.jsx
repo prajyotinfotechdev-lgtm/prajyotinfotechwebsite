@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import HrmsHeader from "../../components/HrmsHeader.jsx";
 import HrmsFooter from "../../components/HrmsFooter.jsx";
+import OibuzTrialCtaPair from "../../components/OibuzTrialCtaPair.jsx";
 import Seo from "../../components/Seo.jsx";
 import { useLeadModal } from "../../context/LeadModalContext.jsx";
 import OibuzPricingSection from "../../components/OibuzPricingSection.jsx";
@@ -167,23 +168,14 @@ export default function HrmsPricingPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.22, duration: 0.4 }}
-              className="flex flex-row flex-nowrap w-full sm:w-auto gap-2.5 sm:gap-3.5 items-center mb-10"
+              className="mb-10"
             >
-              <a
-                href="#pricing-plans"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("pricing-plans")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 text-white font-black px-4 sm:px-8 py-3.5 sm:py-4 rounded-xl transition-all shadow-xl shadow-blue-600/30 hover:shadow-2xl hover:shadow-indigo-600/40 hover:-translate-y-0.5 min-h-[46px] sm:min-h-[50px] text-xs sm:text-base cursor-pointer whitespace-nowrap"
-              >
-                <span>View Plans</span>
-                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 stroke-[2.5]" />
-              </a>
-
-              <button
-                type="button"
-                onClick={() =>
+              <OibuzTrialCtaPair
+                source="hrms_pricing_hero"
+                dark={true}
+                showHint={true}
+                secondaryLabel="Book a Demo"
+                onSecondaryClick={() =>
                   openLeadModal({
                     source: "Pricing Page - Hero CTA",
                     title: "Book Live Oibuz Product Walkthrough",
@@ -191,10 +183,7 @@ export default function HrmsPricingPage() {
                     projectType: "Oibuz Construction HRMS",
                   })
                 }
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 sm:gap-2 border border-slate-700 bg-white/5 hover:bg-white/10 text-slate-200 font-bold px-4 sm:px-7 py-3.5 sm:py-4 rounded-xl transition-all min-h-[46px] sm:min-h-[50px] text-xs sm:text-base text-center whitespace-nowrap shadow-xs hover:border-slate-500 cursor-pointer"
-              >
-                Book Demo
-              </button>
+              />
             </motion.div>
 
             {/* Floating Trust Metric Strip */}
@@ -492,27 +481,21 @@ export default function HrmsPricingPage() {
           <p className="text-slate-300 text-base sm:text-lg mb-8 max-w-xl mx-auto">
             Contact our team to get a detailed product walkthrough and receive a customized deployment proposal.
           </p>
-          <div className="flex flex-row w-full sm:w-auto justify-center gap-3">
-            <button
-              onClick={() =>
-                openLeadModal({
-                  source: "Pricing Page - Final CTA",
-                  title: "Request Custom Pricing Quote",
-                  subtitle: "Schedule a 15-min product walkthrough tailored to your operations.",
-                  projectType: "Oibuz Construction HRMS",
-                })
-              }
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-bold text-sm sm:text-base shadow-lg shadow-blue-600/30 transition-all cursor-pointer whitespace-nowrap"
-            >
-              Talk to Sales <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-            </button>
-            <Link
-              to="/products/hrms/features"
-              className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-200 font-semibold text-sm sm:text-base transition-all whitespace-nowrap"
-            >
-              Explore Features
-            </Link>
-          </div>
+          <OibuzTrialCtaPair
+            source="hrms_pricing_bottom"
+            align="center"
+            dark={true}
+            showHint={true}
+            secondaryLabel="Talk to Sales"
+            onSecondaryClick={() =>
+              openLeadModal({
+                source: "Pricing Page - Final CTA",
+                title: "Request Custom Pricing Quote",
+                subtitle: "Schedule a 15-min product walkthrough tailored to your operations.",
+                projectType: "Oibuz Construction HRMS",
+              })
+            }
+          />
         </div>
       </section>
 

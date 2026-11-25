@@ -65,6 +65,8 @@ import { useLeadModal } from "../context/LeadModalContext.jsx";
 import OibuzAudioStory from "../components/OibuzAudioStory.jsx";
 import HrmsHeader from "../components/HrmsHeader.jsx";
 import HrmsFooter from "../components/HrmsFooter.jsx";
+import OibuzSelfServeCard from "../components/OibuzSelfServeCard.jsx";
+import { getOibuzRegisterUrl, trackOibuzTrialClick } from "../utils/oibuzLinks.js";
 
 const WHATSAPP_NUMBER = "917020708747";
 
@@ -658,29 +660,44 @@ export default function ConstructionHrmsPage() {
                 Manage attendance, leave, timesheets, expenses and payroll across your workforce — from one connected platform.
               </motion.p>
 
-              {/* CTA buttons */}
+              {/* CTA buttons: Self-Serve Free Trial primary + Demo secondary */}
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.21, duration: 0.4 }}
-                className="flex flex-row w-full sm:w-auto gap-2 sm:gap-3"
+                className="space-y-3"
               >
-                <a
-                  href="#demo-form"
-                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-6 py-3.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-[13px] sm:text-sm shadow-lg shadow-blue-700/25 transition-all hover:-translate-y-0.5 whitespace-nowrap"
-                >
-                  Book a Demo
-                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
-                </a>
-                <a
-                  href="#features"
-                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-6 py-3.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-semibold text-[13px] sm:text-sm transition-all whitespace-nowrap"
-                >
-                  <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border-[1.5px] border-slate-400 flex items-center justify-center shrink-0">
-                    <span className="w-0 h-0 border-t-[3px] sm:border-t-[3.5px] border-t-transparent border-b-[3px] sm:border-b-[3.5px] border-b-transparent border-l-[5px] sm:border-l-[6px] border-l-slate-500 ml-0.5" />
+                <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-2.5 sm:gap-3">
+                  <a
+                    href={getOibuzRegisterUrl({ source: "hrms_hero_primary" })}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackOibuzTrialClick("hrms_hero_primary")}
+                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-sm shadow-lg shadow-emerald-600/25 transition-all hover:-translate-y-0.5 whitespace-nowrap"
+                  >
+                    <span>Start Free Trial</span>
+                    <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+                  </a>
+                  <a
+                    href="#demo-form"
+                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-3.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-bold text-sm transition-all whitespace-nowrap shadow-xs"
+                  >
+                    <span>Book a Demo</span>
+                    <ArrowRight className="w-4 h-4 stroke-[2.2]" />
+                  </a>
+                </div>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-semibold text-slate-600">
+                  <span className="inline-flex items-center gap-1 text-emerald-700">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    Self-setup in 2 mins
                   </span>
-                  Explore Platform
-                </a>
+                  <span className="text-slate-300">•</span>
+                  <span>No credit card required</span>
+                  <span className="text-slate-300">•</span>
+                  <a href="#features" className="text-blue-700 hover:underline font-bold">
+                    Explore Platform ↓
+                  </a>
+                </div>
               </motion.div>
 
               {/* 4 Feature highlights */}
@@ -1903,18 +1920,28 @@ export default function ConstructionHrmsPage() {
           <p className="text-slate-400 text-base sm:text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
             See how Oibuz can fit your employees, projects, sites and approval workflows.
           </p>
-          <div className="flex flex-row flex-wrap items-center justify-center gap-2.5 sm:gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 mb-8">
+            <a
+              href={getOibuzRegisterUrl({ source: "hrms_final_cta" })}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackOibuzTrialClick("hrms_final_cta")}
+              className="inline-flex items-center justify-center gap-2 px-7 sm:px-9 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-emerald-900/30 transition-all hover:-translate-y-0.5 whitespace-nowrap"
+            >
+              <span>Start Free Trial</span>
+              <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+            </a>
             <a
               href="#demo-form"
-              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-base shadow-xl shadow-blue-600/30 transition-all hover:-translate-y-0.5 whitespace-nowrap"
+              className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm sm:text-base shadow-xl shadow-blue-600/30 transition-all hover:-translate-y-0.5 whitespace-nowrap"
             >
-              Book a Demo <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
+              Book a Demo <ArrowRight className="w-4 h-4 stroke-[2.5]" />
             </a>
             <button
               onClick={openWhatsAppDirect}
-              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 sm:px-8 py-3.5 sm:py-4 rounded-xl border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white font-semibold text-xs sm:text-base transition-all whitespace-nowrap cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-4 rounded-xl border border-slate-600 hover:border-slate-400 text-slate-300 hover:text-white font-semibold text-sm sm:text-base transition-all whitespace-nowrap cursor-pointer"
             >
-              <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> Talk to Our Team
+              <Phone className="w-4 h-4" /> Talk to Our Team
             </button>
           </div>
           <p className="text-slate-600 text-sm font-semibold tracking-wide">Built for construction. Designed for control.</p>
@@ -1936,7 +1963,7 @@ export default function ConstructionHrmsPage() {
               <p className="text-slate-500 text-base leading-relaxed mb-8">
                 Share your details and our team will get in touch to walk you through Oibuz — tailored to your construction operation.
               </p>
-              <div className="space-y-4">
+              <div className="space-y-4 mb-7">
                 {[
                   { icon: Users, text: "Understand how Oibuz fits your workforce structure" },
                   { icon: Building2, text: "See workflows configured for your sites" },
@@ -1950,6 +1977,8 @@ export default function ConstructionHrmsPage() {
                   </div>
                 ))}
               </div>
+
+              <OibuzSelfServeCard source="hrms_demo_section" />
             </div>
 
             {/* Right: form */}
@@ -2029,20 +2058,29 @@ export default function ConstructionHrmsPage() {
       <HrmsFooter />
 
       {/* Mobile sticky bar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 p-3 bg-white/95 backdrop-blur-md border-t border-slate-200 flex items-center gap-3 shadow-lg">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 p-3 bg-white/95 backdrop-blur-md border-t border-slate-200 flex items-center gap-2.5 shadow-lg">
         <button
           onClick={openWhatsAppDirect}
-          className="flex-1 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md"
+          className="px-3.5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm shrink-0"
         >
-          <Phone className="w-3.5 h-3.5" />
-          <span>WhatsApp Us</span>
+          <Phone className="w-3.5 h-3.5 text-emerald-400" />
+          <span>WhatsApp</span>
         </button>
         <a
           href="#demo-form"
-          className="flex-1 py-3 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-md"
+          className="px-3.5 py-3 rounded-xl border border-blue-200 bg-blue-50 text-blue-800 font-bold text-xs flex items-center justify-center shrink-0"
         >
-          <span>Book a Demo</span>
-          <ArrowRight className="w-3.5 h-3.5" />
+          <span>Demo</span>
+        </a>
+        <a
+          href={getOibuzRegisterUrl({ source: "hrms_mobile_sticky" })}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackOibuzTrialClick("hrms_mobile_sticky")}
+          className="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-md"
+        >
+          <span>Start Free Trial</span>
+          <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
         </a>
       </div>
     </div>
