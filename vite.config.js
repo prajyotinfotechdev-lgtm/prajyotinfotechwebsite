@@ -14,11 +14,12 @@ export default defineConfig({
     strictPort: true,
   },
   build: {
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 800,
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ["react", "react-dom", "react-router-dom", "framer-motion", "lucide-react"],
+          "react-core": ["react", "react-dom", "react-router-dom"],
+          "motion-vendor": ["framer-motion"],
         },
       },
     },

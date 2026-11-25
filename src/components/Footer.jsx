@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import { Link } from "react-router-dom";
-import { Trophy, Zap, Gauge, Calculator, Sparkles, FileText } from "lucide-react";
+import { Trophy, Zap, Gauge, Calculator, Sparkles, FileText, FileCheck2, QrCode, IndianRupee } from "lucide-react";
 import Logo from "./Logo.jsx";
 
 const BRAND         = "Prajyot Infotech";
@@ -242,6 +242,9 @@ export default function Footer() {
               <li><Link to="/tools/construction-leakage-calculator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><Calculator className="w-3.5 h-3.5 text-amber-400 shrink-0" />Leakage Calculator</Link></li>
               <li><Link to="/tools/app-cost-calculator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><Calculator className="w-3.5 h-3.5 text-violet-400 shrink-0" />App Cost Calculator</Link></li>
               <li><Link to="/tools/gst-invoice-generator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><FileText className="w-3.5 h-3.5 text-emerald-400 shrink-0" />Free GST Invoice Maker</Link></li>
+              <li><Link to="/tools/quotation-generator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><FileCheck2 className="w-3.5 h-3.5 text-indigo-400 shrink-0" />Free Quotation &amp; Estimate Maker</Link></li>
+              <li><Link to="/tools/whatsapp-link-generator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><QrCode className="w-3.5 h-3.5 text-teal-400 shrink-0" />WhatsApp Link &amp; QR Generator</Link></li>
+              <li><Link to="/tools/gst-profit-calculator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><IndianRupee className="w-3.5 h-3.5 text-sky-400 shrink-0" />GST &amp; Profit Margin Calculator</Link></li>
               <li><Link to="/resources/software-rfp-template" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5 text-brand-400 shrink-0" />Software RFP &amp; SOW Kit</Link></li>
               <li><Link to="/compare/tally-vs-custom-erp" className="hover:text-slate-200 transition-colors">Compare: Tally vs Custom ERP</Link></li>
               <li><Link to="/compare/wordpress-vs-custom-software" className="hover:text-slate-200 transition-colors">Compare: WordPress vs Custom App</Link></li>

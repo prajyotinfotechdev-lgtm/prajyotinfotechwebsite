@@ -1,16 +1,17 @@
 // App.jsx
 import React, { useEffect, useState, Suspense, lazy } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
 
 import Nav from "./components/Nav.jsx";
 import Footer from "./components/Footer.jsx";
 import { Analytics } from "@vercel/analytics/react";
+import { LeadModalProvider } from "./context/LeadModalContext.jsx";
+import { prefetchTopProducts } from "./utils/prefetch.js";
 import "./styles/responsive.css";
 import "./style.css";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
-const Work = lazy(() => import("./pages/work.jsx")); // ensure case matches actual file on disk
+const Work = lazy(() => import("./pages/work.jsx"));
 const Services = lazy(() => import("./pages/Services.jsx"));
 const About = lazy(() => import("./pages/About.jsx"));
 const Contact = lazy(() => import("./pages/Contact.jsx"));
@@ -25,6 +26,9 @@ const ServiceDetail = lazy(() => import("./pages/ServiceDetail.jsx"));
 const ConstructionLeakageCalculator = lazy(() => import("./pages/ConstructionLeakageCalculator.jsx"));
 const WebsiteTechChecker = lazy(() => import("./pages/WebsiteTechChecker.jsx"));
 const GstInvoiceGenerator = lazy(() => import("./pages/GstInvoiceGenerator.jsx"));
+const QuotationGenerator = lazy(() => import("./pages/QuotationGenerator.jsx"));
+const WhatsAppLinkGenerator = lazy(() => import("./pages/WhatsAppLinkGenerator.jsx"));
+const GstProfitCalculator = lazy(() => import("./pages/GstProfitCalculator.jsx"));
 const Testimonials = lazy(() => import("./pages/Testimonials.jsx"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.jsx"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService.jsx"));
@@ -40,7 +44,6 @@ const HrmsPricingPage = lazy(() => import("./pages/hrms/HrmsPricingPage.jsx"));
 const HrmsResourcesPage = lazy(() => import("./pages/hrms/HrmsResourcesPage.jsx"));
 const SiteVisitsPage = lazy(() => import("./pages/SiteVisitsPage.jsx"));
 const OibuzLandingPage = lazy(() => import("./pages/OibuzLandingPage.jsx"));
-// 2027 Business Growth Campaign
 const FreeBusinessAudit = lazy(() => import("./pages/FreeBusinessAudit.jsx"));
 const AppCostCalculator = lazy(() => import("./pages/AppCostCalculator.jsx"));
 const TallyVsCustomErp = lazy(() => import("./pages/TallyVsCustomErp.jsx"));
@@ -48,30 +51,33 @@ const WordpressVsCustomSoftware = lazy(() => import("./pages/WordpressVsCustomSo
 const SoftwareRfpTemplate = lazy(() => import("./pages/SoftwareRfpTemplate.jsx"));
 const ThankYou = lazy(() => import("./pages/ThankYou.jsx"));
 
-import HelpBot from "./components/HelpBot.jsx";
-import FloatingWhatsApp from "./components/FloatingWhatsApp.jsx";
-
-import { LeadModalProvider } from "./context/LeadModalContext.jsx";
-import LeadModal from "./components/LeadModal.jsx";
-
-
+// Defer floating widgets & modal so they do not bloat the initial main bundle
+const HelpBot = lazy(() => import("./components/HelpBot.jsx"));
+const FloatingWhatsApp = lazy(() => import("./components/FloatingWhatsApp.jsx"));
+const LeadModal = lazy(() => import("./components/LeadModal.jsx"));
 
 function ScrollToTop() {
   const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
   return null;
 }
 
-function PageWrapper({ children }) {
+function RouteFallback() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -15 }}
-      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
+    <div className="min-h-[70vh] mx-auto max-w-6xl px-4 py-16 animate-pulse">
+      <div className="max-w-2xl mx-auto text-center space-y-4">
+        <div className="h-6 w-48 mx-auto rounded-full bg-slate-200" />
+        <div className="h-10 w-3/4 mx-auto rounded-xl bg-slate-200" />
+        <div className="h-4 w-2/3 mx-auto rounded bg-slate-100" />
+      </div>
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="h-52 rounded-3xl bg-slate-100 border border-slate-200/60" />
+        <div className="h-52 rounded-3xl bg-slate-100 border border-slate-200/60 hidden md:block" />
+        <div className="h-52 rounded-3xl bg-slate-100 border border-slate-200/60 hidden lg:block" />
+      </div>
+    </div>
   );
 }
 
@@ -79,123 +85,121 @@ export default function App() {
   const [showChats, setShowChats] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowChats(true);
-    }, 3500); // defer chat widgets by 3.5 seconds
-    return () => clearTimeout(timer);
+    const chatTimer = setTimeout(() => setShowChats(true), 2500);
+    const prefetchTimer =
+      typeof window.requestIdleCallback === "function"
+        ? window.requestIdleCallback(() => prefetchTopProducts(), { timeout: 3000 })
+        : setTimeout(() => prefetchTopProducts(), 2000);
+
+    return () => {
+      clearTimeout(chatTimer);
+      if (typeof window.cancelIdleCallback === "function" && typeof prefetchTimer === "number") {
+        window.cancelIdleCallback(prefetchTimer);
+      } else {
+        clearTimeout(prefetchTimer);
+      }
+    };
   }, []);
 
   const location = useLocation();
-  // Pages with their own dedicated navbar — hide global Nav on these
   const hideGlobalNav = location.pathname.startsWith("/products/hrms") || location.pathname === "/oibuz";
 
   return (
     <LeadModalProvider>
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-brand-50/20 text-navy-800 antialiased selection:bg-brand-200/50 selection:text-navy-900 overflow-clip">
-        {/* ↑ overflow-clip prevents mobile sideways scroll without breaking position: sticky */}
         <ScrollToTop />
 
         {!hideGlobalNav && <Nav />}
 
-        <Suspense fallback={
-          <div className="flex h-screen items-center justify-center bg-slate-50">
-            <div className="flex flex-col items-center gap-4">
-              <div className="w-10 h-10 rounded-full border-4 border-brand-200 border-t-brand-600 animate-spin" />
-              <span className="text-sm text-slate-400 font-medium tracking-wide">Loading…</span>
-            </div>
-          </div>
-        }>
-          <AnimatePresence mode="wait">
-            <Routes location={location} key={location.pathname}>
-              <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
-              <Route path="/pricing" element={<PageWrapper><Pricing /></PageWrapper>} />
-              <Route path="/services" element={<PageWrapper><Services /></PageWrapper>} />
-              <Route path="/services/:serviceId" element={<PageWrapper><ServiceDetail /></PageWrapper>} />
-              <Route path="/work" element={<PageWrapper><Work /></PageWrapper>} />
-              <Route path="/work/:id" element={<PageWrapper><CaseStudyDetail /></PageWrapper>} />
-              <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
-              <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
-              <Route path="/estimate" element={<PageWrapper><Estimate /></PageWrapper>} />
-              <Route path="/products/hrms" element={<PageWrapper><ConstructionHrmsPage /></PageWrapper>} />
-              <Route path="/products/hrms/story" element={<PageWrapper><HrmsStoryPage /></PageWrapper>} />
-              <Route path="/products/hrms/features" element={<PageWrapper><HrmsFeaturesPage /></PageWrapper>} />
-              <Route path="/products/hrms/for-construction" element={<PageWrapper><HrmsConstructionPage /></PageWrapper>} />
-              <Route path="/products/hrms/pricing" element={<PageWrapper><HrmsPricingPage /></PageWrapper>} />
-              <Route path="/products/hrms/resources" element={<PageWrapper><HrmsResourcesPage /></PageWrapper>} />
-              <Route path="/site-visits" element={<PageWrapper><SiteVisitsPage /></PageWrapper>} />
-              <Route path="/oibuz" element={<PageWrapper><OibuzLandingPage /></PageWrapper>} />
+        <Suspense fallback={<RouteFallback />}>
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<Home />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/services/:serviceId" element={<ServiceDetail />} />
+            <Route path="/work" element={<Work />} />
+            <Route path="/work/:id" element={<CaseStudyDetail />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/estimate" element={<Estimate />} />
+            <Route path="/products/hrms" element={<ConstructionHrmsPage />} />
+            <Route path="/products/hrms/story" element={<HrmsStoryPage />} />
+            <Route path="/products/hrms/features" element={<HrmsFeaturesPage />} />
+            <Route path="/products/hrms/for-construction" element={<HrmsConstructionPage />} />
+            <Route path="/products/hrms/pricing" element={<HrmsPricingPage />} />
+            <Route path="/products/hrms/resources" element={<HrmsResourcesPage />} />
+            <Route path="/site-visits" element={<SiteVisitsPage />} />
+            <Route path="/oibuz" element={<OibuzLandingPage />} />
 
-              {/* 2027 Business Growth Campaign */}
-              <Route path="/free-business-tech-audit" element={<PageWrapper><FreeBusinessAudit /></PageWrapper>} />
-              <Route path="/thank-you" element={<PageWrapper><ThankYou /></PageWrapper>} />
-              {/* Redirect legacy Diwali URL to new audit landing page */}
-              <Route path="/diwali-offers-2026" element={<Navigate to="/free-business-tech-audit" replace />} />
+            {/* 2027 Business Growth Campaign */}
+            <Route path="/free-business-tech-audit" element={<FreeBusinessAudit />} />
+            <Route path="/thank-you" element={<ThankYou />} />
+            <Route path="/diwali-offers-2026" element={<Navigate to="/free-business-tech-audit" replace />} />
 
-              {/* Retained Location Pages (Genuine Value & Business Presence) */}
-              <Route path="/software-company-in-pune" element={<PageWrapper><CityLandingPage cityId="pune" /></PageWrapper>} />
-              <Route path="/software-company-in-mumbai" element={<PageWrapper><CityLandingPage cityId="mumbai" /></PageWrapper>} />
-              <Route path="/software-company-in-latur" element={<PageWrapper><CityLandingPage cityId="latur" /></PageWrapper>} />
+            {/* Retained Location Pages */}
+            <Route path="/software-company-in-pune" element={<CityLandingPage cityId="pune" />} />
+            <Route path="/software-company-in-mumbai" element={<CityLandingPage cityId="mumbai" />} />
+            <Route path="/software-company-in-latur" element={<CityLandingPage cityId="latur" />} />
 
-              {/* Consolidated Location Redirects (Maharashtra satellite markets -> Pune HQ) */}
-              <Route path="/software-company-in-navi-mumbai" element={<Navigate to="/software-company-in-mumbai" replace />} />
-              <Route path="/software-company-in-thane" element={<Navigate to="/software-company-in-mumbai" replace />} />
-              <Route path="/software-company-in-nashik" element={<Navigate to="/software-company-in-pune" replace />} />
-              <Route path="/software-company-in-aurangabad" element={<Navigate to="/software-company-in-pune" replace />} />
-              <Route path="/software-company-in-nagpur" element={<Navigate to="/software-company-in-pune" replace />} />
+            {/* Consolidated Location Redirects */}
+            <Route path="/software-company-in-navi-mumbai" element={<Navigate to="/software-company-in-mumbai" replace />} />
+            <Route path="/software-company-in-thane" element={<Navigate to="/software-company-in-mumbai" replace />} />
+            <Route path="/software-company-in-nashik" element={<Navigate to="/software-company-in-pune" replace />} />
+            <Route path="/software-company-in-aurangabad" element={<Navigate to="/software-company-in-pune" replace />} />
+            <Route path="/software-company-in-nagpur" element={<Navigate to="/software-company-in-pune" replace />} />
+            <Route path="/software-company-in-bangalore" element={<Navigate to="/services" replace />} />
+            <Route path="/software-company-in-delhi" element={<Navigate to="/services" replace />} />
+            <Route path="/software-company-in-hyderabad" element={<Navigate to="/services" replace />} />
+            <Route path="/software-company-in-usa" element={<Navigate to="/services" replace />} />
+            <Route path="/software-company-in-uk" element={<Navigate to="/services" replace />} />
+            <Route path="/software-company-in-uae" element={<Navigate to="/services" replace />} />
 
-              {/* Consolidated Location Redirects (Non-Maharashtra / Outstation -> Core Services) */}
-              <Route path="/software-company-in-bangalore" element={<Navigate to="/services" replace />} />
-              <Route path="/software-company-in-delhi" element={<Navigate to="/services" replace />} />
-              <Route path="/software-company-in-hyderabad" element={<Navigate to="/services" replace />} />
-              <Route path="/software-company-in-usa" element={<Navigate to="/services" replace />} />
-              <Route path="/software-company-in-uk" element={<Navigate to="/services" replace />} />
-              <Route path="/software-company-in-uae" element={<Navigate to="/services" replace />} />
+            <Route path="/articles" element={<Articles />} />
+            <Route path="/articles/:id" element={<ArticleDetail />} />
 
-              <Route path="/articles" element={<PageWrapper><Articles /></PageWrapper>} />
-              <Route path="/articles/:id" element={<PageWrapper><ArticleDetail /></PageWrapper>} />
-              <Route path="/tools/construction-leakage-calculator" element={<PageWrapper><ConstructionLeakageCalculator /></PageWrapper>} />
-              <Route path="/tools/website-tech-checker" element={<PageWrapper><WebsiteTechChecker /></PageWrapper>} />
-              <Route path="/tools/gst-invoice-generator" element={<PageWrapper><GstInvoiceGenerator /></PageWrapper>} />
-              <Route path="/tools/app-cost-calculator" element={<PageWrapper><AppCostCalculator /></PageWrapper>} />
-              <Route path="/compare/tally-vs-custom-erp" element={<PageWrapper><TallyVsCustomErp /></PageWrapper>} />
-              <Route path="/compare/wordpress-vs-custom-software" element={<PageWrapper><WordpressVsCustomSoftware /></PageWrapper>} />
-              <Route path="/resources/software-rfp-template" element={<PageWrapper><SoftwareRfpTemplate /></PageWrapper>} />
-              <Route path="/software-company-in-chakan-bhosari" element={<PageWrapper><CityLandingPage cityId="chakan-bhosari" /></PageWrapper>} />
-              <Route path="/software-company-in-hinjewadi" element={<PageWrapper><CityLandingPage cityId="hinjewadi" /></PageWrapper>} />
-              <Route path="/testimonials" element={<PageWrapper><Testimonials /></PageWrapper>} />
-              <Route path="/privacy" element={<PageWrapper><PrivacyPolicy /></PageWrapper>} />
-              <Route path="/terms" element={<PageWrapper><TermsOfService /></PageWrapper>} />
-              <Route path="/faq" element={<PageWrapper><FAQ /></PageWrapper>} />
-              <Route path="/glossary" element={<PageWrapper><TechGlossary /></PageWrapper>} />
-              <Route path="/careers" element={<PageWrapper><Careers /></PageWrapper>} />
-              <Route path="/careers/manage" element={<PageWrapper><CareerManager /></PageWrapper>} />
-              <Route path="/admin" element={<PageWrapper><CareerManager /></PageWrapper>} />
-              <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
+            {/* Free Business Products & Interactive Tools */}
+            <Route path="/tools/construction-leakage-calculator" element={<ConstructionLeakageCalculator />} />
+            <Route path="/tools/website-tech-checker" element={<WebsiteTechChecker />} />
+            <Route path="/tools/gst-invoice-generator" element={<GstInvoiceGenerator />} />
+            <Route path="/tools/quotation-generator" element={<QuotationGenerator />} />
+            <Route path="/tools/whatsapp-link-generator" element={<WhatsAppLinkGenerator />} />
+            <Route path="/tools/gst-profit-calculator" element={<GstProfitCalculator />} />
+            <Route path="/tools/app-cost-calculator" element={<AppCostCalculator />} />
 
-            </Routes>
-          </AnimatePresence>
+            <Route path="/compare/tally-vs-custom-erp" element={<TallyVsCustomErp />} />
+            <Route path="/compare/wordpress-vs-custom-software" element={<WordpressVsCustomSoftware />} />
+            <Route path="/resources/software-rfp-template" element={<SoftwareRfpTemplate />} />
+            <Route path="/software-company-in-chakan-bhosari" element={<CityLandingPage cityId="chakan-bhosari" />} />
+            <Route path="/software-company-in-hinjewadi" element={<CityLandingPage cityId="hinjewadi" />} />
+            <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/glossary" element={<TechGlossary />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/careers/manage" element={<CareerManager />} />
+            <Route path="/admin" element={<CareerManager />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </Suspense>
 
         {showChats && (
-          <>
-            {/* Chat bot at bottom-right */}
+          <Suspense fallback={null}>
             <HelpBot
-              launcherOffset={{ bottom: "6rem", right: "1rem" }} // chat button sits above WA
-              panelOffset={{ bottom: "10rem", right: "1rem" }}   // chat panel above its button
+              launcherOffset={{ bottom: "6rem", right: "1rem" }}
+              panelOffset={{ bottom: "10rem", right: "1rem" }}
               zIndex={50}
             />
-
-            {/* WhatsApp directly under the bot */}
             <FloatingWhatsApp bottom="1rem" right="1rem" zIndex={40} />
-          </>
+          </Suspense>
         )}
 
         {!hideGlobalNav && <Footer />}
 
-        {/* Global Lead Capture Modal */}
-        <LeadModal />
+        <Suspense fallback={null}>
+          <LeadModal />
+        </Suspense>
 
-        {/* Vercel Web Analytics */}
         <Analytics />
       </div>
     </LeadModalProvider>

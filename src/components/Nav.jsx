@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Zap, Sparkles } from "lucide-react";
 import Logo from "./Logo.jsx";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
+import { prefetchRoute, prefetchTopProducts } from "../utils/prefetch.js";
 
 const linkBase =
   "relative py-2 px-1 rounded transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 font-medium";
@@ -15,12 +16,16 @@ const desktopDropdownItemBase =
 const navConfig = [
   {
     label: "Products",
+    mega: true,
     dropdown: [
       { to: "/products/hrms", label: "Oibuz HRMS", badge: "Flagship", desc: "Connected workforce & HR platform." },
-      { to: "/tools/construction-leakage-calculator", label: "Leakage Calculator", badge: "Free Tool", desc: "Calculate ghost-labor & site cash loss." },
-      { to: "/tools/website-tech-checker", label: "Speed & Tech Checker", badge: "Free Tool", desc: "Audit Core Web Vitals, speed & stack." },
+      { to: "/tools/gst-invoice-generator", label: "GST Invoice Generator", badge: "Popular", desc: "Create, print & download A4 GST invoices free." },
+      { to: "/tools/quotation-generator", label: "Quotation & Estimate Maker", badge: "New", desc: "Generate branded quotes & share on WhatsApp." },
+      { to: "/tools/whatsapp-link-generator", label: "WhatsApp Link & QR Maker", badge: "New", desc: "Build wa.me links, counter QRs & widgets free." },
+      { to: "/tools/gst-profit-calculator", label: "GST & Profit Calculator", badge: "Free Tool", desc: "Add/remove GST & simulate net profit margin." },
       { to: "/tools/app-cost-calculator", label: "App Cost Calculator", badge: "2026 Index", desc: "Instant iOS & Android development quote." },
-      { to: "/tools/gst-invoice-generator", label: "GST Invoice Generator", badge: "Free Tool", desc: "Create, print & download GST invoices free." },
+      { to: "/tools/website-tech-checker", label: "Speed & Tech Checker", badge: "Free Tool", desc: "Audit Core Web Vitals, speed & stack." },
+      { to: "/tools/construction-leakage-calculator", label: "Leakage Calculator", badge: "Free Tool", desc: "Calculate ghost-labor & site cash loss." },
     ]
   },
   {
@@ -145,21 +150,31 @@ export default function Nav() {
           {navConfig.map((item) => {
             if (item.dropdown) {
               return (
-                <div key={`desk:${item.label}`} className="group relative py-2">
+                <div
+                  key={`desk:${item.label}`}
+                  className="group relative py-2"
+                  onMouseEnter={() => item.mega && prefetchTopProducts()}
+                >
                   <button className={`${linkBase} text-slate-600 group-hover:text-purple-800 flex items-center gap-1.5`}>
                     {item.label}
                     <svg className="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  <div className="absolute top-full left-0 mt-0 w-72 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50">
-                    <div className="bg-white/90 rounded-2xl shadow-[0_12px_40px_-10px_rgba(124,58,237,0.15)] border border-purple-100 p-2 mt-2 backdrop-blur-3xl">
+                  <div className={`absolute top-full left-0 mt-0 ${item.mega ? "w-[36rem]" : "w-72"} opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-200 z-50`}>
+                    <div className={`bg-white/95 rounded-2xl shadow-[0_12px_40px_-10px_rgba(124,58,237,0.18)] border border-purple-100 p-2.5 mt-2 backdrop-blur-3xl ${item.mega ? "grid grid-cols-2 gap-1" : ""}`}>
                       {item.dropdown.map((subItem) => (
-                        <NavLink key={subItem.to} to={subItem.to} className={desktopDropdownItemBase.replace("hover:bg-brand-50", "hover:bg-purple-50/50").replace("hover:text-brand-700", "hover:text-purple-700")}>
+                        <NavLink
+                          key={subItem.to}
+                          to={subItem.to}
+                          onMouseEnter={() => prefetchRoute(subItem.to)}
+                          onFocus={() => prefetchRoute(subItem.to)}
+                          className={desktopDropdownItemBase.replace("hover:bg-brand-50", "hover:bg-purple-50/60").replace("hover:text-brand-700", "hover:text-purple-700")}
+                        >
                           <div className="font-semibold text-slate-800 flex items-center gap-2 group-hover/item:text-purple-700 transition-colors">
-                            {subItem.label} 
+                            <span>{subItem.label}</span>
                             {subItem.badge && (
-                              <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-amber-50 text-amber-700 border border-amber-200/80">
+                              <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-amber-50 text-amber-700 border border-amber-200/80 shrink-0">
                                 {subItem.badge}
                               </span>
                             )}
@@ -319,7 +334,8 @@ export default function Nav() {
                             <NavLink 
                               key={subItem.to} 
                               to={subItem.to} 
-                              onClick={() => setOpen(false)} 
+                              onTouchStart={() => prefetchRoute(subItem.to)}
+                              onClick={() => setOpen(false)}
                               className={({ isActive }) => `block py-2.5 px-3 rounded-lg text-sm font-medium transition-colors ${isActive ? "bg-brand-50 text-brand-700" : "text-slate-600 hover:bg-slate-50 hover:text-navy-900"}`}
                             >
                               {subItem.label}

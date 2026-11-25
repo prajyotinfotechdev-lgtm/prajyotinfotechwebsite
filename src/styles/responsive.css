@@ -76,6 +76,16 @@ table {
 }
 
 /* 5. FLOATING WIDGETS RESPONSIVE TUNING (Mobile & Small Tablets) */
+@media (max-width: 1023px) {
+  /* Automatically elevate floating action widgets when a page displays a sticky mobile bottom bar */
+  body.has-bottom-bar button[aria-label="Request Consultation"] {
+    bottom: calc(max(0.85rem, env(safe-area-inset-bottom)) + 4.8rem) !important;
+  }
+  body.has-bottom-bar button[aria-label="Open AI Architect"] {
+    bottom: calc(max(0.85rem, env(safe-area-inset-bottom)) + 8.6rem) !important;
+  }
+}
+
 @media (max-width: 639px) {
   /* Prevent floating action buttons from overlapping or blocking interactive content */
   button[aria-label="Request Consultation"] {
@@ -90,6 +100,13 @@ table {
     height: 52px !important;
     bottom: calc(max(0.85rem, env(safe-area-inset-bottom)) + 3.8rem) !important;
     right: 0.85rem !important;
+  }
+
+  body.has-bottom-bar button[aria-label="Request Consultation"] {
+    bottom: calc(max(0.85rem, env(safe-area-inset-bottom)) + 4.9rem) !important;
+  }
+  body.has-bottom-bar button[aria-label="Open AI Architect"] {
+    bottom: calc(max(0.85rem, env(safe-area-inset-bottom)) + 8.7rem) !important;
   }
 }
 

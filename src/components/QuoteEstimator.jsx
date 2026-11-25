@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Laptop, 
   Database, 
@@ -66,7 +65,7 @@ const SOLUTION_TYPES = [
 const ARCHITECTURE_ADDONS = [
   {
     id: 'sub-second-sla',
-    name: 'Sub-Second SLA (&lt;0.8s LCP)',
+    name: 'Sub-Second SLA (<0.8s LCP)',
     desc: 'Edge-caching, code-splitting, and Lighthouse 95+ performance optimization.',
     costMin: 25000,
     costMax: 45000,
@@ -255,18 +254,18 @@ export default function QuoteEstimator() {
         </div>
 
         {/* Step Indicators */}
-        <div className="grid grid-cols-4 gap-2 mt-6 pt-6 border-t border-slate-800 text-xs font-semibold">
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-2 mt-6 pt-5 border-t border-slate-800 text-[11px] sm:text-xs font-semibold">
           {[
-            { num: 1, label: '1. Solution' },
-            { num: 2, label: '2. Modules' },
-            { num: 3, label: '3. Timeline' },
-            { num: 4, label: '4. Summary' }
+            { num: 1, label: '1. Solution', short: '1. Scope' },
+            { num: 2, label: '2. Modules', short: '2. Modules' },
+            { num: 3, label: '3. Timeline', short: '3. Speed' },
+            { num: 4, label: '4. Summary', short: '4. Quote' }
           ].map((s) => (
             <button
               key={s.num}
               type="button"
               onClick={() => s.num < step && setStep(s.num)}
-              className={`text-left py-1.5 border-b-2 transition-all ${
+              className={`text-left py-1.5 border-b-2 transition-all truncate ${
                 step === s.num
                   ? 'border-brand-400 text-white font-bold'
                   : step > s.num
@@ -274,25 +273,18 @@ export default function QuoteEstimator() {
                   : 'border-slate-800 text-slate-500 cursor-default'
               }`}
             >
-              {s.label}
+              <span className="hidden sm:inline">{s.label}</span>
+              <span className="sm:hidden">{s.short}</span>
             </button>
           ))}
         </div>
       </div>
 
       {/* Main Form Body */}
-      <div className="p-6 sm:p-10">
-        <AnimatePresence mode="wait">
+      <div className="p-5 sm:p-10">
           {/* STEP 1: SOLUTION CLASS */}
           {step === 1 && (
-            <motion.div
-              key="step1"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.25 }}
-              className="space-y-6"
-            >
+            <div className="space-y-6">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-brand-600">Phase 1 of 4</span>
                 <h3 className="text-2xl font-bold text-slate-900 mt-1">Select your core software solution</h3>
@@ -350,19 +342,12 @@ export default function QuoteEstimator() {
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
-            </motion.div>
+            </div>
           )}
 
           {/* STEP 2: MODULES & ARCHITECTURE */}
           {step === 2 && (
-            <motion.div
-              key="step2"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.25 }}
-              className="space-y-6"
-            >
+            <div className="space-y-6">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-brand-600">Phase 2 of 4</span>
                 <h3 className="text-2xl font-bold text-slate-900 mt-1">Select engineering modules & architecture</h3>
@@ -422,19 +407,12 @@ export default function QuoteEstimator() {
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
-            </motion.div>
+            </div>
           )}
 
           {/* STEP 3: TIMELINE & URGENCY */}
           {step === 3 && (
-            <motion.div
-              key="step3"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.25 }}
-              className="space-y-6"
-            >
+            <div className="space-y-6">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-brand-600">Phase 3 of 4</span>
                 <h3 className="text-2xl font-bold text-slate-900 mt-1">Target delivery speed & launch urgency</h3>
@@ -492,19 +470,12 @@ export default function QuoteEstimator() {
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
-            </motion.div>
+            </div>
           )}
 
           {/* STEP 4: SUMMARY & LEAD DISPATCH */}
           {step === 4 && (
-            <motion.div
-              key="step4"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.25 }}
-              className="space-y-8"
-            >
+            <div className="space-y-8">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-brand-600">Phase 4 of 4</span>
                 <h3 className="text-2xl font-bold text-slate-900 mt-1">Executive Project Summary & Proposal</h3>
@@ -683,9 +654,8 @@ export default function QuoteEstimator() {
                   </div>
                 </div>
               )}
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
       </div>
 
       {/* Footer Guarantee Strip */}

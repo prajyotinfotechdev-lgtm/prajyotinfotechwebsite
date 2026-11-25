@@ -38,7 +38,7 @@ const RFP_SECTIONS = [
   {
     number: "03",
     title: "Performance, Security & SLA Requirements",
-    desc: "Non-negotiable technical standards: Sub-second page load times (&lt;0.8s LCP), Role-Based Access Control (RBAC), end-to-end encryption, and daily automated backups."
+    desc: "Non-negotiable technical standards: Sub-second page load times (<0.8s LCP), Role-Based Access Control (RBAC), end-to-end encryption, and daily automated backups."
   },
   {
     number: "04",
@@ -59,6 +59,7 @@ const RFP_SECTIONS = [
 
 export default function SoftwareRfpTemplate() {
   const [copied, setCopied] = useState(false);
+  const [mobileTab, setMobileTab] = useState("edit");
   const [rfpData, setRfpData] = useState({
     companyName: "Apex Manufacturing Pvt Ltd",
     contactPerson: "Rajesh Sharma",
@@ -69,7 +70,7 @@ export default function SoftwareRfpTemplate() {
     budgetRange: "₹3,50,000 – ₹5,50,000",
     coreProblem: "Manual inventory entry between factory and warehouse causes stockouts and delayed dispatches. Tally lacks real-time mobile tracking for our shop-floor managers.",
     integrations: "Tally Prime (sales/purchase journal sync), Razorpay UPI billing, WhatsApp automated invoice alerts",
-    slaRequirements: "Sub-second load times (&lt;0.8s), 100% full source code ownership on Day 1, 60-day bug warranty"
+    slaRequirements: "Sub-second load times (<0.8s), 100% full source code ownership on Day 1, 60-day bug warranty"
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -116,6 +117,18 @@ Submit this document to hr@prajyotinfotech.in or via WhatsApp at +91 93226 73286
     navigator.clipboard.writeText(generateFullRfpText());
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
+  };
+
+  const handleDownloadTxt = () => {
+    const blob = new Blob([generateFullRfpText()], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `RFP-${(rfpData.companyName || "Project").replace(/[^a-z0-9]+/gi, "-")}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const handleSubmitToPrajyot = async (e) => {
@@ -191,10 +204,19 @@ Submit this document to hr@prajyotinfotech.in or via WhatsApp at +91 93226 73286
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
 
-      <main className="py-20 px-4 bg-slate-50 min-h-screen">
+      <style>{`
+        @media print {
+          nav, footer, .no-print, button[aria-label="Request Consultation"], button[aria-label="Open AI Architect"] { display: none !important; }
+          body { background: #ffffff !important; color: #0f172a !important; }
+          .rfp-print-area { display: block !important; background: #ffffff !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; box-shadow: none !important; }
+          .rfp-print-area * { color: #0f172a !important; }
+        }
+      `}</style>
+
+      <main className="py-12 sm:py-20 px-4 bg-slate-50 min-h-screen">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-12 no-print">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-800 text-xs font-bold mb-4 shadow-sm">
               <Sparkles className="w-3.5 h-3.5 text-brand-600 shrink-0" />
               <span>B2B Procurement Framework · 2026 Edition</span>
@@ -208,7 +230,7 @@ Submit this document to hr@prajyotinfotech.in or via WhatsApp at +91 93226 73286
           </div>
 
           {/* 6 Core RFP Sections */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          <div className="no-print grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-12">
             {RFP_SECTIONS.map((sec) => (
               <div key={sec.number} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
                 <div>
@@ -229,29 +251,49 @@ Submit this document to hr@prajyotinfotech.in or via WhatsApp at +91 93226 73286
                 </span>
                 <h2 className="text-2xl font-bold text-slate-900">Interactive Scope of Work (SOW) Builder</h2>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 no-print">
                 <button
                   type="button"
                   onClick={handleCopy}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-all"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-all cursor-pointer min-h-[40px]"
                 >
                   {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copied ? "Copied RFP!" : "Copy Full RFP"}</span>
+                  <span>{copied ? "Copied!" : "Copy RFP"}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDownloadTxt}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-all cursor-pointer min-h-[40px]"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download .TXT</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => window.print()}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-all"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-semibold transition-all cursor-pointer min-h-[40px]"
                 >
                   <Printer className="w-3.5 h-3.5" />
-                  <span>Print Document</span>
+                  <span>Print / PDF</span>
                 </button>
               </div>
             </div>
 
+            {/* Mobile switcher */}
+            <div className="lg:hidden grid grid-cols-2 gap-2 p-1 rounded-xl bg-slate-100 mb-6 no-print">
+              <button type="button" onClick={() => setMobileTab("edit")}
+                className={`py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${mobileTab === "edit" ? "bg-white text-brand-700 shadow-xs" : "text-slate-600"}`}>
+                1. Edit Specs
+              </button>
+              <button type="button" onClick={() => setMobileTab("preview")}
+                className={`py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${mobileTab === "preview" ? "bg-white text-brand-700 shadow-xs" : "text-slate-600"}`}>
+                2. Preview Document
+              </button>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
               {/* Form Controls */}
-              <div className="lg:col-span-5 space-y-4">
+              <div className={`lg:col-span-5 space-y-4 no-print ${mobileTab === "preview" ? "hidden lg:block" : "block"}`}>
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">Company / Organization</label>
                   <input
@@ -335,7 +377,7 @@ Submit this document to hr@prajyotinfotech.in or via WhatsApp at +91 93226 73286
               </div>
 
               {/* Live Preview Document */}
-              <div className="lg:col-span-7 bg-slate-900 text-slate-100 p-6 sm:p-8 rounded-2xl font-mono text-xs overflow-x-auto shadow-inner border border-slate-800">
+              <div className={`lg:col-span-7 rfp-print-area bg-slate-900 text-slate-100 p-5 sm:p-8 rounded-2xl font-mono text-xs overflow-x-auto shadow-inner border border-slate-800 ${mobileTab === "edit" ? "hidden lg:block print:block" : "block"}`}>
                 <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-800 text-slate-400">
                   <span>DOCUMENT: SOW_SPEC_2026.TXT</span>
                   <span className="text-[10px] text-brand-400">READY FOR TENDER</span>
@@ -378,7 +420,7 @@ Submit this document to hr@prajyotinfotech.in or via WhatsApp at +91 93226 73286
           </div>
 
           {/* 4 Critical Mistakes in Software RFPs */}
-          <div className="bg-slate-100/70 rounded-3xl p-6 sm:p-10 border border-slate-200">
+          <div className="no-print bg-slate-100/70 rounded-3xl p-6 sm:p-10 border border-slate-200">
             <div className="max-w-2xl mb-8">
               <span className="text-xs font-bold uppercase tracking-widest text-amber-700 flex items-center gap-1.5 mb-2">
                 <AlertTriangle className="w-4 h-4 text-amber-600" />

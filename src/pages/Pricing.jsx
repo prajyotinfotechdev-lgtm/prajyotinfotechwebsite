@@ -116,8 +116,8 @@ export default function Pricing() {
       <BreadcrumbsLd items={[{ name: "Home", url: "https://www.prajyotinfotech.in/" }, { name: "Pricing", url: "https://www.prajyotinfotech.in/pricing" }]} />
 
       <Seo
-        title="Software & Web Development Pricing � Transparent Cost Packages | Prajyot Infotech"
-        description="Transparent software and website development pricing. Starter web from ?25,499. Custom software, mobile apps, ERP/CRM and automation. Get a free business audit."
+        title="Software & Web Development Pricing — Transparent Cost Packages | Prajyot Infotech"
+        description="Transparent software and website development pricing. Starter web from ₹25,499. Custom software, mobile apps, ERP/CRM and automation. Get a free business audit."
         keywords="website development pricing India, custom software development cost, mobile app pricing, ERP CRM cost, free business technology audit"
         path="/pricing"
         schema={{
@@ -165,13 +165,13 @@ export default function Pricing() {
       <div className="mt-8 relative rounded-3xl p-5 sm:p-7 bg-gradient-to-r from-brand-600 via-brand-700 to-navy-700 text-white shadow-xl overflow-hidden">
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3.5 text-center md:text-left">
-            <span className="text-3xl sm:text-4xl">??</span>
+            <Zap className="w-9 h-9 text-brand-200 shrink-0" />
             <div>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-[11px] font-bold text-brand-100 tracking-wider uppercase mb-1">
                 2027 Business Growth Campaign
               </div>
               <h3 className="text-lg sm:text-2xl font-black">
-                Get Your Business 2027-Ready � Free Business Audit
+                Get Your Business 2027-Ready — Free Business Audit
               </h3>
               <p className="text-xs sm:text-sm text-brand-100 font-medium">
                 Build smarter, automate better, grow faster. No cost, no commitment.

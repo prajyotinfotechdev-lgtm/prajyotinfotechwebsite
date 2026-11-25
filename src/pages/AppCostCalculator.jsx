@@ -27,6 +27,7 @@ import {
   Send
 } from "lucide-react";
 import { createLead } from "../utils/leadStorage.js";
+import { useBottomBar } from "../utils/useBottomBar.js";
 
 // Platforms
 const PLATFORMS = [
@@ -208,6 +209,7 @@ function formatRupee(amount) {
 }
 
 export default function AppCostCalculator() {
+  useBottomBar();
   const [selectedPlatform, setSelectedPlatform] = useState(PLATFORMS[0]);
   const [selectedAuth, setSelectedAuth] = useState(["otp", "rbac"]);
   const [selectedFeatures, setSelectedFeatures] = useState(["payments", "push-notifications"]);
@@ -373,22 +375,34 @@ export default function AppCostCalculator() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
+      <style>{`
+        @media print {
+          nav, footer, .no-print, button[aria-label="Request Consultation"], button[aria-label="Open AI Architect"] { display: none !important; }
+          body { background: #ffffff !important; color: #0f172a !important; }
+        }
+      `}</style>
+
       {/* Mobile Sticky Bottom Price Bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-slate-900/95 backdrop-blur-md border-t border-slate-700 px-4 py-3 flex items-center justify-between gap-3">
-        <div>
-          <div className="text-[11px] text-slate-400 font-mono uppercase">Estimated Cost</div>
-          <div className="text-base font-black text-brand-400 font-mono leading-tight">{formatRupee(totalCostMin)}–{formatRupee(totalCostMax)}</div>
-          <div className="text-[11px] text-slate-500">~{totalWeeks} weeks</div>
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30 no-print bg-slate-900/95 backdrop-blur-md border-t border-slate-700 px-3 py-2.5 flex items-center justify-between gap-2">
+        <div className="min-w-0">
+          <div className="text-[10px] text-slate-400 font-mono uppercase">Est. Investment (~{totalWeeks} wks)</div>
+          <div className="text-sm sm:text-base font-black text-brand-400 font-mono leading-tight truncate">
+            {formatRupee(totalCostMin)} – {formatRupee(totalCostMax)}
+          </div>
         </div>
-        <div className="flex gap-2">
-          <button onClick={generateWhatsAppMessage}
-            className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs cursor-pointer min-h-[44px]">
+        <div className="flex gap-2 shrink-0">
+          <button type="button" onClick={() => window.print()}
+            className="flex items-center gap-1 px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 font-bold text-xs cursor-pointer min-h-[44px]">
+            <Printer className="w-3.5 h-3.5" /> PDF
+          </button>
+          <button type="button" onClick={generateWhatsAppMessage}
+            className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs cursor-pointer min-h-[44px]">
             <MessageSquare className="w-4 h-4" /> WhatsApp
           </button>
         </div>
       </div>
 
-      <main className="py-20 px-4 pb-28 lg:pb-20 bg-slate-50 min-h-screen">
+      <main className="py-12 sm:py-20 px-4 pb-28 lg:pb-20 bg-slate-50 min-h-screen">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto mb-12">
@@ -782,7 +796,27 @@ export default function AppCostCalculator() {
               </p>
             </div>
 
-            <div className="overflow-x-auto">
+            {/* Mobile Benchmark Cards */}
+            <div className="md:hidden space-y-3">
+              {[
+                { label: "Average App Budget", freelancer: "₹40k – ₹1.2L", prajyot: "₹2L – ₹5.5L", legacy: "₹20L – ₹60L+" },
+                { label: "Code Architecture", freelancer: "Templates", prajyot: "Clean + CI/CD", legacy: "Slow Bureaucracy" },
+                { label: "Delivery Speed", freelancer: "Unpredictable", prajyot: "6–10 Weeks", legacy: "6–12 Months" },
+                { label: "IP Ownership", freelancer: "Disputed", prajyot: "100% Day-1 Transfer", legacy: "Locked Licenses" },
+                { label: "Bug Warranty", freelancer: "None", prajyot: "60 Days Included", legacy: "₹1.5L/mo AMC" },
+              ].map((b) => (
+                <div key={b.label} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
+                  <div className="font-bold text-slate-900 text-sm">{b.label}</div>
+                  <div className="grid grid-cols-3 gap-2 pt-1">
+                    <div><span className="text-[10px] text-slate-400 block">Freelancers</span><span className="text-slate-600">{b.freelancer}</span></div>
+                    <div className="bg-brand-50 p-1.5 rounded-lg border border-brand-200"><span className="text-[10px] text-brand-700 font-bold block">Prajyot</span><span className="font-bold text-brand-900">{b.prajyot}</span></div>
+                    <div><span className="text-[10px] text-slate-400 block">Legacy IT</span><span className="text-slate-600">{b.legacy}</span></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
                   <tr className="border-b border-slate-200 bg-slate-50 text-slate-700 font-bold uppercase tracking-wider text-[11px]">

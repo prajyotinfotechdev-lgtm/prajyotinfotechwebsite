@@ -197,7 +197,7 @@ export default function Services() {
         { name: "Services", url: `${SITE_URL}/services` },
       ]} />
       <Seo
-        title="Software & Web Development Services | Custom Web, Mobile & ERP Solutions — Prajyot Infotech"
+        title="Software & Web Development Services | Custom Web, Mobile & ERP Solutions â€” Prajyot Infotech"
         description="Prajyot Infotech provides enterprise web development, mobile apps & custom ERP/CRM. Get a free business technology audit and discover how to get 2027-ready."
         keywords="custom software development, enterprise web development, mobile app engineering, ERP CRM solutions, business automation, free business tech audit"
         path="/services"
@@ -241,10 +241,10 @@ export default function Services() {
         {/* 2027 Business Growth CTA */}
         <div className="mt-8 p-5 rounded-3xl bg-gradient-to-r from-brand-600 via-brand-700 to-navy-700 text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <span className="text-3xl">??</span>
+            <Zap className="w-8 h-8 text-brand-200 shrink-0" />
             <div>
               <div className="text-xs font-black uppercase text-brand-200 tracking-wider">2027 Business Growth Campaign</div>
-              <div className="text-sm sm:text-base font-extrabold text-white">Get Your Business 2027-Ready — Free Technology Audit</div>
+              <div className="text-sm sm:text-base font-extrabold text-white">Get Your Business 2027-Ready â€” Free Technology Audit</div>
               <div className="text-xs text-brand-100 font-medium">Build smarter. Automate better. Grow faster. No cost, no commitment.</div>
             </div>
           </div>

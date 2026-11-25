@@ -117,7 +117,13 @@ Canonical URL: https://www.prajyotinfotech.in
 - **Mobile App Development Cost Calculator (India 2026)**: `https://www.prajyotinfotech.in/tools/app-cost-calculator`
   Interactive scoping wizard calculating Flutter, React Native, iOS, Android app costs in INR with WhatsApp scope export.
 - **Free GST Invoice Generator Online**: `https://www.prajyotinfotech.in/tools/gst-invoice-generator`
-  Free Indian GST compliant invoicing tool with CGST/SGST/IGST auto-tax, 24+ state codes, HSN lookup, and WhatsApp dispatch.
+  Free Indian GST compliant invoicing tool with CGST/SGST/IGST auto-tax, custom logo upload, 24+ state codes, and WhatsApp dispatch.
+- **Free Business Quotation & Proforma Estimate Maker**: `https://www.prajyotinfotech.in/tools/quotation-generator`
+  Free quotation and proforma invoice builder supporting GST inclusive/exclusive/non-GST quotes, A4 PDF export, and WhatsApp dispatch.
+- **Free WhatsApp Link & Counter QR Code Generator**: `https://www.prajyotinfotech.in/tools/whatsapp-link-generator`
+  Generate custom wa.me links with pre-filled messages, SVG/PNG QR codes, printable counter standee cards, and floating chat button snippets.
+- **India GST & Profit Margin Calculator**: `https://www.prajyotinfotech.in/tools/gst-profit-calculator`
+  Add or reverse-extract Indian GST slabs (0%–28%) with CGST/SGST vs IGST breakdown and real-time net profit margin simulation.
 - **Website Speed & Tech Stack Checker**: `https://www.prajyotinfotech.in/tools/website-tech-checker`
   Client-side Core Web Vitals and technology stack diagnostic scanner.
 - **Construction Ghost-Labor Leakage Calculator**: `https://www.prajyotinfotech.in/tools/construction-leakage-calculator`

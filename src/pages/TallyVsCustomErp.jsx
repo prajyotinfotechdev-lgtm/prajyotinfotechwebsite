@@ -219,7 +219,34 @@ export default function TallyVsCustomErp() {
               </p>
             </div>
 
-            <div className="overflow-x-auto">
+            {/* Mobile Comparison Cards */}
+            <div className="md:hidden space-y-4">
+              {COMPARISON_ROWS.map((row, idx) => (
+                <div key={idx} className="rounded-2xl border border-slate-200 overflow-hidden bg-slate-50">
+                  <div className="px-4 py-3 bg-slate-100 font-bold text-slate-900 text-sm border-b border-slate-200">
+                    {row.feature}
+                  </div>
+                  <div className="p-4 space-y-3 text-xs">
+                    <div className="flex items-start gap-2 text-slate-600">
+                      <XCircle className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-bold text-slate-500 uppercase text-[10px] block mb-0.5">Tally Prime</span>
+                        {row.tally}
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2 text-slate-900 bg-brand-50/70 p-3 rounded-xl border border-brand-200/70 font-medium">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-bold text-brand-700 uppercase text-[10px] block mb-0.5">Custom ERP</span>
+                        {row.customErp}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
                   <tr className="border-b border-slate-200 bg-slate-50 text-slate-700 font-bold uppercase tracking-wider text-[11px]">

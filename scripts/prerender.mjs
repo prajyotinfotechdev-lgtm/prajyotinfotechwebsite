@@ -748,6 +748,45 @@ const ROUTES = [
       </section>
     `,
   },
+  {
+    path: "tools/quotation-generator",
+    title: "Free Quotation & Proforma Estimate Maker Online India | Prajyot Infotech",
+    description: "Create branded business quotations, estimates, and proforma invoices in seconds. Supports GST exclusive/inclusive/non-GST quotes, A4 PDF export, and WhatsApp sharing.",
+    keywords: "free quotation generator online India, proforma invoice maker free, business estimate maker PDF, quotation format India",
+    canonical: "https://www.prajyotinfotech.in/tools/quotation-generator",
+    h1: "Free Business Quotation & Proforma Estimate Maker",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Create clean, professional business quotations and proforma estimates online for free. Includes payment milestone templates, optional GST breakdowns, A4 PDF print, and 1-click WhatsApp dispatch.
+      </p>
+    `,
+  },
+  {
+    path: "tools/whatsapp-link-generator",
+    title: "Free WhatsApp Link & QR Code Generator (wa.me Maker) | Prajyot Infotech",
+    description: "Generate direct WhatsApp chat links with custom greeting messages, high-res SVG/PNG QR codes, printable shop counter standees, and website button HTML snippets free.",
+    keywords: "whatsapp link generator, create whatsapp link with message, whatsapp qr code generator free, wa.me link generator India",
+    canonical: "https://www.prajyotinfotech.in/tools/whatsapp-link-generator",
+    h1: "Free WhatsApp Direct Chat Link & QR Code Generator",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Build instant wa.me chat links with pre-filled messages, generate crisp scannable QR codes in SVG or PNG format, and print counter standees for your business for free.
+      </p>
+    `,
+  },
+  {
+    path: "tools/gst-profit-calculator",
+    title: "India GST & Profit Margin Calculator Online (Add / Remove GST) | Prajyot Infotech",
+    description: "Instant Indian GST calculator for all tax slabs (3%, 5%, 12%, 18%, 28%). Calculate CGST, SGST, IGST split plus net profit margin and markup percentages.",
+    keywords: "gst calculator india, reverse gst calculator online, profit margin calculator india, cgst sgst igst calculator",
+    canonical: "https://www.prajyotinfotech.in/tools/gst-profit-calculator",
+    h1: "India GST & Profit Margin Calculator",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Add or remove GST across 0%, 3%, 5%, 12%, 18%, and 28% Indian tax slabs, split CGST + SGST vs IGST automatically, and check exact product profit margins.
+      </p>
+    `,
+  },
 
 ];
 console.log(`Starting static HTML prerendering for ${ROUTES.length} routes...`);

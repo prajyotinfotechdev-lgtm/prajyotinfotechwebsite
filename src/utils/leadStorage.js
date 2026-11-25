@@ -1,8 +1,17 @@
 // src/utils/leadStorage.js
-import { supabase } from '../lib/supabase.js';
+// Lazy-loads Supabase SDK only when primary /api/leads fails or admin dashboard functions are invoked.
+
+let _supabasePromise = null;
+async function getSupabase() {
+  if (!_supabasePromise) {
+    _supabasePromise = import('../lib/supabase.js').then((mod) => mod.supabase);
+  }
+  return _supabasePromise;
+}
 
 export async function getLeads() {
   try {
+    const supabase = await getSupabase();
     const { data, error } = await supabase
       .from('leads')
       .select('*')
@@ -35,7 +44,7 @@ export async function createLead(leadData) {
   const now = Date.now();
   const lastSubmitStr = localStorage.getItem('last_lead_submit');
   const countStr = localStorage.getItem('lead_submit_count');
-  
+
   if (lastSubmitStr && countStr) {
     const lastSubmit = parseInt(lastSubmitStr, 10);
     const count = parseInt(countStr, 10);
@@ -86,8 +95,7 @@ export async function createLead(leadData) {
 
     console.warn("API leads endpoint notice (attempting direct client fallback):", apiErr.message);
 
-    // 2. Fallback: Direct Supabase Client SDK
-    // Format rich metadata into message if provided
+    // 2. Fallback: Direct Supabase Client SDK (dynamically loaded on demand)
     let formattedMessage = leadData.message || leadData.notes || "";
     const details = [];
     if (leadData.businessName) details.push(`Business: ${leadData.businessName}`);
@@ -119,6 +127,7 @@ export async function createLead(leadData) {
       created_at: new Date().toISOString()
     };
 
+    const supabase = await getSupabase();
     const { data, error } = await supabase
       .from('leads')
       .insert(fallbackLead)
@@ -136,6 +145,7 @@ export async function createLead(leadData) {
 
 export async function updateLeadStatus(id, status) {
   try {
+    const supabase = await getSupabase();
     const { error } = await supabase
       .from('leads')
       .update({ status })
@@ -152,6 +162,7 @@ export async function updateLeadStatus(id, status) {
 
 export async function deleteLead(id) {
   try {
+    const supabase = await getSupabase();
     const { error } = await supabase
       .from('leads')
       .delete()
