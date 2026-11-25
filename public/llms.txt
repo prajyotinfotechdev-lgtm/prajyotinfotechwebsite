@@ -142,3 +142,16 @@ Canonical URL: https://www.prajyotinfotech.in
   Manufacturing plant ERPs, barcode inventory tracking, and shop-floor automation for auto-ancillary and fabrication units.
 - **Hinjewadi Tech Park**: `https://www.prajyotinfotech.in/software-company-in-hinjewadi`
   Rapid startup MVP development, high-concurrency microservices, and dedicated engineering pods for tech founders.
+- **Free Tools Directory Hub**: `https://www.prajyotinfotech.in/tools`
+- **Dynamic UPI Payment QR Standee Generator**: `https://www.prajyotinfotech.in/tools/upi-qr-generator`
+- **HSN & SAC Code GST Rate Finder**: `https://www.prajyotinfotech.in/tools/hsn-sac-finder`
+- **Razorpay & Play Store Legal Policy Maker**: `https://www.prajyotinfotech.in/tools/legal-policy-generator`
+- **Free Employee Salary Slip (Payslip) Generator**: `https://www.prajyotinfotech.in/tools/salary-slip-generator`
+- **Free Purchase Order & Delivery Challan Maker**: `https://www.prajyotinfotech.in/tools/purchase-order-generator`
+
+### Industry Software Solutions & SaaS Cost Comparisons
+- **Mobile Shop POS & Serialized IMEI Billing**: `https://www.prajyotinfotech.in/solutions/mobile-shop-pos-software`
+- **Restaurant QR Table Ordering & Kitchen Display (KDS)**: `https://www.prajyotinfotech.in/solutions/restaurant-qr-kds-software`
+- **Manufacturing BOM & Tally-Synced Plant ERP**: `https://www.prajyotinfotech.in/solutions/manufacturing-bom-erp`
+- **Zoho / Per-Seat SaaS vs Custom Owned ERP Calculator**: `https://www.prajyotinfotech.in/compare/zoho-vs-custom-software`
+- **Shopify vs Custom React E-Commerce**: `https://www.prajyotinfotech.in/compare/shopify-vs-custom-ecommerce`

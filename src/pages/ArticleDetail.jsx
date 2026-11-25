@@ -165,9 +165,29 @@ export default function ArticleDetail() {
           <div className="my-8">
             <h2 className="text-sm font-mono uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-brand-400" />
-              Live Interactive Simulation & Calculator
+              Live Interactive Simulation &amp; Calculator
             </h2>
             {article.interactiveComponent}
+          </div>
+        )}
+
+        {/* Free Tool Funnel Bridge */}
+        {article.relatedTool && (
+          <div className="my-8 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-emerald-950/80 via-slate-900 to-brand-950/70 border border-emerald-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="text-[11px] font-mono font-bold uppercase tracking-wider text-emerald-400 mb-1">
+                Free Online Utility Recommended for Readers
+              </div>
+              <h3 className="text-base sm:text-lg font-bold text-white">{article.relatedTool.title}</h3>
+              <p className="text-xs sm:text-sm text-slate-300 mt-0.5">{article.relatedTool.desc}</p>
+            </div>
+            <Link
+              to={article.relatedTool.to}
+              className="shrink-0 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg transition-all min-h-[44px]"
+            >
+              <span>{article.relatedTool.cta || "Launch Free Tool"}</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         )}
 

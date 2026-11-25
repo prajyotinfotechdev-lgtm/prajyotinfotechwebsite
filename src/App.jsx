@@ -23,12 +23,31 @@ const Articles = lazy(() => import("./pages/Articles.jsx"));
 const ArticleDetail = lazy(() => import("./pages/ArticleDetail.jsx"));
 const CaseStudyDetail = lazy(() => import("./pages/CaseStudyDetail.jsx"));
 const ServiceDetail = lazy(() => import("./pages/ServiceDetail.jsx"));
+
+// Free Tools & Products
+const ToolsHub = lazy(() => import("./pages/ToolsHub.jsx"));
 const ConstructionLeakageCalculator = lazy(() => import("./pages/ConstructionLeakageCalculator.jsx"));
 const WebsiteTechChecker = lazy(() => import("./pages/WebsiteTechChecker.jsx"));
 const GstInvoiceGenerator = lazy(() => import("./pages/GstInvoiceGenerator.jsx"));
 const QuotationGenerator = lazy(() => import("./pages/QuotationGenerator.jsx"));
 const WhatsAppLinkGenerator = lazy(() => import("./pages/WhatsAppLinkGenerator.jsx"));
 const GstProfitCalculator = lazy(() => import("./pages/GstProfitCalculator.jsx"));
+const UpiQrGenerator = lazy(() => import("./pages/UpiQrGenerator.jsx"));
+const HsnSacFinder = lazy(() => import("./pages/HsnSacFinder.jsx"));
+const LegalPolicyGenerator = lazy(() => import("./pages/LegalPolicyGenerator.jsx"));
+const SalarySlipGenerator = lazy(() => import("./pages/SalarySlipGenerator.jsx"));
+const PurchaseOrderGenerator = lazy(() => import("./pages/PurchaseOrderGenerator.jsx"));
+const AppCostCalculator = lazy(() => import("./pages/AppCostCalculator.jsx"));
+
+// Comparison & Solution Hubs
+const TallyVsCustomErp = lazy(() => import("./pages/TallyVsCustomErp.jsx"));
+const WordpressVsCustomSoftware = lazy(() => import("./pages/WordpressVsCustomSoftware.jsx"));
+const ZohoVsCustomSoftware = lazy(() => import("./pages/ZohoVsCustomSoftware.jsx"));
+const ShopifyVsCustomEcommerce = lazy(() => import("./pages/ShopifyVsCustomEcommerce.jsx"));
+const SolutionLandingPage = lazy(() => import("./pages/SolutionLandingPage.jsx"));
+const SoftwareRfpTemplate = lazy(() => import("./pages/SoftwareRfpTemplate.jsx"));
+
+// Other Pages
 const Testimonials = lazy(() => import("./pages/Testimonials.jsx"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy.jsx"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService.jsx"));
@@ -45,13 +64,8 @@ const HrmsResourcesPage = lazy(() => import("./pages/hrms/HrmsResourcesPage.jsx"
 const SiteVisitsPage = lazy(() => import("./pages/SiteVisitsPage.jsx"));
 const OibuzLandingPage = lazy(() => import("./pages/OibuzLandingPage.jsx"));
 const FreeBusinessAudit = lazy(() => import("./pages/FreeBusinessAudit.jsx"));
-const AppCostCalculator = lazy(() => import("./pages/AppCostCalculator.jsx"));
-const TallyVsCustomErp = lazy(() => import("./pages/TallyVsCustomErp.jsx"));
-const WordpressVsCustomSoftware = lazy(() => import("./pages/WordpressVsCustomSoftware.jsx"));
-const SoftwareRfpTemplate = lazy(() => import("./pages/SoftwareRfpTemplate.jsx"));
 const ThankYou = lazy(() => import("./pages/ThankYou.jsx"));
 
-// Defer floating widgets & modal so they do not bloat the initial main bundle
 const HelpBot = lazy(() => import("./components/HelpBot.jsx"));
 const FloatingWhatsApp = lazy(() => import("./components/FloatingWhatsApp.jsx"));
 const LeadModal = lazy(() => import("./components/LeadModal.jsx"));
@@ -122,6 +136,8 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/estimate" element={<Estimate />} />
+
+            {/* Oibuz HRMS (Untouched) */}
             <Route path="/products/hrms" element={<ConstructionHrmsPage />} />
             <Route path="/products/hrms/story" element={<HrmsStoryPage />} />
             <Route path="/products/hrms/features" element={<HrmsFeaturesPage />} />
@@ -131,17 +147,15 @@ export default function App() {
             <Route path="/site-visits" element={<SiteVisitsPage />} />
             <Route path="/oibuz" element={<OibuzLandingPage />} />
 
-            {/* 2027 Business Growth Campaign */}
+            {/* Campaign & Locations */}
             <Route path="/free-business-tech-audit" element={<FreeBusinessAudit />} />
             <Route path="/thank-you" element={<ThankYou />} />
             <Route path="/diwali-offers-2026" element={<Navigate to="/free-business-tech-audit" replace />} />
-
-            {/* Retained Location Pages */}
             <Route path="/software-company-in-pune" element={<CityLandingPage cityId="pune" />} />
             <Route path="/software-company-in-mumbai" element={<CityLandingPage cityId="mumbai" />} />
             <Route path="/software-company-in-latur" element={<CityLandingPage cityId="latur" />} />
-
-            {/* Consolidated Location Redirects */}
+            <Route path="/software-company-in-chakan-bhosari" element={<CityLandingPage cityId="chakan-bhosari" />} />
+            <Route path="/software-company-in-hinjewadi" element={<CityLandingPage cityId="hinjewadi" />} />
             <Route path="/software-company-in-navi-mumbai" element={<Navigate to="/software-company-in-mumbai" replace />} />
             <Route path="/software-company-in-thane" element={<Navigate to="/software-company-in-mumbai" replace />} />
             <Route path="/software-company-in-nashik" element={<Navigate to="/software-company-in-pune" replace />} />
@@ -154,23 +168,36 @@ export default function App() {
             <Route path="/software-company-in-uk" element={<Navigate to="/services" replace />} />
             <Route path="/software-company-in-uae" element={<Navigate to="/services" replace />} />
 
+            {/* Articles */}
             <Route path="/articles" element={<Articles />} />
             <Route path="/articles/:id" element={<ArticleDetail />} />
 
-            {/* Free Business Products & Interactive Tools */}
+            {/* Free Business Products Hub & Utilities */}
+            <Route path="/tools" element={<ToolsHub />} />
             <Route path="/tools/construction-leakage-calculator" element={<ConstructionLeakageCalculator />} />
             <Route path="/tools/website-tech-checker" element={<WebsiteTechChecker />} />
             <Route path="/tools/gst-invoice-generator" element={<GstInvoiceGenerator />} />
             <Route path="/tools/quotation-generator" element={<QuotationGenerator />} />
             <Route path="/tools/whatsapp-link-generator" element={<WhatsAppLinkGenerator />} />
             <Route path="/tools/gst-profit-calculator" element={<GstProfitCalculator />} />
+            <Route path="/tools/upi-qr-generator" element={<UpiQrGenerator />} />
+            <Route path="/tools/hsn-sac-finder" element={<HsnSacFinder />} />
+            <Route path="/tools/legal-policy-generator" element={<LegalPolicyGenerator />} />
+            <Route path="/tools/salary-slip-generator" element={<SalarySlipGenerator />} />
+            <Route path="/tools/purchase-order-generator" element={<PurchaseOrderGenerator />} />
             <Route path="/tools/app-cost-calculator" element={<AppCostCalculator />} />
 
+            {/* Comparisons & Solution Landing Pages */}
             <Route path="/compare/tally-vs-custom-erp" element={<TallyVsCustomErp />} />
             <Route path="/compare/wordpress-vs-custom-software" element={<WordpressVsCustomSoftware />} />
+            <Route path="/compare/zoho-vs-custom-software" element={<ZohoVsCustomSoftware />} />
+            <Route path="/compare/shopify-vs-custom-ecommerce" element={<ShopifyVsCustomEcommerce />} />
+            <Route path="/solutions/mobile-shop-pos-software" element={<SolutionLandingPage solutionKey="mobile-shop-pos-software" />} />
+            <Route path="/solutions/restaurant-qr-kds-software" element={<SolutionLandingPage solutionKey="restaurant-qr-kds-software" />} />
+            <Route path="/solutions/manufacturing-bom-erp" element={<SolutionLandingPage solutionKey="manufacturing-bom-erp" />} />
             <Route path="/resources/software-rfp-template" element={<SoftwareRfpTemplate />} />
-            <Route path="/software-company-in-chakan-bhosari" element={<CityLandingPage cityId="chakan-bhosari" />} />
-            <Route path="/software-company-in-hinjewadi" element={<CityLandingPage cityId="hinjewadi" />} />
+
+            {/* General Pages */}
             <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />

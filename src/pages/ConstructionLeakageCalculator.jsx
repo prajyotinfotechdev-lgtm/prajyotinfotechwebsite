@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
+import ToolSeoFaq from "../components/ToolSeoFaq.jsx";
 import {
   Printer,
   Share2,
@@ -331,6 +332,15 @@ export default function ConstructionLeakageCalculator() {
           </div>
         </div>
       </div>
+
+      <ToolSeoFaq
+        dark
+        heading="Construction Labor Audit & Leakage FAQs"
+        faqs={[
+          { q: "How much payroll loss comes from manual paper muster rolls?", a: "Field audits across Indian infrastructure and builder sites typically reveal 5% to 12% monthly leakage caused by ghost entries, proxy attendance, late arrivals, and unverified cash slips." },
+          { q: "Can contractors track attendance across multiple active sites simultaneously?", a: "Yes. GPS-geofenced mobile attendance ensures supervisors and site workers can only check in within verified site coordinates." },
+        ]}
+      />
     </div>
   );
 }

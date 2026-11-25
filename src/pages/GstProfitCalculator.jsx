@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
+import ToolSeoFaq from "../components/ToolSeoFaq.jsx";
 import {
   Calculator,
   Share2,
@@ -361,6 +362,15 @@ export default function GstProfitCalculator() {
           </div>
         </div>
       </div>
+
+      <ToolSeoFaq
+        heading="GST & Profit Margin Calculator FAQs"
+        faqs={[
+          { q: "How do I reverse calculate GST from an MRP / GST-inclusive price?", a: "Select '- Remove GST (Inclusive)' above, enter the final selling price, and pick the slab (e.g., 18%). The calculator applies Price / (1 + Rate/100) to isolate exact taxable base value and tax." },
+          { q: "What is the difference between Profit Margin % and Markup %?", a: "Margin % measures profit relative to your net selling price before GST, whereas Markup % measures profit added on top of your purchase cost." },
+        ]}
+      />
     </div>
   );
 }
+

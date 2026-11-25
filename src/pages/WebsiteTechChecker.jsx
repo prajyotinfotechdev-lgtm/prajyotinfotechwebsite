@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
+import ToolSeoFaq from "../components/ToolSeoFaq.jsx";
 import {
   Globe,
   Printer,
@@ -463,6 +464,15 @@ export default function WebsiteTechChecker() {
           </div>
         )}
       </div>
+
+      <ToolSeoFaq
+        dark
+        heading="Website Speed & Core Web Vitals FAQs"
+        faqs={[
+          { q: "Why does Google Core Web Vitals (LCP, INP, CLS) affect SEO rankings?", a: "Google uses page experience signals as tie-breakers across mobile search results. Pages loading under 1.0–2.5s LCP keep bounce rates low and improve Google Ads Quality Scores." },
+          { q: "How does Prajyot Infotech achieve sub-second load speeds?", a: "By eliminating heavy WordPress theme/plugin payloads and building lean React applications with code-splitting, lazy route preloading, and edge CDN asset caching." },
+        ]}
+      />
     </div>
   );
 }

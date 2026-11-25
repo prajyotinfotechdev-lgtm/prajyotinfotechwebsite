@@ -212,12 +212,44 @@ export default function FreeToolsShowcase() {
             <span>Free Software RFP &amp; SOW Kit</span>
           </Link>
           <Link
-            to="/estimate"
-            onMouseEnter={() => prefetchRoute("/estimate")}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-brand-50 hover:bg-brand-100 border border-brand-200 text-brand-700 font-bold transition-colors"
+            to="/tools/upi-qr-generator"
+            onMouseEnter={() => prefetchRoute("/tools/upi-qr-generator")}
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 font-bold transition-colors"
           >
-            <Zap className="w-3.5 h-3.5" />
-            <span>Interactive Project Cost Estimator</span>
+            <QrCode className="w-3.5 h-3.5" />
+            <span>UPI Payment QR Maker</span>
+          </Link>
+          <Link
+            to="/tools/hsn-sac-finder"
+            onMouseEnter={() => prefetchRoute("/tools/hsn-sac-finder")}
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-800 font-bold transition-colors"
+          >
+            <FileText className="w-3.5 h-3.5" />
+            <span>HSN / SAC Rate Finder</span>
+          </Link>
+          <Link
+            to="/tools/legal-policy-generator"
+            onMouseEnter={() => prefetchRoute("/tools/legal-policy-generator")}
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-800 font-bold transition-colors"
+          >
+            <FileCheck2 className="w-3.5 h-3.5" />
+            <span>Razorpay Legal Policy Maker</span>
+          </Link>
+          <Link
+            to="/tools/salary-slip-generator"
+            onMouseEnter={() => prefetchRoute("/tools/salary-slip-generator")}
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-violet-50 hover:bg-violet-100 border border-violet-200 text-violet-800 font-bold transition-colors"
+          >
+            <FileText className="w-3.5 h-3.5" />
+            <span>Salary Slip PDF</span>
+          </Link>
+          <Link
+            to="/tools"
+            onMouseEnter={() => prefetchRoute("/tools")}
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-bold transition-colors"
+          >
+            <span>Explore All 12+ Free Tools</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
       </div>

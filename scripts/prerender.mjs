@@ -775,6 +775,176 @@ const ROUTES = [
     `,
   },
   {
+    path: "tools",
+    title: "Free Online Business Tools India — GST Invoice, Quotation, UPI QR & Calculators | Prajyot Infotech",
+    description: "Directory of free online Indian business tools: GST Invoice Generator, Quotation Maker, UPI QR Standee, HSN Finder, Legal Policy Maker, Salary Slip, PO & App Calculators.",
+    keywords: "free business tools india, online gst invoice generator, free quotation maker, upi qr standee generator, salary slip generator",
+    canonical: "https://www.prajyotinfotech.in/tools",
+    h1: "Free Online Business Utilities & Calculators India",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:24px;">
+        Zero-login, zero-watermark business utilities built for Indian enterprises, merchants, contractors, and founders.
+      </p>
+      <ul style="line-height:1.8;color:#334155;font-size:15px;">
+        <li><a href="/tools/gst-invoice-generator">Free GST Tax Invoice Generator (A4 PDF & WhatsApp)</a></li>
+        <li><a href="/tools/quotation-generator">Free Business Quotation & Proforma Estimate Maker</a></li>
+        <li><a href="/tools/upi-qr-generator">Free Dynamic UPI QR Code & Shop Standee Maker</a></li>
+        <li><a href="/tools/whatsapp-link-generator">Free WhatsApp Direct Link (wa.me) & QR Generator</a></li>
+        <li><a href="/tools/hsn-sac-finder">HSN & SAC Code with Indian GST Slab Lookup</a></li>
+        <li><a href="/tools/gst-profit-calculator">India GST & Net Profit Margin Calculator</a></li>
+        <li><a href="/tools/legal-policy-generator">Razorpay & Play Store Legal Policy Generator</a></li>
+        <li><a href="/tools/salary-slip-generator">Free Employee Salary Slip (Payslip) PDF Maker</a></li>
+        <li><a href="/tools/purchase-order-generator">Free Purchase Order & Delivery Challan Generator</a></li>
+        <li><a href="/tools/website-tech-checker">Free Website Speed & Core Web Vitals Inspector</a></li>
+        <li><a href="/tools/app-cost-calculator">Mobile App Development Cost Calculator (India 2026)</a></li>
+      </ul>
+    `,
+  },
+  {
+    path: "tools/upi-qr-generator",
+    title: "Free UPI QR Code Generator with Amount (GPay / PhonePe Standee) | Prajyot Infotech",
+    description: "Create NPCI standard UPI QR codes with locked rupee amounts for GPay, PhonePe, Paytm & BHIM. Download PNG/SVG or print shop counter standees free.",
+    keywords: "upi qr code generator, upi qr generator with amount, phonepe gpay qr standee maker india",
+    canonical: "https://www.prajyotinfotech.in/tools/upi-qr-generator",
+    h1: "Free UPI Payment QR & Shop Standee Generator",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Create scannable GPay, PhonePe, Paytm, and BHIM payment QR standees with optional locked ₹ amounts. Zero fees, runs locally.</p>`,
+  },
+  {
+    path: "tools/hsn-sac-finder",
+    title: "HSN Code & SAC Code List with GST Rates India 2026 | Free Lookup | Prajyot Infotech",
+    description: "Search Indian HSN and SAC codes with official GST slabs (3%, 5%, 12%, 18%, 28%) and load directly into our free GST Invoice Maker.",
+    keywords: "hsn code list with gst rate india, sac code 998314 software services, hsn sac finder tool",
+    canonical: "https://www.prajyotinfotech.in/tools/hsn-sac-finder",
+    h1: "HSN & SAC Code GST Rate Finder India",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Search HSN goods and SAC service codes (like SAC 998314 for software engineering) and send any item straight to our <a href="/tools/gst-invoice-generator">Free GST Invoice Generator</a>.</p>`,
+  },
+  {
+    path: "tools/legal-policy-generator",
+    title: "Free Privacy Policy, Terms & Refund Generator (Razorpay KYC Ready India) | Prajyot Infotech",
+    description: "Generate ready-to-publish Privacy Policy, Terms & Conditions, Refund Policy & Shipping pages compliant for Razorpay KYC and Google Play Store.",
+    keywords: "privacy policy generator razorpay india, refund policy maker ecommerce, play store privacy policy generator free",
+    canonical: "https://www.prajyotinfotech.in/tools/legal-policy-generator",
+    h1: "Free Website & App Legal Policy Generator (India)",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Generate Privacy Policy, Terms of Service, Refund/Cancellation, and Shipping policies formatted for Indian DPDPA, Razorpay KYC, and Google Play Store.</p>`,
+  },
+  {
+    path: "tools/salary-slip-generator",
+    title: "Free Salary Slip Generator India (Payslip PDF Maker) | Prajyot Infotech",
+    description: "Create & print official Indian employee salary slips online free. Auto calculates Gross Pay, PF, Professional Tax, TDS & Net Salary in words.",
+    keywords: "free salary slip generator india, employee payslip pdf maker, online payslip format india",
+    canonical: "https://www.prajyotinfotech.in/tools/salary-slip-generator",
+    h1: "Free Employee Salary Slip (Payslip) Generator PDF",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Generate A4 printable Indian monthly salary slips with Basic, HRA, PF, PT, TDS deductions and Net Pay in Rupees words.</p>`,
+  },
+  {
+    path: "tools/purchase-order-generator",
+    title: "Free Purchase Order (PO) & Delivery Challan Generator PDF India | Prajyot Infotech",
+    description: "Create A4 Purchase Orders and Rule-55 Delivery Challans online free. Ideal for Indian manufacturers, traders, and contractors with HSN tracking.",
+    keywords: "free purchase order generator india, delivery challan pdf maker, manufacturing po maker free",
+    canonical: "https://www.prajyotinfotech.in/tools/purchase-order-generator",
+    h1: "Free Purchase Order & Delivery Challan Generator",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Generate A4 Purchase Orders and Delivery Challans for factories, suppliers, and site warehouses with HSN and GST breakdowns.</p>`,
+  },
+  {
+    path: "compare/zoho-vs-custom-software",
+    title: "Zoho / SaaS Per-Seat Subscriptions vs Custom ERP Cost Calculator 2026 | Prajyot Infotech",
+    description: "Calculate your 5-year Zoho CRM / SaaS per-user subscription spend vs owning bespoke custom business software with ₹0/seat licensing.",
+    keywords: "zoho vs custom software india, saas vs custom erp calculator, zoho alternative zero seat fee",
+    canonical: "https://www.prajyotinfotech.in/compare/zoho-vs-custom-software",
+    h1: "SaaS Per-Seat Subscriptions vs Custom Owned Software",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Compare recurring 5-year per-user SaaS subscription costs against building once and owning 100% source code on Day 1.</p>`,
+  },
+  {
+    path: "compare/shopify-vs-custom-ecommerce",
+    title: "Shopify vs Custom E-Commerce Storefront India (2026 Guide) | Prajyot Infotech",
+    description: "Compare Shopify monthly app stacks and transaction fees vs ultra-fast custom React storefronts with direct Razorpay UPI and WhatsApp commerce.",
+    keywords: "shopify vs custom ecommerce india, d2c storefront development pune, custom ecommerce vs shopify",
+    canonical: "https://www.prajyotinfotech.in/compare/shopify-vs-custom-ecommerce",
+    h1: "Shopify vs Custom D2C E-Commerce Storefront",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Why scaling luxury and D2C Indian brands outgrow heavy Shopify plugin stacks for custom sub-second storefronts.</p>`,
+  },
+  {
+    path: "solutions/mobile-shop-pos-software",
+    title: "Mobile Shop POS, Serialized IMEI Tracking & GST Billing Software | Prajyot Infotech",
+    description: "Retail POS and 15-digit IMEI barcode tracking software for mobile and electronics stores in India. Repair job cards, GST thermal print & WhatsApp receipts.",
+    keywords: "mobile shop billing software imei, electronics store pos india, repair job card software",
+    canonical: "https://www.prajyotinfotech.in/solutions/mobile-shop-pos-software",
+    h1: "Mobile Shop POS & Serialized IMEI Billing System",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Eliminate handwritten IMEI ledgers with barcode checkout, automated GST thermal receipts, and repair job card tracking.</p>`,
+  },
+  {
+    path: "solutions/restaurant-qr-kds-software",
+    title: "Restaurant QR Table Ordering & Live Kitchen Display System (KDS) | Prajyot Infotech",
+    description: "Boost table turnover by 35% with zero-commission table QR menus synced live to chef Kitchen Display Tablets (KDS) and automated WhatsApp bills.",
+    keywords: "restaurant qr ordering system india, kitchen display system kds software, restaurant pos pune",
+    canonical: "https://www.prajyotinfotech.in/solutions/restaurant-qr-kds-software",
+    h1: "Restaurant QR Table Menus & Live Kitchen Display (KDS)",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Scan-and-order table QR progressive web menus synced live to Kitchen Display Systems with split GST billing.</p>`,
+  },
+  {
+    path: "solutions/manufacturing-bom-erp",
+    title: "Manufacturing Plant ERP, BOM, Barcode Inventory & Tally Sync | Prajyot Infotech",
+    description: "Bespoke factory ERP engineered for Indian MIDC manufacturers: multi-stage BOM, raw material GRN, barcode tracking & automated Tally Prime XML sync.",
+    keywords: "manufacturing erp software india, bill of materials software pune, chakan midc factory erp",
+    canonical: "https://www.prajyotinfotech.in/solutions/manufacturing-bom-erp",
+    h1: "Custom Manufacturing Plant ERP & Shop-Floor BOM",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Unify Purchase Orders, Gate GRN, multi-level BOM, scrap tracking, and automated Tally voucher syncing.</p>`,
+  },
+  {
+    path: "articles/website-development-cost-pune-india",
+    title: "Website Development Cost in Pune & India (2026–2027 Breakdown) — Prajyot Infotech",
+    description: "Transparent cost guide for corporate websites, Razorpay stores, and custom SaaS portals in Pune and India.",
+    keywords: "website development cost pune india, website price india 2026",
+    canonical: "https://www.prajyotinfotech.in/articles/website-development-cost-pune-india",
+    h1: "Website Development Cost in Pune & India (2026–2027 Guide)",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Explore transparent website budgets or run our <a href="/estimate">Interactive Cost Estimator</a>.</p>`,
+  },
+  {
+    path: "articles/razorpay-meta-whatsapp-kyc-checklist",
+    title: "Razorpay & Meta WhatsApp Cloud API KYC Checklist for Indian Startups — Prajyot Infotech",
+    description: "Pass payment gateway and Meta WhatsApp verification fast with required Privacy, Terms, Refund, and GST compliance pages.",
+    keywords: "razorpay kyc checklist india, meta whatsapp business api verification india",
+    canonical: "https://www.prajyotinfotech.in/articles/razorpay-meta-whatsapp-kyc-checklist",
+    h1: "Razorpay & Meta WhatsApp Cloud API KYC Checklist",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Generate all 4 mandatory gateway KYC policy pages instantly with our <a href="/tools/legal-policy-generator">Legal Policy Generator</a>.</p>`,
+  },
+  {
+    path: "articles/barcode-imei-inventory-retail-guide",
+    title: "Barcode & Serialized IMEI Inventory Software Guide for Mobile Stores — Prajyot Infotech",
+    description: "How mobile and electronics stores slash billing queues from 10 minutes to 45 seconds using IMEI scanning and automated WhatsApp GST invoices.",
+    keywords: "imei barcode inventory software guide, mobile shop billing software india",
+    canonical: "https://www.prajyotinfotech.in/articles/barcode-imei-inventory-retail-guide",
+    h1: "Barcode & Serialized IMEI Inventory Guide for Electronics Retail",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Explore serialized POS features or create GST invoices with our <a href="/tools/gst-invoice-generator">Free GST Invoice Maker</a>.</p>`,
+  },
+  {
+    path: "articles/restaurant-qr-ordering-kds-roi",
+    title: "Restaurant QR Table Menus & Kitchen Display Systems: Eliminate Lost KOTs — Prajyot Infotech",
+    description: "Increase table turnaround speed by 35% using scan-to-order QR menus connected to Kitchen Display Tablets.",
+    keywords: "restaurant qr ordering roi, kitchen display system kds india",
+    canonical: "https://www.prajyotinfotech.in/articles/restaurant-qr-ordering-kds-roi",
+    h1: "Restaurant QR Table Menus & Kitchen Display Systems ROI",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Create table payment QRs fast with our <a href="/tools/upi-qr-generator">UPI QR Generator</a>.</p>`,
+  },
+  {
+    path: "articles/chakan-midc-manufacturing-erp-guide",
+    title: "How MIDC Manufacturing Units Eliminate Margin Leakage with Shop-Floor BOM ERP — Prajyot Infotech",
+    description: "Unify Purchase Orders, GRN, BOM, and Tally Prime sync for Chakan & Bhosari MIDC automotive and fabrication units.",
+    keywords: "chakan midc manufacturing erp, plant bom erp software india",
+    canonical: "https://www.prajyotinfotech.in/articles/chakan-midc-manufacturing-erp-guide",
+    h1: "How MIDC Factories Eliminate Margin Leakage with Shop-Floor BOM ERP",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Generate factory orders using our <a href="/tools/purchase-order-generator">Purchase Order & Delivery Challan Maker</a>.</p>`,
+  },
+  {
+    path: "articles/react-nextjs-vs-wordpress-speed-india",
+    title: "React vs WordPress Speed Benchmark on Indian 4G Mobile Networks — Prajyot Infotech",
+    description: "Real Core Web Vitals speed comparison between heavy Elementor WordPress builds and custom sub-second React apps over Indian 4G.",
+    keywords: "react vs wordpress speed test india, core web vitals 4g benchmark",
+    canonical: "https://www.prajyotinfotech.in/articles/react-nextjs-vs-wordpress-speed-india",
+    h1: "React vs WordPress Speed Benchmark on Indian 4G Mobile Networks",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Benchmark your live domain right now with our <a href="/tools/website-tech-checker">Free Speed & Tech Stack Inspector</a>.</p>`,
+  },
+  {
     path: "tools/gst-profit-calculator",
     title: "India GST & Profit Margin Calculator Online (Add / Remove GST) | Prajyot Infotech",
     description: "Instant Indian GST calculator for all tax slabs (3%, 5%, 12%, 18%, 28%). Calculate CGST, SGST, IGST split plus net profit margin and markup percentages.",

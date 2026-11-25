@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
+import ToolSeoFaq from "../components/ToolSeoFaq.jsx";
 import {
   FileCheck2,
   Printer,
@@ -612,6 +613,15 @@ export default function QuotationGenerator() {
           </div>
         </div>
       </div>
+
+      <ToolSeoFaq
+        heading="Quotation & Proforma Estimate FAQs"
+        faqs={[
+          { q: "What is the difference between a Quotation, Estimate, and Proforma Invoice?", a: "An Estimate gives an approximate budget, a Quotation states formal fixed unit prices valid until a chosen expiry date, and a Proforma Invoice acts as a preliminary commercial bill prior to order payment." },
+          { q: "Can I make a quote without GST or with GST already included in the rate?", a: "Yes. Switch the GST Mode dropdown between 'Add GST (Exclusive)', 'GST Included', and 'No Tax (Simple Quote)' anytime." },
+        ]}
+      />
     </div>
   );
 }
+

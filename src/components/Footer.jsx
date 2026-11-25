@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Trophy, Zap, Gauge, Calculator, Sparkles, FileText, FileCheck2, QrCode, IndianRupee } from "lucide-react";
 import Logo from "./Logo.jsx";
@@ -193,6 +193,9 @@ export default function Footer() {
               <li><Link to="/services/enterprise-erp-crm" className="hover:text-slate-200 transition-colors">Enterprise ERP &amp; Custom CRM</Link></li>
               <li><Link to="/services/mobile-app-development" className="hover:text-slate-200 transition-colors">Mobile Apps (iOS &amp; Android)</Link></li>
               <li><Link to="/services/whatsapp-automation" className="hover:text-slate-200 transition-colors">WhatsApp Business Automation</Link></li>
+              <li><Link to="/solutions/mobile-shop-pos-software" className="hover:text-slate-200 transition-colors">Mobile Shop IMEI &amp; POS Software</Link></li>
+              <li><Link to="/solutions/restaurant-qr-kds-software" className="hover:text-slate-200 transition-colors">Restaurant QR Menu &amp; Live KDS</Link></li>
+              <li><Link to="/solutions/manufacturing-bom-erp" className="hover:text-slate-200 transition-colors">Manufacturing BOM &amp; Plant ERP</Link></li>
               <li><Link to="/services" className="hover:text-slate-200 transition-colors">All Engineering Capabilities</Link></li>
             </ul>
           </div>
@@ -247,7 +250,14 @@ export default function Footer() {
               <li><Link to="/tools/gst-profit-calculator" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><IndianRupee className="w-3.5 h-3.5 text-sky-400 shrink-0" />GST &amp; Profit Margin Calculator</Link></li>
               <li><Link to="/resources/software-rfp-template" className="hover:text-slate-200 transition-colors inline-flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5 text-brand-400 shrink-0" />Software RFP &amp; SOW Kit</Link></li>
               <li><Link to="/compare/tally-vs-custom-erp" className="hover:text-slate-200 transition-colors">Compare: Tally vs Custom ERP</Link></li>
+              <li><Link to="/tools/upi-qr-generator" className="hover:text-slate-200 transition-colors">Free UPI Payment QR Standee</Link></li>
+              <li><Link to="/tools/hsn-sac-finder" className="hover:text-slate-200 transition-colors">HSN &amp; SAC GST Rate Finder</Link></li>
+              <li><Link to="/tools/legal-policy-generator" className="hover:text-slate-200 transition-colors">Razorpay Legal Policy Maker</Link></li>
+              <li><Link to="/tools/salary-slip-generator" className="hover:text-slate-200 transition-colors">Salary Slip &amp; PO PDF Makers</Link></li>
+              <li><Link to="/tools" className="hover:text-brand-300 font-semibold transition-colors">Browse All 12+ Free Tools →</Link></li>
               <li><Link to="/compare/wordpress-vs-custom-software" className="hover:text-slate-200 transition-colors">Compare: WordPress vs Custom App</Link></li>
+              <li><Link to="/compare/zoho-vs-custom-software" className="hover:text-slate-200 transition-colors">Compare: Zoho SaaS vs Custom ERP</Link></li>
+              <li><Link to="/compare/shopify-vs-custom-ecommerce" className="hover:text-slate-200 transition-colors">Compare: Shopify vs Custom Store</Link></li>
               <li><Link to="/testimonials" className="hover:text-slate-200 transition-colors">Client Reviews & Success Stories</Link></li>
               <li><Link to="/glossary" className="hover:text-slate-200 transition-colors">Software Engineering Glossary</Link></li>
             </ul>

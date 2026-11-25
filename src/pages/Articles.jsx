@@ -179,9 +179,28 @@ export default function Articles() {
               </p>
 
               {/* Interactive Widget */}
-              <div className="my-6">
-                {article.interactiveComponent}
-              </div>
+              {article.interactiveComponent && (
+                <div className="my-6">
+                  {article.interactiveComponent}
+                </div>
+              )}
+
+              {/* Direct Free Tool Bridge */}
+              {article.relatedTool && (
+                <div className="my-6 p-4 sm:p-5 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <span className="text-[10px] font-mono uppercase font-bold text-emerald-400 block">Try Interactive Free Tool</span>
+                    <div className="text-sm font-bold text-white">{article.relatedTool.title}</div>
+                  </div>
+                  <Link
+                    to={article.relatedTool.to}
+                    className="shrink-0 inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all"
+                  >
+                    <span>{article.relatedTool.cta || "Open Tool"}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              )}
 
               {/* Key Takeaways Box */}
               <div className="my-8 p-5 md:p-6 rounded-2xl bg-slate-900 border border-slate-800">

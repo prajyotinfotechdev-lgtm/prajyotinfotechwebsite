@@ -1,7 +1,8 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
+import ToolSeoFaq from "../components/ToolSeoFaq.jsx";
 import {
   FileText, Printer, Share2, Plus, Trash2, Copy, Check,
   Building2, ArrowRight, MessageSquare, Sparkles, ChevronDown, ChevronUp,
@@ -137,6 +138,7 @@ const inputCls =
 export default function GstInvoiceGenerator() {
   useBottomBar();
   const { openLeadModal } = useLeadModal();
+  const [searchParams] = useSearchParams();
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState("form");
   const [themeId, setThemeId] = useState("navy");
@@ -163,10 +165,28 @@ export default function GstInvoiceGenerator() {
     try { const b = localStorage.getItem("pi_gst_bank"); return b ? JSON.parse(b) : defBank(); } catch { return defBank(); }
   });
 
-  const [items, setItems] = useState([
-    { id: "1", description: "Custom ERP & CRM Web Portal Architecture", hsn: "998314", qty: 1, rate: 85000, discount: 0, gstRate: 18 },
-    { id: "2", description: "WhatsApp Business Cloud API Integration", hsn: "998313", qty: 1, rate: 15000, discount: 0, gstRate: 18 },
-  ]);
+  const [items, setItems] = useState(() => {
+    const hsnParam = searchParams.get("hsn");
+    const rateParam = searchParams.get("rate");
+    const descParam = searchParams.get("desc");
+    if (hsnParam || descParam) {
+      return [
+        {
+          id: "1",
+          description: descParam || "Product / Service",
+          hsn: hsnParam || "998314",
+          qty: 1,
+          rate: 10000,
+          discount: 0,
+          gstRate: GST_RATES.includes(Number(rateParam)) ? Number(rateParam) : 18,
+        },
+      ];
+    }
+    return [
+      { id: "1", description: "Custom ERP & CRM Web Portal Architecture", hsn: "998314", qty: 1, rate: 85000, discount: 0, gstRate: 18 },
+      { id: "2", description: "WhatsApp Business Cloud API Integration", hsn: "998313", qty: 1, rate: 15000, discount: 0, gstRate: 18 },
+    ];
+  });
 
   const [notes, setNotes] = useState(
     "1. Payment due within 15 days of invoice date.\n2. 100% IP & source code transferred upon final clearance.\n3. Pay via NEFT/RTGS or UPI to the account details provided."
@@ -879,6 +899,16 @@ export default function GstInvoiceGenerator() {
           </div>
         </div>
       </div>
+
+      <ToolSeoFaq
+        heading="GST Invoice Generator FAQs"
+        faqs={[
+          { q: "When is CGST + SGST applied vs IGST on an Indian invoice?", a: "When supplier and buyer/Place of Supply share the same state code (e.g., 27 Maharashtra to 27 Maharashtra), tax splits 50/50 into CGST + SGST. Different state codes trigger IGST automatically." },
+          { q: "Is this online GST invoice maker compliant with Rule 46 of CGST Rules?", a: "Yes. It supports 15-digit GSTINs, sequential numbering, Place of Supply state codes, HSN/SAC codes, taxable value breakdown, tax totals, and authorized signatory blocks." },
+          { q: "Are my customer invoices or GSTIN saved on your servers?", a: "No. Everything is generated privately inside your browser. Only your own supplier and bank info stay saved locally on your device for faster repeat billing." },
+          { q: "How do I find the correct HSN or SAC code and GST percentage?", a: "Use our free HSN & SAC Code Finder and click 'Use in GST Invoice' on any item to load it automatically here." },
+        ]}
+      />
     </div>
   );
 }

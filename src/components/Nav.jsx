@@ -25,7 +25,13 @@ const navConfig = [
       { to: "/tools/gst-profit-calculator", label: "GST & Profit Calculator", badge: "Free Tool", desc: "Add/remove GST & simulate net profit margin." },
       { to: "/tools/app-cost-calculator", label: "App Cost Calculator", badge: "2026 Index", desc: "Instant iOS & Android development quote." },
       { to: "/tools/website-tech-checker", label: "Speed & Tech Checker", badge: "Free Tool", desc: "Audit Core Web Vitals, speed & stack." },
+      { to: "/tools/upi-qr-generator", label: "UPI Payment QR Maker", badge: "New", desc: "Printable GPay/PhonePe QR with locked ₹ amount." },
+      { to: "/tools/hsn-sac-finder", label: "HSN / SAC GST Finder", badge: "New", desc: "Lookup GST slabs & load straight into Invoice Maker." },
+      { to: "/tools/legal-policy-generator", label: "Legal Policy Maker (KYC)", badge: "New", desc: "Razorpay & Play Store Privacy, Terms & Refund pages." },
+      { to: "/tools/salary-slip-generator", label: "Salary Slip PDF Maker", badge: "Free Tool", desc: "Official monthly employee payslips with PF/PT/TDS." },
+      { to: "/tools/purchase-order-generator", label: "PO & Challan Generator", badge: "B2B", desc: "Factory Purchase Orders & Delivery Challans in A4 PDF." },
       { to: "/tools/construction-leakage-calculator", label: "Leakage Calculator", badge: "Free Tool", desc: "Calculate ghost-labor & site cash loss." },
+      { to: "/tools", label: "All Free Business Tools", badge: "12+ Tools", desc: "Browse our full library of free Indian business utilities." },
     ]
   },
   {

@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
+import ToolSeoFaq from "../components/ToolSeoFaq.jsx";
 import {
   MessageSquare,
   Copy,
@@ -335,6 +336,15 @@ export default function WhatsAppLinkGenerator() {
           </div>
         </div>
       </div>
+
+      <ToolSeoFaq
+        heading="WhatsApp Link & QR Generator FAQs"
+        faqs={[
+          { q: "Can customers chat on WhatsApp without saving my phone number?", a: "Yes. Any visitor tapping your wa.me link or scanning your generated QR code opens a direct WhatsApp chat window immediately with your pre-filled greeting text." },
+          { q: "Can I print the QR code card for my shop billing counter or restaurant table?", a: "Yes. Download the high-res PNG or SVG file, or click 'Print Card' for a clean counter standee poster." },
+        ]}
+      />
     </div>
   );
 }
+

@@ -704,6 +704,7 @@ export const ARTICLES = [
 
   {
     id: "erp-vs-spreadsheets",
+    relatedTool: {"to":"/compare/tally-vs-custom-erp","title":"Compare Tally vs Custom ERP","cta":"Open Comparison Matrix"},
     title: "ERP vs Spreadsheets: Why Indian SMBs Are Switching in 2026",
     category: "ERP & Business",
     difficulty: "Business Decision Guide",
@@ -728,6 +729,7 @@ The right ERP is not generic off-the-shelf software. It is a system architected 
   },
   {
     id: "cost-of-custom-software-india",
+    relatedTool: {"to":"/tools/app-cost-calculator","title":"2026 Mobile App & Software Cost Calculator","cta":"Calculate Your Budget"},
     title: "How Much Does Custom Software Development Cost in India? (2026 Guide)",
     category: "Pricing & Planning",
     difficulty: "Buyer's Guide",
@@ -765,6 +767,7 @@ The key rule: always get a fixed-price written contract with milestone deliverab
   },
   {
     id: "whatsapp-business-api-india",
+    relatedTool: {"to":"/tools/whatsapp-link-generator","title":"Free WhatsApp Direct Link & Counter QR Maker","cta":"Create WhatsApp QR Free"},
     title: "WhatsApp Business API for Indian SMBs: Complete Implementation Guide 2026",
     category: "AI & Automation",
     difficulty: "Implementation Guide",
@@ -798,6 +801,7 @@ At Prajyot Infotech, we implement complete WhatsApp Business API integrations in
   },
   {
     id: "sub-second-page-speed",
+    relatedTool: {"to":"/tools/website-tech-checker","title":"Free Website Speed & Core Web Vitals Inspector","cta":"Test Your Website Speed"},
     title: "Why Sub-Second Page Speed is Google's #1 Ranking Factor in 2026",
     category: "Performance & SEO",
     difficulty: "Executive Blueprint",
@@ -820,6 +824,7 @@ At Prajyot Infotech, we engineer every application with zero-dependency vanilla 
   },
   {
     id: "ai-whatsapp-automation",
+    relatedTool: {"to":"/tools/whatsapp-link-generator","title":"WhatsApp Direct Chat Link & QR Generator","cta":"Build Link Free"},
     title: "Automating Business Operations with AI & WhatsApp: From Leads to Revenue in 12 Seconds",
     category: "AI & Automation",
     difficulty: "Architecture Deep Dive",
@@ -884,6 +889,106 @@ True responsiveness adapts intelligently to device width: multi-column grids col
 
 Use the interactive viewport engine above to toggle between an iPhone, iPad, and 4K desktop display to observe how a production-grade layout responds dynamically.`
   }
+,
+  {
+    id: "website-development-cost-pune-india",
+    title: "Website Development Cost in Pune & India (2026–2027 Breakdown)",
+    category: "Pricing & Planning",
+    difficulty: "Buyer's Guide",
+    readTime: "6 min read",
+    date: "November 2026",
+    author: "Prajyot Kankal",
+    authorRole: "Founder & Chief Architect",
+    excerpt: "Exact price ranges for business websites, React web apps, Razorpay e-commerce stores, and custom SaaS in Pune & India — plus what agencies omit from quotes.",
+    relatedTool: {"to":"/estimate","title":"Configure Your Exact Website & Software Quote","desc":"Select pages, Razorpay/WhatsApp integrations, and timeline in 4 fast steps.","cta":"Launch Estimator Free"},
+    interactiveComponent: <SoftwareCostEstimatorWidget />,
+    keyTakeaways: ["Fast 1–5 page custom corporate websites in Pune start at ₹29,999 with on-page SEO and WhatsApp lead capture.","High-speed Razorpay e-commerce stores range from ₹59,999 to ₹3.5 Lakh depending on catalog & CRM automation.","Always demand 100% source code ownership, sub-second page speed SLA, and zero recurring monthly plugin fees."],
+    content: "Searching for website development pricing in Pune or anywhere in India produces wildly confusing quotes ranging from ₹8,000 templates to ₹15 Lakh enterprise agencies.\n\nHere is the transparent breakdown of what business websites actually cost in 2026–2027 based on engineering complexity:\n\n1. Starter Corporate Website (₹29,999 – ₹59,999): Custom responsive layout, Core Web Vitals optimization (<1s load), sitemap + Google schema markup, and direct WhatsApp + database lead forms.\n\n2. Growth & E-Commerce Website (₹59,999 – ₹2,50,000): Dynamic product catalog, Razorpay/Cashfree UPI checkout, automated WhatsApp order confirmations, and lightweight CMS dashboard.\n\n3. Custom SaaS / Web Portal (₹1,50,000+): Multi-role login (Admin/Staff/Customers), automated GST PDF billing, Tally integration, and REST APIs.\n\nAlways verify before signing: Do you own the Git source code repository on Day 1? Slow WordPress sites rebuilt cheaply end up costing double in lost Google Ads conversions."
+  },
+  {
+    id: "razorpay-meta-whatsapp-kyc-checklist",
+    title: "Razorpay & Meta WhatsApp Cloud API KYC Checklist for Indian Startups",
+    category: "AI & Automation",
+    difficulty: "Launch Checklist",
+    readTime: "5 min read",
+    date: "November 2026",
+    author: "Sanket Kshirsagar",
+    authorRole: "Co-Founder & Tech Lead",
+    excerpt: "Stop getting rejected during Razorpay, PhonePe, or Meta WhatsApp Cloud API onboarding. Follow this verified documentation and website compliance checklist.",
+    relatedTool: {"to":"/tools/legal-policy-generator","title":"Generate Razorpay-Ready Privacy, Terms & Refund Pages","desc":"Instant compliance pages ready for gateway KYC verification in 30 seconds.","cta":"Generate Policies Free"},
+    interactiveComponent: null,
+    keyTakeaways: ["Indian payment gateways mandate 4 visible footer links: Privacy Policy, Terms of Service, Refund/Cancellation (with day timelines), and Shipping Policy.","Your website contact email must match or clearly link to your registered business domain and GST/MSME entity.","Meta WhatsApp API requires matching legal company address on your website footer and GST/Udyam PDF certificate."],
+    content: "Most Indian founders build their website or app and then lose 2 to 3 weeks stuck in Razorpay, Cashfree, or Meta Business Manager KYC rejections.\n\nVerification teams follow a strict checklist:\n\n1. Four Live Legal URLs: Your domain must host a Privacy Policy, Terms & Conditions, Refund & Cancellation Policy (stating exact days, e.g. 5–7 business days), and a Shipping/Delivery Policy — accessible without login.\n\n2. Matching Entity Details: Your registered business name, GSTIN (or Udyam certificate), phone number, and support email in your website footer must match the KYC documents submitted.\n\n3. Clear Pricing in INR: Checkout items or service pages must display INR pricing transparently before opening the payment modal.\n\nUse our Free Website Legal Policy Generator linked above to publish all 4 compliant pages in under two minutes."
+  },
+  {
+    id: "barcode-imei-inventory-retail-guide",
+    title: "Barcode & Serialized IMEI Inventory Software Guide for Mobile & Electronics Stores",
+    category: "Retail & SaaS",
+    difficulty: "Operations Guide",
+    readTime: "5 min read",
+    date: "November 2026",
+    author: "Prajyot Kankal",
+    authorRole: "Founder & Chief Architect",
+    excerpt: "How multi-branch electronics retailers cut customer billing queues from 10 minutes to 45 seconds using serialized IMEI scanning and automated WhatsApp GST receipts.",
+    relatedTool: {"to":"/tools/gst-invoice-generator","title":"Create Sample Serialized GST Tax Invoices Free","desc":"Test Rule-46 Indian GST tax invoices with HSN 8517 for mobile handsets.","cta":"Open GST Invoice Maker"},
+    interactiveComponent: null,
+    keyTakeaways: ["Serialized IMEI inventory eliminates missing stock disputes and fake warranty claims completely.","USB barcode scan + thermal/A4 PDF print drops average checkout billing time by 90% during festive rushes.","Automated repair job card alerts on WhatsApp increase repeat accessory and service revenue by over 20%."],
+    content: "Handwriting 15-digit IMEI serial numbers onto carbon-copy bill books creates billing queues, GST audit headaches, and silent inventory shrinkage.\n\nA modern serialized retail POS replaces manual registers with three clean steps:\n\n1. Purchase GRN Scan: Scan supplier carton barcodes once when stock arrives; every IMEI enters cloud inventory automatically.\n\n2. 45-Second Checkout: At billing, scan the handset box barcode to pull exact model, color, HSN 8517, 18% GST tax split, and warranty duration automatically.\n\n3. Repair Job Cards & WhatsApp Follow-up: Log customer repair drops and automatically alert them on WhatsApp when devices are ready for pickup."
+  },
+  {
+    id: "restaurant-qr-ordering-kds-roi",
+    title: "Restaurant QR Table Menus & Kitchen Display Systems: Eliminate Lost KOTs",
+    category: "Retail & SaaS",
+    difficulty: "Hospitality Guide",
+    readTime: "4 min read",
+    date: "November 2026",
+    author: "Sneha Kalekar",
+    authorRole: "Head of Marketing & Operations",
+    excerpt: "Why high-volume dine-in restaurants replace paper KOT slips with live table QR menus synced to Kitchen Display Tablets (KDS) and WhatsApp bills.",
+    relatedTool: {"to":"/tools/upi-qr-generator","title":"Create Free Table Counter UPI Payment QR Standees","desc":"Generate scannable GPay/PhonePe QR cards for fast table settlement.","cta":"Create Table QR Free"},
+    interactiveComponent: null,
+    keyTakeaways: ["QR ordering frees waitstaff during peak weekend hours, boosting table turnover by up to 35%.","Digital Kitchen Display Systems (KDS) eliminate lost or unreadable handwritten KOT slips completely.","Manager stock toggles immediately hide out-of-stock dishes across all table QR menus."],
+    content: "During busy weekend dinner service, angry diners don't leave because of food quality — they leave waiting 20 minutes for someone to bring a menu or take a drink add-on order.\n\nWith event-driven QR table ordering and a live Kitchen Display Screen (KDS):\n\n- Guests scan the table QR with their smartphone camera (no app install required) and order starters or extra rotis directly.\n\n- Kitchen screens highlight new KOT tickets within milliseconds in cooking priority order.\n\n- Guests settle bills effortlessly via UPI QR and receive automated GST digital invoices directly on WhatsApp."
+  },
+  {
+    id: "chakan-midc-manufacturing-erp-guide",
+    title: "How MIDC Manufacturing Units Eliminate Margin Leakage with Shop-Floor BOM ERP",
+    category: "ERP & Business",
+    difficulty: "Industrial Architecture",
+    readTime: "6 min read",
+    date: "November 2026",
+    author: "Prajyot Kankal",
+    authorRole: "Founder & Chief Architect",
+    excerpt: "Inside the hybrid architecture powering Chakan & Bhosari auto-ancillary units: real-time plant BOM, GRN verification, and automatic Tally Prime XML voucher sync.",
+    relatedTool: {"to":"/tools/purchase-order-generator","title":"Free Purchase Order & Delivery Challan PDF Maker","desc":"Create HSN-ready factory POs and Rule-55 Delivery Challans right away.","cta":"Launch PO / Challan Maker"},
+    interactiveComponent: <ErpRoiInteractiveCalculator />,
+    keyTakeaways: ["Tally Prime excels at CA compliance and GST returns, but was not designed for multi-stage shop-floor BOM routing or machine downtime tracking.","A hybrid Plant ERP runs daily Purchase Orders, Gate GRN, scrap tracking, and barcode dispatch while auto-syncing ledger journals into Tally.","Zero recurring per-seat SaaS costs allow unlimited supervisors and warehouse operators on mobile tablets."],
+    content: "Auto-ancillary and precision engineering factories in Chakan, Bhosari MIDC, Nashik, and Aurangabad frequently run a broken loop of Excel sheets, WhatsApp dispatch photos, and a single overloaded Tally desktop PC.\n\nWhen raw material steel consumption or stage-wise rejection is tracked only at month-end, silent scrap loss and rush raw-material stockouts quietly drain plant profitability.\n\nBy adopting a hybrid Custom Plant ERP:\n\n- Purchase teams issue traceable POs and verify incoming Gate GRNs on tablets.\n\n- Shop-floor operators scan lot barcodes as WIP moves across CNC and fabrication stages.\n\n- Validated sales & purchase invoices sync straight into Tally Prime automatically with zero double entry."
+  },
+  {
+    id: "react-nextjs-vs-wordpress-speed-india",
+    title: "React vs WordPress Speed Benchmark on Indian 4G Mobile Networks",
+    category: "Performance & SEO",
+    difficulty: "Technical Benchmark",
+    readTime: "5 min read",
+    date: "November 2026",
+    author: "Sanket Kshirsagar",
+    authorRole: "Co-Founder & Tech Lead",
+    excerpt: "Why bloated PHP + Elementor websites drop below 50 Mobile Lighthouse scores on mid-range Indian Android phones — and how custom React apps stay sub-second.",
+    relatedTool: {"to":"/tools/website-tech-checker","title":"Website Speed & Core Web Vitals Inspector","desc":"Scan your live site's LCP, TTFB, and tech stack score in seconds.","cta":"Scan Website Free"},
+    interactiveComponent: <SpeedInteractiveDiagram />,
+    keyTakeaways: ["Mid-range smartphones over 4G struggle when WordPress sites ship heavy plugin CSS and jQuery.","Static pre-rendered React routes + granular code-splitting ensure pages become interactive fast.","Faster mobile LCP directly lowers cost-per-lead on Google Ads and Meta campaigns."],
+    content: "On a fast developer laptop over fiber Wi-Fi, almost any WordPress theme feels usable. On a mid-range Android smartphone over fluctuating Indian 4G mobile data, bloated CMS themes stall for 4 to 6 seconds before rendering usable content.\n\nKey architectural differences driving real-world performance:\n\n- Database Roundtrips vs Edge Delivery: WordPress executes PHP queries dynamically unless heavily cached; modern React apps serve pre-built static HTML and small split JS chunks straight from global CDN edges.\n\n- Script Blocking: Dozens of plugins inject overlapping CSS and JS libraries into the critical render path. Custom code bundles only the exact components required for that route.\n\nRun our free Website Speed & Tech Inspector to check how fast your current domain performs."
+  }
 ];
 
-export const CATEGORIES = ["All Articles", "Performance & SEO", "AI & Automation", "APIs & Backend", "UI/UX & Speed"];
+export const CATEGORIES = [
+  "All Articles",
+  "Pricing & Planning",
+  "ERP & Business",
+  "AI & Automation",
+  "Retail & SaaS",
+  "Performance & SEO",
+  "APIs & Backend",
+  "UI/UX & Speed"
+];
