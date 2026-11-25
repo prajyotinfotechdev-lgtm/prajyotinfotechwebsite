@@ -1,23 +1,15 @@
 // src/components/AuroraHero.jsx
-// Cinematic Motion-Graphics Hero — Prajyot Infotech
-// Architecture: multi-slide auto-advancing carousel with distinct choreography per slide
+// Zero-Framer-Motion CSS-accelerated hero for sub-second First Contentful Paint
 import React, { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { Trophy, BarChart3, Building2, Smartphone, Zap, Sparkles } from "lucide-react";
+import { Trophy, BarChart3, Building2, Smartphone, Zap } from "lucide-react";
 import "../styles/aurora.css";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
 
-/* ─── CONSTANTS ───────────────────────────────────────────────────────────── */
 const WA_NUMBER = "917020708747";
 const wa = (t) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`;
-const SLIDE_DURATION = 8000; // 8 seconds per slide
+const SLIDE_DURATION = 8000;
 
-/* ─── EASING ──────────────────────────────────────────────────────────────── */
-const EASE_OUT_EXPO = [0.16, 1, 0.3, 1];
-const EASE_SPRING = { type: "spring", stiffness: 120, damping: 20, mass: 0.8 };
-
-/* ─── SVG ELEMENTS — Technical grid background ───────────────────────────── */
 function TechnicalGrid({ opacity = 0.06 }) {
   return (
     <svg
@@ -39,26 +31,23 @@ function TechnicalGrid({ opacity = 0.06 }) {
   );
 }
 
-/* ─── SVG: Animated circuit / data-flow lines ─────────────────────────────── */
-function DataFlowLines({ reduced }) {
+function DataFlowLines() {
   const lines = [
-    { d: "M 0 200 Q 200 100 400 250 T 800 180", delay: 0 },
-    { d: "M 100 400 Q 300 300 500 420 T 900 350", delay: 0.5 },
-    { d: "M 200 150 Q 400 50  600 200 T 1000 120", delay: 1.0 },
+    { d: "M 0 200 Q 200 100 400 250 T 800 180", delay: "0s" },
+    { d: "M 100 400 Q 300 300 500 420 T 900 350", delay: "0.6s" },
+    { d: "M 200 150 Q 400 50 600 200 T 1000 120", delay: "1.2s" },
   ];
-  if (reduced) return null;
   return (
     <svg className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden style={{ opacity: 0.12 }}>
       {lines.map((l, i) => (
-        <motion.path
+        <path
           key={i}
           d={l.d}
           fill="none"
           stroke="url(#lineGrad)"
           strokeWidth="1.5"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 1 }}
-          transition={{ duration: 2.2, delay: l.delay, ease: EASE_OUT_EXPO, repeat: Infinity, repeatType: "loop", repeatDelay: 5 }}
+          className="animate-path-draw"
+          style={{ animationDelay: l.delay }}
         />
       ))}
       <defs>
@@ -72,25 +61,18 @@ function DataFlowLines({ reduced }) {
   );
 }
 
-/* ─── Floating UI card ────────────────────────────────────────────────────── */
-function UICard({ delay, x, y, children, className = "" }) {
-  const reduced = useReducedMotion();
+function UICard({ delay = 0, x, y, children, className = "" }) {
   return (
-    <motion.div
-      className={`absolute glass rounded-xl border border-white/30 shadow-xl backdrop-blur-md p-3 text-slate-800 text-xs ${className}`}
-      style={{ left: x, top: y }}
-      initial={{ opacity: 0, y: reduced ? 0 : 16, scale: reduced ? 1 : 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: reduced ? 0 : -8, scale: 0.95 }}
-      transition={{ delay, duration: 0.6, ease: EASE_OUT_EXPO }}
+    <div
+      className={`absolute glass rounded-xl border border-white/30 shadow-xl backdrop-blur-md p-3 text-slate-800 text-xs hero-fade-in ${className}`}
+      style={{ left: x, top: y, animationDelay: `${delay}s` }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
-/* ─── SLIDE 0 (2027 CAMPAIGN): "Get Your Business 2027-Ready" ─────────── */
-function Slide2027Visual({ reduced }) {
+function Slide2027Visual() {
   const paths = [
     { label: "Custom Software", desc: "Web & mobile apps built for you", color: "#7c3aed", iconType: "code" },
     { label: "OIBUZ Construction", desc: "Smart HRMS for site teams", color: "#1e2756", iconType: "building" },
@@ -101,27 +83,18 @@ function Slide2027Visual({ reduced }) {
     <div className="absolute inset-0 overflow-hidden">
       <TechnicalGrid opacity={0.04} />
 
-      {/* Purple brand ambient radial glow */}
-      <motion.div
-        className="absolute right-0 top-1/4 w-[600px] h-[600px] rounded-full pointer-events-none"
+      <div
+        className="absolute right-0 top-1/4 w-[600px] h-[600px] rounded-full pointer-events-none animate-pulse-slow"
         style={{
-          background:
-            "radial-gradient(circle, rgba(124,58,237,0.14) 0%, rgba(30,39,86,0.06) 50%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(124,58,237,0.14) 0%, rgba(30,39,86,0.06) 50%, transparent 70%)",
         }}
-        animate={reduced ? {} : { scale: [1, 1.1, 1], opacity: [0.75, 1, 0.75] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* 2027 Campaign Showcase Card (desktop) */}
       <div className="hidden lg:block absolute right-6 xl:right-14 top-1/2 -translate-y-1/2 w-[430px]">
-        <motion.div
-          className="rounded-3xl p-6 bg-white/95 backdrop-blur-xl border border-brand-200/70 shadow-2xl shadow-brand-500/15"
-          initial={{ opacity: 0, x: 50, scale: 0.95 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          exit={{ opacity: 0, x: 30, scale: 0.98 }}
-          transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: 0.2 }}
+        <div
+          className="rounded-3xl p-6 bg-white/95 backdrop-blur-xl border border-brand-200/70 shadow-2xl shadow-brand-500/15 hero-card-in"
+          style={{ animationDelay: "0.12s" }}
         >
-          {/* Header */}
           <div className="flex items-center justify-between pb-4 border-b border-slate-100">
             <div className="flex items-center gap-2.5">
               <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-600 to-navy-700 flex items-center justify-center text-white text-sm font-black">27</span>
@@ -137,15 +110,12 @@ function Slide2027Visual({ reduced }) {
             </span>
           </div>
 
-          {/* Three solution paths */}
           <div className="flex flex-col gap-2.5 mt-4">
             {paths.map((p, i) => (
-              <motion.div
+              <div
                 key={p.label}
-                className="bg-slate-50 rounded-2xl p-3 border border-slate-100 shadow-sm hover:border-brand-200 transition-colors flex items-center gap-3"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 + i * 0.1, duration: 0.45, ease: EASE_OUT_EXPO }}
+                className="bg-slate-50 rounded-2xl p-3 border border-slate-100 shadow-sm hover:border-brand-200 transition-colors flex items-center gap-3 hero-fade-in"
+                style={{ animationDelay: `${0.25 + i * 0.08}s` }}
               >
                 <span className="size-8 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${p.color}18`, color: p.color }}>
                   {p.iconType === "code" && (
@@ -162,11 +132,10 @@ function Slide2027Visual({ reduced }) {
                   <div className="text-xs font-bold text-slate-800">{p.label}</div>
                   <div className="text-[10px] text-slate-500 mt-0.5">{p.desc}</div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
 
-          {/* Audit CTA strip */}
           <div className="mt-4 p-3.5 rounded-2xl bg-gradient-to-r from-brand-600 to-navy-700 text-white flex items-center justify-between shadow-md">
             <div>
               <div className="text-[10px] uppercase font-bold tracking-wider opacity-90">Complimentary</div>
@@ -177,34 +146,27 @@ function Slide2027Visual({ reduced }) {
               <div className="text-[10px] opacity-80">No commitment.</div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
 }
 
-/* ─── SLIDE 1: "Build software that defines the future" ──────────────────── */
-function Slide1Visual({ reduced }) {
-
+function Slide1Visual() {
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {/* Background environment */}
       <TechnicalGrid opacity={0.05} />
-      <DataFlowLines reduced={reduced} />
+      <DataFlowLines />
 
-      {/* Floating cards — desktop only */}
       <div className="hidden lg:block">
-
-        {/* Code snippet card */}
-        <UICard delay={1.1} x="60%" y="75%">
+        <UICard delay={0.35} x="60%" y="75%">
           <div className="font-mono text-[10px] text-slate-600 space-y-0.5">
             <div><span className="text-brand-700">const</span> result = <span className="text-emerald-600">await</span> deploy();</div>
             <div className="text-emerald-600">✓ Production ready</div>
           </div>
         </UICard>
 
-        {/* Availability pulse */}
-        <UICard delay={1.3} x="58%" y="52%">
+        <UICard delay={0.5} x="58%" y="52%">
           <div className="flex items-center gap-2">
             <span className="relative flex size-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
@@ -215,25 +177,19 @@ function Slide1Visual({ reduced }) {
         </UICard>
       </div>
 
-      {/* Decorative orbs */}
-      <motion.div
-        className="absolute right-0 top-0 w-[500px] h-[500px] rounded-full pointer-events-none"
+      <div
+        className="absolute right-0 top-0 w-[500px] h-[500px] rounded-full pointer-events-none animate-pulse-slow"
         style={{ background: "radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%)" }}
-        animate={reduced ? {} : { scale: [1, 1.08, 1], opacity: [0.8, 1, 0.8] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       />
-      <motion.div
-        className="absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full pointer-events-none"
+      <div
+        className="absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full pointer-events-none animate-pulse-slow"
         style={{ background: "radial-gradient(circle, rgba(30,39,86,0.1) 0%, transparent 70%)" }}
-        animate={reduced ? {} : { scale: [1, 1.05, 1] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
     </div>
   );
 }
 
-/* ─── SLIDE 2: "Enterprise ERP & CRM" ────────────────────────────────────── */
-function Slide2Visual({ reduced }) {
+function Slide2Visual() {
   const modules = [
     { icon: BarChart3, label: "CRM Pipeline", value: "12 deals", color: "#7c3aed" },
     { icon: Building2, label: "ERP Inventory", value: "2,480 items", color: "#2563eb" },
@@ -244,78 +200,58 @@ function Slide2Visual({ reduced }) {
     <div className="absolute inset-0 overflow-hidden">
       <TechnicalGrid opacity={0.04} />
 
-      {/* App window mockup */}
       <div className="hidden lg:block absolute right-4 xl:right-8 top-1/2 -translate-y-1/2 w-[420px]">
-        <motion.div
-          className="bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden"
-          initial={{ opacity: 0, x: 60, scale: 0.96 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          exit={{ opacity: 0, x: 30, scale: 0.98 }}
-          transition={{ duration: 0.8, ease: EASE_OUT_EXPO, delay: 0.3 }}
+        <div
+          className="bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden hero-card-in"
+          style={{ animationDelay: "0.15s" }}
         >
-          {/* Title bar */}
           <div className="flex items-center gap-1.5 px-4 py-3 bg-slate-900">
             <div className="w-3 h-3 rounded-full bg-red-400/80" />
             <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
             <div className="w-3 h-3 rounded-full bg-green-400/80" />
             <span className="ml-3 text-xs text-slate-400 font-mono">Prajyot ERP Suite — Dashboard</span>
           </div>
-          {/* Content */}
           <div className="p-4 bg-slate-50">
             <div className="grid grid-cols-2 gap-3">
               {modules.map((m, i) => (
-                <motion.div
+                <div
                   key={m.label}
-                  className="bg-white rounded-xl p-3 border border-slate-100 shadow-sm"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + i * 0.12, duration: 0.5, ease: EASE_OUT_EXPO }}
+                  className="bg-white rounded-xl p-3 border border-slate-100 shadow-sm hero-fade-in"
+                  style={{ animationDelay: `${0.25 + i * 0.08}s` }}
                 >
                   <div className="w-7 h-7 rounded-lg bg-slate-50 flex items-center justify-center mb-1.5 text-slate-700">
                     <m.icon className="w-4 h-4" style={{ color: m.color }} />
                   </div>
                   <div className="text-[10px] text-slate-500 font-medium">{m.label}</div>
                   <div className="text-sm font-black mt-0.5" style={{ color: m.color }}>{m.value}</div>
-                </motion.div>
+                </div>
               ))}
             </div>
-            {/* Mini bar chart */}
-            <motion.div
-              className="mt-3 bg-white rounded-xl p-3 border border-slate-100"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.9, duration: 0.5 }}
-            >
+            <div className="mt-3 bg-white rounded-xl p-3 border border-slate-100 hero-fade-in" style={{ animationDelay: "0.5s" }}>
               <div className="text-[9px] text-slate-400 font-semibold mb-2">Revenue Growth (Illustrative)</div>
               <div className="flex items-end gap-1.5 h-12">
                 {[40, 55, 62, 78, 85, 92, 100].map((h, i) => (
-                  <motion.div
+                  <div
                     key={i}
-                    className="flex-1 rounded-sm"
-                    style={{ backgroundColor: i === 6 ? "#7c3aed" : "#e9d5ff" }}
-                    initial={{ height: 0 }}
-                    animate={{ height: `${h}%` }}
-                    transition={{ delay: 1.0 + i * 0.05, duration: 0.4, ease: EASE_OUT_EXPO }}
+                    className="flex-1 rounded-sm transition-all duration-500"
+                    style={{ height: `${h}%`, backgroundColor: i === 6 ? "#7c3aed" : "#e9d5ff" }}
                   />
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
-      <motion.div
-        className="absolute right-0 top-0 w-[600px] h-[600px] rounded-full pointer-events-none"
+      <div
+        className="absolute right-0 top-0 w-[600px] h-[600px] rounded-full pointer-events-none animate-pulse-slow"
         style={{ background: "radial-gradient(circle, rgba(37,99,235,0.10) 0%, transparent 70%)" }}
-        animate={reduced ? {} : { scale: [1, 1.06, 1] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
     </div>
   );
 }
 
-/* ─── SLIDE 3: "Mobile & Automation" ─────────────────────────────────────── */
-function Slide3Visual({ reduced }) {
+function Slide3Visual() {
   const steps = [
     { label: "Client submits inquiry", status: "done" },
     { label: "AI qualifies lead", status: "done" },
@@ -327,14 +263,7 @@ function Slide3Visual({ reduced }) {
       <TechnicalGrid opacity={0.04} />
 
       <div className="hidden lg:block absolute right-4 xl:right-10 top-1/2 -translate-y-1/2 w-[360px] space-y-3">
-        {/* Workflow card */}
-        <motion.div
-          className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden"
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 30 }}
-          transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: 0.2 }}
-        >
+        <div className="bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden hero-card-in">
           <div className="px-4 py-3 bg-gradient-to-r from-brand-700 to-navy-800 text-white">
             <div className="text-xs font-bold tracking-wide flex items-center gap-1.5">
               <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0" />
@@ -344,35 +273,35 @@ function Slide3Visual({ reduced }) {
           </div>
           <div className="p-4 space-y-3">
             {steps.map((s, i) => (
-              <motion.div
+              <div
                 key={s.label}
-                className="flex items-center gap-3"
-                initial={{ opacity: 0, x: 16 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 + i * 0.2, duration: 0.45, ease: EASE_OUT_EXPO }}
+                className="flex items-center gap-3 hero-fade-in"
+                style={{ animationDelay: `${0.2 + i * 0.1}s` }}
               >
-                <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold
-                  ${s.status === "done" ? "bg-emerald-100 text-emerald-600" :
-                    s.status === "active" ? "bg-brand-100 text-brand-700 ring-2 ring-brand-400 ring-offset-1" :
-                    "bg-slate-100 text-slate-400"}`}
+                <div
+                  className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 text-[10px] font-bold ${
+                    s.status === "done"
+                      ? "bg-emerald-100 text-emerald-600"
+                      : s.status === "active"
+                      ? "bg-brand-100 text-brand-700 ring-2 ring-brand-400 ring-offset-1"
+                      : "bg-slate-100 text-slate-400"
+                  }`}
                 >
                   {s.status === "done" ? "✓" : i + 1}
                 </div>
-                <div className={`text-xs font-medium ${s.status === "active" ? "text-brand-700" : s.status === "done" ? "text-slate-600" : "text-slate-400"}`}>
+                <div
+                  className={`text-xs font-medium ${
+                    s.status === "active" ? "text-brand-700" : s.status === "done" ? "text-slate-600" : "text-slate-400"
+                  }`}
+                >
                   {s.label}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        {/* Stats card */}
-        <motion.div
-          className="bg-white rounded-xl shadow-lg border border-slate-100 p-3 flex items-center gap-3"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.5, ease: EASE_OUT_EXPO }}
-        >
+        <div className="bg-white rounded-xl shadow-lg border border-slate-100 p-3 flex items-center gap-3 hero-fade-in" style={{ animationDelay: "0.45s" }}>
           <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 flex-shrink-0">
             <Smartphone className="w-5 h-5" />
           </div>
@@ -380,20 +309,17 @@ function Slide3Visual({ reduced }) {
             <div className="text-xs font-black text-slate-800">50,000+ Automations</div>
             <div className="text-[10px] text-slate-500">Executed monthly across client platforms</div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
-      <motion.div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none"
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full pointer-events-none animate-pulse-slow"
         style={{ background: "radial-gradient(circle, rgba(124,58,237,0.06) 0%, transparent 70%)" }}
-        animate={reduced ? {} : { scale: [1, 1.1, 1] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />
     </div>
   );
 }
 
-/* ─── SLIDE DATA ──────────────────────────────────────────────────────────── */
 const SLIDES = [
   {
     id: "growth2027",
@@ -401,11 +327,7 @@ const SLIDES = [
     headline: ["Get Your Business", "2027-Ready."],
     accentWord: "2027-Ready.",
     sub: "Build smarter. Automate better. Grow faster. Discover how digital technology and intelligent business systems can help your business operate more efficiently.",
-    primaryCTA: {
-      type: "link",
-      to: "/free-business-tech-audit",
-      label: "Get Your Free Business Audit",
-    },
+    primaryCTA: { type: "link", to: "/free-business-tech-audit", label: "Get Your Free Business Audit" },
     secondaryCTA: { type: "link", to: "/services", label: "Explore Our Solutions" },
     Visual: Slide2027Visual,
     accentGradient: "from-brand-700 via-brand-600 to-navy-600",
@@ -442,8 +364,7 @@ const SLIDES = [
   },
 ];
 
-/* ─── SLIDE DOT INDICATOR ─────────────────────────────────────────────────── */
-function SlideDots({ total, active, onSelect, reduced }) {
+function SlideDots({ total, active, onSelect }) {
   return (
     <div className="flex items-center gap-2" role="tablist" aria-label="Slide navigation">
       {Array.from({ length: total }).map((_, i) => (
@@ -453,17 +374,11 @@ function SlideDots({ total, active, onSelect, reduced }) {
           aria-selected={i === active}
           aria-label={`Go to slide ${i + 1}`}
           onClick={() => onSelect(i)}
-          className="group relative focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-full"
+          className="group relative focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 rounded-full cursor-pointer"
         >
           <div className={`rounded-full transition-all duration-500 ${i === active ? "w-7 h-2 bg-brand-700" : "w-2 h-2 bg-slate-300 hover:bg-slate-400"}`} />
-          {/* Progress ring on active */}
-          {i === active && !reduced && (
-            <motion.div
-              className="absolute inset-0 rounded-full border-2 border-brand-700/40 scale-[1.8]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 1, 0] }}
-              transition={{ duration: SLIDE_DURATION / 1000, repeat: Infinity, ease: "linear" }}
-            />
+          {i === active && (
+            <div className="absolute inset-0 rounded-full border-2 border-brand-700/40 scale-[1.8] hero-dot-pulse pointer-events-none" />
           )}
         </button>
       ))}
@@ -471,23 +386,8 @@ function SlideDots({ total, active, onSelect, reduced }) {
   );
 }
 
-/* ─── TEXT ANIMATION VARIANTS ─────────────────────────────────────────────── */
-const wordVariants = {
-  hidden: (custom) => ({ opacity: 0, y: 20, filter: custom?.blur ? "blur(4px)" : "blur(0px)" }),
-  visible: (custom) => ({
-    opacity: 1, y: 0, filter: "blur(0px)",
-    transition: { delay: 0.25 + (custom?.i ?? custom ?? 0) * 0.07, duration: 0.55, ease: EASE_OUT_EXPO }
-  }),
-  exit: (custom) => ({ opacity: 0, y: -12, filter: custom?.blur ? "blur(2px)" : "blur(0px)", transition: { duration: 0.3 } })
-};
-
-/* ─── MAIN COMPONENT ──────────────────────────────────────────────────────── */
 export default function AuroraHero() {
   const { openLeadModal } = useLeadModal();
-  const reduced = useReducedMotion();
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 600], [0, reduced ? 0 : 70]);
-  const opacity = useTransform(scrollY, [0, 350], [1, reduced ? 1 : 0.65]);
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -498,26 +398,19 @@ export default function AuroraHero() {
     return `Taking new projects — ${d.toLocaleString(undefined, { month: "long" })} ${d.getFullYear()}`;
   }, []);
 
-  const goToSlide = useCallback((idx) => {
-    setActiveSlide(idx);
-  }, []);
+  const goToSlide = useCallback((idx) => setActiveSlide(idx), []);
+  const advance = useCallback(() => setActiveSlide((s) => (s + 1) % SLIDES.length), []);
 
-  const advance = useCallback(() => {
-    setActiveSlide(s => (s + 1) % SLIDES.length);
-  }, []);
-
-  // Autoplay
   useEffect(() => {
-    if (isPaused || reduced) return;
+    if (isPaused) return;
     timerRef.current = setInterval(advance, SLIDE_DURATION);
     return () => clearInterval(timerRef.current);
-  }, [isPaused, reduced, advance]);
+  }, [isPaused, advance]);
 
-  // Keyboard navigation
   useEffect(() => {
     const handler = (e) => {
       if (e.key === "ArrowRight") advance();
-      if (e.key === "ArrowLeft") setActiveSlide(s => (s - 1 + SLIDES.length) % SLIDES.length);
+      if (e.key === "ArrowLeft") setActiveSlide((s) => (s - 1 + SLIDES.length) % SLIDES.length);
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
@@ -554,7 +447,7 @@ export default function AuroraHero() {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* ── Static aurora background (always visible) ── */}
+      {/* Static aurora background */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="aurora-bg">
           <div className="aurora-blob aurora-blob-1" />
@@ -562,7 +455,6 @@ export default function AuroraHero() {
           <div className="aurora-blob aurora-blob-3" />
           <div className="aurora-blob aurora-blob-4" />
         </div>
-        {/* Film-grain texture */}
         <div className="absolute inset-0 opacity-[0.06] mix-blend-overlay pointer-events-none">
           <svg className="w-full h-full">
             <filter id="noiseFilter">
@@ -573,47 +465,25 @@ export default function AuroraHero() {
         </div>
       </div>
 
-      {/* ── Slide-specific background visual ── */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={`visual-${slide.id}`}
-          className="absolute inset-0 z-[1] pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-        >
-          <Visual reduced={reduced} />
-        </motion.div>
-      </AnimatePresence>
+      {/* Slide visual background */}
+      <div key={`visual-${slide.id}`} className="absolute inset-0 z-[1] pointer-events-none hero-fade-in">
+        <Visual />
+      </div>
 
-      {/* ── Main scrollable content ── */}
-      <motion.div
-        style={reduced ? undefined : { y, opacity }}
-        className="relative z-10 flex-1 flex flex-col"
-      >
+      {/* Main content */}
+      <div className="relative z-10 flex-1 flex flex-col">
         <div className="w-full px-4 sm:px-8 md:px-12 lg:px-20 xl:px-24 pt-16 sm:pt-20 md:pt-24 pb-6 sm:pb-10 flex-1 flex flex-col justify-center">
-
           {/* Badge row */}
           <div className="mb-6 flex flex-wrap items-center gap-2 sm:gap-3 justify-center text-center sm:text-left sm:justify-start">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: EASE_OUT_EXPO }}
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/65 backdrop-blur-md px-4 py-1.5 text-[11px] sm:text-xs font-semibold text-slate-700 shadow-sm"
-            >
+            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/65 backdrop-blur-md px-4 py-1.5 text-[11px] sm:text-xs font-semibold text-slate-700 shadow-sm hero-fade-in">
               <span className="relative flex size-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
                 <span className="relative inline-flex rounded-full size-2 bg-emerald-500" />
               </span>
               {availability}
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1, ease: EASE_OUT_EXPO }}
-            >
+            <div className="hero-fade-in" style={{ animationDelay: "0.08s" }}>
               <Link
                 to="/products/hrms"
                 className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-amber-700 font-medium hover:text-amber-900 transition-colors group"
@@ -624,14 +494,9 @@ export default function AuroraHero() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
-            </motion.div>
+            </div>
 
-            {/* 2027 Business Growth Campaign Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2, ease: EASE_OUT_EXPO }}
-            >
+            <div className="hero-fade-in" style={{ animationDelay: "0.14s" }}>
               <Link
                 to="/free-business-tech-audit"
                 className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold rounded-full px-3.5 py-1.5 cursor-pointer transition-all duration-300 hover:scale-105 bg-brand-50 border border-brand-200 text-brand-800 shadow-sm"
@@ -643,196 +508,146 @@ export default function AuroraHero() {
                   <span className="relative inline-flex rounded-full size-1.5 bg-brand-500" />
                 </span>
               </Link>
-            </motion.div>
+            </div>
           </div>
 
           {/* Slide content */}
-          <div className="max-w-2xl lg:max-w-[52%] text-center sm:text-left">
-            <AnimatePresence mode="wait">
-              <motion.div key={`content-${slide.id}`}>
-                {/* Eyebrow */}
-                <motion.p
-                  className="mb-3 text-xs font-bold tracking-widest text-brand-700 uppercase"
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4, ease: EASE_OUT_EXPO }}
+          <div className="max-w-2xl lg:max-w-[52%] text-center sm:text-left" key={`content-${slide.id}`}>
+            <p className="mb-3 text-xs font-bold tracking-widest text-brand-700 uppercase hero-fade-in">
+              {slide.eyebrow}
+            </p>
+
+            <h1 id="heroTitle" className="text-3xl sm:text-5xl md:text-6xl lg:text-[4.5rem]/[1.05] font-black tracking-tight text-slate-900 mb-5 sm:mb-6">
+              {slide.headline.map((line, li) => {
+                const words = line.split(" ");
+                return (
+                  <span key={li} className="block">
+                    {words.map((word, wi) => {
+                      const isAccent = slide.accentWord.includes(word) && li === slide.headline.length - 1;
+                      const isLastWord = li === slide.headline.length - 1 && wi === words.length - 1;
+
+                      let textClass = "";
+                      if (isLastWord) {
+                        textClass = slide.accentGradient
+                          ? `text-transparent bg-clip-text bg-gradient-to-r ${slide.accentGradient}`
+                          : "text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-navy-600";
+                      } else if (isAccent) {
+                        textClass = `text-transparent bg-clip-text bg-gradient-to-r ${slide.accentGradient || "from-brand-700 to-brand-600"}`;
+                      }
+
+                      return (
+                        <span
+                          key={`${li}-${wi}`}
+                          style={{ animationDelay: `${0.08 + (li * 3 + wi) * 0.04}s` }}
+                          className={`inline-block mr-[0.25em] hero-word-in ${textClass}`}
+                        >
+                          {word}
+                        </span>
+                      );
+                    })}
+                  </span>
+                );
+              })}
+            </h1>
+
+            <p className="text-base sm:text-lg/relaxed text-slate-600 font-normal mb-8 sm:mb-10 max-w-xl mx-auto sm:mx-0 hero-fade-in" style={{ animationDelay: "0.22s" }}>
+              {slide.sub}
+            </p>
+
+            <div className="flex flex-row items-center gap-2 sm:gap-3 justify-center sm:justify-start w-full hero-fade-in" style={{ animationDelay: "0.28s" }}>
+              {slide.primaryCTA.type === "link" ? (
+                <Link
+                  to={slide.primaryCTA.to}
+                  className="group flex-1 sm:flex-none min-w-0 px-3.5 sm:px-7 py-2.5 sm:py-3.5 rounded-full bg-navy-800 text-white font-semibold shadow-md shadow-navy-900/20 transition-all duration-300 hover:bg-navy-700 hover:shadow-lg hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-base whitespace-nowrap text-center"
                 >
-                  {slide.eyebrow}
-                </motion.p>
-
-                {/* Headline with word-by-word reveal */}
-                <h1 id="heroTitle" className="text-3xl sm:text-5xl md:text-6xl lg:text-[4.5rem]/[1.05] font-black tracking-tight text-slate-900 mb-5 sm:mb-6">
-                  {slide.headline.map((line, li) => {
-                    const words = line.split(" ");
-                    return (
-                    <span key={li} className="block">
-                      {words.map((word, wi) => {
-                        const isAccent = slide.accentWord.includes(word) && li === slide.headline.length - 1;
-                        const isLastWord = li === slide.headline.length - 1 && wi === words.length - 1;
-                        
-                        let textClass = "";
-                        if (isLastWord) {
-                          textClass = slide.accentGradient ? `text-transparent bg-clip-text bg-gradient-to-r ${slide.accentGradient}` : "text-transparent bg-clip-text bg-gradient-to-r from-brand-700 via-brand-600 to-navy-600";
-                        } else if (isAccent) {
-                          textClass = `text-transparent bg-clip-text bg-gradient-to-r ${slide.accentGradient || "from-brand-700 to-brand-600"}`;
-                        }
-                        
-                        return (
-                          <motion.span
-                            key={`${li}-${wi}`}
-                            custom={{ i: li * 3 + wi, blur: isLastWord }}
-                            variants={wordVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            className={`inline-block mr-[0.25em] ${textClass}`}
-                          >
-                            {word}
-                          </motion.span>
-                        );
-                      })}
-                    </span>
-                  )})}
-                </h1>
-
-                {/* Sub-headline */}
-                <motion.p
-                  className="text-base sm:text-lg/relaxed text-slate-600 font-normal mb-8 sm:mb-10 max-w-xl mx-auto sm:mx-0"
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ delay: 0.5, duration: 0.6, ease: EASE_OUT_EXPO }}
+                  <span>{slide.primaryCTA.label}</span>
+                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 transition-transform shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => handleCTA(slide.primaryCTA)}
+                  className="group flex-1 sm:flex-none min-w-0 px-3.5 sm:px-7 py-2.5 sm:py-3.5 rounded-full bg-navy-800 text-white font-semibold shadow-md shadow-navy-900/20 transition-all duration-300 hover:bg-navy-700 hover:shadow-lg hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-base whitespace-nowrap cursor-pointer text-center"
                 >
-                  {slide.sub}
-                </motion.p>
+                  <span>{slide.primaryCTA.label}</span>
+                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 transition-transform shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </button>
+              )}
 
-                {/* CTAs — 2 buttons side-by-side in one line on mobile */}
-                <motion.div
-                  className="flex flex-row items-center gap-2 sm:gap-3 justify-center sm:justify-start w-full"
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ delay: 0.65, duration: 0.6, ease: EASE_OUT_EXPO }}
+              {slide.secondaryCTA.type === "link" ? (
+                <Link
+                  to={slide.secondaryCTA.to}
+                  className="flex-1 sm:flex-none min-w-0 px-3.5 sm:px-7 py-2.5 sm:py-3.5 rounded-full bg-gradient-to-r from-brand-600 to-brand-700 text-white font-semibold shadow-md shadow-brand-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-brand-500/25 hover:scale-[1.02] focus:outline-none text-xs sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 whitespace-nowrap text-center"
                 >
-                  {/* Primary CTA */}
-                  {slide.primaryCTA.type === "link" ? (
-                    <Link
-                      to={slide.primaryCTA.to}
-                      className="group flex-1 sm:flex-none min-w-0 px-3.5 sm:px-7 py-2.5 sm:py-3.5 rounded-full bg-navy-800 text-white font-semibold shadow-md shadow-navy-900/20 transition-all duration-300 hover:bg-navy-700 hover:shadow-lg hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-base whitespace-nowrap text-center"
-                    >
-                      <span>{slide.primaryCTA.label}</span>
-                      <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 transition-transform shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </Link>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => handleCTA(slide.primaryCTA)}
-                      className="group flex-1 sm:flex-none min-w-0 px-3.5 sm:px-7 py-2.5 sm:py-3.5 rounded-full bg-navy-800 text-white font-semibold shadow-md shadow-navy-900/20 transition-all duration-300 hover:bg-navy-700 hover:shadow-lg hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-base whitespace-nowrap cursor-pointer text-center"
-                    >
-                      <span>{slide.primaryCTA.label}</span>
-                      <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-0.5 transition-transform shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                      </svg>
-                    </button>
-                  )}
+                  <span>{slide.secondaryCTA.label}</span>
+                </Link>
+              ) : (
+                <Link
+                  to="/services"
+                  className="flex-1 sm:flex-none min-w-0 px-3.5 sm:px-7 py-2.5 sm:py-3.5 rounded-full border border-slate-900/12 bg-white/55 backdrop-blur-sm text-slate-700 font-semibold transition-all duration-300 hover:bg-white/75 hover:border-slate-300 focus:outline-none text-xs sm:text-base flex items-center justify-center whitespace-nowrap text-center"
+                >
+                  <span>{slide.secondaryCTA.label}</span>
+                </Link>
+              )}
+            </div>
 
-                  {/* Secondary CTA */}
-                  {slide.secondaryCTA.type === "link" ? (
-                    <Link
-                      to={slide.secondaryCTA.to}
-                      className="flex-1 sm:flex-none min-w-0 px-3.5 sm:px-7 py-2.5 sm:py-3.5 rounded-full bg-gradient-to-r from-brand-600 to-brand-700 text-white font-semibold shadow-md shadow-brand-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-brand-500/25 hover:scale-[1.02] focus:outline-none text-xs sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 whitespace-nowrap text-center"
-                    >
-                      <span>{slide.secondaryCTA.label}</span>
-                    </Link>
-                  ) : (
-                    <Link
-                      to="/services"
-                      className="flex-1 sm:flex-none min-w-0 px-3.5 sm:px-7 py-2.5 sm:py-3.5 rounded-full border border-slate-900/12 bg-white/55 backdrop-blur-sm text-slate-700 font-semibold transition-all duration-300 hover:bg-white/75 hover:border-slate-300 focus:outline-none text-xs sm:text-base flex items-center justify-center whitespace-nowrap text-center"
-                    >
-                      <span>{slide.secondaryCTA.label}</span>
-                    </Link>
-                  )}
-                </motion.div>
-
-                {/* Mobile 2027 Campaign Pill (Visible on mobile only for growth2027 slide) */}
-                {slide.id === "growth2027" && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.75, duration: 0.4 }}
-                    className="lg:hidden mt-4 p-2.5 rounded-2xl bg-gradient-to-r from-brand-600/10 via-brand-500/8 to-navy-700/10 border border-brand-200/60 flex items-center justify-between gap-2 text-xs"
-                  >
-                    <div className="flex items-center gap-1.5 font-bold text-brand-900 text-[11px]">
-                      <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
-                      <span>Free Business Audit — Get 2027-Ready</span>
-                    </div>
-                    <Link
-                      to="/free-business-tech-audit"
-                      className="font-semibold bg-gradient-to-r from-brand-600 to-navy-700 text-white px-2 py-0.5 rounded-lg text-[10px] tracking-wider shrink-0 shadow-sm"
-                    >
-                      FREE AUDIT
-                    </Link>
-                  </motion.div>
-                )}
-              </motion.div>
-            </AnimatePresence>
+            {slide.id === "growth2027" && (
+              <div className="lg:hidden mt-4 p-2.5 rounded-2xl bg-gradient-to-r from-brand-600/10 via-brand-500/8 to-navy-700/10 border border-brand-200/60 flex items-center justify-between gap-2 text-xs hero-fade-in" style={{ animationDelay: "0.35s" }}>
+                <div className="flex items-center gap-1.5 font-bold text-brand-900 text-[11px]">
+                  <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
+                  <span>Free Business Audit — Get 2027-Ready</span>
+                </div>
+                <Link
+                  to="/free-business-tech-audit"
+                  className="font-semibold bg-gradient-to-r from-brand-600 to-navy-700 text-white px-2 py-0.5 rounded-lg text-[10px] tracking-wider shrink-0 shadow-sm"
+                >
+                  FREE AUDIT
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* ── Bottom bar: trust line + slide controls ── */}
+        {/* Bottom bar */}
         <div className="relative z-10 w-full px-4 sm:px-8 md:px-12 lg:px-20 xl:px-24 pb-6 sm:pb-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            {/* Trust line */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.5 }}
-              className="inline-flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm font-medium text-slate-600 bg-white/60 border border-slate-200/70 backdrop-blur-md px-4 py-2 rounded-full shadow-xs"
-            >
+            <div className="inline-flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm font-medium text-slate-600 bg-white/60 border border-slate-200/70 backdrop-blur-md px-4 py-2 rounded-full shadow-xs">
               <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
-              Trusted by growing businesses across India & worldwide
-            </motion.div>
+              Trusted by growing businesses across India &amp; worldwide
+            </div>
 
-            {/* Slide controls */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.9, duration: 0.5 }}
-              className="flex items-center gap-4"
-            >
-              {/* Prev */}
+            <div className="flex items-center gap-4">
               <button
-                onClick={() => setActiveSlide(s => (s - 1 + SLIDES.length) % SLIDES.length)}
+                onClick={() => setActiveSlide((s) => (s - 1 + SLIDES.length) % SLIDES.length)}
                 aria-label="Previous slide"
-                className="w-8 h-8 rounded-full border border-slate-200 bg-white/70 backdrop-blur-sm flex items-center justify-center text-slate-500 hover:border-brand-300 hover:text-brand-700 transition-all hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+                className="w-8 h-8 rounded-full border border-slate-200 bg-white/70 backdrop-blur-sm flex items-center justify-center text-slate-500 hover:border-brand-300 hover:text-brand-700 transition-all hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 cursor-pointer"
               >
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
                   <path d="M7.5 2L3.5 6l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
 
-              <SlideDots total={SLIDES.length} active={activeSlide} onSelect={goToSlide} reduced={reduced} />
+              <SlideDots total={SLIDES.length} active={activeSlide} onSelect={goToSlide} />
 
-              {/* Next */}
               <button
                 onClick={advance}
                 aria-label="Next slide"
-                className="w-8 h-8 rounded-full border border-slate-200 bg-white/70 backdrop-blur-sm flex items-center justify-center text-slate-500 hover:border-brand-300 hover:text-brand-700 transition-all hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+                className="w-8 h-8 rounded-full border border-slate-200 bg-white/70 backdrop-blur-sm flex items-center justify-center text-slate-500 hover:border-brand-300 hover:text-brand-700 transition-all hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 cursor-pointer"
               >
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
                   <path d="M4.5 2L8.5 6l-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
 
-              {/* Pause/resume */}
               <button
-                onClick={() => setIsPaused(p => !p)}
+                onClick={() => setIsPaused((p) => !p)}
                 aria-label={isPaused ? "Resume slideshow" : "Pause slideshow"}
                 aria-pressed={isPaused}
-                className="w-8 h-8 rounded-full border border-slate-200 bg-white/70 backdrop-blur-sm flex items-center justify-center text-slate-500 hover:border-brand-300 hover:text-brand-700 transition-all hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+                className="w-8 h-8 rounded-full border border-slate-200 bg-white/70 backdrop-blur-sm flex items-center justify-center text-slate-500 hover:border-brand-300 hover:text-brand-700 transition-all hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 cursor-pointer"
               >
                 {isPaused ? (
                   <svg width="11" height="11" viewBox="0 0 11 11" fill="currentColor" aria-hidden>
@@ -845,12 +660,10 @@ export default function AuroraHero() {
                   </svg>
                 )}
               </button>
-            </motion.div>
+            </div>
           </div>
         </div>
-      </motion.div>
-
-
+      </div>
     </section>
   );
 }

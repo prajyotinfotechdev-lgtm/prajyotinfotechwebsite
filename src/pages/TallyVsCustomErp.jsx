@@ -163,6 +163,7 @@ export default function TallyVsCustomErp() {
         description="Detailed technical & commercial comparison between Tally and Custom ERP software for Indian manufacturers and distributors. Compare multi-branch inventory, mobile access, production BOM, and TCO."
         keywords="Tally vs custom ERP, replace Tally with custom software, manufacturing ERP Pune, Tally limitations inventory, custom ERP vs Tally Prime 2026"
         path="/compare/tally-vs-custom-erp"
+        image="/og/og-compare.jpg"
       />
 
       <script

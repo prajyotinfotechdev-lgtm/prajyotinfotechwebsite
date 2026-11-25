@@ -60,6 +60,7 @@ export default function ShopifyVsCustomEcommerce() {
         description="Compare Shopify + monthly app fees vs custom sub-second React e-commerce websites with direct Razorpay UPI and WhatsApp commerce in India."
         keywords="shopify vs custom ecommerce india, shopify monthly app cost vs custom website, d2c website development pune, luxury ecommerce custom build"
         path="/compare/shopify-vs-custom-ecommerce"
+        image="/og/og-compare.jpg"
         schema={faqSchema}
       />
 
@@ -144,3 +145,4 @@ export default function ShopifyVsCustomEcommerce() {
     </>
   );
 }
+

@@ -163,6 +163,7 @@ export default function FreeBusinessAudit() {
         description="Build smarter. Automate better. Grow faster. Apply for a complimentary 2027 Business Technology Audit with Prajyot Infotech. Zero cost, no obligation."
         keywords="free business technology audit, 2027 business growth, custom software consultation, process automation audit, construction hrms demo, software architecture review Pune India"
         path="/free-business-tech-audit"
+        image="/og/og-audit.jpg"
         schema={[serviceSchema, faqSchema]}
       />
 

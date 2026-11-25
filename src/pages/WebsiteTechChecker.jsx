@@ -203,6 +203,7 @@ export default function WebsiteTechChecker() {
         description="Inspect any website's speed, Core Web Vitals, tech stack, and SEO readiness in seconds. Free instant diagnostic report by Prajyot Infotech."
         keywords="website speed test, website tech stack checker, Core Web Vitals test, website audit tool India, Prajyot Infotech"
         path="/tools/website-tech-checker"
+        image="/og/og-tech-checker.jpg"
         schema={toolSchema}
       />
 

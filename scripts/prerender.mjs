@@ -957,13 +957,249 @@ const ROUTES = [
       </p>
     `,
   },
+  {
+    path: "tools/business-emi-calculator",
+    title: "MSME Business Loan EMI Calculator & Prepayment Planner India | Prajyot Infotech",
+    description: "Calculate exact monthly EMI, reducing-balance interest, and prepayment savings for MSME loans, factory machinery finance, and working capital credit.",
+    keywords: "business loan emi calculator india, msme loan emi prepayment calculator, machinery loan emi calculator, mudra loan emi marathi",
+    canonical: "https://www.prajyotinfotech.in/tools/business-emi-calculator",
+    h1: "MSME Business Loan & Prepayment EMI Calculator",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Plan MSME, Mudra, or machinery finance EMIs, inspect year-by-year principal and interest amortization, and simulate prepayment savings in ₹.
+      </p>
+    `,
+  },
+  {
+    path: "tools/break-even-calculator",
+    title: "Break-Even Point & D2C Unit Economics Calculator India | Prajyot Infotech",
+    description: "Find exact monthly sales needed to break even after Indian GST, Razorpay 2% gateway charges, shipping, and Meta Ad CAC. Built for Indian D2C brands & retail startups.",
+    keywords: "break even calculator india, d2c unit economics calculator, roas profit calculator india, ecommerce margin calculator inr",
+    canonical: "https://www.prajyotinfotech.in/tools/break-even-calculator",
+    h1: "Break-Even & Indian D2C Unit Economics Calculator",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Calculate monthly break-even order volume, contribution margin per unit, safe Meta Ad CAC, and net profit forecasts after Indian GST and payment gateway fees.
+      </p>
+    `,
+  },
+  {
+    path: "tools/nda-agreement-generator",
+    title: "Free Mutual NDA & Software IP Ownership Generator India | Prajyot Infotech",
+    description: "Draft clean Indian Mutual Non-Disclosure Agreements (NDA) and 100% Source Code IP Assignment clauses ready for founders, freelancers & software agencies.",
+    keywords: "mutual nda format india, software ip ownership agreement generator, startup nda template india, developer source code agreement",
+    canonical: "https://www.prajyotinfotech.in/tools/nda-agreement-generator",
+    h1: "Mutual NDA & Software IP Ownership Generator",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Create clean printable Mutual Non-Disclosure Agreements and source code IP assignment terms under Indian jurisdiction without signup.
+      </p>
+    `,
+  },
+  {
+    path: "demo/restaurant-qr-kds",
+    title: "Restaurant QR Ordering & Kitchen Display (KDS) Live Interactive Demo | Prajyot Infotech",
+    description: "Test-drive our live restaurant QR table ordering simulator connected directly to a real-time Kitchen Display Screen (KDS) and WhatsApp bill dispatch.",
+    keywords: "restaurant qr ordering demo, kitchen display system kds demo, cafe pos live demo india, restaurant billing software pune",
+    canonical: "https://www.prajyotinfotech.in/demo/restaurant-qr-kds",
+    h1: "Interactive Restaurant QR Menu & Kitchen Display (KDS) Live Demo",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Add dishes on the customer table QR view and watch instant KOT tickets arrive on the live Kitchen Display Screen terminal in real time.
+      </p>
+    `,
+  },
+  {
+    path: "demo/mobile-shop-imei-pos",
+    title: "Mobile Shop IMEI Barcode POS & GST Billing Live Interactive Demo | Prajyot Infotech",
+    description: "Try our live retail IMEI barcode billing simulator built for smartphone stores and multi-brand electronics counters in India. Generate instant GST tax invoices.",
+    keywords: "mobile shop billing software demo, imei serial number pos demo india, electronics retail gst software pune",
+    canonical: "https://www.prajyotinfotech.in/demo/mobile-shop-imei-pos",
+    h1: "Mobile Shop Serialized IMEI POS & GST Billing Live Demo",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Select serialized IMEI handsets, assign customer billing details, and simulate 45-second GST invoicing with WhatsApp PDF receipt delivery.
+      </p>
+    `,
+  },
+  {
+    path: "demo/boutique-ecommerce",
+    title: "Custom Boutique E-Commerce & Bridal Configurator Live Demo (SAGYA Case Study) | Prajyot Infotech",
+    description: "Interact with our luxury apparel e-commerce storefront simulator featuring custom tailoring flows, high-speed catalog browsing, and instant WhatsApp stylist routing.",
+    keywords: "custom boutique ecommerce demo, bridal clothing store software india, luxury apparel website demo, shopify alternative india demo",
+    canonical: "https://www.prajyotinfotech.in/demo/boutique-ecommerce",
+    h1: "Luxury Ethnic Couture & Bespoke E-Commerce Live Demo",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:32px;">
+        Browse interactive luxury collections, manage wishlists, and test bespoke boutique WhatsApp stylist consultations powered by custom React architecture.
+      </p>
+    `,
+  },
+  {
+    path: "software-company-in-nashik",
+    title: "Smart Web Development & Factory ERP Solutions in Nashik — Prajyot Infotech",
+    description: "Custom web portals, winery booking software, agro-export traceability, and Ambad/Satpur MIDC factory ERPs built by Prajyot Infotech for Nashik enterprises.",
+    keywords: "software company nashik, web development nashik, ambad satpur midc erp nashik, factory software nashik",
+    canonical: "https://www.prajyotinfotech.in/software-company-in-nashik",
+    h1: "Smart Web Development & Factory ERP Solutions in Nashik",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Custom quality &amp; production ERPs for Ambad and Satpur MIDC plants plus hospitality booking systems in Nashik.</p>`,
+  },
+  {
+    path: "software-company-in-nagpur",
+    title: "Logistics Software, E-Commerce & Web Development in Nagpur — Prajyot Infotech",
+    description: "3PL fleet dispatch, warehouse barcode inventory, hospital portals, and wholesale B2B web software built for Nagpur, MIHAN & Butibori enterprises.",
+    keywords: "software company nagpur, logistics software nagpur mihan, warehouse erp butibori nagpur",
+    canonical: "https://www.prajyotinfotech.in/software-company-in-nagpur",
+    h1: "Logistics Software, Warehouse ERP & Web Development in Nagpur",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Engineering cloud logistics bilty portals, Hingna/Butibori warehouse inventory systems, and multi-branch ERPs in Nagpur.</p>`,
+  },
+  {
+    path: "software-company-in-aurangabad",
+    title: "Industrial Software, ERP & Web Platforms in Aurangabad (Chhatrapati Sambhajinagar) — Prajyot Infotech",
+    description: "Industrial ERP, pharma batch tracking, and Waluj/AURIC MIDC digital maintenance systems engineered for Chhatrapati Sambhajinagar businesses.",
+    keywords: "software company aurangabad, chhatrapati sambhajinagar software company, waluj midc erp, auric software",
+    canonical: "https://www.prajyotinfotech.in/software-company-in-aurangabad",
+    h1: "Industrial Software, ERP & Web Platforms in Chhatrapati Sambhajinagar",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Shop-floor OEE dashboards, maintenance QR portals, and Tally-synced billing for Waluj, Chikalthana &amp; Shendra MIDC.</p>`,
+  },
+  {
+    path: "software-company-in-thane",
+    title: "Modern Web Applications & Real Estate CRMs in Thane — Prajyot Infotech",
+    description: "Real estate lead routing CRMs, clinic booking portals, and corporate web applications for Wagle Estate and Ghodbunder businesses in Thane.",
+    keywords: "software company thane, web development wagle estate thane, real estate crm thane",
+    canonical: "https://www.prajyotinfotech.in/software-company-in-thane",
+    h1: "Modern Web Applications & Real Estate Portals in Thane",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Conversion-engineered websites, clinic portals, and automated WhatsApp lead CRMs serving Thane and Wagle Estate.</p>`,
+  },
+  {
+    path: "articles/msme-gst-billing-quotation-guide-marathi-hindi",
+    title: "GST Bill, Quotation & UPI QR Guide for Maharashtra SMBs (English + मराठी + हिंदी) — Prajyot Infotech",
+    description: "Free multilingual guide to GST invoices, quotation PDF formats, and fixed-amount UPI QR standees for shopkeepers and factories across Pune, Nashik & Maharashtra.",
+    keywords: "marathi gst bill format, marathi quotation format pdf, hindi gst invoice guide, maharashtra smb billing guide",
+    canonical: "https://www.prajyotinfotech.in/articles/msme-gst-billing-quotation-guide-marathi-hindi",
+    h1: "GST Bill, Quotation & UPI QR Guide for Maharashtra SMBs (Marathi & Hindi)",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Practical billing &amp; UPI workflow guide in English, Marathi, and Hindi linked directly to our free zero-login A4 PDF tools.</p>`,
+  },
+  {
+    path: "articles/india-d2c-break-even-razorpay-fees-shopify-vs-custom",
+    title: "Indian D2C Break-Even Math: Payment Fees, GST, RTO & Platform Costs — Prajyot Infotech",
+    description: "Calculate true contribution margin per order after GST extraction, 2% payment gateway cuts, shipping, and Ad CAC for Indian D2C brands.",
+    keywords: "india d2c break even guide, razorpay fees margin math, shopify vs custom store margin",
+    canonical: "https://www.prajyotinfotech.in/articles/india-d2c-break-even-razorpay-fees-shopify-vs-custom",
+    h1: "Indian D2C Break-Even Math: Payment Fees, GST & ROAS Economics",
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Run live INR contribution margin scenarios using our free Break-Even Calculator.</p>`,
+  },
 
 ];
+
+const SITE_URL = "https://www.prajyotinfotech.in";
+const OG_IMAGE_MAP = {
+  "tools": "/og/og-tools.jpg",
+  "tools/gst-invoice-generator": "/og/og-gst-invoice.jpg",
+  "tools/quotation-generator": "/og/og-quotation.jpg",
+  "tools/upi-qr-generator": "/og/og-upi-qr.jpg",
+  "tools/hsn-sac-finder": "/og/og-hsn-finder.jpg",
+  "tools/whatsapp-link-generator": "/og/og-whatsapp-qr.jpg",
+  "tools/gst-profit-calculator": "/og/og-gst-profit.jpg",
+  "tools/business-emi-calculator": "/og/og-business-emi.jpg",
+  "tools/break-even-calculator": "/og/og-break-even.jpg",
+  "tools/nda-agreement-generator": "/og/og-nda-agreement.jpg",
+  "tools/website-tech-checker": "/og/og-tech-checker.jpg",
+  "tools/app-cost-calculator": "/og/og-app-cost.jpg",
+  "tools/salary-slip-generator": "/og/og-salary-slip.jpg",
+  "tools/purchase-order-generator": "/og/og-purchase-order.jpg",
+  "tools/legal-policy-generator": "/og/og-legal-policy.jpg",
+  "tools/construction-leakage-calculator": "/og/og-construction-calc.jpg",
+  "resources/software-rfp-template": "/og/og-tools.jpg",
+  "free-business-tech-audit": "/og/og-audit.jpg",
+};
+
+function resolveOgImage(routePath) {
+  if (OG_IMAGE_MAP[routePath]) return `${SITE_URL}${OG_IMAGE_MAP[routePath]}`;
+  if (routePath.startsWith("demo/")) return `${SITE_URL}/og/og-demos.jpg`;
+  if (routePath.startsWith("compare/")) return `${SITE_URL}/og/og-compare.jpg`;
+  if (routePath.startsWith("solutions/")) return `${SITE_URL}/og/og-solutions.jpg`;
+  return `${SITE_URL}/og/og-default.jpg`;
+}
+
+function buildRouteJsonLd(route) {
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+      { "@type": "ListItem", position: 2, name: route.h1, item: route.canonical },
+    ],
+  };
+
+  if (route.path.startsWith("tools/") || route.path.startsWith("demo/")) {
+    return [
+      breadcrumb,
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: route.h1,
+        url: route.canonical,
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "All",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+        description: route.description,
+      },
+    ];
+  }
+
+  if (route.path.startsWith("articles/")) {
+    return [
+      breadcrumb,
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        headline: route.h1,
+        url: route.canonical,
+        description: route.description,
+        publisher: { "@type": "Organization", name: "Prajyot Infotech", url: SITE_URL },
+      },
+    ];
+  }
+
+  if (route.path.startsWith("solutions/")) {
+    return [
+      breadcrumb,
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: route.h1,
+        url: route.canonical,
+        applicationCategory: "BusinessApplication",
+        operatingSystem: "Web, iOS, Android",
+        description: route.description,
+      },
+    ];
+  }
+
+  if (route.path.startsWith("software-company-in-") || route.path.startsWith("services/")) {
+    return [
+      breadcrumb,
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        name: route.h1,
+        url: route.canonical,
+        description: route.description,
+        provider: { "@type": "Organization", name: "Prajyot Infotech", "@id": `${SITE_URL}/#organization` },
+      },
+    ];
+  }
+
+  return [breadcrumb];
+}
+
 console.log(`Starting static HTML prerendering for ${ROUTES.length} routes...`);
 
 let count = 0;
 for (const route of ROUTES) {
   let html = baseTemplate;
+  const ogImg = resolveOgImage(route.path);
 
   // 1. Replace Title
   html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${route.title}</title>`);
@@ -986,7 +1222,7 @@ for (const route of ROUTES) {
     `<link rel="canonical" href="${route.canonical}" />`
   );
 
-  // 5. Replace Open Graph
+  // 5. Replace Open Graph & custom OG image
   html = html.replace(
     /<meta\s+property=["']og:title["']\s+content=["'][\s\S]*?["']\s*\/?>/i,
     `<meta property="og:title" content="${route.title}" />`
@@ -999,8 +1235,16 @@ for (const route of ROUTES) {
     /<meta\s+property=["']og:url["']\s+content=["'][\s\S]*?["']\s*\/?>/i,
     `<meta property="og:url" content="${route.canonical}" />`
   );
+  html = html.replace(
+    /<meta\s+property=["']og:image["']\s+content=["'][\s\S]*?["']\s*\/?>/i,
+    `<meta property="og:image" content="${ogImg}" />`
+  );
+  html = html.replace(
+    /<meta\s+property=["']og:image:secure_url["']\s+content=["'][\s\S]*?["']\s*\/?>/i,
+    `<meta property="og:image:secure_url" content="${ogImg}" />`
+  );
 
-  // 6. Replace Twitter Card
+  // 6. Replace Twitter Card & image
   html = html.replace(
     /<meta\s+name=["']twitter:title["']\s+content=["'][\s\S]*?["']\s*\/?>/i,
     `<meta name="twitter:title" content="${route.title}" />`
@@ -1009,6 +1253,17 @@ for (const route of ROUTES) {
     /<meta\s+name=["']twitter:description["']\s+content=["'][\s\S]*?["']\s*\/?>/i,
     `<meta name="twitter:description" content="${route.description}" />`
   );
+  html = html.replace(
+    /<meta\s+name=["']twitter:image["']\s+content=["'][\s\S]*?["']\s*\/?>/i,
+    `<meta name="twitter:image" content="${ogImg}" />`
+  );
+
+  // 6b. Inject route-specific static JSON-LD schemas for zero-JS crawlers
+  const routeSchemas = buildRouteJsonLd(route);
+  const schemaTags = routeSchemas
+    .map((s) => `<script type="application/ld+json" data-prerender-ld="true">${JSON.stringify(s)}</script>`)
+    .join("\n    ");
+  html = html.replace(/<\/head>/i, `    ${schemaTags}\n  </head>`);
 
   // 7. Inject Unique Semantic Snapshot inside #root
   const semanticBlockRegex = /<main[\s\S]*?<\/main>/i;

@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import ToolSeoFaq from "../components/ToolSeoFaq.jsx";
+import BilingualToolGuide from "../components/BilingualToolGuide.jsx";
 import {
   FileText, Printer, Share2, Plus, Trash2, Copy, Check,
   Building2, ArrowRight, MessageSquare, Sparkles, ChevronDown, ChevronUp,
@@ -10,6 +11,40 @@ import {
 } from "lucide-react";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
 import { useBottomBar } from "../utils/useBottomBar.js";
+import { trackEvent } from "../utils/analytics.js";
+
+const GST_BILINGUAL = {
+  en: {
+    title: "CGST + SGST vs IGST Rules on Indian Tax Invoices",
+    summary: "Enter supplier and buyer State Codes (e.g. 27 for Maharashtra). Same state automatically applies 50/50 CGST + SGST; interstate buyers automatically receive IGST.",
+    steps: [
+      "Upload your business logo and enter GSTIN once (saved safely in your browser).",
+      "Pick products or load HSN/SAC codes straight from our GST Code Finder.",
+      "Click Print / Save A4 PDF or send the GST summary straight on WhatsApp.",
+    ],
+    note: "Rule 46 Compliant: Sequential invoice numbers, Place of Supply, HSN breakdown, and bank/UPI payment block included.",
+  },
+  mr: {
+    title: "मोफत GST बिल (Tax Invoice) PDF कसे बनवायचे?",
+    summary: "ग्राहकाच्या राज्याचा कोड (उदा. महाराष्ट्र साठी 27) निवडताच CGST + SGST किंवा IGST आपोआप मोजले जातात. लोगो अपलोड करून A4 साईझ मध्ये प्रिंट किंवा WhatsApp वर शेअर करा.",
+    steps: [
+      "तुमच्या दुकानाचा/कंपनीचा लोगो, नाव व GSTIN एकदाच टाका (ब्राउझरमध्ये सेव्ह राहते).",
+      "वस्तू किंवा सेवांची यादी, HSN कोड आणि GST दर (5%, 12%, 18%, 28%) भरा.",
+      "Print / Save A4 PDF वर क्लिक करा किंवा एक-क्लिकवर ग्राहकाला WhatsApp बिल पाठवा.",
+    ],
+    note: "टीप: कोणताही वॉटरमार्क नाही आणि लॉगिनची गरज नाही — डेटा तुमच्या फोन/संगणकावरच सुरक्षित राहतो.",
+  },
+  hi: {
+    title: "मुफ़्त GST बिल (Tax Invoice PDF) ऑनलाइन कैसे बनाएं?",
+    summary: "सप्लायर और ग्राहक का State Code चुनते ही CGST+SGST या IGST अपने आप कैलकुलेट हो जाता है। बिना वॉटरमार्क के साफ़ A4 PDF डाउनलोड या WhatsApp शेयर करें।",
+    steps: [
+      "अपनी दुकान या कंपनी का नाम, GSTIN, बैंक और UPI डिटेल एक बार भरें।",
+      "प्रोडक्ट का नाम, HSN/SAC कोड, मात्रा और GST रेट जोड़ें।",
+      "A4 PDF सेव करें या सीधे WhatsApp Share बटन से ग्राहक को बिल भेजें।",
+    ],
+    note: "टिप: अगर ऑटोमेटेड बिलिंग, बारकोड/IMEI या Tally Sync चाहिए तो कस्टम ERP डेमो बुक करें।",
+  },
+};
 
 const INDIAN_STATES = [
   { code: "27", name: "Maharashtra" }, { code: "29", name: "Karnataka" },
@@ -191,6 +226,7 @@ export default function GstInvoiceGenerator() {
   const [notes, setNotes] = useState(
     "1. Payment due within 15 days of invoice date.\n2. 100% IP & source code transferred upon final clearance.\n3. Pay via NEFT/RTGS or UPI to the account details provided."
   );
+  const [showBrandFooter, setShowBrandFooter] = useState(true);
 
   useEffect(() => {
     try {
@@ -283,9 +319,13 @@ export default function GstInvoiceGenerator() {
     setItems([{ id: Date.now().toString(), description: "", hsn: "9983", qty: 1, rate: 0, discount: 0, gstRate: 18 }]);
   };
 
-  const handlePrint = () => window.print();
+  const handlePrint = () => {
+    trackEvent("pdf_printed", { tool: "gst-invoice-generator" });
+    window.print();
+  };
 
   const shareOnWhatsApp = () => {
+    trackEvent("whatsapp_share_clicked", { tool: "gst-invoice-generator" });
     const text = encodeURIComponent(
       `Tax Invoice *${invoice.number}* from *${seller.name || "Our Business"}*\n` +
       `Billed To: ${buyer.name || "Customer"}\n` +
@@ -333,6 +373,7 @@ export default function GstInvoiceGenerator() {
         description="Create professional, 100% GST-compliant tax invoices online for free. Auto CGST, SGST & IGST calculations, custom logo, HSN codes, A4 PDF print & WhatsApp share."
         keywords="free GST invoice generator online, GST bill maker India, create GST invoice PDF free, GST calculator India, online billing generator for SMB"
         path="/tools/gst-invoice-generator"
+        image="/og/og-gst-invoice.jpg"
         schema={[webAppSchema]}
       />
 
@@ -862,10 +903,23 @@ export default function GstInvoiceGenerator() {
                   </div>
                 </div>
               </div>
+              {showBrandFooter && (
+                <div className="px-4 sm:px-6 py-2 bg-slate-50 border-t border-slate-200 text-center text-[10px] font-mono text-slate-400">
+                  Generated free with Prajyot Infotech GST Billing Tool — www.prajyotinfotech.in/tools/gst-invoice-generator
+                </div>
+              )}
             </div>
 
             <div className="no-print mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500 px-1">
-              <span>Supplier &amp; Bank info autosave in your browser for daily billing.</span>
+              <label className="inline-flex items-center gap-2 cursor-pointer select-none text-slate-600 font-medium">
+                <input
+                  type="checkbox"
+                  checked={showBrandFooter}
+                  onChange={(e) => setShowBrandFooter(e.target.checked)}
+                  className="rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+                />
+                <span>Include subtle footer link on PDF</span>
+              </label>
               <Link to="/tools/quotation-generator" className="text-brand-700 font-bold hover:underline">
                 Need a Quotation instead? Switch to Free Quotation Maker →
               </Link>
@@ -873,6 +927,8 @@ export default function GstInvoiceGenerator() {
           </div>
         </div>
       </div>
+
+      <BilingualToolGuide guides={GST_BILINGUAL} />
 
       {/* ── ERP Upgrade Conversion Banner ── */}
       <div className="no-print bg-gradient-to-br from-slate-900 via-brand-950 to-slate-950 border-t border-brand-500/30 px-4 py-12 sm:py-16">

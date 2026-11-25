@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import ToolSeoFaq from "../components/ToolSeoFaq.jsx";
+import BilingualToolGuide from "../components/BilingualToolGuide.jsx";
 import {
   QrCode,
   Download,
@@ -140,6 +141,7 @@ export default function UpiQrGenerator() {
         description="Create custom NPCI UPI QR codes with locked rupee amounts for GPay, PhonePe, Paytm & BHIM. Download crisp PNG/SVG QR or print shop counter standees free."
         keywords="upi qr code generator, upi qr generator with amount, phonepe gpay qr standee maker, bhmi upi pay link maker india"
         path="/tools/upi-qr-generator"
+        image="/og/og-upi-qr.jpg"
         schema={schema}
       />
 
@@ -311,6 +313,26 @@ export default function UpiQrGenerator() {
         </div>
       </div>
 
+      <BilingualToolGuide
+        guides={{
+          en: {
+            title: "Print Shop UPI Standees with Fixed Amount Locking",
+            summary: "Lock exact ₹ billing amounts inside an NPCI UPI QR so customers never mistype digits or claim fake screenshots.",
+            steps: ["Enter your VPA / UPI ID (GPay, PhonePe, Paytm, BHIM).", "Optionally fix an Amount in ₹ for fixed fees or packages.", "Download high-DPI PNG, scalable SVG, or print counter standees."],
+          },
+          mr: {
+            title: "दुकानासाठी मोफत UPI QR पेमेंट स्टँडी (फिक्स रकमेसह) बनवा",
+            summary: "GPay, PhonePe किंवा Paytm साठी प्रिंट करण्याजोगा दुकान काउंटर QR स्टँड तयार करा — गरज असल्यास ग्राहकाला रक्कम टाईप करावी लागू नये म्हणून Fixed Amount लॉक करता येते.",
+            steps: ["तुमचा UPI ID (उदा. business@okaxis) व दुकानाचे नाव भरा.", "ऐच्छिक असल्यास ठरलेली रक्कम (उदा. ₹499) लॉक करा.", "PNG, SVG डाउनलोड करा किंवा दुकानाच्या काउंटरवर ठेवण्यासाठी थेट प्रिंट काढा."],
+          },
+          hi: {
+            title: "दुकान काउंटर के लिए मुफ़्त UPI QR कोड स्टैंडी (Fixed Amount) बनाएं",
+            summary: "Google Pay, PhonePe, Paytm और BHIM के लिए प्रिंट करने लायक UPI स्टैंडी कार्ड तुरंत बनाएं — आप चाहें तो फिक्स ₹ अमाउंट भी लॉक कर सकते हैं।",
+            steps: ["अपना सही UPI ID और बिज़नेस/दुकान का नाम डालें।", "फ़िक्स पैकेज या फीस के लिए अमाउंट लॉक सेट करें (वैकल्पिक)।", "साफ़ PNG/SVG डाउनलोड करें या काउंटर स्टैंड प्रिंट निकालें।"],
+          },
+        }}
+      />
+
       {/* POS / E-Commerce Upsell */}
       <div className="no-print bg-slate-900 text-white px-4 py-12 text-center border-t border-slate-800">
         <div className="max-w-3xl mx-auto">
@@ -337,3 +359,4 @@ export default function UpiQrGenerator() {
     </div>
   );
 }
+

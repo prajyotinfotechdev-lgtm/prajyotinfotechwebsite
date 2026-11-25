@@ -364,6 +364,7 @@ export default function AppCostCalculator() {
         description="Calculate accurate mobile app development costs in India for iOS & Android. Configure Flutter, React Native, GPS tracking, Razorpay, and admin portals with instant WhatsApp scope export."
         keywords="mobile app development cost in India, cost to build an app Pune, app development price calculator 2026, Flutter app cost India, React Native development cost, Android app pricing India"
         path="/tools/app-cost-calculator"
+        image="/og/og-app-cost.jpg"
       />
 
       <script

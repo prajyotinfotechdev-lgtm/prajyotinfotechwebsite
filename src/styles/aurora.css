@@ -98,15 +98,75 @@
   }
 }
 
-/* ── Reduced motion — freeze all aurora blobs ── */
+/* ── Reduced motion — freeze all animations ── */
 @media (prefers-reduced-motion: reduce) {
-  .aurora-blob {
+  .aurora-blob,
+  .animate-pulse-slow,
+  .hero-slide-progress,
+  .hero-fade-in,
+  .hero-word-in,
+  .hero-card-in,
+  .hero-bar-grow,
+  .hero-dot-pulse,
+  .nav-sheet-enter,
+  .nav-backdrop-enter {
     animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
-  .animate-pulse-slow {
-    animation: none !important;
-  }
-  .hero-slide-progress {
-    animation: none !important;
-  }
+}
+
+/* ── CSS-only Hero & Navigation Motion (replaces initial-load Framer Motion) ── */
+@keyframes hero-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-fade-in {
+  animation: hero-fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-word-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-word-in {
+  animation: hero-word-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-card-in {
+  from { opacity: 0; transform: translateX(32px) scale(0.97); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.hero-card-in {
+  animation: hero-card-in 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-dot-pulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.hero-dot-pulse {
+  animation: hero-dot-pulse 8s linear infinite;
+}
+
+@keyframes nav-sheet-enter {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.nav-sheet-enter {
+  animation: nav-sheet-enter 0.18s ease-out both;
+}
+
+@keyframes nav-backdrop-enter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.nav-backdrop-enter {
+  animation: nav-backdrop-enter 0.16s ease-out both;
 }

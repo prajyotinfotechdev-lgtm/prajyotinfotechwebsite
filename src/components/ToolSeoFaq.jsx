@@ -94,3 +94,4 @@ export default function ToolSeoFaq({ heading = "Frequently Asked Questions", faq
     </section>
   );
 }
+

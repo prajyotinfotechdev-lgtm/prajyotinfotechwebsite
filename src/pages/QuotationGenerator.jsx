@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import ToolSeoFaq from "../components/ToolSeoFaq.jsx";
+import BilingualToolGuide from "../components/BilingualToolGuide.jsx";
 import {
   FileCheck2,
   Printer,
@@ -23,6 +24,37 @@ import {
 } from "lucide-react";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
 import { useBottomBar } from "../utils/useBottomBar.js";
+import { trackEvent } from "../utils/analytics.js";
+
+const QUOTE_BILINGUAL = {
+  en: {
+    title: "Generate High-Converting Business Quotations & Proforma Estimates",
+    summary: "Toggle seamlessly between Quotation, Estimate, and Proforma Invoice headers with Inclusive, Exclusive, or No-Tax modes and instant milestone terms.",
+    steps: [
+      "Choose Document Heading (Quotation, Estimate, or Proforma) and GST Mode.",
+      "Add deliverables, quantities, units, and unit pricing.",
+      "Export clean A4 PDF or dispatch itemized quote summary on WhatsApp.",
+    ],
+  },
+  mr: {
+    title: "व्यवसायासाठी प्रोफेशनल मराठी/इंग्रजी कोटेशन फॉरमॅट PDF बनवा",
+    summary: "ग्राहकाला काम सुरू करण्यापूर्वी अचूक दरपत्रक (Quotation / Estimate / Proforma) देण्यासाठी हे मोफत टूल वापरा — GST सह किंवा GST शिवाय कोटेशन एका मिनिटात तयार होते.",
+    steps: [
+      "Quotation, Estimate किंवा Proforma हेडिंग आणि GST प्रकार निवडा.",
+      "कामाचा तपशील, दर व पेमेंट अटी (उदा. 50% Advance) निवडा.",
+      "A4 PDF प्रिंट करा किंवा थेट WhatsApp वर पाठवून ऑर्डर कन्फर्म करा.",
+    ],
+  },
+  hi: {
+    title: "बिज़नेस कोटेशन और प्रोफॉर्मा एस्टीमेट PDF (Quotation Maker) बनाएं",
+    summary: "क्लाइंट को ऑर्डर से पहले प्रोफ़ेशनल कोटेशन, एस्टीमेट या प्रोफॉर्मा इनवॉइस भेजें — एक्सक्लूसिव GST, इन्क्लूसिव GST या बिना टैक्स विकल्पों के साथ।",
+    steps: [
+      "ऊपर से हेडिंग (Quotation / Estimate / Proforma) और GST मोड चुनें।",
+      "काम या सामान की लिस्ट, यूनिट रेट और पेमेंट की शर्तें जोड़ें।",
+      "तुरंत A4 PDF डाउनलोड करें या WhatsApp पर शेयर करें।",
+    ],
+  },
+};
 
 const TAX_MODES = [
   { id: "exclusive", label: "Add GST (Exclusive)" },
@@ -85,6 +117,7 @@ export default function QuotationGenerator() {
 
   const [taxMode, setTaxMode] = useState("exclusive");
   const [docTitle, setDocTitle] = useState("QUOTATION");
+  const [showBrandFooter, setShowBrandFooter] = useState(true);
 
   const [sender, setSender] = useState(() => {
     try {
@@ -233,6 +266,7 @@ export default function QuotationGenerator() {
         description="Create professional business quotations, proposals, and proforma estimates in seconds. Auto GST calculation, A4 PDF export & 1-click WhatsApp dispatch. Free forever."
         keywords="free quotation generator online India, proforma invoice maker free, business estimate maker PDF, quotation format India, WhatsApp quotation maker"
         path="/tools/quotation-generator"
+        image="/og/og-quotation.jpg"
         schema={[schema]}
       />
 
@@ -579,10 +613,23 @@ export default function QuotationGenerator() {
                   </div>
                 </div>
               </div>
+              {showBrandFooter && (
+                <div className="px-5 py-2 bg-slate-50 border-t border-slate-200 text-center text-[10px] font-mono text-slate-400">
+                  Generated free with Prajyot Infotech Quotation Maker — www.prajyotinfotech.in/tools/quotation-generator
+                </div>
+              )}
             </div>
 
             <div className="no-print mt-4 flex flex-wrap justify-between items-center gap-2 text-xs text-slate-500">
-              <span>Ready to bill? Switch to Tax Invoice Maker anytime.</span>
+              <label className="inline-flex items-center gap-2 cursor-pointer select-none text-slate-600 font-medium">
+                <input
+                  type="checkbox"
+                  checked={showBrandFooter}
+                  onChange={(e) => setShowBrandFooter(e.target.checked)}
+                  className="rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+                />
+                <span>Include subtle footer link on PDF</span>
+              </label>
               <Link to="/tools/gst-invoice-generator" className="text-brand-700 font-bold hover:underline">
                 Open GST Tax Invoice Generator →
               </Link>
@@ -590,6 +637,8 @@ export default function QuotationGenerator() {
           </div>
         </div>
       </div>
+
+      <BilingualToolGuide guides={QUOTE_BILINGUAL} />
 
       {/* Bottom Lead Banner */}
       <div className="no-print bg-gradient-to-br from-slate-900 via-brand-950 to-slate-950 border-t border-brand-500/30 px-4 py-12 sm:py-16">

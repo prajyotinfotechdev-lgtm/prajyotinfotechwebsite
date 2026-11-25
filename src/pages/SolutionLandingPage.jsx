@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
+import BilingualToolGuide from "../components/BilingualToolGuide.jsx";
 import { SOLUTIONS } from "../data/solutionsData.js";
 import { CheckCircle2, ArrowRight, MessageSquare, Sparkles, Layers } from "lucide-react";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
@@ -47,6 +48,7 @@ export default function SolutionLandingPage({ solutionKey }) {
         description={sol.metaDesc}
         keywords={sol.keywords}
         path={sol.path}
+        image="/og/og-solutions.jpg"
         schema={[softwareSchema, faqSchema]}
       />
 
@@ -126,8 +128,38 @@ export default function SolutionLandingPage({ solutionKey }) {
             <Link to={sol.relatedTool.to} className="px-4 py-2.5 rounded-xl bg-brand-600 text-white font-bold text-xs hover:bg-brand-500">
               {sol.relatedTool.label}
             </Link>
+            {(key === "restaurant-qr-kds-software" || key === "mobile-shop-pos-software") && (
+              <Link
+                to={key === "restaurant-qr-kds-software" ? "/demo/restaurant-qr-kds" : "/demo/mobile-shop-imei-pos"}
+                className="px-4 py-2.5 rounded-xl bg-slate-900 text-white font-bold text-xs hover:bg-slate-800"
+              >
+                Launch Interactive Live Demo →
+              </Link>
+            )}
           </div>
         </div>
+
+        {key === "manufacturing-bom-erp" && (
+          <BilingualToolGuide
+            guides={{
+              en: {
+                title: "Shop-Floor BOM ERP Built for MIDC Factories",
+                summary: "Replace fragmented Tally + paper job cards with Marathi/English shop-floor mobile barcode tracking, scrap audits, and 1-click Tally XML accounting bridge.",
+                steps: ["Track multi-level Bill of Materials & raw coil consumption.", "Give storekeepers easy mobile inward/GRN scanning screens.", "Sync approved GST invoices automatically to your CA's Tally."],
+              },
+              mr: {
+                title: "चाकण व भोसरी MIDC कारखान्यांसाठी खास मराठी + इंग्लिश ERP सॉफ्टवेअर",
+                summary: "कागदी जॉब कार्ड आणि Tally मधील मॅन्युअल नोंदी बंद करून मोबाईलवर सोप्या मराठीत Raw Material, Scrap आणि Production Dispatch ट्रॅक करा.",
+                steps: ["प्रत्येक उत्पादनासाठी अचूक Bill of Materials (BOM) आणि वेस्टेज नियंत्रित करा.", "स्टोअरकीपरसाठी मराठी भाषेत सोपे Android बारकोड स्कॅनिंग अ‍ॅप.", "सर्व GST बिले आणि स्टॉक्स थेट तुमच्या CA च्या Tally शी सिंक होतात."],
+              },
+              hi: {
+                title: "फ़ैक्टरी और मैन्युफ़ैक्चरिंग प्लांट के लिए कस्टम BOM व इन्वेंट्री ERP",
+                summary: "पेपर जॉब कार्ड और Excel शीट हटाकर मोबाइल बारकोड स्कैनिंग, स्क्रैप ट्रैकिंग और Tally XML सिंक के साथ पूरा प्लांट लाइव मैनेज करें।",
+                steps: ["हर प्रोडक्ट के लिए मल्टी-लेवल BOM और रॉ मटेरियल वेस्टेज ट्रैक करें।", "स्टोरकीपर के लिए आसान हिंदी/मराठी/इंग्लिश मोबाइल ऐप इंटरफ़ेस।", "आपके CA के मौजूदा Tally से टू-वे अकाउंटिंग सिंक।"],
+              },
+            }}
+          />
+        )}
 
         {/* FAQs */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -142,3 +174,4 @@ export default function SolutionLandingPage({ solutionKey }) {
     </div>
   );
 }
+

@@ -199,6 +199,7 @@ For delayed shipments or activation issues contact ${cfg.email} or call ${cfg.ph
         description="Generate free Privacy Policy, Terms of Service, Refund & Cancellation, and Shipping Policy pages formatted for Razorpay, PhonePe KYC, and Google Play Store."
         keywords="privacy policy generator razorpay india, refund policy generator ecommerce india, play store privacy policy maker, terms and conditions generator free"
         path="/tools/legal-policy-generator"
+        image="/og/og-legal-policy.jpg"
         schema={schema}
       />
 
@@ -346,3 +347,4 @@ For delayed shipments or activation issues contact ${cfg.email} or call ${cfg.ph
     </div>
   );
 }
+

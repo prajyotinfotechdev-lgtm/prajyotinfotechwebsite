@@ -106,6 +106,7 @@ export default function ConstructionLeakageCalculator() {
         description="Calculate how much your construction projects lose monthly to manual paper muster errors, buddy punching, and ghost labor. Free interactive ROI calculator."
         keywords="construction labor cost calculator, ghost labor calculator, construction muster app India, site expense tracking"
         path="/tools/construction-leakage-calculator"
+        image="/og/og-construction-calc.jpg"
         schema={calcSchema}
       />
 

@@ -17,6 +17,9 @@ import {
   Sparkles,
   ArrowRight,
   MessageSquare,
+  TrendingUp,
+  FileSignature,
+  PlayCircle,
 } from "lucide-react";
 import { prefetchRoute } from "../utils/prefetch.js";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
@@ -27,20 +30,23 @@ const TOOL_GROUPS = [
     sub: "Zero-watermark A4 PDF makers and Indian GST calculators built for daily merchant workflows.",
     items: [
       { to: "/tools/gst-invoice-generator", title: "Free GST Invoice Generator", badge: "Popular", desc: "A4 Rule-46 Tax Invoices with custom logo, auto CGST/SGST vs IGST & WhatsApp dispatch.", icon: FileText, color: "text-emerald-600 bg-emerald-50" },
-      { to: "/tools/quotation-generator", title: "Quotation & Proforma Maker", badge: "New", desc: "Send crisp GST exclusive/inclusive/non-GST price quotes with payment milestone terms.", icon: FileCheck2, color: "text-indigo-600 bg-indigo-50" },
-      { to: "/tools/gst-profit-calculator", title: "GST & Profit Margin Calculator", badge: "New", desc: "Add or reverse-extract 0%–28% GST slabs & check exact retail net margin %.", icon: IndianRupee, color: "text-blue-600 bg-blue-50" },
-      { to: "/tools/hsn-sac-finder", title: "HSN / SAC Code & Tax Finder", badge: "New", desc: "Search common Indian HSN/SAC codes and load them into the GST Invoice Maker in 1 tap.", icon: Tag, color: "text-amber-600 bg-amber-50" },
+      { to: "/tools/quotation-generator", title: "Quotation & Proforma Maker", badge: "Free", desc: "Send crisp GST exclusive/inclusive/non-GST price quotes with payment milestone terms.", icon: FileCheck2, color: "text-indigo-600 bg-indigo-50" },
+      { to: "/tools/gst-profit-calculator", title: "GST & Profit Margin Calculator", badge: "Free", desc: "Add or reverse-extract 0%–28% GST slabs & check exact retail net margin %.", icon: IndianRupee, color: "text-blue-600 bg-blue-50" },
+      { to: "/tools/hsn-sac-finder", title: "HSN / SAC Code & Tax Finder", badge: "GST Slabs", desc: "Search common Indian HSN/SAC codes and load them into the GST Invoice Maker in 1 tap.", icon: Tag, color: "text-amber-600 bg-amber-50" },
+      { to: "/tools/business-emi-calculator", title: "MSME Business Loan EMI Calculator", badge: "New", desc: "Simulate loan EMI, yearly amortization & interest saved with annual prepayments.", icon: IndianRupee, color: "text-purple-600 bg-purple-50" },
+      { to: "/tools/break-even-calculator", title: "Break-Even & D2C Margin Calc", badge: "New", desc: "Compute exact monthly break-even orders after GST, 2% payment fee, courier & Ad CAC.", icon: TrendingUp, color: "text-rose-600 bg-rose-50" },
     ],
   },
   {
-    heading: "WhatsApp, QR Payments & Launch Compliance",
-    sub: "Accept direct UPI payments, grow WhatsApp inquiries, and pass Razorpay/Play Store KYC fast.",
+    heading: "WhatsApp, QR Payments, HR & Legal Compliance",
+    sub: "Accept direct UPI payments, grow WhatsApp inquiries, issue payslips, and draft NDAs fast.",
     items: [
-      { to: "/tools/whatsapp-link-generator", title: "WhatsApp Link & Counter QR", badge: "New", desc: "Create custom wa.me links with welcome messages, SVG/PNG QR standees & website widget code.", icon: QrCode, color: "text-teal-600 bg-teal-50" },
-      { to: "/tools/upi-qr-generator", title: "UPI Payment QR Standee Maker", badge: "New", desc: "Generate NPCI UPI QR cards with fixed Rupee amount locking for GPay, PhonePe & Paytm.", icon: QrCode, color: "text-brand-600 bg-brand-50" },
-      { to: "/tools/legal-policy-generator", title: "Legal Policy Generator (KYC)", badge: "New", desc: "Generate Privacy, Terms, Refund & Shipping pages ready for Razorpay & Play Store review.", icon: ShieldCheck, color: "text-emerald-600 bg-emerald-50" },
-      { to: "/tools/salary-slip-generator", title: "Employee Salary Slip Maker", badge: "New", desc: "Create official monthly A4 payslips with Basic, HRA, PF, PT & TDS calculations free.", icon: Receipt, color: "text-violet-600 bg-violet-50" },
-      { to: "/tools/purchase-order-generator", title: "Purchase Order & Challan Maker", badge: "New", desc: "Generate factory Purchase Orders & Rule-55 Delivery Challans with HSN & GST.", icon: ClipboardCheck, color: "text-orange-600 bg-orange-50" },
+      { to: "/tools/whatsapp-link-generator", title: "WhatsApp Link & Counter QR", badge: "Popular", desc: "Create custom wa.me links with welcome messages, SVG/PNG QR standees & website widget code.", icon: QrCode, color: "text-teal-600 bg-teal-50" },
+      { to: "/tools/upi-qr-generator", title: "UPI Payment QR Standee Maker", badge: "Standee", desc: "Generate NPCI UPI QR cards with fixed Rupee amount locking for GPay, PhonePe & Paytm.", icon: QrCode, color: "text-brand-600 bg-brand-50" },
+      { to: "/tools/legal-policy-generator", title: "Legal Policy Generator (KYC)", badge: "Razorpay", desc: "Generate Privacy, Terms, Refund & Shipping pages ready for Razorpay & Play Store review.", icon: ShieldCheck, color: "text-emerald-600 bg-emerald-50" },
+      { to: "/tools/nda-agreement-generator", title: "Mutual NDA & IP Ownership Maker", badge: "New", desc: "Draft Indian Mutual NDAs & 100% Source Code IP Assignment clauses ready to print.", icon: FileSignature, color: "text-indigo-600 bg-indigo-50" },
+      { to: "/tools/salary-slip-generator", title: "Employee Salary Slip Maker", badge: "Payroll", desc: "Create official monthly A4 payslips with Basic, HRA, PF, PT & TDS calculations free.", icon: Receipt, color: "text-violet-600 bg-violet-50" },
+      { to: "/tools/purchase-order-generator", title: "Purchase Order & Challan Maker", badge: "B2B", desc: "Generate factory Purchase Orders & Rule-55 Delivery Challans with HSN & GST.", icon: ClipboardCheck, color: "text-orange-600 bg-orange-50" },
     ],
   },
   {
@@ -55,6 +61,12 @@ const TOOL_GROUPS = [
   },
 ];
 
+const LIVE_DEMOS = [
+  { to: "/demo/restaurant-qr-kds", title: "Restaurant QR & Kitchen KDS Demo", badge: "FoodTech Live", desc: "Punch table orders live on the customer screen and watch tickets appear on the Kitchen Display System." },
+  { to: "/demo/mobile-shop-imei-pos", title: "Mobile Shop IMEI POS & GST Demo", badge: "Retail Live", desc: "Select serialized IMEI phones and simulate instant GST invoicing with automated WhatsApp receipt delivery." },
+  { to: "/demo/boutique-ecommerce", title: "Couture Boutique Storefront Demo", badge: "Luxury D2C", desc: "Test custom boutique browsing, bridal wishlist saving, and stylist WhatsApp escalation without SaaS rent." },
+];
+
 export default function ToolsHub() {
   const { openLeadModal } = useLeadModal();
 
@@ -64,7 +76,7 @@ export default function ToolsHub() {
     "@type": "CollectionPage",
     name: "Free Online Business Tools & Calculators India | Prajyot Infotech",
     url: pageUrl,
-    description: "Directory of 100% free Indian business utilities: GST Invoice Generator, Quotation Maker, UPI QR Standee, HSN Finder, WhatsApp QR, Legal Policy Generator, Salary Slip & Cost Calculators.",
+    description: "Directory of 100% free Indian business utilities: GST Invoice Generator, Quotation Maker, UPI QR Standee, HSN Finder, Business Loan EMI, Break-Even Calc, NDA Drafts, Salary Slip & Cost Calculators.",
   };
 
   return (
@@ -76,10 +88,11 @@ export default function ToolsHub() {
         ]}
       />
       <Seo
-        title="Free Online Business Tools India — GST Invoice, Quotation, UPI QR & Calculators | Prajyot Infotech"
-        description="Free browser-based tools for Indian businesses: GST Invoice PDF maker, Quotation generator, UPI payment QR standee, WhatsApp link maker, HSN lookup, Salary slip & Cost calculators."
-        keywords="free business tools india, online gst invoice maker, free quotation generator, upi qr standee maker, salary slip generator, whatsapp qr maker"
+        title="Free Online Business Tools India — GST Invoice, EMI, Break-Even & Live Demos | Prajyot Infotech"
+        description="Free browser-based tools for Indian businesses: GST Invoice PDF maker, Quotation maker, Business EMI & Break-Even calculators, Mutual NDA draft, UPI QR standee, Salary slip & interactive software demos."
+        keywords="free business tools india, online gst invoice maker, free quotation generator, upi qr standee maker, msme business loan emi calculator, break even calculator india"
         path="/tools"
+        image="/og/og-tools.jpg"
         schema={schema}
       />
 
@@ -88,19 +101,54 @@ export default function ToolsHub() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-500/20 border border-brand-400/30 text-brand-200 text-xs font-bold mb-4">
             <Sparkles className="w-3.5 h-3.5 text-brand-300" />
-            <span>Zero Signup · Zero Watermarks · Runs Locally</span>
+            <span>Zero Signup · Zero Watermarks · English / मराठी / हिंदी Guides</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
-            Free Online Business Utilities &amp; Calculators
+            Free Online Business Utilities &amp; Live Demos
           </h1>
           <p className="text-slate-300 text-sm sm:text-lg max-w-2xl mx-auto mt-4 leading-relaxed">
-            Every essential billing, tax, compliance, QR, and software estimation tool engineered cleanly for Indian businesses — free forever.
+            Every essential billing, GST, loan EMI, break-even, legal NDA, QR, and software cost estimation tool — free forever.
           </p>
         </div>
       </div>
 
+      {/* Live Interactive Software Demos Strip */}
+      <div className="max-w-7xl mx-auto px-4 pt-12 pb-2">
+        <div className="bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-800 text-white">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+            <div>
+              <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1">
+                <PlayCircle className="w-4 h-4" /> Interactive Software Simulators
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black">Test-Drive Live Industry Systems in Browser</h2>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {LIVE_DEMOS.map((d) => (
+              <Link
+                key={d.to}
+                to={d.to}
+                onMouseEnter={() => prefetchRoute(d.to)}
+                className="p-5 rounded-2xl bg-slate-950/90 border border-slate-800 hover:border-brand-500/60 transition group flex flex-col justify-between gap-3"
+              >
+                <div>
+                  <span className="inline-block px-2 py-0.5 rounded bg-brand-500/20 text-brand-300 text-[10px] font-mono font-bold uppercase mb-2">
+                    {d.badge}
+                  </span>
+                  <h3 className="text-base font-black text-white group-hover:text-brand-300 transition">{d.title}</h3>
+                  <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">{d.desc}</p>
+                </div>
+                <span className="text-xs font-bold text-emerald-400 inline-flex items-center gap-1">
+                  Launch Interactive Demo <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Groups */}
-      <div className="max-w-7xl mx-auto px-4 py-12 sm:py-16 space-y-14">
+      <div className="max-w-7xl mx-auto px-4 py-10 sm:py-14 space-y-14">
         {TOOL_GROUPS.map((grp) => (
           <section key={grp.heading}>
             <div className="mb-6">

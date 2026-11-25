@@ -7,6 +7,7 @@ import Footer from "./components/Footer.jsx";
 import { Analytics } from "@vercel/analytics/react";
 import { LeadModalProvider } from "./context/LeadModalContext.jsx";
 import { prefetchTopProducts } from "./utils/prefetch.js";
+import { initAnalytics, trackPageView } from "./utils/analytics.js";
 import "./styles/responsive.css";
 import "./style.css";
 
@@ -37,6 +38,10 @@ const HsnSacFinder = lazy(() => import("./pages/HsnSacFinder.jsx"));
 const LegalPolicyGenerator = lazy(() => import("./pages/LegalPolicyGenerator.jsx"));
 const SalarySlipGenerator = lazy(() => import("./pages/SalarySlipGenerator.jsx"));
 const PurchaseOrderGenerator = lazy(() => import("./pages/PurchaseOrderGenerator.jsx"));
+const BusinessEmiCalculator = lazy(() => import("./pages/BusinessEmiCalculator.jsx"));
+const BreakEvenCalculator = lazy(() => import("./pages/BreakEvenCalculator.jsx"));
+const NdaAgreementGenerator = lazy(() => import("./pages/NdaAgreementGenerator.jsx"));
+const DemoShowcasePage = lazy(() => import("./pages/DemoShowcasePage.jsx"));
 const AppCostCalculator = lazy(() => import("./pages/AppCostCalculator.jsx"));
 
 // Comparison & Solution Hubs
@@ -74,6 +79,7 @@ function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
+    trackPageView(pathname);
   }, [pathname]);
   return null;
 }
@@ -99,6 +105,7 @@ export default function App() {
   const [showChats, setShowChats] = useState(false);
 
   useEffect(() => {
+    const analyticsTimer = setTimeout(() => initAnalytics(), 1200);
     const chatTimer = setTimeout(() => setShowChats(true), 2500);
     const prefetchTimer =
       typeof window.requestIdleCallback === "function"
@@ -106,6 +113,7 @@ export default function App() {
         : setTimeout(() => prefetchTopProducts(), 2000);
 
     return () => {
+      clearTimeout(analyticsTimer);
       clearTimeout(chatTimer);
       if (typeof window.cancelIdleCallback === "function" && typeof prefetchTimer === "number") {
         window.cancelIdleCallback(prefetchTimer);
@@ -156,11 +164,11 @@ export default function App() {
             <Route path="/software-company-in-latur" element={<CityLandingPage cityId="latur" />} />
             <Route path="/software-company-in-chakan-bhosari" element={<CityLandingPage cityId="chakan-bhosari" />} />
             <Route path="/software-company-in-hinjewadi" element={<CityLandingPage cityId="hinjewadi" />} />
+            <Route path="/software-company-in-thane" element={<CityLandingPage cityId="thane" />} />
+            <Route path="/software-company-in-nashik" element={<CityLandingPage cityId="nashik" />} />
+            <Route path="/software-company-in-aurangabad" element={<CityLandingPage cityId="aurangabad" />} />
+            <Route path="/software-company-in-nagpur" element={<CityLandingPage cityId="nagpur" />} />
             <Route path="/software-company-in-navi-mumbai" element={<Navigate to="/software-company-in-mumbai" replace />} />
-            <Route path="/software-company-in-thane" element={<Navigate to="/software-company-in-mumbai" replace />} />
-            <Route path="/software-company-in-nashik" element={<Navigate to="/software-company-in-pune" replace />} />
-            <Route path="/software-company-in-aurangabad" element={<Navigate to="/software-company-in-pune" replace />} />
-            <Route path="/software-company-in-nagpur" element={<Navigate to="/software-company-in-pune" replace />} />
             <Route path="/software-company-in-bangalore" element={<Navigate to="/services" replace />} />
             <Route path="/software-company-in-delhi" element={<Navigate to="/services" replace />} />
             <Route path="/software-company-in-hyderabad" element={<Navigate to="/services" replace />} />
@@ -185,7 +193,16 @@ export default function App() {
             <Route path="/tools/legal-policy-generator" element={<LegalPolicyGenerator />} />
             <Route path="/tools/salary-slip-generator" element={<SalarySlipGenerator />} />
             <Route path="/tools/purchase-order-generator" element={<PurchaseOrderGenerator />} />
+            <Route path="/tools/business-emi-calculator" element={<BusinessEmiCalculator />} />
+            <Route path="/tools/break-even-calculator" element={<BreakEvenCalculator />} />
+            <Route path="/tools/nda-agreement-generator" element={<NdaAgreementGenerator />} />
             <Route path="/tools/app-cost-calculator" element={<AppCostCalculator />} />
+
+            {/* Standalone Interactive Live Product Demos */}
+            <Route path="/demo" element={<Navigate to="/demo/restaurant-qr-kds" replace />} />
+            <Route path="/demo/restaurant-qr-kds" element={<DemoShowcasePage demoKey="restaurant-qr-kds" />} />
+            <Route path="/demo/mobile-shop-imei-pos" element={<DemoShowcasePage demoKey="mobile-shop-imei-pos" />} />
+            <Route path="/demo/boutique-ecommerce" element={<DemoShowcasePage demoKey="boutique-ecommerce" />} />
 
             {/* Comparisons & Solution Landing Pages */}
             <Route path="/compare/tally-vs-custom-erp" element={<TallyVsCustomErp />} />

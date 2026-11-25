@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import ToolSeoFaq from "../components/ToolSeoFaq.jsx";
+import BilingualToolGuide from "../components/BilingualToolGuide.jsx";
 import { Search, FileText, ArrowRight, Sparkles, Tag } from "lucide-react";
 
 const HSN_SAC_CODES = [
@@ -107,6 +108,7 @@ export default function HsnSacFinder() {
         description="Search verified HSN and SAC codes with official GST rates in India (998314 software, construction, electronics, industrial, retail). 1-click export to Free GST Invoice Maker."
         keywords="hsn code list with gst rate india, sac code for software services 998314, hsn sac finder india, gst rate lookup tool"
         path="/tools/hsn-sac-finder"
+        image="/og/og-hsn-finder.jpg"
         schema={schema}
       />
 
@@ -218,7 +220,28 @@ export default function HsnSacFinder() {
         )}
       </div>
 
+      <BilingualToolGuide
+        guides={{
+          en: {
+            title: "HSN vs SAC Rules for Indian GST Invoices",
+            summary: "Goods use numeric HSN codes (e.g. 8517 Smartphones, 7214 Steel); services use SAC starting with 99 (e.g. 998314 Software Development). Click Use in GST Invoice to pre-load automatically.",
+            steps: ["Type your service, product category, or 4/6-digit code.", "Filter by GST percentage slab (3%, 5%, 12%, 18%, 28%).", "Tap 'Use in GST Invoice' to auto-populate the invoice maker."],
+          },
+          mr: {
+            title: "GST बिलासाठी योग्य HSN आणि SAC कोड कसे शोधायचे?",
+            summary: "वस्तू (Goods) साठी HSN कोड आणि सेवा (Services) साठी 99 पासून सुरू होणारे SAC कोड लागतात. कोणत्याही कोडवर क्लिक करून थेट मोफत GST बिलात लोड करा.",
+            steps: ["वरच्या बॉक्समध्ये वस्तू किंवा सेवेचे नाव शोधून पहा.", "योग्य GST दर (5%, 12%, 18%, 28%) तपासा.", "'Use in GST Invoice' वर क्लिक करून लगेच बिल तयार करा."],
+          },
+          hi: {
+            title: "GST बिल के लिए सही HSN और SAC कोड कैसे पता करें?",
+            summary: "सामान (Goods) के लिए HSN कोड और सर्विस (Services) के लिए 99 से शुरू होने वाले SAC कोड का उपयोग होता है। एक क्लिक में कोड को GST बिल मेकर में लोड करें।",
+            steps: ["सर्च बार में उत्पाद या सेवा का नाम लिखकर कोड खोजें।", "सही GST स्लैब (3%, 5%, 12%, 18%, 28%) की जांच करें।", "'Use in GST Invoice' पर टैप करके तुरंत इनवॉइस बनाएं।"],
+          },
+        }}
+      />
+
       <ToolSeoFaq heading="HSN & SAC Code Reference FAQs" faqs={FAQS} />
     </div>
   );
 }
+

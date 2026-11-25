@@ -87,6 +87,7 @@ export default function PurchaseOrderGenerator() {
         description="Create A4 Purchase Orders and Rule-55 Delivery Challans online for free. Built for Indian manufacturers, traders, and contractors with HSN tracking and WhatsApp export."
         keywords="free purchase order generator india, delivery challan format pdf maker, online po generator for manufacturing, gst challan maker"
         path="/tools/purchase-order-generator"
+        image="/og/og-purchase-order.jpg"
         schema={schema}
       />
 
@@ -300,3 +301,4 @@ export default function PurchaseOrderGenerator() {
     </div>
   );
 }
+

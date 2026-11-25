@@ -17,9 +17,23 @@ export default defineConfig({
     chunkSizeWarningLimit: 800,
     rollupOptions: {
       output: {
-        manualChunks: {
-          "react-core": ["react", "react-dom", "react-router-dom"],
-          "motion-vendor": ["framer-motion"],
+        manualChunks(id) {
+          const norm = id.replace(/\\/g, "/");
+          if (
+            norm.includes("/node_modules/react/") ||
+            norm.includes("/node_modules/react-dom/") ||
+            norm.includes("/node_modules/react-router") ||
+            norm.includes("/node_modules/scheduler/")
+          ) {
+            return "react-core";
+          }
+          if (
+            norm.includes("/node_modules/framer-motion/") ||
+            norm.includes("/node_modules/motion-dom/") ||
+            norm.includes("/node_modules/motion-utils/")
+          ) {
+            return "motion-vendor";
+          }
         },
       },
     },

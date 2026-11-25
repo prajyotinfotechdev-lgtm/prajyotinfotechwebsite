@@ -117,6 +117,7 @@ export default function SalarySlipGenerator() {
         description="Create & download official Indian employee salary slips (payslips) online free. Auto calculates Gross, PF, Professional Tax, TDS & Net Pay in words with A4 PDF export."
         keywords="free salary slip generator india, employee payslip maker pdf, salary slip format india excel pdf, online payslip creator free"
         path="/tools/salary-slip-generator"
+        image="/og/og-salary-slip.jpg"
         schema={schema}
       />
 
@@ -322,3 +323,4 @@ export default function SalarySlipGenerator() {
     </div>
   );
 }
+

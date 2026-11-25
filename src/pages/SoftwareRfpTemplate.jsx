@@ -197,6 +197,7 @@ Submit this document to hr@prajyotinfotech.in or via WhatsApp at +91 93226 73286
         description="Free downloadable and interactive Software RFP & Scope of Work template for Indian businesses. Learn how to scope web apps, mobile apps, and ERPs with fixed pricing and 100% IP transfer."
         keywords="software RFP template India, scope of work template web app, ERP requirements document template, how to write software RFP, software tender template Pune"
         path="/resources/software-rfp-template"
+        image="/og/og-tools.jpg"
       />
 
       <script

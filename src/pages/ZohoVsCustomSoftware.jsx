@@ -110,6 +110,7 @@ export default function ZohoVsCustomSoftware() {
         description="Calculate your 5-year Zoho CRM / SaaS per-user subscription cost vs owning custom in-house business software in India with zero monthly seat fees."
         keywords="zoho vs custom software india, saas vs custom erp cost calculator, zoho alternative zero seat fee, custom crm vs zoho india"
         path="/compare/zoho-vs-custom-software"
+        image="/og/og-compare.jpg"
         schema={faqSchema}
       />
 
@@ -287,3 +288,4 @@ export default function ZohoVsCustomSoftware() {
     </>
   );
 }
+

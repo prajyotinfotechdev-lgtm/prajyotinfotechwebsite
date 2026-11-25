@@ -155,3 +155,18 @@ Canonical URL: https://www.prajyotinfotech.in
 - **Manufacturing BOM & Tally-Synced Plant ERP**: `https://www.prajyotinfotech.in/solutions/manufacturing-bom-erp`
 - **Zoho / Per-Seat SaaS vs Custom Owned ERP Calculator**: `https://www.prajyotinfotech.in/compare/zoho-vs-custom-software`
 - **Shopify vs Custom React E-Commerce**: `https://www.prajyotinfotech.in/compare/shopify-vs-custom-ecommerce`
+- **MSME Business Loan & Prepayment EMI Calculator (English/Marathi/Hindi)**: `https://www.prajyotinfotech.in/tools/business-emi-calculator`
+- **Break-Even Point & Indian D2C Unit Economics Calculator**: `https://www.prajyotinfotech.in/tools/break-even-calculator`
+- **Mutual NDA & Software IP Ownership Generator**: `https://www.prajyotinfotech.in/tools/nda-agreement-generator`
+
+### Interactive Browser Product Demos
+- **Restaurant QR Menu & Live KDS Terminal Demo**: `https://www.prajyotinfotech.in/demo/restaurant-qr-kds`
+- **Mobile Shop Serialized IMEI POS & GST Demo**: `https://www.prajyotinfotech.in/demo/mobile-shop-imei-pos`
+- **Luxury Couture Boutique Storefront Demo**: `https://www.prajyotinfotech.in/demo/boutique-ecommerce`
+
+### Expanded Maharashtra Regional Hubs
+- **Nashik Ambad & Satpur MIDC**: `https://www.prajyotinfotech.in/software-company-in-nashik`
+- **Nagpur MIHAN & Logistics**: `https://www.prajyotinfotech.in/software-company-in-nagpur`
+- **Chhatrapati Sambhajinagar (Aurangabad / Waluj MIDC)**: `https://www.prajyotinfotech.in/software-company-in-aurangabad`
+- **Thane & Wagle Estate**: `https://www.prajyotinfotech.in/software-company-in-thane`
+

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import ToolSeoFaq from "../components/ToolSeoFaq.jsx";
+import BilingualToolGuide from "../components/BilingualToolGuide.jsx";
 import {
   Calculator,
   Share2,
@@ -115,6 +116,7 @@ export default function GstProfitCalculator() {
         description="Instant GST calculator for Indian businesses. Add or remove 3%, 5%, 12%, 18%, 28% GST with automatic CGST, SGST, IGST split & live product profit margin calculator."
         keywords="gst calculator india, reverse gst calculator online, profit margin calculator india, cgst sgst igst calculator, markup vs margin calculator"
         path="/tools/gst-profit-calculator"
+        image="/og/og-gst-profit.jpg"
         schema={[schema]}
       />
 
@@ -340,6 +342,26 @@ export default function GstProfitCalculator() {
           </div>
         </div>
       </div>
+
+      <BilingualToolGuide
+        guides={{
+          en: {
+            title: "Reverse GST Removal & Net Retail Profit Margin Formula",
+            summary: "Switch between Adding GST onto base prices or Extracting included GST backwards from any MRP price (Price / (1 + Rate/100)) to see exact profit vs markup.",
+            steps: ["Select Add GST (Exclusive) or Remove GST (MRP Included).", "Enter Selling Price and Purchase Cost Price in ₹.", "Pick the Indian GST Slab (0% to 28%) for CGST/SGST/IGST split."],
+          },
+          mr: {
+            title: "GST अधिक/वजा (Reverse GST) आणि निव्वळ नफा कॅल्क्युलेटर",
+            summary: "MRP किंमतीतून समाविष्ट GST वेगळा काढायचा असेल किंवा मूळ किमतीत 5%, 12%, 18%, 28% GST जोडायचा असेल तर हे मोफत मराठी/इंग्रजी टूल वापरा.",
+            steps: ["+ Add GST किंवा - Remove GST (MRP मधून वजा) निवडा.", "विक्री किंमत व खरेदी खर्च भरा.", "CGST, SGST आणि अचूक निव्वळ नफा टक्केवारी (%) लगेच पहा."],
+          },
+          hi: {
+            title: "GST जोड़ें / घटाएं (Reverse GST) और नेट प्रॉफिट मार्जिन कैलकुलेटर",
+            summary: "MRP से शामिल GST अलग निकालना हो या बेस कीमत पर 3%, 5%, 12%, 18%, 28% GST जोड़ना हो — असली मुनाफा (Profit Margin %) तुरंत जांचें।",
+            steps: ["ऊपर + Add GST या - Remove GST (Inclusive MRP) चुनें।", "बिक्री मूल्य (Selling Price) और खरीद लागत (Cost) भरें।", "CGST/SGST विभाजन और शुद्ध प्रॉफिट मार्जिन प्रतिशत देखें।"],
+          },
+        }}
+      />
 
       {/* Bottom ERP Upsell */}
       <div className="no-print bg-slate-900 border-t border-slate-800 px-4 py-12 sm:py-16">

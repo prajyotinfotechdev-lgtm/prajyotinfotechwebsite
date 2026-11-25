@@ -131,6 +131,7 @@ export default function WhatsAppLinkGenerator() {
         description="Generate free WhatsApp direct chat links with custom welcome message, high-resolution SVG/PNG QR codes, printable counter standees, and website button snippets."
         keywords="whatsapp link generator, create whatsapp link with message, whatsapp qr code generator free, wa.me link maker India, whatsapp chat button html"
         path="/tools/whatsapp-link-generator"
+        image="/og/og-whatsapp-qr.jpg"
         schema={[schema]}
       />
 

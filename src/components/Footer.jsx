@@ -254,7 +254,11 @@ export default function Footer() {
               <li><Link to="/tools/hsn-sac-finder" className="hover:text-slate-200 transition-colors">HSN &amp; SAC GST Rate Finder</Link></li>
               <li><Link to="/tools/legal-policy-generator" className="hover:text-slate-200 transition-colors">Razorpay Legal Policy Maker</Link></li>
               <li><Link to="/tools/salary-slip-generator" className="hover:text-slate-200 transition-colors">Salary Slip &amp; PO PDF Makers</Link></li>
-              <li><Link to="/tools" className="hover:text-brand-300 font-semibold transition-colors">Browse All 12+ Free Tools →</Link></li>
+              <li><Link to="/tools/business-emi-calculator" className="hover:text-slate-200 transition-colors">MSME Business Loan EMI Calculator</Link></li>
+              <li><Link to="/tools/break-even-calculator" className="hover:text-slate-200 transition-colors">D2C Break-Even &amp; Margin Calc</Link></li>
+              <li><Link to="/tools/nda-agreement-generator" className="hover:text-slate-200 transition-colors">Mutual NDA &amp; IP Ownership Maker</Link></li>
+              <li><Link to="/demo/restaurant-qr-kds" className="hover:text-emerald-300 font-medium transition-colors">Interactive Product Demos</Link></li>
+              <li><Link to="/tools" className="text-brand-300 font-semibold transition-colors">Browse All 15+ Free Tools →</Link></li>
               <li><Link to="/compare/wordpress-vs-custom-software" className="hover:text-slate-200 transition-colors">Compare: WordPress vs Custom App</Link></li>
               <li><Link to="/compare/zoho-vs-custom-software" className="hover:text-slate-200 transition-colors">Compare: Zoho SaaS vs Custom ERP</Link></li>
               <li><Link to="/compare/shopify-vs-custom-ecommerce" className="hover:text-slate-200 transition-colors">Compare: Shopify vs Custom Store</Link></li>
@@ -329,7 +333,15 @@ export default function Footer() {
             <span className="text-slate-700">•</span>
             <Link to="/software-company-in-mumbai" className="hover:text-brand-300 transition-colors">Mumbai Hub</Link>
             <span className="text-slate-700">•</span>
-            <Link to="/software-company-in-latur" className="hover:text-brand-300 transition-colors">Latur Regional Hub</Link>
+            <Link to="/software-company-in-thane" className="hover:text-brand-300 transition-colors">Thane Hub</Link>
+            <span className="text-slate-700">•</span>
+            <Link to="/software-company-in-nashik" className="hover:text-brand-300 transition-colors">Nashik MIDC</Link>
+            <span className="text-slate-700">•</span>
+            <Link to="/software-company-in-aurangabad" className="hover:text-brand-300 transition-colors">Chh. Sambhajinagar</Link>
+            <span className="text-slate-700">•</span>
+            <Link to="/software-company-in-nagpur" className="hover:text-brand-300 transition-colors">Nagpur MIHAN</Link>
+            <span className="text-slate-700">•</span>
+            <Link to="/software-company-in-latur" className="hover:text-brand-300 transition-colors">Latur Hub</Link>
           </div>
         </div>
       </div>

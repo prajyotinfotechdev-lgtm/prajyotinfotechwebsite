@@ -28,7 +28,7 @@ export default function SeoLite({
   description = "",
   keywords = "",
   path = "",
-  image = "",
+  image = "/og/og-default.jpg",
   siteName = "Prajyot Infotech",
   baseUrl = "https://www.prajyotinfotech.in",
 }) {
@@ -39,9 +39,16 @@ export default function SeoLite({
       : `${siteName} — Premier Software Engineering & Web Development Company`;
     document.title = pageTitle;
 
+    const cleanBase = baseUrl.replace(/\/$/, "");
     // Canonical
-    const canonical = path ? `${baseUrl.replace(/\/$/, "")}${path}` : baseUrl;
+    const canonical = path ? `${cleanBase}${path}` : cleanBase;
     upsertLink("canonical", canonical);
+
+    // Normalized absolute Open Graph image URL
+    const rawImg = image || "/og/og-default.jpg";
+    const resolvedImage = /^https?:\/\//i.test(rawImg)
+      ? rawImg
+      : `${cleanBase}${rawImg.startsWith("/") ? "" : "/"}${rawImg}`;
 
     // Basic meta
     if (description) {
@@ -59,9 +66,8 @@ export default function SeoLite({
       upsertMeta('meta[property="og:description"]', { property: "og:description", content: description });
     }
     upsertMeta('meta[property="og:url"]', { property: "og:url", content: canonical });
-    if (image) {
-      upsertMeta('meta[property="og:image"]', { property: "og:image", content: image });
-    }
+    upsertMeta('meta[property="og:image"]', { property: "og:image", content: resolvedImage });
+    upsertMeta('meta[property="og:image:secure_url"]', { property: "og:image:secure_url", content: resolvedImage });
 
     // Twitter
     upsertMeta('meta[name="twitter:card"]', { name: "twitter:card", content: "summary_large_image" });
@@ -69,10 +75,8 @@ export default function SeoLite({
     if (description) {
       upsertMeta('meta[name="twitter:description"]', { name: "twitter:description", content: description });
     }
-    if (image) {
-      upsertMeta('meta[name="twitter:image"]', { name: "twitter:image", content: image });
-    }
-  }, [title, description, path, image, siteName, baseUrl]);
+    upsertMeta('meta[name="twitter:image"]', { name: "twitter:image", content: resolvedImage });
+  }, [title, description, keywords, path, image, siteName, baseUrl]);
 
-  return null; // ← IMPORTANT: nothing renders in the page
+  return null;
 }

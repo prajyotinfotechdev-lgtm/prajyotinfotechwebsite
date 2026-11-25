@@ -151,6 +151,7 @@ export default function WordpressVsCustomSoftware() {
         description="Comprehensive comparison between WordPress/WooCommerce and custom React/Next.js software. Analyze Core Web Vitals speed, security vulnerabilities, plugin fragility, and 3-year TCO."
         keywords="WordPress vs custom software, migrate WordPress to React, why custom software is better than WordPress, WordPress speed vs custom code, custom web application Pune"
         path="/compare/wordpress-vs-custom-software"
+        image="/og/og-compare.jpg"
       />
 
       <script
