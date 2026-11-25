@@ -31,6 +31,7 @@ import HrmsFooter from "../../components/HrmsFooter.jsx";
 import OibuzAudioStory from "../../components/OibuzAudioStory.jsx";
 import OibuzTrialCtaPair from "../../components/OibuzTrialCtaPair.jsx";
 import Seo from "../../components/Seo.jsx";
+import { OIBUZ_SOFTWARE_SCHEMA } from "../../utils/oibuzSchema.js";
 import { useLeadModal } from "../../context/LeadModalContext.jsx";
 
 const container = "mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8";
@@ -92,8 +93,12 @@ export default function HrmsStoryPage() {
   return (
     <div className="min-h-screen bg-white text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900">
       <Seo
-        title="Product Story - Oibuz Construction Workforce & Business Management"
-        description="See how Oibuz brings construction workforce operations into one structured system. Explore the real problem, information flow, and connected platform."
+        title="Product Story — OIBUZ Construction Workforce & Business Management"
+        description="See how OIBUZ replaces paper registers, WhatsApp approvals, and manual Excel payroll with one verifiable construction HRMS platform. Start free trial at oibuz.in/register."
+        keywords="oibuz story, construction workforce software workflow, site attendance approval engine, oibuz hrms"
+        path="/products/hrms/story"
+        image="/og/og-oibuz.jpg"
+        schema={OIBUZ_SOFTWARE_SCHEMA}
       />
 
       <HrmsHeader />

@@ -24,6 +24,7 @@ import HrmsHeader from "../../components/HrmsHeader.jsx";
 import HrmsFooter from "../../components/HrmsFooter.jsx";
 import OibuzTrialCtaPair from "../../components/OibuzTrialCtaPair.jsx";
 import Seo from "../../components/Seo.jsx";
+import { OIBUZ_SOFTWARE_SCHEMA, OIBUZ_FAQ_SCHEMA } from "../../utils/oibuzSchema.js";
 import { useLeadModal } from "../../context/LeadModalContext.jsx";
 
 const container = "mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8";
@@ -190,8 +191,12 @@ export default function HrmsResourcesPage() {
   return (
     <div className="min-h-screen bg-white text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900">
       <Seo
-        title="Resources & Documentation - Oibuz Construction HRMS"
-        description="Explore operational guides, role-based workflows, and frequently asked questions for Oibuz Construction HRMS."
+        title="Guides, Workflows & FAQs — OIBUZ Construction HRMS"
+        description="Complete OIBUZ operational documentation, 5-role governance blueprint, SLA approval workflows, and contractor FAQs."
+        keywords="oibuz documentation, construction hrms faq, site muster roll guide, oibuz onboarding"
+        path="/products/hrms/resources"
+        image="/og/og-oibuz.jpg"
+        schema={[OIBUZ_SOFTWARE_SCHEMA, OIBUZ_FAQ_SCHEMA]}
       />
 
       <HrmsHeader />

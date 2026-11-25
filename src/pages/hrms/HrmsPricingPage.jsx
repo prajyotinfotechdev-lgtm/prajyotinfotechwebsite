@@ -20,6 +20,7 @@ import HrmsHeader from "../../components/HrmsHeader.jsx";
 import HrmsFooter from "../../components/HrmsFooter.jsx";
 import OibuzTrialCtaPair from "../../components/OibuzTrialCtaPair.jsx";
 import Seo from "../../components/Seo.jsx";
+import { OIBUZ_SOFTWARE_SCHEMA, OIBUZ_FAQ_SCHEMA } from "../../utils/oibuzSchema.js";
 import { useLeadModal } from "../../context/LeadModalContext.jsx";
 import OibuzPricingSection from "../../components/OibuzPricingSection.jsx";
 
@@ -86,8 +87,12 @@ export default function HrmsPricingPage() {
   return (
     <div className="min-h-screen bg-white text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900">
       <Seo
-        title="Pricing & Deployment - Oibuz Construction HRMS"
-        description="Let's build the right Oibuz plan for your workforce. Transparent, scalable construction workforce management with zero hidden fees."
+        title="Pricing & Free Trial Plans — OIBUZ Construction HRMS (India INR)"
+        description="Transparent INR pricing for OIBUZ Construction HRMS: Starter ₹1,999 (25 workers), Business ₹3,799 (50 workers), Enterprise ₹7,999 (100 workers), plus Free Self-Setup Trial at oibuz.in/register."
+        keywords="oibuz pricing india, construction hrms pricing inr, site attendance app cost india, oibuz free trial register"
+        path="/products/hrms/pricing"
+        image="/og/og-oibuz.jpg"
+        schema={[OIBUZ_SOFTWARE_SCHEMA, OIBUZ_FAQ_SCHEMA]}
       />
 
       <HrmsHeader />

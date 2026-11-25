@@ -32,6 +32,7 @@ import HrmsHeader from "../../components/HrmsHeader.jsx";
 import HrmsFooter from "../../components/HrmsFooter.jsx";
 import OibuzTrialCtaPair from "../../components/OibuzTrialCtaPair.jsx";
 import Seo from "../../components/Seo.jsx";
+import { OIBUZ_SOFTWARE_SCHEMA } from "../../utils/oibuzSchema.js";
 import { useLeadModal } from "../../context/LeadModalContext.jsx";
 
 const container = "mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8";
@@ -313,8 +314,12 @@ export default function HrmsFeaturesPage() {
   return (
     <div className="min-h-screen bg-white text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900">
       <Seo
-        title="Features & Capabilities - Oibuz Construction Workforce Management"
-        description="Comprehensive breakdown of Oibuz modules: Mobile selfie attendance, project timesheets, multi-tier reimbursements, HR payroll, and SLA escalation management."
+        title="10 Core Features & Modules — OIBUZ Construction HRMS Software"
+        description="Explore all 10 OIBUZ Construction HRMS modules: GPS selfie attendance, gang punching, sequential leave, project timesheets, expense receipts, 1-click payroll & SLA escalations."
+        keywords="oibuz features, construction attendance app features, project timesheet software, site expense reimbursement app india"
+        path="/products/hrms/features"
+        image="/og/og-oibuz.jpg"
+        schema={OIBUZ_SOFTWARE_SCHEMA}
       />
 
       <HrmsHeader />

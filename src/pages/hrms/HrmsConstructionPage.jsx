@@ -29,6 +29,7 @@ import HrmsHeader from "../../components/HrmsHeader.jsx";
 import HrmsFooter from "../../components/HrmsFooter.jsx";
 import OibuzTrialCtaPair from "../../components/OibuzTrialCtaPair.jsx";
 import Seo from "../../components/Seo.jsx";
+import { OIBUZ_SOFTWARE_SCHEMA } from "../../utils/oibuzSchema.js";
 import { useLeadModal } from "../../context/LeadModalContext.jsx";
 
 const container = "mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8";
@@ -102,8 +103,12 @@ export default function HrmsConstructionPage() {
   return (
     <div className="min-h-screen bg-white text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900">
       <Seo
-        title="Workforce Management Built for Construction - Oibuz HRMS"
-        description="Connect people, sites, managers, HR and Finance through structured construction workforce workflows. Mobile selfie attendance, project timesheets, and multi-tier approvals."
+        title="Built for Construction Sites — OIBUZ Multi-Site Labour HRMS"
+        description="Why office HR tools fail on construction sites and how OIBUZ empowers builders & civil contractors with GPS geofenced attendance and multi-site labour visibility."
+        keywords="software for civil contractors india, multi site construction attendance app, builder workforce software, oibuz construction"
+        path="/products/hrms/for-construction"
+        image="/og/og-oibuz.jpg"
+        schema={OIBUZ_SOFTWARE_SCHEMA}
       />
 
       <HrmsHeader />

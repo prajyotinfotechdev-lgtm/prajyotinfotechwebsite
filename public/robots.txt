@@ -8,7 +8,15 @@ Allow: /services/
 Allow: /work/
 Allow: /articles/
 Allow: /tools/
+Allow: /products/hrms
+Allow: /products/hrms/
+Allow: /oibuz
+Allow: /demo/
+Allow: /solutions/
+Allow: /compare/
 Allow: /free-business-tech-audit
+Allow: /llms.txt
+Allow: /llms-full.txt
 
 # Exclude private admin portal from search crawlers
 Disallow: /careers/manage
@@ -19,27 +27,52 @@ User-agent: Googlebot
 Allow: /
 Crawl-delay: 0
 
-# Bingbot
-User-agent: Bingbot
-Allow: /
-
 User-agent: Googlebot-Image
 Allow: /images/
 Allow: /og/
 Allow: /videos/
 
-# AI Search Crawlers (AEO Optimization)
+# Google Gemini / Vertex AI Grounding & Training
+User-agent: Google-Extended
+Allow: /
+
+# Bingbot (Also powers ChatGPT Search & Microsoft Copilot)
+User-agent: Bingbot
+Allow: /
+
+# OpenAI ChatGPT Search & GPT Crawlers (AEO / GEO Optimization)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
 User-agent: GPTBot
 Allow: /
-Allow: /llms.txt
 
+# Perplexity AI Search
 User-agent: PerplexityBot
 Allow: /
-Allow: /llms.txt
 
+User-agent: Perplexity-User
+Allow: /
+
+# Anthropic Claude
 User-agent: ClaudeBot
 Allow: /
-Allow: /llms.txt
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+# Apple Intelligence & Meta / Cohere AI Crawlers
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
 
 # Canonical Host
 Host: https://www.prajyotinfotech.in

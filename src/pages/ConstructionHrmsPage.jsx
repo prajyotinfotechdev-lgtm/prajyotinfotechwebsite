@@ -67,6 +67,7 @@ import HrmsHeader from "../components/HrmsHeader.jsx";
 import HrmsFooter from "../components/HrmsFooter.jsx";
 import OibuzSelfServeCard from "../components/OibuzSelfServeCard.jsx";
 import { getOibuzRegisterUrl, trackOibuzTrialClick } from "../utils/oibuzLinks.js";
+import { OIBUZ_SOFTWARE_SCHEMA, OIBUZ_FAQ_SCHEMA } from "../utils/oibuzSchema.js";
 
 const WHATSAPP_NUMBER = "917020708747";
 
@@ -571,9 +572,12 @@ export default function ConstructionHrmsPage() {
   return (
     <div className="min-h-screen bg-[#faf9f5] text-slate-800 font-sans selection:bg-amber-400 selection:text-slate-900 overflow-x-hidden">
       <Seo
-        title="Oibuz | Construction Workforce & Business Management Platform"
-        description="Every Worker Verified. Every Rupee Accounted. Zero-hardware AI face-scan attendance, GPS geofencing, photo-verified material challans, 5-tier role governance, and 1-click biometric payroll."
-        keywords="construction hrms, site attendance app, civil contractor payroll software, Oibuz platform, construction workforce software india, zero ghost workers"
+        title="OIBUZ — Construction HRMS, GPS Selfie Attendance & Payroll Software India"
+        description="Every Worker Verified. Every Rupee Accounted. Zero-hardware GPS geofenced selfie attendance, 5-tier role governance, site timesheets & 1-click daily-wage payroll. Start Free Trial at oibuz.in/register."
+        keywords="OIBUZ, construction hrms india, construction site attendance app, gps selfie attendance construction, civil contractor payroll software, labour muster roll app, stop ghost workers"
+        path="/products/hrms"
+        image="/og/og-oibuz.jpg"
+        schema={[OIBUZ_SOFTWARE_SCHEMA, OIBUZ_FAQ_SCHEMA]}
       />
       <BreadcrumbsLd
         items={[

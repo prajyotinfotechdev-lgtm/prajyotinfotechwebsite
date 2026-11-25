@@ -15,7 +15,9 @@ import {
 import OibuzAudioStory from "../components/OibuzAudioStory";
 import OibuzPricingSection from "../components/OibuzPricingSection";
 import OibuzSelfServeCard from "../components/OibuzSelfServeCard";
+import Seo from "../components/Seo.jsx";
 import { getOibuzRegisterUrl, trackOibuzTrialClick } from "../utils/oibuzLinks.js";
+import { OIBUZ_SOFTWARE_SCHEMA, OIBUZ_FAQ_SCHEMA } from "../utils/oibuzSchema.js";
 
 /* ─── UTILITIES ───────────────────────────────────────────────────────────── */
 function useScrollReveal(threshold = 0.1) {
@@ -2295,6 +2297,14 @@ export default function OibuzLandingPage() {
   const scrollToDemo = () => document.getElementById("demo")?.scrollIntoView({ behavior: "smooth" });
   return (
     <div className="bg-white overflow-x-clip">
+      <Seo
+        title="OIBUZ — Construction Workforce Management & Attendance Platform | Start Free Trial"
+        description="Verify every site worker with GPS geofenced selfie attendance, approve leaves & expenses in 1 click, and run construction payroll in minutes. Self-setup free trial at oibuz.in/register."
+        keywords="OIBUZ, construction attendance app, civil contractor workforce platform, gps attendance without biometric machine india"
+        path="/oibuz"
+        image="/og/og-oibuz.jpg"
+        schema={[OIBUZ_SOFTWARE_SCHEMA, OIBUZ_FAQ_SCHEMA]}
+      />
       <OibuzHeader onDemoClick={scrollToDemo} />
       <HeroSection onDemoClick={scrollToDemo} />
       <AudienceStrip />
