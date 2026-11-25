@@ -109,10 +109,79 @@
   .hero-bar-grow,
   .hero-dot-pulse,
   .nav-sheet-enter,
-  .nav-backdrop-enter {
+  .nav-backdrop-enter,
+  .pi-ring-spin,
+  .pi-ring-reverse,
+  .pi-wing-top,
+  .pi-wing-bottom,
+  .pi-bar-sweep,
+  .pi-top-progress-bar {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+}
+
+/* ── Prajyot Infotech Brand Loader Animations (GPU-only) ── */
+@keyframes pi-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes pi-spin-reverse {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
+}
+
+.pi-ring-spin {
+  animation: pi-spin 1.15s linear infinite;
+  will-change: transform;
+}
+
+.pi-ring-reverse {
+  animation: pi-spin-reverse 1.9s linear infinite;
+  will-change: transform;
+}
+
+@keyframes pi-wing-top-anim {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(1.5px, -1.5px); }
+}
+
+@keyframes pi-wing-bottom-anim {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(-1.5px, 1.5px); }
+}
+
+.pi-wing-top {
+  animation: pi-wing-top-anim 2s ease-in-out infinite;
+}
+
+.pi-wing-bottom {
+  animation: pi-wing-bottom-anim 2s ease-in-out infinite;
+}
+
+@keyframes pi-sweep {
+  0%   { transform: translateX(-110%); }
+  100% { transform: translateX(220%); }
+}
+
+.pi-bar-sweep {
+  background: linear-gradient(90deg, #7c3aed 0%, #4338ca 55%, #10b981 100%);
+  animation: pi-sweep 1.25s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+.pi-top-progress-bar {
+  background: linear-gradient(90deg, transparent 0%, #7c3aed 35%, #4f46e5 65%, #10b981 100%);
+  animation: pi-sweep 1.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+@media print {
+  #pi-preloader,
+  .pi-top-progress {
+    display: none !important;
   }
 }
 

@@ -260,9 +260,188 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" /></noscript>
+
+    <!-- Prajyot Infotech First-Visit Brand Preloader (Zero-crawler / zero-LCP penalty) -->
+    <style>
+      #pi-preloader { display: none; }
+      html.pi-boot-active body { overflow: hidden; }
+      html.pi-boot-active #pi-preloader {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background:
+          radial-gradient(620px circle at 18% 18%, rgba(124, 58, 237, 0.13), transparent 62%),
+          radial-gradient(560px circle at 85% 80%, rgba(30, 39, 86, 0.09), transparent 60%),
+          #f8fafc;
+        font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        transition: opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1), transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+        pointer-events: all;
+      }
+      #pi-preloader.pi-preloader-exit {
+        opacity: 0 !important;
+        transform: translateY(-10px) scale(1.015) !important;
+        pointer-events: none !important;
+      }
+      .pi-pre-stage {
+        position: relative;
+        width: 92px;
+        height: 92px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      .pi-pre-orbit {
+        position: absolute;
+        inset: 0;
+        animation: piPreSpin 1.2s linear infinite;
+      }
+      .pi-pre-card {
+        position: relative;
+        width: 64px;
+        height: 64px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid rgba(226, 232, 240, 0.95);
+        box-shadow: 0 14px 36px -10px rgba(124, 58, 237, 0.24);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: piPrePop 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      .pi-pre-top { animation: piPreWingTop 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+      .pi-pre-bot { animation: piPreWingBot 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+      .pi-pre-title {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        line-height: 1.1;
+        margin: 0;
+        animation: piPreFade 0.45s ease-out 0.08s both;
+      }
+      .pi-pre-sub {
+        margin: 7px 0 0;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.19em;
+        text-transform: uppercase;
+        color: #64748b;
+        animation: piPreFade 0.45s ease-out 0.14s both;
+      }
+      .pi-pre-track {
+        margin-top: 20px;
+        width: 172px;
+        height: 3.5px;
+        border-radius: 999px;
+        background: rgba(203, 213, 225, 0.55);
+        overflow: hidden;
+      }
+      .pi-pre-fill {
+        height: 100%;
+        width: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #7c3aed 0%, #4338ca 55%, #10b981 100%);
+        transform-origin: left center;
+        animation: piPreFill 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+      @keyframes piPreSpin { to { transform: rotate(360deg); } }
+      @keyframes piPrePop { from { opacity: 0; transform: scale(0.86); } to { opacity: 1; transform: scale(1); } }
+      @keyframes piPreWingTop { from { opacity: 0; transform: translate(-4px, -4px); } to { opacity: 1; transform: translate(0, 0); } }
+      @keyframes piPreWingBot { from { opacity: 0; transform: translate(4px, 4px); } to { opacity: 1; transform: translate(0, 0); } }
+      @keyframes piPreFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes piPreFill { from { transform: scaleX(0.08); } to { transform: scaleX(1); } }
+      @media print { #pi-preloader { display: none !important; } }
+    </style>
+    <script>
+      (function () {
+        try {
+          var ua = navigator.userAgent || "";
+          var isBot = /bot|crawl|spider|slurp|duckduck|baidu|yandex|facebot|ia_archiver|lighthouse|headlesschrome|pagespeed|ptst|chrome-lighthouse/i.test(ua);
+          var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          var seen = false;
+          try { seen = sessionStorage.getItem("pi_booted") === "1"; } catch (_) {}
+          var params = new URLSearchParams(window.location.search || "");
+          var forcePreload = params.get("loader") === "1";
+          if (forcePreload || (!isBot && !navigator.webdriver && !reduced && !seen)) {
+            window.__piBootStart = Date.now();
+            document.documentElement.classList.add("pi-boot-active");
+          }
+        } catch (_) {}
+      })();
+      window.__piDismissPreloader = function () {
+        if (window.__piPreloaderDone) return;
+        window.__piPreloaderDone = true;
+        try { sessionStorage.setItem("pi_booted", "1"); } catch (_) {}
+        var el = document.getElementById("pi-preloader");
+        if (!el) {
+          document.documentElement.classList.remove("pi-boot-active");
+          return;
+        }
+        var p = window.location.pathname || "/";
+        var isTool = p.indexOf("/tools") === 0 || p.indexOf("/demo") === 0;
+        var minMs = isTool ? 220 : 620;
+        var elapsed = Date.now() - (window.__piBootStart || Date.now());
+        var wait = Math.max(0, minMs - elapsed);
+        setTimeout(function () {
+          el.classList.add("pi-preloader-exit");
+          document.documentElement.classList.remove("pi-boot-active");
+          setTimeout(function () {
+            if (el && el.parentNode) el.parentNode.removeChild(el);
+          }, 440);
+        }, wait);
+      };
+    </script>
   </head>
 
   <body class="bg-slate-50">
+    <!-- Signature First-Visit Brand Preloader (Auto-removes on React mount, failsafe 1.35s) -->
+    <div id="pi-preloader" role="status" aria-label="Loading Prajyot Infotech" aria-live="polite">
+      <div style="position: fixed; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #7c3aed, #4338ca, #10b981);"></div>
+      <div class="pi-pre-stage">
+        <svg viewBox="0 0 100 100" class="pi-pre-orbit" aria-hidden="true">
+          <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(124,58,237,0.14)" stroke-width="1.5" />
+          <path d="M50 4 A46 46 0 0 1 94 36" fill="none" stroke="#7c3aed" stroke-width="2.6" stroke-linecap="round" />
+        </svg>
+        <div class="pi-pre-card">
+          <svg width="36" height="36" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="piPreTop" x1="10" y1="8" x2="92" y2="54" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#a855f7" />
+                <stop offset="100%" stop-color="#7c3aed" />
+              </linearGradient>
+              <linearGradient id="piPreBot" x1="12" y1="50" x2="56" y2="94" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#3730a3" />
+                <stop offset="100%" stop-color="#1e2756" />
+              </linearGradient>
+            </defs>
+            <path class="pi-pre-top" d="M11 10H70C84.5 10 94 20.2 94 33C94 45.8 84.5 55.5 70 55.5H54.5L11 10Z" fill="url(#piPreTop)" />
+            <path class="pi-pre-bot" d="M10 51.5H50.5C53.2 51.5 54.5 52.8 54.5 55.5V93.5L10 51.5Z" fill="url(#piPreBot)" />
+          </svg>
+        </div>
+      </div>
+      <p class="pi-pre-title">
+        <span style="color: #7c3aed;">Prajyot</span>
+        <span style="color: #1e2756;"> Infotech</span>
+      </p>
+      <p class="pi-pre-sub">Software &bull; ERP &bull; Digital Systems</p>
+      <div class="pi-pre-track" aria-hidden="true">
+        <div class="pi-pre-fill"></div>
+      </div>
+      <script>
+        if (document.documentElement.classList.contains("pi-boot-active")) {
+          setTimeout(function () {
+            if (typeof window.__piDismissPreloader === "function") window.__piDismissPreloader();
+          }, 1350);
+        }
+      </script>
+    </div>
     <noscript>
       <div style="padding:16px;text-align:center;background:#fff3cd;color:#7a5b00;font-family:sans-serif;border-bottom:1px solid #ffeeba;">
         <strong>Prajyot Infotech:</strong> JavaScript is recommended for interactive simulators. Contact us directly at

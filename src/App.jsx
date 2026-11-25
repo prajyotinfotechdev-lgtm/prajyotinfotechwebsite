@@ -4,6 +4,7 @@ import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 import Nav from "./components/Nav.jsx";
 import Footer from "./components/Footer.jsx";
+import BrandLoader from "./components/BrandLoader.jsx";
 import { Analytics } from "@vercel/analytics/react";
 import { LeadModalProvider } from "./context/LeadModalContext.jsx";
 import { prefetchTopProducts } from "./utils/prefetch.js";
@@ -85,26 +86,23 @@ function ScrollToTop() {
 }
 
 function RouteFallback() {
-  return (
-    <div className="min-h-[70vh] mx-auto max-w-6xl px-4 py-16 animate-pulse">
-      <div className="max-w-2xl mx-auto text-center space-y-4">
-        <div className="h-6 w-48 mx-auto rounded-full bg-slate-200" />
-        <div className="h-10 w-3/4 mx-auto rounded-xl bg-slate-200" />
-        <div className="h-4 w-2/3 mx-auto rounded bg-slate-100" />
-      </div>
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="h-52 rounded-3xl bg-slate-100 border border-slate-200/60" />
-        <div className="h-52 rounded-3xl bg-slate-100 border border-slate-200/60 hidden md:block" />
-        <div className="h-52 rounded-3xl bg-slate-100 border border-slate-200/60 hidden lg:block" />
-      </div>
-    </div>
-  );
+  const { pathname } = useLocation();
+  let label = "Loading Engineering Suite...";
+  if (pathname.startsWith("/tools")) label = "Opening Free Business Tool...";
+  else if (pathname.startsWith("/demo")) label = "Booting Live Interactive Demo...";
+  else if (pathname.startsWith("/solutions")) label = "Loading Industry Blueprint...";
+  else if (pathname.startsWith("/articles")) label = "Loading Engineering Guide...";
+
+  return <BrandLoader variant="route" label={label} showTopBar={true} />;
 }
 
 export default function App() {
   const [showChats, setShowChats] = useState(false);
 
   useEffect(() => {
+    if (typeof window.__piDismissPreloader === "function") {
+      window.__piDismissPreloader();
+    }
     const analyticsTimer = setTimeout(() => initAnalytics(), 1200);
     const chatTimer = setTimeout(() => setShowChats(true), 2500);
     const prefetchTimer =
