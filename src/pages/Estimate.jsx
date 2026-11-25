@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { Sparkles, Shield, Clock, Award, Code2, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
