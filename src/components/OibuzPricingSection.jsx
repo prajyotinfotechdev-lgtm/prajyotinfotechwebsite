@@ -115,20 +115,20 @@ function SpotlightPricingCard({
       onMouseEnter={onHover}
       layout
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      className={`group relative flex flex-col justify-between rounded-3xl p-7 sm:p-8 transition-all duration-300 cursor-pointer ${isDark
+      className={`group relative flex flex-col justify-between rounded-2xl sm:rounded-3xl p-5 sm:p-8 transition-all duration-300 cursor-pointer ${isDark
           ? "bg-[#0b1528] text-white border border-slate-800 shadow-xl"
           : isFeatured
             ? "bg-gradient-to-b from-white via-indigo-50/30 to-white border-2 border-indigo-600/90 shadow-2xl shadow-indigo-600/10"
             : "bg-white text-slate-900 border border-slate-200/90 shadow-md"
         } ${isSelected
-          ? `${plan.borderActive} scale-[1.02] z-20`
+          ? `${plan.borderActive} sm:scale-[1.02] z-20`
           : "hover:-translate-y-1 hover:shadow-xl"
         }`}
       onClick={onSelect}
     >
       {/* Dynamic Cursor Spotlight Radial Mask */}
       <div
-        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        className="pointer-events-none absolute -inset-px rounded-2xl sm:rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
           background: `radial-gradient(450px circle at ${mousePos.x}px ${mousePos.y}px, ${plan.accentGlow}, transparent 75%)`,
         }}
@@ -140,7 +140,7 @@ function SpotlightPricingCard({
           <motion.div
             animate={{ scale: [1, 1.03, 1] }}
             transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
-            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-600/35 border border-white/20"
+            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-600/35 border border-white/20 whitespace-nowrap"
           >
             <Sparkles className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: "6s" }} />
             <span>{plan.tag}</span>
@@ -293,7 +293,7 @@ function SpotlightPricingCard({
             e.stopPropagation();
             onBookDemo?.();
           }}
-          className={`w-full text-center text-xs font-semibold py-1.5 rounded-lg transition-colors cursor-pointer ${
+          className={`w-full text-center text-xs font-semibold py-2.5 min-h-[40px] rounded-lg transition-colors cursor-pointer ${
             isDark
               ? "text-slate-400 hover:text-cyan-300"
               : "text-slate-500 hover:text-blue-700"
@@ -365,7 +365,7 @@ export default function OibuzPricingSection({
   return (
     <section
       id={id}
-      className={`relative overflow-hidden py-16 sm:py-24 lg:py-32 bg-slate-50/70 border-b border-slate-200/80 ${className}`}
+      className={`relative overflow-hidden py-12 sm:py-24 lg:py-32 bg-slate-50/70 border-b border-slate-200/80 ${className}`}
     >
       {/* ─── AMBIENT MOTION GRAPHICS & BACKDROP ───────────────────────────── */}
       {/* Top Floating Glow Orbs */}
@@ -397,13 +397,13 @@ export default function OibuzPricingSection({
 
       <div className="relative mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8">
         {/* ─── HEADER ──────────────────────────────────────────────────────── */}
-        <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-16">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 border border-blue-200/80 rounded-full px-4 py-1.5 mb-5 shadow-xs"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 border border-blue-200/80 rounded-full px-4 py-1.5 mb-4 sm:mb-5 shadow-xs"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75" />
@@ -419,7 +419,7 @@ export default function OibuzPricingSection({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.08, duration: 0.5 }}
-            className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.08] mb-5"
+            className="text-[1.75rem] sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.1] mb-4 sm:mb-5"
           >
             Simple, predictable plans for{" "}
             <span className="bg-gradient-to-r from-blue-700 via-indigo-600 to-cyan-600 bg-clip-text text-transparent">
@@ -432,7 +432,7 @@ export default function OibuzPricingSection({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.15, duration: 0.45 }}
-            className="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto font-normal leading-relaxed"
+            className="text-sm sm:text-xl text-slate-600 max-w-2xl mx-auto font-normal leading-relaxed"
           >
             Select the plan matching your active team size. No surprises, no hidden setup fees—built for contractors from day one.
           </motion.p>
@@ -443,20 +443,20 @@ export default function OibuzPricingSection({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.45 }}
-            className="mt-10 max-w-xl mx-auto bg-white/95 backdrop-blur-md p-6 sm:p-7 rounded-3xl border border-slate-200/90 shadow-xl shadow-slate-200/50"
+            className="mt-7 sm:mt-10 max-w-xl mx-auto bg-white/95 backdrop-blur-md p-4 sm:p-7 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-xl shadow-slate-200/50"
           >
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                <Sliders className="w-4 h-4 text-blue-600" />
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <span className="text-[11px] sm:text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5 sm:gap-2">
+                <Sliders className="w-4 h-4 text-blue-600 shrink-0" />
                 Select Workforce Headcount:
               </span>
-              <span className="text-sm sm:text-base font-black px-3.5 py-1 rounded-full bg-blue-600 text-white shadow-xs">
+              <span className="text-xs sm:text-base font-black px-3 py-1 rounded-full bg-blue-600 text-white shadow-xs">
                 {sliderValue > 100 ? "100+ Workers" : `${sliderValue} Workers`}
               </span>
             </div>
 
             {/* Range Slider */}
-            <div className="relative my-4">
+            <div className="relative my-3.5 sm:my-4">
               <input
                 type="range"
                 min="5"
@@ -464,20 +464,21 @@ export default function OibuzPricingSection({
                 step="5"
                 value={sliderValue}
                 onChange={handleSliderChange}
+                aria-label="Select workforce headcount"
                 className="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600 focus:outline-none"
               />
-              <div className="flex justify-between text-[11px] font-bold text-slate-400 mt-2">
+              <div className="flex justify-between text-[10px] sm:text-[11px] font-bold text-slate-400 mt-2">
                 <span>5</span>
-                <span>25 (Starter)</span>
-                <span>50 (Business)</span>
-                <span>100 (Enterprise)</span>
+                <span>25<span className="hidden sm:inline"> (Starter)</span></span>
+                <span>50<span className="hidden sm:inline"> (Business)</span></span>
+                <span>100<span className="hidden sm:inline"> (Enterprise)</span></span>
                 <span>100+</span>
               </div>
             </div>
 
             {/* Quick Match Preset Pills */}
-            <div className="flex flex-wrap items-center justify-center gap-2 pt-3 border-t border-slate-100">
-              <span className="text-xs text-slate-500 font-semibold mr-1">Quick Select:</span>
+            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 pt-3 border-t border-slate-100">
+              <span className="w-full sm:w-auto text-[11px] sm:text-xs text-slate-500 font-semibold mb-0.5 sm:mb-0 sm:mr-1">Quick Select:</span>
               {PLANS.map((p) => {
                 const isMatch = activePlanId === p.id;
                 return (
@@ -485,7 +486,7 @@ export default function OibuzPricingSection({
                     key={p.id}
                     type="button"
                     onClick={() => handlePresetClick(p)}
-                    className={`text-xs font-bold px-3.5 py-1.5 rounded-xl transition-all cursor-pointer ${isMatch
+                    className={`text-[11px] sm:text-xs font-bold px-3 sm:px-3.5 py-2 sm:py-1.5 rounded-xl transition-all cursor-pointer min-h-[36px] ${isMatch
                         ? "bg-blue-700 text-white shadow-sm"
                         : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                       }`}
@@ -499,7 +500,7 @@ export default function OibuzPricingSection({
         </div>
 
         {/* ─── PRICING CARDS GRID ─────────────────────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch max-w-6xl mx-auto mb-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 sm:gap-6 lg:gap-8 items-stretch max-w-6xl mx-auto mb-10 sm:mb-14">
           {PLANS.map((plan) => (
             <SpotlightPricingCard
               key={plan.id}
@@ -521,17 +522,17 @@ export default function OibuzPricingSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.45 }}
-          className="max-w-4xl mx-auto bg-gradient-to-r from-slate-900 via-[#0e1d35] to-blue-950 text-white rounded-3xl border border-slate-700/80 p-6 sm:p-8 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6"
+          className="max-w-4xl mx-auto bg-gradient-to-r from-slate-900 via-[#0e1d35] to-blue-950 text-white rounded-2xl sm:rounded-3xl border border-slate-700/80 p-5 sm:p-8 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6 text-center md:text-left"
         >
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-blue-500/20 border border-blue-400/30 text-blue-300 flex items-center justify-center shrink-0">
-              <Building2 className="w-7 h-7" />
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-500/20 border border-blue-400/30 text-blue-300 flex items-center justify-center shrink-0">
+              <Building2 className="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
             <div>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-blue-500/20 text-blue-300 border border-blue-400/30 mb-1.5">
                 Large-Scale Operations
               </div>
-              <h4 className="text-lg sm:text-xl font-black text-white leading-tight">
+              <h4 className="text-base sm:text-xl font-black text-white leading-tight">
                 Managing more than 100 employees across multiple construction sites?
               </h4>
               <p className="text-xs sm:text-sm text-slate-300 mt-1">
@@ -543,7 +544,7 @@ export default function OibuzPricingSection({
           <button
             type="button"
             onClick={handleEnterpriseCustom}
-            className="shrink-0 inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all cursor-pointer whitespace-nowrap"
+            className="w-full md:w-auto shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-lg shadow-blue-600/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all cursor-pointer whitespace-nowrap min-h-[48px]"
           >
             <span>Inquire for 100+ Workers</span>
             <ArrowUpRight className="w-4 h-4" />

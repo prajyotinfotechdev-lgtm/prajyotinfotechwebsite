@@ -32,9 +32,9 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.08 } }
 /* ─── SHARED STYLES ────────────────────────────────────────────────────────── */
 // Consistent container used across all sections
 const container = "mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8";
-// Section padding — generous desktop, tighter mobile
-const sxPad = "py-14 sm:py-16 lg:py-20 xl:py-24";
-const sxPadSm = "py-10 sm:py-14 lg:py-18";
+// Section padding — generous desktop, balanced mobile
+const sxPad = "py-12 sm:py-16 lg:py-20 xl:py-24";
+const sxPadSm = "py-10 sm:py-14 lg:py-16";
 
 /* ─── HEADER ─────────────────────────────────────────────────────────────── */
 function OibuzHeader({ onDemoClick }) {
@@ -68,17 +68,17 @@ function OibuzHeader({ onDemoClick }) {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled || menuOpen
           ? "bg-white/97 backdrop-blur-md shadow-sm border-b border-slate-100"
-          : "bg-transparent"
+          : "bg-white/85 lg:bg-transparent backdrop-blur-sm lg:backdrop-blur-none border-b border-slate-100/70 lg:border-b-0"
         }`}
     >
       <div className={container}>
-        <div className="flex items-center justify-between h-[68px]">
+        <div className="flex items-center justify-between h-16 sm:h-[68px]">
           {/* Logo */}
           <a href="#" className="flex-shrink-0 flex items-center" aria-label="Oibuz home">
             <img
               src="/images/oibuz-logo.png"
               alt="Oibuz"
-              className="h-10 sm:h-11 w-auto object-contain"
+              className="h-9 sm:h-11 w-auto object-contain"
             />
           </a>
 
@@ -122,20 +122,20 @@ function OibuzHeader({ onDemoClick }) {
             </a>
           </div>
 
-          {/* Mobile: optional small CTA + hamburger */}
+          {/* Mobile: compact CTA + hamburger */}
           <div className="flex lg:hidden items-center gap-2">
             <a
               href={getOibuzRegisterUrl({ source: "oibuz_landing_mobile_nav" })}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackOibuzTrialClick("oibuz_landing_mobile_nav")}
-              className="flex items-center gap-1 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold px-3.5 py-2 rounded-lg whitespace-nowrap"
+              className="flex items-center gap-1 bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold px-3.5 py-2 rounded-lg whitespace-nowrap min-h-[38px]"
             >
               Free Trial <ArrowUpRight className="w-3 h-3" />
             </a>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="p-2.5 text-slate-700 rounded-lg hover:bg-slate-100 transition-colors"
+              className="p-2.5 text-slate-700 rounded-lg hover:bg-slate-100 transition-colors min-w-[42px] min-h-[42px] flex items-center justify-center"
               aria-label="Toggle navigation menu"
               aria-expanded={menuOpen}
             >
@@ -153,9 +153,9 @@ function OibuzHeader({ onDemoClick }) {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.22 }}
-            className="lg:hidden bg-white border-t border-slate-100 shadow-lg overflow-hidden"
+            className="lg:hidden bg-white border-t border-slate-100 shadow-lg overflow-y-auto max-h-[calc(100dvh-64px)]"
           >
-            <nav className="px-4 pt-3 pb-5 space-y-1" aria-label="Mobile navigation">
+            <nav className="px-4 pt-3 pb-6 space-y-1" aria-label="Mobile navigation">
               {navLinks.map(l => (
                 <a
                   key={l.label}
@@ -173,7 +173,7 @@ function OibuzHeader({ onDemoClick }) {
                   {l.label}
                 </a>
               ))}
-              <div className="pt-3 border-t border-slate-100 space-y-2">
+              <div className="pt-3 border-t border-slate-100 space-y-2.5">
                 <a
                   href={getOibuzRegisterUrl({ source: "oibuz_landing_drawer" })}
                   target="_blank"
@@ -185,7 +185,7 @@ function OibuzHeader({ onDemoClick }) {
                 </a>
                 <button
                   onClick={() => { onDemoClick(); setMenuOpen(false); }}
-                  className="w-full flex items-center justify-center gap-2 bg-[#1a3a6b] text-white text-sm font-semibold py-3 rounded-xl min-h-[44px]"
+                  className="w-full flex items-center justify-center gap-2 bg-[#1a3a6b] text-white text-sm font-semibold py-3 rounded-xl min-h-[46px]"
                 >
                   Book a Demo <ArrowRight className="w-4 h-4" />
                 </button>
@@ -209,6 +209,7 @@ const HERO_STAGES = [
     id: "attendance",
     stepNum: "01",
     tabLabel: "GPS Attendance",
+    shortTabLabel: "Attendance",
     badge: "GPS Geofence + Selfie Verified",
     headlineWords1: ["Every", "Worker", "Verified."],
     headlineWords2: ["Every", "Rupee", "Accounted."],
@@ -227,6 +228,7 @@ const HERO_STAGES = [
     id: "timesheets",
     stepNum: "02",
     tabLabel: "Project Timesheets",
+    shortTabLabel: "Timesheets",
     badge: "Site & Task Labor Distribution",
     headlineWords1: ["Project", "Timesheets."],
     headlineWords2: ["Logged", "by", "Active", "Site."],
@@ -245,6 +247,7 @@ const HERO_STAGES = [
     id: "payroll",
     stepNum: "03",
     tabLabel: "Automated Payroll",
+    shortTabLabel: "Payroll",
     badge: "Zero Spreadsheets • 1-Click Pay",
     headlineWords1: ["Leave", "to", "Payroll."],
     headlineWords2: ["100%", "Automated."],
@@ -630,48 +633,76 @@ function HybridDashboardMobile({ activeStageId, accentColor }) {
     { l: "Pending", v: "7", c: "#dc2626", I: Bell },
   ];
 
+  const stageRows =
+    activeStageId === "attendance"
+      ? [
+          { title: "Rahul M. (Mason) · Site A", meta: "08:02 AM · GPS Match", badge: "Verified", badgeCls: "bg-emerald-50 text-emerald-700" },
+          { title: "Vikram P. (Foreman) · Site B", meta: "08:14 AM · Selfie OK", badge: "On-Site", badgeCls: "bg-blue-50 text-blue-700" },
+        ]
+      : activeStageId === "timesheets"
+      ? [
+          { title: "Foundation Piling · 8 Workers", meta: "Week 39 · Site A", badge: "64 hrs", badgeCls: "bg-cyan-50 text-cyan-700" },
+          { title: "Structural Rebar · 14 Workers", meta: "Manager Approved", badge: "112 hrs", badgeCls: "bg-emerald-50 text-emerald-700" },
+        ]
+      : [
+          { title: "October Payroll Run · 248 Staff", meta: "Auto-synced attendance & OT", badge: "Ready", badgeCls: "bg-emerald-50 text-emerald-700" },
+          { title: "Rahul M. · 26 Days Present", meta: "PDF Salary Slip Generated", badge: "₹28,400", badgeCls: "bg-slate-100 text-slate-800" },
+        ];
+
   return (
     <div className="bg-white rounded-2xl shadow-xl border border-slate-200/90 overflow-hidden w-full">
-      <div className="flex items-center justify-between px-4 py-3 bg-[#0f1f3d]">
-        <div className="flex items-center gap-1.5">
-          <div className="w-2 h-2 rounded-full bg-red-400/80" />
-          <div className="w-2 h-2 rounded-full bg-yellow-400/80" />
-          <div className="w-2 h-2 rounded-full bg-green-400/80" />
-          <span className="ml-2 text-xs text-slate-300 font-medium">Oibuz · Mobile OS</span>
+      <div className="flex items-center justify-between px-3.5 py-2.5 bg-[#0f1f3d]">
+        <div className="flex items-center gap-1.5 min-w-0">
+          <div className="w-2 h-2 rounded-full bg-red-400/80 flex-shrink-0" />
+          <div className="w-2 h-2 rounded-full bg-yellow-400/80 flex-shrink-0" />
+          <div className="w-2 h-2 rounded-full bg-green-400/80 flex-shrink-0" />
+          <span className="ml-1.5 text-xs text-slate-200 font-medium truncate">Oibuz · Live Mobile OS</span>
         </div>
         <span
-          className="text-[9px] font-bold px-2 py-0.5 rounded-full uppercase"
-          style={{ backgroundColor: `${accentColor}25`, color: accentColor }}
+          className="text-[9px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider flex-shrink-0 text-white"
+          style={{ backgroundColor: accentColor }}
         >
           {activeStageId}
         </span>
       </div>
 
-      <div className="p-4 bg-[#f8fafc]">
-        <div className="grid grid-cols-2 gap-2 mb-3">
+      <div className="p-3.5 bg-[#f8fafc] space-y-2.5">
+        <div className="grid grid-cols-2 gap-2">
           {stats.map(({ l, v, c, I }) => (
-            <div key={l} className="bg-white rounded-xl p-3 border border-slate-100 shadow-sm flex items-center gap-2.5">
+            <div key={l} className="bg-white rounded-xl p-2.5 border border-slate-100 shadow-xs flex items-center gap-2.5 min-w-0">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${c}15` }}>
                 <I className="w-4 h-4" style={{ color: c }} />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="text-base font-black text-slate-800 leading-none">{v}</p>
-                <p className="text-[9px] text-slate-500 mt-0.5">{l}</p>
+                <p className="text-[10px] text-slate-500 mt-0.5 truncate">{l}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="bg-white rounded-xl p-3 border border-slate-100 text-left">
-          <p className="text-[10px] font-bold text-slate-700 mb-1">
-            {activeStageId === "attendance"
-              ? "Live GPS Selfie punches active across all sites"
-              : activeStageId === "timesheets"
-              ? "Project timesheets submitted & pending manager review"
-              : "October payroll run ready for automated release"}
-          </p>
-          <p className="text-[9px] text-slate-400">Zero paperwork · Instant field-to-office sync</p>
-        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`mobile-dash-${activeStageId}`}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.25 }}
+            className="bg-white rounded-xl p-3 border border-slate-100 space-y-2 text-left"
+          >
+            {stageRows.map((row) => (
+              <div key={row.title} className="flex items-center justify-between gap-2 bg-slate-50/90 rounded-lg px-2.5 py-2 border border-slate-100">
+                <div className="min-w-0">
+                  <p className="text-[11px] font-bold text-slate-800 truncate">{row.title}</p>
+                  <p className="text-[10px] text-slate-500 truncate">{row.meta}</p>
+                </div>
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md flex-shrink-0 ${row.badgeCls}`}>
+                  {row.badge}
+                </span>
+              </div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );
@@ -707,7 +738,7 @@ function HeroSection({ onDemoClick }) {
 
   return (
     <section
-      className="relative min-h-screen flex flex-col justify-center pt-[68px] overflow-hidden"
+      className="relative lg:min-h-screen flex flex-col justify-center pt-16 sm:pt-[68px] overflow-hidden"
       style={{
         background: "linear-gradient(135deg, #f8fafc 0%, #eef2ff 45%, #e8f0fe 75%, #f1f5f9 100%)",
       }}
@@ -778,8 +809,8 @@ function HeroSection({ onDemoClick }) {
       {/* Floating Micro-Particles */}
       {!reduced && <AmbientHeroParticles color={accentColor} />}
 
-      <div className={`relative ${container} py-10 sm:py-14 lg:py-18`}>
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-8 xl:gap-12 items-center">
+      <div className={`relative ${container} py-7 sm:py-14 lg:py-20`}>
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-8 xl:gap-12 items-center">
 
           {/* LEFT: KINETIC MOTION COPY & INTERACTIVE 39s SLIDESHOW */}
           <motion.div
@@ -790,13 +821,15 @@ function HeroSection({ onDemoClick }) {
             className="max-w-xl"
           >
             {/* Eyebrow badge with Live Pulsing Beacon */}
-            <motion.div variants={fadeUp} className="mb-4">
-              <div className="inline-flex items-center gap-2 bg-white/90 border border-slate-200/90 rounded-full px-4 py-1.5 shadow-sm backdrop-blur-sm">
-                <HardHat className="w-3.5 h-3.5 text-[#2563eb] flex-shrink-0" />
-                <span className="text-xs font-semibold text-[#1a3a6b] tracking-wide uppercase leading-none">
-                  Workforce Management for Construction
-                </span>
-                <span className="text-slate-300">·</span>
+            <motion.div variants={fadeUp} className="mb-3.5 sm:mb-4">
+              <div className="inline-flex flex-wrap items-center gap-x-2 gap-y-1 bg-white/90 border border-slate-200/90 rounded-2xl sm:rounded-full px-3 sm:px-4 py-1.5 shadow-sm backdrop-blur-sm max-w-full">
+                <div className="inline-flex items-center gap-1.5">
+                  <HardHat className="w-3.5 h-3.5 text-[#2563eb] flex-shrink-0" />
+                  <span className="text-[11px] sm:text-xs font-semibold text-[#1a3a6b] tracking-wide uppercase leading-none">
+                    Workforce Management for Construction
+                  </span>
+                </div>
+                <span className="text-slate-300 hidden sm:inline">·</span>
                 <span
                   className="text-[10px] font-bold font-mono tracking-wider transition-colors duration-300"
                   style={{ color: accentColor }}
@@ -807,15 +840,15 @@ function HeroSection({ onDemoClick }) {
             </motion.div>
 
             {/* Kinetic Word-by-Word Motion Headline */}
-            <div className="mb-4 min-h-[96px] sm:min-h-[110px] flex flex-col justify-center">
+            <div className="mb-3.5 sm:mb-4 min-h-[78px] sm:min-h-[110px] flex flex-col justify-center">
               <AnimatePresence mode="wait">
                 <motion.h1
                   key={`headline-${stage.id}`}
-                  className="font-extrabold text-[#0f1f3d] tracking-tight leading-[1.08]"
-                  style={{ fontSize: "clamp(2.1rem, 4.2vw, 3.4rem)" }}
+                  className="font-extrabold text-[#0f1f3d] tracking-tight leading-[1.1]"
+                  style={{ fontSize: "clamp(1.85rem, 4.2vw, 3.4rem)" }}
                 >
                   {/* Line 1 */}
-                  <span className="block mb-1">
+                  <span className="block mb-0.5 sm:mb-1">
                     {stage.headlineWords1.map((word, wi) => (
                       <motion.span
                         key={`${stage.id}-1-${wi}`}
@@ -853,7 +886,7 @@ function HeroSection({ onDemoClick }) {
             </div>
 
             {/* Dynamic Kinetic Subtitle */}
-            <div className="mb-6 min-h-[56px] sm:min-h-[64px]">
+            <div className="mb-5 sm:mb-6 min-h-[72px] sm:min-h-[64px]">
               <AnimatePresence mode="wait">
                 <motion.p
                   key={`sub-${stage.id}`}
@@ -861,7 +894,7 @@ function HeroSection({ onDemoClick }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ delay: 0.2, duration: 0.4, ease: HERO_EASE }}
-                  className="text-base sm:text-lg text-slate-600 leading-relaxed"
+                  className="text-[15px] sm:text-lg text-slate-600 leading-relaxed"
                 >
                   {stage.sub}
                 </motion.p>
@@ -871,23 +904,23 @@ function HeroSection({ onDemoClick }) {
             {/* 39-SECOND INTERACTIVE SEGMENT CONTROLLER (3 stages x 13s) */}
             <motion.div
               variants={fadeUp}
-              className="bg-white/95 border border-slate-200/90 rounded-2xl p-2 sm:p-2.5 shadow-sm mb-7 backdrop-blur-sm relative overflow-hidden"
+              className="bg-white/95 border border-slate-200/90 rounded-2xl p-2 sm:p-2.5 shadow-sm mb-5 sm:mb-7 backdrop-blur-sm relative overflow-hidden"
             >
               {/* Active Slide Background Highlight */}
-              <div className="flex items-center justify-between gap-1.5 sm:gap-2">
+              <div className="flex items-center justify-between gap-1 sm:gap-2">
                 {HERO_STAGES.map((st, i) => {
                   const isActive = i === activeStage;
                   return (
                     <button
                       key={st.id}
                       onClick={() => setActiveStage(i)}
-                      className={`flex-1 flex items-center justify-between px-2.5 sm:px-3 py-2 rounded-xl text-left transition-all duration-300 relative ${
+                      className={`flex-1 min-w-0 flex items-center justify-between px-2.5 sm:px-3 py-2 rounded-xl text-left transition-all duration-300 relative min-h-[44px] ${
                         isActive
                           ? "bg-slate-50 border border-slate-200/90 shadow-xs"
                           : "hover:bg-slate-50/60 opacity-75 hover:opacity-100"
                       }`}
                     >
-                      <div className="min-w-0 pr-1">
+                      <div className="min-w-0 pr-0.5 sm:pr-1">
                         <span className="text-[9px] font-mono font-bold block text-slate-400 leading-none">
                           {st.stepNum}
                         </span>
@@ -896,15 +929,18 @@ function HeroSection({ onDemoClick }) {
                             isActive ? "text-slate-900" : "text-slate-600"
                           }`}
                         >
-                          {st.tabLabel}
+                          <span className="sm:hidden">{st.shortTabLabel}</span>
+                          <span className="hidden sm:inline">{st.tabLabel}</span>
                         </span>
                       </div>
                       {isActive && (
-                        <HeroProgressRing
-                          duration={HERO_SLIDE_DURATION}
-                          active={!isPaused}
-                          color={st.accentColor}
-                        />
+                        <div className="hidden sm:block flex-shrink-0">
+                          <HeroProgressRing
+                            duration={HERO_SLIDE_DURATION}
+                            active={!isPaused}
+                            color={st.accentColor}
+                          />
+                        </div>
                       )}
                     </button>
                   );
@@ -928,27 +964,27 @@ function HeroSection({ onDemoClick }) {
               {/* Controls bar */}
               <div className="flex items-center justify-between px-1.5 pt-2 mt-1 text-[10px] text-slate-400">
                 <span className="font-mono">
-                  Stage {activeStage + 1} of 3 · 39s Presentation
+                  Stage {activeStage + 1} of 3<span className="hidden sm:inline"> · 39s Presentation</span>
                 </span>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1">
                   <button
                     onClick={() => setActiveStage((s) => (s - 1 + HERO_STAGES.length) % HERO_STAGES.length)}
                     aria-label="Previous stage"
-                    className="w-6 h-6 rounded-md hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors font-bold"
+                    className="w-7 h-7 sm:w-6 sm:h-6 rounded-md hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors font-bold"
                   >
                     ‹
                   </button>
                   <button
                     onClick={() => setIsPaused((p) => !p)}
                     aria-label={isPaused ? "Resume auto-play" : "Pause auto-play"}
-                    className="px-2 py-0.5 rounded-md hover:bg-slate-100 font-medium text-slate-700 transition-colors"
+                    className="px-2.5 py-1 sm:py-0.5 rounded-md hover:bg-slate-100 font-medium text-slate-700 transition-colors"
                   >
                     {isPaused ? "▶ Play" : "❚❚ Pause"}
                   </button>
                   <button
                     onClick={advance}
                     aria-label="Next stage"
-                    className="w-6 h-6 rounded-md hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors font-bold"
+                    className="w-7 h-7 sm:w-6 sm:h-6 rounded-md hover:bg-slate-100 flex items-center justify-center text-slate-600 transition-colors font-bold"
                   >
                     ›
                   </button>
@@ -957,7 +993,7 @@ function HeroSection({ onDemoClick }) {
             </motion.div>
 
             {/* Primary CTAs */}
-            <motion.div variants={fadeUp} className="mb-7 space-y-2.5">
+            <motion.div variants={fadeUp} className="mb-5 sm:mb-7 space-y-2.5">
               <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-2.5 sm:gap-3">
                 <a
                   href={getOibuzRegisterUrl({ source: "oibuz_landing_hero" })}
@@ -977,7 +1013,7 @@ function HeroSection({ onDemoClick }) {
                   Book a Demo <ArrowRight className="w-4 h-4 flex-shrink-0" />
                 </button>
               </div>
-              <p className="text-[11px] font-semibold text-slate-500 flex flex-wrap items-center gap-x-2.5 gap-y-1">
+              <p className="text-xs sm:text-[11px] font-semibold text-slate-500 flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
                 <span>✓ Setup your company workspace yourself in 2 mins &bull; No credit card required</span>
                 <a
                   href="#setup-tutorial"
@@ -985,7 +1021,7 @@ function HeroSection({ onDemoClick }) {
                     e.preventDefault();
                     document.getElementById("setup-tutorial")?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className="text-[#1a3a6b] hover:text-blue-700 font-bold underline underline-offset-2 cursor-pointer"
+                  className="text-[#1a3a6b] hover:text-blue-700 font-bold underline underline-offset-2 cursor-pointer inline-flex items-center py-0.5"
                 >
                   Watch Setup Guide (EN / हिंदी) ↓
                 </a>
@@ -997,10 +1033,10 @@ function HeroSection({ onDemoClick }) {
               {pills.map(({ I, l }) => (
                 <div
                   key={l}
-                  className="flex items-center gap-1.5 bg-white/90 border border-slate-200/90 rounded-xl sm:rounded-full px-3 py-2 shadow-xs backdrop-blur-sm"
+                  className="flex items-center gap-1.5 bg-white/90 border border-slate-200/90 rounded-xl sm:rounded-full px-2.5 sm:px-3 py-2 shadow-xs backdrop-blur-sm min-w-0"
                 >
                   <I className="w-3.5 h-3.5 text-[#2563eb] flex-shrink-0" />
-                  <span className="text-xs font-medium text-slate-700 leading-tight">{l}</span>
+                  <span className="text-[11px] sm:text-xs font-medium text-slate-700 leading-tight">{l}</span>
                 </div>
               ))}
             </motion.div>
@@ -1122,10 +1158,10 @@ function ProblemSection() {
               <span className="text-sm text-slate-400">Replace with</span>
               <div className="h-px w-12 bg-slate-200" />
             </div>
-            <div className="flex items-center gap-3 bg-[#0f1f3d] text-white rounded-2xl px-6 sm:px-8 py-4 shadow-xl max-w-xs sm:max-w-none">
+            <div className="flex items-center gap-3 bg-[#0f1f3d] text-white rounded-2xl px-5 sm:px-8 py-4 shadow-xl w-full sm:w-auto max-w-sm sm:max-w-none">
               <img src="/images/oibuz-logo.png" alt="Oibuz" className="h-6 sm:h-7 w-auto brightness-0 invert flex-shrink-0" />
-              <div>
-                <p className="text-sm font-bold">One connected workforce platform</p>
+              <div className="min-w-0">
+                <p className="text-sm font-bold leading-snug">One connected workforce platform</p>
                 <p className="text-xs text-blue-200">Built for construction teams</p>
               </div>
             </div>
@@ -1226,15 +1262,15 @@ function MultiSiteSection() {
 
           <div className="max-w-xl mx-auto">
             {/* Sites row */}
-            <motion.div variants={stagger} className="grid grid-cols-3 gap-3 sm:gap-4 mb-5">
+            <motion.div variants={stagger} className="grid grid-cols-3 gap-2 sm:gap-4 mb-5">
               {sites.map(({ n, items, c }) => (
-                <motion.div key={n} variants={fadeUp} className="bg-white rounded-2xl p-3 sm:p-5 border shadow-sm text-center" style={{ borderColor: `${c}25` }}>
+                <motion.div key={n} variants={fadeUp} className="bg-white rounded-xl sm:rounded-2xl p-2.5 sm:p-5 border shadow-sm text-center min-w-0" style={{ borderColor: `${c}25` }}>
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl mx-auto mb-2 sm:mb-3 flex items-center justify-center" style={{ backgroundColor: `${c}12` }}>
                     <Building2 className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: c }} />
                   </div>
-                  <p className="text-xs sm:text-sm font-bold text-slate-800 mb-1 sm:mb-2">{n}</p>
+                  <p className="text-xs sm:text-sm font-bold text-slate-800 mb-1 sm:mb-2 truncate">{n}</p>
                   {items.map(i => (
-                    <div key={i} className="text-[10px] sm:text-xs text-slate-500 py-0.5 sm:py-1 border-b border-slate-50 last:border-0">{i}</div>
+                    <div key={i} className="text-[10px] sm:text-xs text-slate-500 py-0.5 sm:py-1 border-b border-slate-50 last:border-0 truncate">{i}</div>
                   ))}
                 </motion.div>
               ))}
@@ -1321,7 +1357,7 @@ function ProductShowcase({ onDemoClick }) {
           </div>
           <span className="text-[10px] sm:text-xs bg-green-100 text-green-700 font-semibold px-2 sm:px-3 py-1 rounded-full whitespace-nowrap">231 Present</span>
         </div>
-        <div className="bg-white rounded-xl border border-slate-100 overflow-x-auto">
+        <div className="bg-white rounded-xl border border-slate-100 overflow-x-auto [&::-webkit-scrollbar]:hidden">
           <table className="w-full text-xs min-w-[360px]">
             <thead className="bg-slate-50">
               <tr>{["Employee", "Site", "Punch In", "Status"].map(h => <th key={h} className="text-left px-3 sm:px-4 py-2.5 text-slate-500 font-semibold whitespace-nowrap">{h}</th>)}</tr>
@@ -1495,14 +1531,14 @@ function ProductShowcase({ onDemoClick }) {
           {/* Tab strip — horizontal scroll on mobile, NO page overflow */}
           <motion.div variants={fadeUp} className="mb-6 sm:mb-7">
             <div
-              className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:justify-center sm:flex-wrap"
+              className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:justify-center sm:flex-wrap [&::-webkit-scrollbar]:hidden"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
               {tabs.map(tab => (
                 <button
                   key={tab}
                   onClick={() => setActive(tab)}
-                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap flex-shrink-0 min-h-[40px] ${active === tab ? "bg-[#1a3a6b] text-white shadow-md" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap flex-shrink-0 min-h-[42px] ${active === tab ? "bg-[#1a3a6b] text-white shadow-md" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                     }`}
                 >
                   {tab}
@@ -1526,7 +1562,7 @@ function ProductShowcase({ onDemoClick }) {
                 </div>
               </div>
 
-              <div className="flex" style={{ minHeight: 340 }}>
+              <div className="flex min-h-[290px] sm:min-h-[340px]">
                 {/* Side nav — desktop only */}
                 <div className="w-36 bg-[#0f1f3d] py-3 px-2.5 gap-0.5 flex-col hidden lg:flex flex-shrink-0">
                   {sideNav.map(({ I, l, id }) => (
@@ -1753,7 +1789,7 @@ function RoleSection() {
           {/* Role tab strip — horizontal scroll on mobile */}
           <motion.div variants={fadeUp} className="mb-7">
             <div
-              className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:justify-center sm:flex-wrap"
+              className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:justify-center sm:flex-wrap [&::-webkit-scrollbar]:hidden"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
               {Object.entries(roles).map(([r, { I, c }]) => (
@@ -1779,18 +1815,18 @@ function RoleSection() {
               transition={{ duration: 0.22 }}
               className="max-w-2xl mx-auto bg-white rounded-2xl border border-slate-100 shadow-md overflow-hidden"
             >
-              <div className="px-6 sm:px-8 py-5 sm:py-6 border-b border-slate-100" style={{ backgroundColor: `${roles[active].c}08` }}>
-                <div className="flex items-center gap-4">
+              <div className="px-5 sm:px-8 py-4 sm:py-6 border-b border-slate-100" style={{ backgroundColor: `${roles[active].c}08` }}>
+                <div className="flex items-center gap-3.5 sm:gap-4">
                   <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${roles[active].c}15` }}>
                     {React.createElement(roles[active].I, { className: "w-5 h-5 sm:w-6 sm:h-6", style: { color: roles[active].c } })}
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3 className="text-base sm:text-lg font-bold text-slate-800">{active}</h3>
-                    <p className="text-sm text-slate-500">{roles[active].tag}</p>
+                    <p className="text-xs sm:text-sm text-slate-500">{roles[active].tag}</p>
                   </div>
                 </div>
               </div>
-              <div className="px-6 sm:px-8 py-5 sm:py-6">
+              <div className="px-5 sm:px-8 py-4 sm:py-6">
                 <ul className="space-y-3">
                   {roles[active].caps.map(cap => (
                     <li key={cap} className="flex items-start gap-3">
@@ -1819,7 +1855,7 @@ function FeatureSpotlights() {
       headline: "Mobile attendance, verified on every punch.",
       bullets: ["Selfie + location capture", "Attendance correction workflow", "Daily manager visibility"],
       visual: (
-        <div className="bg-[#0f1f3d] rounded-2xl sm:rounded-3xl p-5 sm:p-6 w-44 sm:w-52 mx-auto shadow-2xl">
+          <div className="bg-[#0f1f3d] rounded-2xl sm:rounded-3xl p-5 sm:p-6 w-52 sm:w-56 mx-auto shadow-2xl">
           <div className="bg-[#1a3a6b] rounded-xl sm:rounded-2xl p-4 sm:p-5 mb-4 text-center">
             <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-[#2563eb]/20 border-2 border-[#2563eb] mx-auto mb-2 sm:mb-3 flex items-center justify-center">
               <Smartphone className="w-5 h-5 sm:w-7 sm:h-7 text-[#2563eb]" />
@@ -1828,10 +1864,14 @@ function FeatureSpotlights() {
             <p className="text-blue-300 text-[10px] mt-0.5">08:02 AM · Site A</p>
           </div>
           <div className="space-y-2">
-            {[{ I: MapPin, l: "Location Captured", c: "green" }, { I: Smartphone, l: "Selfie Captured", c: "blue" }, { I: CheckCircle, l: "Verified", c: "emerald" }].map(({ I, l, c }) => (
-              <div key={l} className={`flex items-center gap-2 bg-${c}-900/25 rounded-lg px-2.5 sm:px-3 py-1.5 sm:py-2`}>
-                <I className={`w-3 h-3 text-${c}-400 flex-shrink-0`} />
-                <span className={`text-[9px] sm:text-[10px] text-${c}-300`}>{l}</span>
+            {[
+              { I: MapPin, l: "Location Captured", box: "bg-green-900/25", ic: "text-green-400", tx: "text-green-300" },
+              { I: Smartphone, l: "Selfie Captured", box: "bg-blue-900/25", ic: "text-blue-400", tx: "text-blue-300" },
+              { I: CheckCircle, l: "Verified", box: "bg-emerald-900/25", ic: "text-emerald-400", tx: "text-emerald-300" },
+            ].map(({ I, l, box, ic, tx }) => (
+              <div key={l} className={`flex items-center gap-2 ${box} rounded-lg px-2.5 sm:px-3 py-1.5 sm:py-2`}>
+                <I className={`w-3 h-3 ${ic} flex-shrink-0`} />
+                <span className={`text-[10px] ${tx}`}>{l}</span>
               </div>
             ))}
           </div>
@@ -1944,12 +1984,12 @@ function FeatureSpotlights() {
               <motion.div key={label} variants={fadeUp} className={`rounded-2xl sm:rounded-3xl overflow-hidden ${bg} border border-slate-100 shadow-sm`}>
                 {/* On mobile: always text then visual. On desktop: alternate */}
                 <div className={`grid grid-cols-1 lg:grid-cols-2 ${rev ? "lg:[direction:rtl]" : ""}`}>
-                  <div className="p-7 sm:p-8 lg:p-10 [direction:ltr] flex flex-col justify-center">
-                    <div className="flex items-center gap-2 mb-4">
+                  <div className="p-5 sm:p-8 lg:p-10 [direction:ltr] flex flex-col justify-center">
+                    <div className="flex items-center gap-2 mb-3.5 sm:mb-4">
                       <div className="w-1 h-6 rounded-full" style={{ backgroundColor: accent }} />
                       <span className="text-xs font-bold uppercase tracking-widest" style={{ color: accent }}>{label}</span>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-extrabold text-[#0f1f3d] mb-5 leading-snug">{headline}</h3>
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-[#0f1f3d] mb-4 sm:mb-5 leading-snug">{headline}</h3>
                     <ul className="space-y-2.5">
                       {bullets.map(b => (
                         <li key={b} className="flex items-start gap-2.5">
@@ -1962,7 +2002,7 @@ function FeatureSpotlights() {
                     </ul>
                   </div>
                   <div
-                    className="px-7 py-8 sm:p-10 lg:p-12 flex items-center justify-center [direction:ltr]"
+                    className="px-4 py-6 sm:p-10 lg:p-12 flex items-center justify-center [direction:ltr]"
                     style={{ background: `linear-gradient(135deg, ${accent}07 0%, ${accent}03 100%)` }}
                   >
                     {visual}
@@ -2187,7 +2227,7 @@ function DemoForm() {
   const hc = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
   const hs = e => { e.preventDefault(); setSubmitted(true); };
 
-  const inputCls = "w-full border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]/25 focus:border-[#2563eb] transition-all min-h-[48px] bg-white";
+  const inputCls = "w-full border border-slate-200 rounded-xl px-4 py-3 text-base sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]/25 focus:border-[#2563eb] transition-all min-h-[48px] bg-white";
 
   return (
     <section className={`bg-slate-50 ${sxPad}`} id="demo">
@@ -2224,7 +2264,7 @@ function DemoForm() {
                 </div>
               ))}
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="form-employees" className="block text-sm font-semibold text-slate-700 mb-1.5">No. of Employees</label>
                   <select id="form-employees" name="employees" value={form.employees} onChange={hc} required className={inputCls}>
@@ -2247,7 +2287,7 @@ function DemoForm() {
                   id="form-message"
                   name="message" value={form.message} onChange={hc} rows={4}
                   placeholder="Tell us about your current challenges or what you would like to see..."
-                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]/25 focus:border-[#2563eb] transition-all resize-none"
+                  className="w-full border border-slate-200 rounded-xl px-4 py-3 text-base sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]/25 focus:border-[#2563eb] transition-all resize-none"
                 />
               </div>
 
@@ -2274,7 +2314,7 @@ function OibuzFooter() {
     Legal: ["Privacy Policy", "Terms & Conditions"],
   };
   return (
-    <footer className="bg-[#0a1628] text-white py-12 sm:py-16">
+    <footer className="bg-[#0a1628] text-white pt-12 pb-24 sm:py-16">
       <div className={container}>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 sm:gap-10 mb-10 sm:mb-12">
           <div className="col-span-2 sm:col-span-3 lg:col-span-2">

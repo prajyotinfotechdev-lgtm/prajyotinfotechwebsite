@@ -134,7 +134,7 @@ function SceneTheChallenge({ time }) {
   const t2 = time >= 2.5;
   const t3 = time >= 3.7;
   return (
-    <div className="relative w-full h-full flex flex-col p-5 sm:p-7 overflow-hidden" style={{ background: "linear-gradient(135deg,#f0f5ff 0%,#e8f0fe 100%)" }}>
+    <div className="relative w-full flex-1 flex flex-col p-4 sm:p-7 overflow-hidden" style={{ background: "linear-gradient(135deg,#f0f5ff 0%,#e8f0fe 100%)" }}>
       {/* BG grid */}
       <svg className="absolute inset-0 w-full h-full opacity-[0.04] pointer-events-none" aria-hidden>
         <defs><pattern id="g1" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#1a3a6b" strokeWidth="0.5"/></pattern></defs>
@@ -154,8 +154,8 @@ function SceneTheChallenge({ time }) {
         Attendance, rosters, and daily field activity spread across distant construction locations create visibility gaps.
       </motion.p>}
 
-      <div className="flex-1 grid grid-cols-2 gap-3 items-start">
-        <div className="col-span-2 sm:col-span-1 rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-sm h-36 sm:h-44 relative">
+      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3 items-start">
+        <div className="rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-sm h-36 sm:h-44 relative">
           <SiteNetworkSVG animate={t2} />
         </div>
         <div className="flex flex-col gap-2">
@@ -201,7 +201,7 @@ function SceneTooManyProcesses({ time }) {
   const showChaos = time >= 11.5;
 
   return (
-    <div className="relative w-full h-full flex flex-col p-5 sm:p-7 overflow-hidden" style={{ background: "linear-gradient(135deg,#fff7ed 0%,#fef3c7 100%)" }}>
+    <div className="relative w-full flex-1 flex flex-col p-4 sm:p-7 overflow-hidden" style={{ background: "linear-gradient(135deg,#fff7ed 0%,#fef3c7 100%)" }}>
       <svg className="absolute inset-0 w-full h-full opacity-[0.04] pointer-events-none" aria-hidden>
         <defs><pattern id="g2" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#7c2d12" strokeWidth="0.5"/></pattern></defs>
         <rect width="100%" height="100%" fill="url(#g2)"/>
@@ -280,7 +280,7 @@ function SceneMeetOibuz({ time }) {
   ];
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-center p-5 sm:p-7 overflow-hidden text-center"
+    <div className="relative w-full flex-1 flex flex-col items-center justify-center p-4 sm:p-7 overflow-hidden text-center"
       style={{ background: "linear-gradient(135deg,#eef2ff 0%,#e0f2fe 100%)" }}>
       <svg className="absolute inset-0 w-full h-full opacity-[0.04] pointer-events-none" aria-hidden>
         <defs><pattern id="g3" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#1a3a6b" strokeWidth="0.5"/></pattern></defs>
@@ -342,7 +342,7 @@ function SceneAttendance({ time }) {
   const t4 = time >= 20.1;
 
   return (
-    <div className="relative w-full h-full flex flex-col p-5 sm:p-7 overflow-hidden"
+    <div className="relative w-full flex-1 flex flex-col p-4 sm:p-7 overflow-hidden"
       style={{ background: "linear-gradient(135deg,#ecfdf5 0%,#d1fae5 100%)" }}>
       <svg className="absolute inset-0 w-full h-full opacity-[0.05] pointer-events-none" aria-hidden>
         <defs><pattern id="g4" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#059669" strokeWidth="0.5"/></pattern></defs>
@@ -438,7 +438,7 @@ function SceneLeaveTimesheets({ time }) {
   const t3 = time >= 22.4;
 
   return (
-    <div className="relative w-full h-full flex flex-col p-5 sm:p-7 overflow-hidden"
+    <div className="relative w-full flex-1 flex flex-col p-4 sm:p-7 overflow-hidden"
       style={{ background: "linear-gradient(135deg,#f5f3ff 0%,#ede9fe 100%)" }}>
       <svg className="absolute inset-0 w-full h-full opacity-[0.04] pointer-events-none" aria-hidden>
         <defs><pattern id="g5" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#7c3aed" strokeWidth="0.5"/></pattern></defs>
@@ -506,7 +506,7 @@ function SceneReimbursementsPayroll({ time }) {
   const t4 = time >= 26.5;
 
   return (
-    <div className="relative w-full h-full flex flex-col p-5 sm:p-7 overflow-hidden"
+    <div className="relative w-full flex-1 flex flex-col p-4 sm:p-7 overflow-hidden"
       style={{ background: "linear-gradient(135deg,#eff6ff 0%,#dbeafe 100%)" }}>
       <svg className="absolute inset-0 w-full h-full opacity-[0.04] pointer-events-none" aria-hidden>
         <defs><pattern id="g6" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#2563eb" strokeWidth="0.5"/></pattern></defs>
@@ -616,7 +616,7 @@ function SceneConnectedOrg({ time }) {
   const t3 = time >= 31.5;
 
   return (
-    <div className="relative w-full h-full flex flex-col p-5 sm:p-7 overflow-hidden"
+    <div className="relative w-full flex-1 flex flex-col p-4 sm:p-7 overflow-hidden"
       style={{ background: "linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 100%)" }}>
       <svg className="absolute inset-0 w-full h-full opacity-[0.04] pointer-events-none" aria-hidden>
         <defs><pattern id="g7" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#0ea5e9" strokeWidth="0.5"/></pattern></defs>
@@ -636,7 +636,7 @@ function SceneConnectedOrg({ time }) {
         Oibuz keeps everyone connected — from field operations to back-office governance.
       </motion.p>}
 
-      <div className="flex-1 rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-sm relative" style={{ minHeight:120 }}>
+      <div className="flex-1 rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-sm relative min-h-[150px]" style={{ minHeight:150 }}>
         <OrgFlowSVG animate={t2} />
       </div>
 
@@ -657,7 +657,7 @@ function SceneBrandPayoff({ time, onDemoClick, onReplay }) {
   const t4 = time >= 37.7;
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-center p-5 sm:p-7 overflow-hidden text-center"
+    <div className="relative w-full flex-1 flex flex-col items-center justify-center p-4 sm:p-7 overflow-hidden text-center"
       style={{ background: "linear-gradient(135deg,#0f1f3d 0%,#1a3a6b 100%)" }}>
       {/* Stars */}
       {Array.from({length:18}).map((_, i) => (
@@ -825,7 +825,7 @@ export default function OibuzAudioStory({ onDemoClick }) {
   const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <section id="product-story" className="relative bg-gradient-to-b from-slate-50 to-white py-16 sm:py-24 border-y border-slate-200/80 overflow-hidden">
+    <section id="product-story" className="relative bg-gradient-to-b from-slate-50 to-white py-12 sm:py-20 lg:py-24 border-y border-slate-200/80 overflow-hidden">
       <audio ref={audioRef} src={OIBUZ_AUDIO_URL} preload="auto" playsInline>
         <source src={OIBUZ_AUDIO_URL} type="audio/mpeg" />
         <source src="/audio/oibuz-product-story.mp3" type="audio/mpeg" />
@@ -838,16 +838,16 @@ export default function OibuzAudioStory({ onDemoClick }) {
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* ── Section Header ── */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
           <motion.div initial={{ opacity:0, y:12 }} whileInView={{ opacity:1, y:0 }}
             viewport={{ once:true }} transition={{ duration:0.6, ease:E }}
-            className="inline-flex items-center gap-2 mb-4">
+            className="inline-flex items-center gap-2 mb-3 sm:mb-4">
             <Workflow className="w-4 h-4 text-blue-600" />
             <span className="text-xs font-bold text-blue-700 tracking-widest uppercase">Product Story</span>
           </motion.div>
           <motion.h2 initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }}
             viewport={{ once:true }} transition={{ delay:0.1, duration:0.6, ease:E }}
-            className="text-3xl sm:text-4xl font-extrabold text-[#0f1f3d] tracking-tight mb-3">
+            className="text-2xl sm:text-4xl font-extrabold text-[#0f1f3d] tracking-tight mb-2.5 sm:mb-3">
             See how Oibuz <span className="text-blue-700">connects the work</span>.
           </motion.h2>
           <motion.p initial={{ opacity:0, y:12 }} whileInView={{ opacity:1, y:0 }}
@@ -858,22 +858,21 @@ export default function OibuzAudioStory({ onDemoClick }) {
         </div>
 
         {/* ── Main Stage ── */}
-        <div ref={stageRef} className="relative rounded-2xl overflow-hidden border border-slate-200/80 shadow-2xl shadow-slate-900/10 bg-white"
-          style={{ minHeight: 480 }}>
+        <div ref={stageRef} className="relative rounded-2xl overflow-hidden border border-slate-200/80 shadow-2xl shadow-slate-900/10 bg-white flex flex-col">
 
-          {/* Scene canvas */}
-          <div className="relative w-full" style={{ minHeight: 420, paddingBottom:"52%" }}>
-            <div className="absolute inset-0 overflow-hidden">
+          {/* Scene canvas — grows cleanly on mobile so multi-card scenes never clip */}
+          <div className="relative w-full min-h-[420px] sm:min-h-[480px] lg:min-h-[540px] flex flex-col">
+            <div className="flex-1 flex flex-col relative">
               <AnimatePresence mode="wait">
-                <motion.div key={activeScene?.id}
-                  className="absolute inset-0"
+                <motion.div key={hasStarted ? activeScene?.id : "preroll"}
+                  className="flex-1 flex flex-col w-full"
                   initial={{ opacity:0, scale:1.01 }}
                   animate={{ opacity:1, scale:1 }}
                   exit={{ opacity:0, scale:0.99 }}
                   transition={{ duration:0.45, ease:E }}>
                   {hasStarted ? renderScene() : (
                     /* ── Pre-roll splash ── */
-                    <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8"
+                    <div className="flex-1 relative flex flex-col items-center justify-center text-center p-5 sm:p-8 min-h-[420px] sm:min-h-[480px] lg:min-h-[540px]"
                       style={{ background:"linear-gradient(135deg,#eef2ff 0%,#e8f0fe 100%)" }}>
                       <div className="absolute inset-0 pointer-events-none" style={{
                         backgroundImage:"radial-gradient(circle at 50% 40%,rgba(37,99,235,0.1) 0%,transparent 60%)"
@@ -884,15 +883,15 @@ export default function OibuzAudioStory({ onDemoClick }) {
                         <rect width="100%" height="100%" fill="url(#gPre)"/>
                       </svg>
 
-                      <div className="relative z-10 space-y-5">
-                        <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-10 w-auto object-contain mx-auto" />
+                      <div className="relative z-10 space-y-4 sm:space-y-5 max-w-lg mx-auto">
+                        <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-9 sm:h-10 w-auto object-contain mx-auto" />
                         <div>
-                          <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0f1f3d] mb-2">See how Oibuz connects the work.</h3>
-                          <p className="text-slate-500 text-sm max-w-md mx-auto">
+                          <h3 className="text-xl sm:text-3xl font-extrabold text-[#0f1f3d] mb-2">See how Oibuz connects the work.</h3>
+                          <p className="text-slate-500 text-xs sm:text-sm max-w-md mx-auto">
                             A cinematic 39-second walkthrough of workforce management for construction sites.
                           </p>
                         </div>
-                        <div className="flex flex-wrap justify-center gap-2 text-[10px]">
+                        <div className="hidden sm:flex flex-wrap justify-center gap-2 text-[10px]">
                           {STORY_SCENES.map(s => (
                             <span key={s.id} className="px-2.5 py-1 bg-white border border-slate-200 rounded-full font-semibold text-slate-600 shadow-xs">
                               {s.chapter} {s.label}
@@ -902,15 +901,15 @@ export default function OibuzAudioStory({ onDemoClick }) {
                         <motion.button
                           onClick={handleStartStory}
                           whileHover={{ scale:1.04 }} whileTap={{ scale:0.97 }}
-                          className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-[#1a3a6b] hover:bg-[#15305a] text-white font-bold text-sm shadow-xl shadow-blue-900/25 transition-colors">
-                          <div className="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center flex-shrink-0">
+                          className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-[#1a3a6b] hover:bg-[#15305a] text-white font-bold text-sm shadow-xl shadow-blue-900/25 transition-colors">
+                          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/15 flex items-center justify-center flex-shrink-0">
                             <Play className="w-4 h-4 fill-white text-white ml-0.5" />
                           </div>
                           <span>Play Product Story</span>
                           <span className="text-blue-300 text-xs font-normal">(39 sec)</span>
                         </motion.button>
-                        <p className="text-[10px] text-slate-400 flex items-center justify-center gap-1.5">
-                          <Headphones className="w-3 h-3" />
+                        <p className="text-[11px] sm:text-[10px] text-slate-400 flex items-center justify-center gap-1.5">
+                          <Headphones className="w-3.5 h-3.5 sm:w-3 sm:h-3" />
                           Best experienced with audio on
                         </p>
                       </div>
@@ -923,11 +922,11 @@ export default function OibuzAudioStory({ onDemoClick }) {
 
           {/* ── Controls bar ── */}
           {hasStarted && (
-            <div className="border-t border-slate-200 bg-white/95 backdrop-blur-sm px-4 py-3">
+            <div className="border-t border-slate-200 bg-white/95 backdrop-blur-sm px-3.5 sm:px-4 py-3">
               {/* Progress bar */}
               <div className="mb-2.5 relative">
                 {/* Scene segment markers */}
-                <div className="relative h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div className="relative h-2 sm:h-1.5 bg-slate-100 rounded-full overflow-hidden">
                   {/* Filled progress */}
                   <motion.div className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-blue-600 to-blue-500"
                     style={{ width: `${progressPercent}%` }}
@@ -950,7 +949,7 @@ export default function OibuzAudioStory({ onDemoClick }) {
               <div className="flex items-center gap-2">
                 {/* Play/Pause */}
                 <button onClick={handleTogglePlay}
-                  className="w-8 h-8 rounded-full bg-[#1a3a6b] hover:bg-[#15305a] text-white flex items-center justify-center transition-colors flex-shrink-0"
+                  className="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-[#1a3a6b] hover:bg-[#15305a] text-white flex items-center justify-center transition-colors flex-shrink-0"
                   aria-label={isPlaying ? "Pause" : "Play"}>
                   {isPlaying
                     ? <Pause className="w-3.5 h-3.5 fill-white" />
@@ -959,15 +958,15 @@ export default function OibuzAudioStory({ onDemoClick }) {
 
                 {/* Replay */}
                 <button onClick={handleReplay}
-                  className="w-7 h-7 rounded-full border border-slate-200 hover:bg-slate-50 text-slate-500 flex items-center justify-center transition-colors flex-shrink-0"
+                  className="w-8 h-8 sm:w-7 sm:h-7 rounded-full border border-slate-200 hover:bg-slate-50 text-slate-500 flex items-center justify-center transition-colors flex-shrink-0"
                   aria-label="Replay">
-                  <RotateCcw className="w-3 h-3" />
+                  <RotateCcw className="w-3.5 h-3.5 sm:w-3 sm:h-3" />
                 </button>
 
                 {/* Equalizer / time */}
                 <div className="flex items-center gap-1.5 text-blue-700 min-w-0">
                   <VoiceEqualizer isPlaying={isPlaying} barCount={4} />
-                  <span className="text-[10px] font-mono text-slate-500 flex-shrink-0">
+                  <span className="text-[11px] sm:text-[10px] font-mono text-slate-500 flex-shrink-0">
                     {formatTime(currentTime)} / {formatTime(duration)}
                   </span>
                 </div>
@@ -983,14 +982,14 @@ export default function OibuzAudioStory({ onDemoClick }) {
                   </motion.div>
                 </AnimatePresence>
 
-                <div className="ml-auto flex items-center gap-1">
+                <div className="ml-auto flex items-center gap-1.5">
                   <button onClick={handleToggleMute}
-                    className="w-7 h-7 rounded-full border border-slate-200 hover:bg-slate-50 text-slate-500 flex items-center justify-center transition-colors"
+                    className="w-8 h-8 sm:w-7 sm:h-7 rounded-full border border-slate-200 hover:bg-slate-50 text-slate-500 flex items-center justify-center transition-colors"
                     aria-label={isMuted ? "Unmute" : "Mute"}>
-                    {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                    {isMuted ? <VolumeX className="w-4 h-4 sm:w-3.5 sm:h-3.5" /> : <Volume2 className="w-4 h-4 sm:w-3.5 sm:h-3.5" />}
                   </button>
                   <button onClick={handleToggleFullscreen}
-                    className="w-7 h-7 rounded-full border border-slate-200 hover:bg-slate-50 text-slate-500 flex items-center justify-center transition-colors"
+                    className="hidden sm:flex w-7 h-7 rounded-full border border-slate-200 hover:bg-slate-50 text-slate-500 items-center justify-center transition-colors"
                     aria-label="Fullscreen">
                     {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
                   </button>
@@ -1008,7 +1007,7 @@ export default function OibuzAudioStory({ onDemoClick }) {
             return (
               <button key={scene.id}
                 onClick={() => handleJumpToScene(scene)}
-                className={`relative p-2 rounded-xl text-center transition-all text-[9px] font-bold border overflow-hidden
+                className={`relative p-1.5 sm:p-2 min-h-[46px] rounded-xl text-center transition-all text-[9px] font-bold border overflow-hidden
                   ${isActive ? "border-blue-600 bg-blue-50 text-blue-800 shadow-sm shadow-blue-200"
                     : isPast ? "border-slate-200 bg-slate-50 text-slate-500"
                     : "border-slate-100 bg-white text-slate-400 hover:border-slate-300 hover:text-slate-600"}`}>
