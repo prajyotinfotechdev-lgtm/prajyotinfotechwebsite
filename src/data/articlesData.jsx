@@ -1028,7 +1028,7 @@ Use the interactive viewport engine above to toggle between an iPhone, iPad, and
     author: "Prajyot Kankal",
     authorRole: "Founder & Chief Architect",
     excerpt: "Compare paper muster registers, hardware biometric machines, and modern GPS selfie attendance platforms like OIBUZ Construction HRMS — pricing, anti-ghost-worker ROI, and instant trial setup.",
-    relatedTool: { to: "/products/hrms", title: "Try OIBUZ Construction HRMS Free", desc: "Start a self-setup free trial in 2 minutes at oibuz.in/register or calculate monthly site cash leakage.", cta: "Explore OIBUZ HRMS" },
+    relatedTool: { to: "/oibuz", title: "Try OIBUZ Construction HRMS Free", desc: "Start a self-setup free trial in 2 minutes at oibuz.in/register or calculate monthly site cash leakage.", cta: "Explore OIBUZ HRMS" },
     interactiveComponent: null,
     keyTakeaways: [
       "Indian builders lose 12% to 20% of monthly site payroll to ghost labour entries, buddy punching, and unverified contractor bills.",

@@ -234,39 +234,6 @@ const ROUTES = [
     `,
   },
   {
-    path: "products/hrms",
-    title: "OIBUZ — Construction HRMS, GPS Selfie Attendance & Payroll Software India | Start Free Trial",
-    description: "OIBUZ is an Indian construction HRMS & labour attendance app by Prajyot Infotech. Eliminates ghost workers via GPS geofenced selfie check-in, site timesheets, and 1-click daily-wage payroll. Free Trial at oibuz.in/register.",
-    keywords: "OIBUZ, construction HRMS india, construction site attendance app, gps selfie attendance software, labour muster roll app, civil contractor payroll software, oibuz free trial",
-    canonical: "https://www.prajyotinfotech.in/products/hrms",
-    h1: "OIBUZ — Construction HRMS & Field Workforce Management Software",
-    content: `
-      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:24px;">
-        <strong>Every Worker Verified. Every Rupee Accounted.</strong> OIBUZ empowers real estate builders, civil contractors, and infrastructure EPC firms across India with zero-hardware GPS geofenced selfie attendance, supervisor 30-second gang punching, project labour timesheets, photo expense receipts, and 1-click payroll.
-      </p>
-      <p style="margin-bottom:32px;">
-        <a href="https://www.oibuz.in/register" style="display:inline-block;background:#059669;color:#ffffff;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:800;font-size:15px;">Start Free Trial on OIBUZ.in &rarr;</a>
-      </p>
-      <section style="margin-bottom:36px;">
-        <h2 style="font-size:22px;font-weight:800;color:#0f172a;margin-bottom:12px;">Transparent Monthly Plans (India INR)</h2>
-        <ul style="line-height:1.8;color:#334155;font-size:15px;">
-          <li><strong>Free Self-Setup Trial (₹0):</strong> Launch your workspace in 2 minutes at <a href="https://www.oibuz.in/register">https://www.oibuz.in/register</a> (no credit card required).</li>
-          <li><strong>Starter (₹1,999/month):</strong> Up to 25 employees with all 10 core modules.</li>
-          <li><strong>Business (₹3,799/month):</strong> Up to 50 employees across multi-site crews.</li>
-          <li><strong>Enterprise (₹7,999/month):</strong> Up to 100 employees plus custom 100+ multi-site deployments.</li>
-        </ul>
-      </section>
-      <section style="margin-bottom:36px;">
-        <h2 style="font-size:22px;font-weight:800;color:#0f172a;margin-bottom:12px;">Why Builders Switch to OIBUZ</h2>
-        <ul style="line-height:1.8;color:#475569;font-size:15px;">
-          <li>Eliminates fingerprint biometric hardware failures on dusty construction sites.</li>
-          <li>Supports daily wage (Dihadi), piece-rate contractors, advances, and salaried engineers together.</li>
-          <li>5-tier role governance across Worker, Site Manager, HR, Finance, and Admin with automated SLA escalations.</li>
-        </ul>
-      </section>
-    `,
-  },
-  {
     path: "products/hrms/story",
     title: "Product Story — OIBUZ Construction Workforce Management Architecture",
     description: "How OIBUZ replaces paper registers, WhatsApp requests, and Excel payroll spreadsheets with one verifiable connected workforce platform.",
@@ -314,11 +281,24 @@ const ROUTES = [
   {
     path: "oibuz",
     title: "OIBUZ — Construction Workforce Management & Attendance Platform | Start Free Trial",
-    description: "Every worker verified with GPS geofenced selfie check-in. Replace paper muster rolls and manual payroll. Create your free OIBUZ account at oibuz.in/register.",
-    keywords: "OIBUZ, construction attendance app india, civil contractor hrms, free trial oibuz",
+    description: "Every worker verified with GPS geofenced selfie check-in, 5-role governance, interactive pricing plans from ₹1,999/mo, and automated construction payroll. Start free trial at oibuz.in/register.",
+    keywords: "OIBUZ, construction attendance app india, civil contractor hrms, gps selfie attendance software, free trial oibuz",
     canonical: "https://www.prajyotinfotech.in/oibuz",
     h1: "OIBUZ — Every Worker Verified. Every Rupee Accounted.",
-    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Self-onboarding construction workforce platform with GPS selfie attendance, project timesheets, expense approvals, and 1-click payroll. <a href="https://www.oibuz.in/register">Start Free Trial on OIBUZ.in &rarr;</a></p>`,
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:24px;">
+        <strong>Every Worker Verified. Every Rupee Accounted.</strong> Self-onboarding construction workforce management platform with GPS geofenced selfie attendance, project timesheets, expense approvals, 5-role permissions, and 1-click payroll.
+      </p>
+      <p style="margin-bottom:28px;">
+        <a href="https://www.oibuz.in/register" style="display:inline-block;background:#059669;color:#ffffff;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:800;font-size:15px;">Start Free Trial on OIBUZ.in &rarr;</a>
+        &nbsp; <a href="/oibuz/setup-guide" style="color:#1a3a6b;font-weight:700;">Read Setup Guide (EN / हिंदी) &rarr;</a>
+      </p>
+      <ul style="line-height:1.8;color:#334155;font-size:15px;">
+        <li><strong>Starter (₹1,999/month):</strong> Up to 25 employees.</li>
+        <li><strong>Business (₹3,799/month):</strong> Up to 50 employees.</li>
+        <li><strong>Enterprise (₹7,999/month):</strong> Up to 100 employees plus custom 100+ multi-site deployments.</li>
+      </ul>
+    `,
   },
   {
     path: "oibuz/setup-guide",
@@ -1190,7 +1170,7 @@ const ROUTES = [
     keywords: "best construction site attendance software india, labour attendance app for civil contractors, oibuz construction hrms review, stop ghost workers site",
     canonical: "https://www.prajyotinfotech.in/articles/construction-site-attendance-software-india-guide",
     h1: "Best Construction Site Attendance & Labour Management Software in India (2026–2027)",
-    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Compare paper musters, biometric hardware, and purpose-built Indian construction HRMS systems like <a href="/products/hrms">OIBUZ</a> with zero-hardware GPS selfie attendance and 1-click payroll. <a href="https://www.oibuz.in/register">Start Free Trial &rarr;</a></p>`,
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Compare paper musters, biometric hardware, and purpose-built Indian construction HRMS systems like <a href="/oibuz">OIBUZ</a> with zero-hardware GPS selfie attendance and 1-click payroll. <a href="https://www.oibuz.in/register">Start Free Trial &rarr;</a></p>`,
   },
   {
     path: "articles/biometric-machines-vs-gps-selfie-attendance-construction",
@@ -1199,7 +1179,7 @@ const ROUTES = [
     keywords: "biometric machine vs mobile attendance construction, gps selfie attendance app construction india, contractor labour muster software",
     canonical: "https://www.prajyotinfotech.in/articles/biometric-machines-vs-gps-selfie-attendance-construction",
     h1: "Fingerprint Biometric Machines vs GPS Selfie Attendance App for Construction Sites",
-    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Technical ROI comparison showing why zero-hardware GPS selfie verification via <a href="/products/hrms">OIBUZ</a> beats fixed fingerprint hardware on active Indian construction sites.</p>`,
+    content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Technical ROI comparison showing why zero-hardware GPS selfie verification via <a href="/oibuz">OIBUZ</a> beats fixed fingerprint hardware on active Indian construction sites.</p>`,
   },
 
 ];

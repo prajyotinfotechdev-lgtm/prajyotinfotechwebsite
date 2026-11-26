@@ -250,12 +250,6 @@
 
   <!-- 9. Flagship SaaS & Knowledge Base -->
   <url>
-    <loc>https://www.prajyotinfotech.in/products/hrms</loc>
-    <lastmod>2026-11-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
-  </url>
-  <url>
     <loc>https://www.prajyotinfotech.in/careers</loc>
     <lastmod>2026-11-24</lastmod>
     <changefreq>monthly</changefreq>
@@ -511,7 +505,7 @@
     <loc>https://www.prajyotinfotech.in/oibuz</loc>
     <lastmod>2026-11-26</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
+    <priority>0.95</priority>
   </url>
   <url>
     <loc>https://www.prajyotinfotech.in/oibuz/setup-guide</loc>

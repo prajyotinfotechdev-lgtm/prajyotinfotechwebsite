@@ -149,7 +149,7 @@ export default function HrmsSpotlight() {
                 </a>
 
                 <Link
-                  to="/products/hrms"
+                  to="/oibuz"
                   className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-sm sm:text-base shadow-md hover:opacity-95 transition whitespace-nowrap"
                 >
                   <span>Explore OIBUZ</span>
@@ -159,7 +159,7 @@ export default function HrmsSpotlight() {
 
               <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600 pt-0.5">
                 <Link
-                  to="/products/hrms#demo-form"
+                  to="/oibuz#demo"
                   className="font-semibold text-purple-800 hover:text-purple-600 underline underline-offset-4"
                 >
                   Or Book a 15-min Guided Demo →

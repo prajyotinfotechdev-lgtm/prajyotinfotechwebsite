@@ -24,7 +24,7 @@ export default function HrmsFooter() {
             <p className="text-white text-xs font-bold uppercase tracking-widest mb-4">Oibuz HRMS</p>
             <div className="space-y-2.5">
               {[
-                { label: "Overview", to: "/products/hrms" },
+                { label: "Overview", to: "/oibuz" },
                 { label: "Product Story", to: "/products/hrms/story" },
                 { label: "Features & Modules", to: "/products/hrms/features" },
                 { label: "For Construction", to: "/products/hrms/for-construction" },

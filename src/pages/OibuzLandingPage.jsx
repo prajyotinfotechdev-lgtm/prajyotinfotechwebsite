@@ -11,13 +11,15 @@ import {
   UserCheck, AlertCircle, ChevronRight,
   Check, Briefcase, FileSpreadsheet,
   ClipboardList, Archive, Send, Home,
-  Globe, Layers,
+  Globe, Layers, Zap, FileCheck2,
 } from "lucide-react";
 import OibuzAudioStory from "../components/OibuzAudioStory";
 import OibuzSetupTutorial from "../components/OibuzSetupTutorial";
 import OibuzPricingSection from "../components/OibuzPricingSection";
 import OibuzSelfServeCard from "../components/OibuzSelfServeCard";
 import Seo from "../components/Seo.jsx";
+import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
+import { createLead } from "../utils/leadStorage.js";
 import { getOibuzRegisterUrl, trackOibuzTrialClick } from "../utils/oibuzLinks.js";
 import { OIBUZ_SOFTWARE_SCHEMA, OIBUZ_FAQ_SCHEMA } from "../utils/oibuzSchema.js";
 
@@ -115,6 +117,12 @@ function OibuzHeader({ onDemoClick }) {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-2.5">
+            <Link
+              to="/"
+              className="hidden xl:inline-flex items-center text-xs font-semibold text-slate-600 hover:text-[#1a3a6b] border border-slate-200 px-3 py-2.5 rounded-lg transition-colors whitespace-nowrap"
+            >
+              ← Prajyot Infotech
+            </Link>
             <button
               onClick={onDemoClick}
               id="nav-demo-btn"
@@ -1321,6 +1329,22 @@ function MultiSiteSection() {
             <motion.p variants={fadeUp} className="text-center text-xs text-slate-400 mt-5 italic">
               Centralized workforce management — not employee surveillance.
             </motion.p>
+
+            {/* Executive Information Flow Summary Tiles */}
+            <motion.div variants={fadeUp} className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mt-7">
+              {[
+                { label: "Attendance", sub: "Selfie & GPS log", I: Clock, color: "bg-white border-blue-100 text-blue-700" },
+                { label: "Approvals", sub: "Manager → HR → Finance", I: CheckCircle, color: "bg-white border-emerald-100 text-emerald-700" },
+                { label: "Workforce", sub: "All active sites", I: Users, color: "bg-white border-indigo-100 text-indigo-700" },
+                { label: "Payroll", sub: "1-click payslips", I: CreditCard, color: "bg-white border-slate-200 text-[#1a3a6b]" },
+              ].map(({ label, sub, I, color }) => (
+                <div key={label} className={`${color} border rounded-xl sm:rounded-2xl p-3 sm:p-4 flex flex-col items-center text-center shadow-2xs`}>
+                  <I className="w-5 h-5 mb-1.5" />
+                  <p className="text-xs sm:text-sm font-bold leading-tight">{label}</p>
+                  <p className="text-[10px] text-slate-500 mt-0.5 leading-tight">{sub}</p>
+                </div>
+              ))}
+            </motion.div>
           </div>
         </motion.div>
       </div>
@@ -1693,6 +1717,85 @@ function HowItWorks() {
   );
 }
 
+/* ─── A TYPICAL DAY WITH OIBUZ ───────────────────────────────────────────── */
+function TypicalDaySection() {
+  const [ref, inView] = useScrollReveal();
+  const timeline = [
+    {
+      time: "08:00 AM",
+      title: "Site workers punch in on arrival.",
+      desc: "Employees open the Oibuz mobile app at the gate. Selfie and live GPS coordinates are captured to verify physical site presence.",
+      c: "#2563eb",
+    },
+    {
+      time: "11:30 AM",
+      title: "Site expenses logged with receipt proof.",
+      desc: "Supervisors submit emergency site purchases with photo receipts directly from site, routing automatically for Manager → HR → Finance review.",
+      c: "#d97706",
+    },
+    {
+      time: "02:15 PM",
+      title: "Missed punches corrected transparently.",
+      desc: "If a worker misses a punch-out, they raise a digital correction request that goes straight to the site manager for validation — zero disputes.",
+      c: "#7c3aed",
+    },
+    {
+      time: "05:00 PM",
+      title: "Daily project labor hours logged.",
+      desc: "Teams record hours against specific construction projects and tasks so project managers track true labor distribution per site.",
+      c: "#0891b2",
+    },
+    {
+      time: "Month End",
+      title: "HR runs payroll & distributes PDF slips.",
+      desc: "Payroll pulls verified attendance, approved leaves, and base salary records together, publishing downloadable PDF salary slips to employee phones.",
+      c: "#059669",
+    },
+  ];
+
+  return (
+    <section className={`bg-white ${sxPad} border-b border-slate-100`}>
+      <div className="mx-auto w-full max-w-[820px] px-4 sm:px-6 lg:px-8">
+        <motion.div ref={ref} initial="hidden" animate={inView ? "visible" : "hidden"} variants={stagger}>
+          <motion.div variants={fadeUp} className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+            <span className="text-xs font-bold tracking-widest text-[#2563eb] uppercase block mb-3">
+              Daily Field Timeline
+            </span>
+            <h2 className="font-extrabold text-[#0f1f3d] mb-3" style={{ fontSize: "clamp(1.6rem, 3vw, 2.45rem)" }}>
+              A typical day with Oibuz.
+            </h2>
+            <p className="text-sm sm:text-base text-slate-500">
+              From the morning gate punch-in to month-end payroll slips, field operations and back-office stay connected.
+            </p>
+          </motion.div>
+
+          <div className="relative space-y-4 sm:space-y-5">
+            {timeline.map((item, idx) => (
+              <motion.div key={item.time} variants={fadeUp} className="flex gap-3.5 sm:gap-5 items-stretch">
+                <div className="flex flex-col items-center shrink-0">
+                  <div
+                    className="w-16 sm:w-20 py-2 px-1.5 rounded-xl text-white font-black text-[10px] sm:text-xs text-center shadow-sm leading-tight"
+                    style={{ backgroundColor: item.c }}
+                  >
+                    {item.time}
+                  </div>
+                  {idx < timeline.length - 1 && (
+                    <div className="w-px flex-1 bg-slate-200 my-1.5" />
+                  )}
+                </div>
+                <div className="flex-1 bg-slate-50 hover:bg-white rounded-2xl p-4 sm:p-5 border border-slate-100 hover:shadow-md transition-all">
+                  <h3 className="text-sm sm:text-base font-bold text-[#0f1f3d] mb-1">{item.title}</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── APPROVAL FLOWS ─────────────────────────────────────────────────────── */
 function SignatureWorkflow() {
   const [active, setActive] = useState("Leave");
@@ -1787,6 +1890,7 @@ function SignatureWorkflow() {
 /* ─── ROLES ──────────────────────────────────────────────────────────────── */
 function RoleSection() {
   const [active, setActive] = useState("Employee");
+  const [showMatrix, setShowMatrix] = useState(false);
   const [ref, inView] = useScrollReveal();
   const roles = {
     Employee: { I: Smartphone, c: "#2563eb", tag: "Your daily work, in one place.", caps: ["Punch in and out with selfie and location", "Submit leave requests and track balances", "Log daily project timesheets", "Submit expense receipts for reimbursement", "Download monthly salary slips"] },
@@ -1795,6 +1899,24 @@ function RoleSection() {
     Finance: { I: CreditCard, c: "#d97706", tag: "Financial control for reimbursements.", caps: ["Review manager-approved expense claims", "Verify receipt amounts and documentation", "Issue final approval for reimbursement", "Track outstanding expense obligations"] },
     Admin: { I: Shield, c: "#1a3a6b", tag: "Organization-wide visibility and control.", caps: ["View all data across the organization", "Configure system-wide policies", "Review full audit logs", "Manage workflow and escalation rules", "Override approvals when required"] },
   };
+  const matrixRows = [
+    { cap: "Punch In / Out (Selfie & Location)", emp: true, mgr: true, hr: true, fin: true, adm: true },
+    { cap: "Submit Leaves / Expenses / Timesheets", emp: true, mgr: true, hr: true, fin: true, adm: true },
+    { cap: "Download Own Monthly Salary Slip", emp: true, mgr: true, hr: true, fin: true, adm: true },
+    { cap: "View Team Attendance & Leave Records", emp: false, mgr: "Direct Team", hr: "All Staff", fin: false, adm: "All Staff" },
+    { cap: "Approve Leave & Timesheet Requests", emp: false, mgr: "Level 1", hr: "Level 2", fin: false, adm: "Override" },
+    { cap: "Manage Employee Profiles & Policies", emp: false, mgr: false, hr: true, fin: false, adm: true },
+    { cap: "Final Clearance on Expense Payouts", emp: false, mgr: false, hr: false, fin: true, adm: true },
+    { cap: "Run & Publish Monthly Payroll", emp: false, mgr: false, hr: true, fin: false, adm: true },
+    { cap: "Inspect Full System Audit Logs", emp: false, mgr: false, hr: false, fin: false, adm: true },
+  ];
+
+  const renderCell = (val) => {
+    if (val === true) return <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs">✓</span>;
+    if (val === false) return <span className="text-slate-300 font-bold">—</span>;
+    return <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-[#1a3a6b] whitespace-nowrap">{val}</span>;
+  };
+
   return (
     <section className={`bg-slate-50 ${sxPad}`} id="roles">
       <div className={container}>
@@ -1858,6 +1980,57 @@ function RoleSection() {
                 </ul>
               </div>
             </motion.div>
+          </AnimatePresence>
+
+          {/* Collapsible 5-Role Permission Matrix */}
+          <div className="mt-7 text-center">
+            <button
+              type="button"
+              onClick={() => setShowMatrix(s => !s)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-xs sm:text-sm font-bold text-[#1a3a6b] shadow-2xs transition-colors cursor-pointer min-h-[44px]"
+            >
+              <span>{showMatrix ? "Hide 5-Role Permissions Matrix" : "Compare All 5 Roles & Permissions Matrix"}</span>
+              <ChevronDown className={`w-4 h-4 transition-transform ${showMatrix ? "rotate-180" : ""}`} />
+            </button>
+          </div>
+
+          <AnimatePresence>
+            {showMatrix && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.25 }}
+                className="overflow-hidden"
+              >
+                <div className="max-w-4xl mx-auto mt-5 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
+                  <table className="w-full text-xs sm:text-sm min-w-[560px]">
+                    <thead className="bg-[#0f1f3d] text-white">
+                      <tr>
+                        <th className="text-left px-4 py-3 font-bold">Platform Capability</th>
+                        <th className="text-center px-3 py-3 font-bold">Employee</th>
+                        <th className="text-center px-3 py-3 font-bold">Manager</th>
+                        <th className="text-center px-3 py-3 font-bold">HR</th>
+                        <th className="text-center px-3 py-3 font-bold">Finance</th>
+                        <th className="text-center px-3 py-3 font-bold">Admin</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {matrixRows.map((row) => (
+                        <tr key={row.cap} className="hover:bg-slate-50/80">
+                          <td className="px-4 py-3 font-semibold text-slate-700">{row.cap}</td>
+                          <td className="px-3 py-3 text-center">{renderCell(row.emp)}</td>
+                          <td className="px-3 py-3 text-center">{renderCell(row.mgr)}</td>
+                          <td className="px-3 py-3 text-center">{renderCell(row.hr)}</td>
+                          <td className="px-3 py-3 text-center">{renderCell(row.fin)}</td>
+                          <td className="px-3 py-3 text-center">{renderCell(row.adm)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </motion.div>
+            )}
           </AnimatePresence>
         </motion.div>
       </div>
@@ -2044,6 +2217,13 @@ function WhyOibuz() {
     { I: Workflow, c: "#7c3aed", t: "Structured workflows — no gaps.", d: "Every request follows a defined path through the organization. Accountability is built in at each stage. Nothing is approved without proper oversight." },
     { I: Globe, c: "#059669", t: "One view across your entire workforce.", d: "Replace disconnected processes with a single source of truth. Business leaders see workforce status, pending approvals and summaries in one place." },
   ];
+  const outcomes = [
+    { I: Shield, title: "Accountability", desc: "Structured workflows and audit history keep critical actions traceable." },
+    { I: FileCheck2, title: "Less Paperwork", desc: "Digitize attendance registers, leave requests, claims, and timesheets." },
+    { I: Zap, title: "Faster Admin", desc: "Consolidate workforce records instead of reconciling scattered files." },
+    { I: Lock, title: "Clear Ownership", desc: "Defined roles govern who reviews and approves each step." },
+    { I: Eye, title: "Full Visibility", desc: "Management sees live site operations through one connected view." },
+  ];
   return (
     <section className={`${sxPad}`} style={{ background: "linear-gradient(135deg, #f0f5ff 0%, #e8f0fe 100%)" }}>
       <div className={container}>
@@ -2054,7 +2234,7 @@ function WhyOibuz() {
               Designed for construction. Not adapted from generic software.
             </h2>
           </motion.div>
-          <motion.div variants={stagger} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+          <motion.div variants={stagger} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-6 sm:mb-8">
             {bens.map(({ I, c, t, d }) => (
               <motion.div key={t} variants={fadeUp} className="bg-white rounded-2xl p-6 sm:p-7 border-t-4 border border-slate-100 hover:shadow-lg transition-all hover:-translate-y-0.5" style={{ borderTopColor: c }}>
                 <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center mb-5" style={{ backgroundColor: `${c}12` }}>
@@ -2062,6 +2242,19 @@ function WhyOibuz() {
                 </div>
                 <h3 className="text-sm sm:text-base font-bold text-slate-800 mb-3">{t}</h3>
                 <p className="text-sm text-slate-500 leading-relaxed">{d}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* 5 Operational Outcomes Strip */}
+          <motion.div variants={stagger} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+            {outcomes.map(({ I, title, desc }) => (
+              <motion.div key={title} variants={fadeUp} className="bg-white/95 rounded-2xl p-4 sm:p-5 border border-blue-100/80 text-center shadow-2xs">
+                <div className="w-10 h-10 rounded-xl bg-[#1a3a6b] flex items-center justify-center mx-auto mb-3">
+                  <I className="w-4.5 h-4.5 text-white" />
+                </div>
+                <h3 className="text-xs sm:text-sm font-bold text-[#0f1f3d] mb-1">{title}</h3>
+                <p className="text-[11px] sm:text-xs text-slate-500 leading-relaxed">{desc}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -2112,14 +2305,15 @@ function FAQ() {
   const [ref, inView] = useScrollReveal();
   const faqs = [
     { q: "What is Oibuz?", a: "Oibuz is a cloud-based workforce and business management platform for construction companies, contractors and project-based businesses. It handles attendance, leave, timesheets, expenses, payroll and role-based approvals in a single connected system." },
-    { q: "Who is Oibuz designed for?", a: "Oibuz is built for construction companies, contractors, multi-site teams and project-based businesses that need to manage a distributed workforce across active sites and back-office operations." },
+    { q: "How do I start a free trial without waiting for sales calls?", a: "Visit oibuz.in/register, enter your organization name and admin details, verify your email within 24 hours, and your 14-day free trial begins automatically. No credit card required." },
+    { q: "Does Oibuz require fingerprint biometric machines on site?", a: "No. Fingerprint hardware often fails due to cement dust and rough hands. Employees punch in with the mobile app capturing a selfie photo and GPS location at the exact moment of punch." },
+    { q: "What pricing plans does Oibuz offer?", a: "Starter is ₹1,999/month (up to 25 employees), Business is ₹3,799/month (up to 50 employees), Enterprise is ₹7,999/month (up to 100 employees), with custom deployments for 100+ workers." },
     { q: "How does attendance verification work?", a: "Employees punch in and out using the Oibuz mobile app. Each punch captures a selfie photo and the device's current location at that exact moment. An attendance correction workflow allows employees to request a fix for missed punch-outs, which a manager can review and approve." },
     { q: "Can employees submit leave and expense requests?", a: "Yes. Employees can view their leave balances and submit requests directly from the platform. For expenses, they upload a photo of the receipt and submit a claim. Both flow through a structured multi-level approval process." },
     { q: "Does Oibuz support project timesheets?", a: "Yes. Employees log their daily hours against specific projects and tasks. Managers can review these logs to understand labor distribution across different sites. Timesheets require manager approval before they are locked." },
     { q: "How does the payroll workflow work?", a: "At month end, HR initiates a payroll run. Oibuz aggregates each employee's base salary, attendance records and approved leave data to calculate the payable amount. HR reviews and finalizes the run before publishing." },
     { q: "How do employees receive salary slips?", a: "Once HR finalizes and publishes the payroll run, Oibuz automatically generates PDF salary slips. Employees can securely download their own slip from their dashboard — no email or manual distribution required." },
-    { q: "What roles are supported?", a: "Oibuz supports five roles: Employee, Manager, HR, Finance and Admin. Each role has a clearly defined set of permissions and visibility appropriate to their responsibilities." },
-    { q: "How does role-based access work?", a: "Each role is scoped strictly. An employee sees only their own records. A manager sees data for their direct reports only. HR has workforce-wide visibility. Finance manages reimbursement approvals. Admin has full organizational access and audit logs." },
+    { q: "What roles and access rules are supported?", a: "Oibuz supports five roles: Employee, Manager, HR, Finance and Admin. Each role is scoped strictly—employees see their own records, managers see direct reports, HR handles workforce and payroll, Finance clears reimbursements, and Admin views full audit logs." },
     { q: "Can Oibuz support distributed construction teams?", a: "Yes — this is Oibuz's core design purpose. Field workers across multiple sites submit data via mobile. Site managers review their team. HR and Finance at headquarters handle back-office workflows. Business owners see consolidated visibility across all sites." },
   ];
   return (
@@ -2242,20 +2436,60 @@ function FinalCTA({ onDemoClick }) {
 function DemoForm() {
   const [ref, inView] = useScrollReveal();
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({ name: "", company: "", phone: "", employees: "", sites: "", message: "" });
   const hc = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
-  const hs = e => { e.preventDefault(); setSubmitted(true); };
+  const hs = async (e) => {
+    e.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
+    try {
+      await createLead({
+        name: form.name,
+        phone: form.phone,
+        company: form.company,
+        service: "Oibuz Construction Platform",
+        requirements: `Employees: ${form.employees || "N/A"}, Sites: ${form.sites || "N/A"}${form.message ? `, Notes: ${form.message}` : ""}`,
+        page: "OIBUZ Unified Page (/oibuz)",
+      });
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Oibuz demo lead submission error:", err);
+      const msg = encodeURIComponent(
+        `Hi Prajyot Infotech, I want a live demo of Oibuz for ${form.company} (${form.employees} employees, ${form.sites} sites). Name: ${form.name}, Phone: ${form.phone}. ${form.message}`
+      );
+      window.open(`https://wa.me/917020708747?text=${msg}`, "_blank");
+      setSubmitted(true);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const inputCls = "w-full border border-slate-200 rounded-xl px-4 py-3 text-base sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2563eb]/25 focus:border-[#2563eb] transition-all min-h-[48px] bg-white";
 
   return (
     <section className={`bg-slate-50 ${sxPad}`} id="demo">
-      <div className="mx-auto w-full max-w-[640px] px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-[680px] px-4 sm:px-6 lg:px-8">
         <motion.div ref={ref} initial="hidden" animate={inView ? "visible" : "hidden"} variants={stagger}>
-          <motion.div variants={fadeUp} className="text-center mb-8 sm:mb-10">
+          <motion.div variants={fadeUp} className="text-center mb-7 sm:mb-9">
             <span className="text-xs font-bold tracking-widest text-[#2563eb] uppercase block mb-3">Get Started</span>
             <h2 className="font-extrabold text-[#0f1f3d] mb-3" style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)" }}>Request a Demo or Self-Setup Free Trial</h2>
             <p className="text-sm sm:text-base text-slate-500">Create your workspace yourself right now or tell us about your workforce for a guided walkthrough.</p>
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-6">
+            {[
+              { I: Users, text: "Fit Oibuz to your workforce structure" },
+              { I: Building2, text: "Configure multi-site approval workflows" },
+              { I: CheckCircle, text: "Get direct answers from engineers" },
+            ].map(({ I, text }) => (
+              <div key={text} className="bg-white rounded-xl p-3 border border-slate-200/80 flex items-center gap-2.5 shadow-2xs">
+                <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+                  <I className="w-3.5 h-3.5 text-blue-700" />
+                </div>
+                <span className="text-xs font-medium text-slate-600 leading-snug">{text}</span>
+              </div>
+            ))}
           </motion.div>
 
           <div className="mb-7">
@@ -2313,9 +2547,10 @@ function DemoForm() {
               <button
                 type="submit"
                 id="demo-submit-btn"
-                className="w-full flex items-center justify-center gap-2 bg-[#1a3a6b] hover:bg-[#15305a] text-white font-bold py-3.5 rounded-xl transition-all hover:shadow-lg min-h-[52px]"
+                disabled={submitting}
+                className="w-full flex items-center justify-center gap-2 bg-[#1a3a6b] hover:bg-[#15305a] disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition-all hover:shadow-lg min-h-[52px] cursor-pointer"
               >
-                Request a Demo <ArrowRight className="w-4 h-4 flex-shrink-0" />
+                {submitting ? "Submitting Request..." : <><span>Request a Demo</span> <ArrowRight className="w-4 h-4 flex-shrink-0" /></>}
               </button>
             </motion.form>
           )}
@@ -2339,7 +2574,7 @@ function OibuzFooter() {
     Company: [
       { label: "Prajyot Infotech", to: "/" },
       { label: "About", to: "/about" },
-      { label: "HRMS Docs", to: "/products/hrms" },
+      { label: "HRMS Docs", to: "/products/hrms/resources" },
       { label: "WhatsApp Support", external: "https://wa.me/917020708747" },
     ],
     Legal: [
@@ -2412,8 +2647,9 @@ export default function OibuzLandingPage() {
 
   useEffect(() => {
     if (hash) {
+      const normalized = hash === "#demo-form" ? "#demo" : hash;
       const timer = setTimeout(() => {
-        document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+        document.querySelector(normalized)?.scrollIntoView({ behavior: "smooth" });
       }, 150);
       return () => clearTimeout(timer);
     }
@@ -2429,6 +2665,13 @@ export default function OibuzLandingPage() {
         image="/og/og-oibuz.jpg"
         schema={[OIBUZ_SOFTWARE_SCHEMA, OIBUZ_FAQ_SCHEMA]}
       />
+      <BreadcrumbsLd
+        items={[
+          { name: "Home", item: "/" },
+          { name: "Products", item: "/services" },
+          { name: "OIBUZ Construction Platform", item: "/oibuz" },
+        ]}
+      />
       <OibuzHeader onDemoClick={scrollToDemo} />
       <HeroSection onDemoClick={scrollToDemo} />
       <AudienceStrip />
@@ -2438,6 +2681,7 @@ export default function OibuzLandingPage() {
       <MultiSiteSection />
       <ProductShowcase onDemoClick={scrollToDemo} />
       <HowItWorks />
+      <TypicalDaySection />
       <SignatureWorkflow />
       <RoleSection />
       <FeatureSpotlights />

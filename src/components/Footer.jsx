@@ -229,7 +229,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3 text-slate-400 text-xs">
               <li>
-                <Link to="/products/hrms" className="hover:text-amber-300 transition-colors flex items-center gap-1.5 font-semibold text-amber-400/90">
+                <Link to="/oibuz" className="hover:text-amber-300 transition-colors flex items-center gap-1.5 font-semibold text-amber-400/90">
                   <Trophy className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                   <span>Oibuz HRMS (Flagship)</span>
                 </Link>

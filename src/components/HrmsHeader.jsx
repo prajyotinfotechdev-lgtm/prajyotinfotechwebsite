@@ -10,7 +10,7 @@ export default function HrmsHeader() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const navItems = [
-    { label: "Overview", to: "/products/hrms" },
+    { label: "Overview", to: "/oibuz" },
     { label: "Product Story", to: "/products/hrms/story" },
     { label: "Features", to: "/products/hrms/features" },
     { label: "For Construction", to: "/products/hrms/for-construction" },
@@ -22,7 +22,7 @@ export default function HrmsHeader() {
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm">
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl flex items-center justify-between h-16">
         {/* Logo */}
-        <Link to="/products/hrms" className="flex items-center gap-2 shrink-0">
+        <Link to="/oibuz" className="flex items-center gap-2 shrink-0">
           <img src="/images/oibuz_logo.png" alt="Oibuz" className="h-8 max-h-8 w-auto object-contain" />
         </Link>
 
@@ -32,7 +32,7 @@ export default function HrmsHeader() {
             <NavLink
               key={item.label}
               to={item.to}
-              end={item.to === "/products/hrms"}
+              end={item.to === "/oibuz"}
               className={({ isActive }) =>
                 `px-3.5 py-2 text-sm font-medium rounded-lg transition-all ${
                   isActive
@@ -105,7 +105,7 @@ export default function HrmsHeader() {
                 <NavLink
                   key={item.label}
                   to={item.to}
-                  end={item.to === "/products/hrms"}
+                  end={item.to === "/oibuz"}
                   onClick={() => setMobileNavOpen(false)}
                   className={({ isActive }) =>
                     `px-3 py-2.5 text-sm font-semibold rounded-lg ${

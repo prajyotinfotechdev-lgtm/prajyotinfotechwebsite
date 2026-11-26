@@ -3,10 +3,10 @@
 export const OIBUZ_SOFTWARE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": ["SoftwareApplication", "WebApplication"],
-  "@id": "https://www.prajyotinfotech.in/products/hrms#software",
+  "@id": "https://www.prajyotinfotech.in/oibuz#software",
   name: "OIBUZ Construction HRMS & Workforce Management Platform",
   alternateName: ["OIBUZ", "Oibuz HRMS", "OIBUZ Construction Attendance App"],
-  url: "https://www.prajyotinfotech.in/products/hrms",
+  url: "https://www.prajyotinfotech.in/oibuz",
   sameAs: ["https://www.oibuz.in", "https://www.oibuz.in/register"],
   applicationCategory: "BusinessApplication",
   applicationSubCategory: "Construction Workforce Management & HRMS",

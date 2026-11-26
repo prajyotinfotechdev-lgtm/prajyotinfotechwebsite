@@ -1,6 +1,8 @@
 // Route chunk prefetcher for zero-latency perceived navigation on hover/focus
 
 const PREFETCH_MAP = {
+  "/oibuz": () => import("../pages/OibuzLandingPage.jsx"),
+  "/oibuz/setup-guide": () => import("../pages/OibuzSetupGuidePage.jsx"),
   "/tools": () => import("../pages/ToolsHub.jsx"),
   "/tools/gst-invoice-generator": () => import("../pages/GstInvoiceGenerator.jsx"),
   "/tools/quotation-generator": () => import("../pages/QuotationGenerator.jsx"),

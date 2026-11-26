@@ -9,6 +9,11 @@
   ],
   "redirects": [
     {
+      "source": "/products/hrms",
+      "destination": "/oibuz",
+      "permanent": true
+    },
+    {
       "source": "/diwali-offers-2026",
       "destination": "/free-business-tech-audit",
       "permanent": true

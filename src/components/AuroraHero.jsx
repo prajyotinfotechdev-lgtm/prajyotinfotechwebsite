@@ -485,7 +485,7 @@ export default function AuroraHero() {
 
             <div className="hero-fade-in" style={{ animationDelay: "0.08s" }}>
               <Link
-                to="/products/hrms"
+                to="/oibuz"
                 className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs text-amber-700 font-medium hover:text-amber-900 transition-colors group"
               >
                 <Trophy className="w-3.5 h-3.5 text-amber-600 shrink-0" />

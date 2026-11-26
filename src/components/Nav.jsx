@@ -17,7 +17,7 @@ const navConfig = [
     label: "Products",
     mega: true,
     dropdown: [
-      { to: "/products/hrms", label: "Oibuz HRMS", badge: "Flagship", desc: "Connected workforce & HR platform." },
+      { to: "/oibuz", label: "Oibuz HRMS", badge: "Flagship", desc: "Connected workforce & HR platform." },
       { to: "/tools/gst-invoice-generator", label: "GST Invoice Generator", badge: "Popular", desc: "Create, print & download A4 GST invoices free." },
       { to: "/tools/quotation-generator", label: "Quotation & Estimate Maker", badge: "Free", desc: "Generate branded quotes & share on WhatsApp." },
       { to: "/tools/whatsapp-link-generator", label: "WhatsApp Link & QR Maker", badge: "Free", desc: "Build wa.me links, counter QRs & widgets free." },

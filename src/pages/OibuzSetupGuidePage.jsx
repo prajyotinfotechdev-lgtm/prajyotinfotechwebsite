@@ -308,7 +308,7 @@ const GUIDE_CONTENT = {
     exploreLinks: [
       { label: "OIBUZ Product Overview", to: "/oibuz" },
       { label: "Pricing & Plans", to: "/oibuz#pricing" },
-      { label: "5-Role Permissions Matrix", to: "/products/hrms" },
+      { label: "5-Role Permissions Matrix", to: "/oibuz#roles" },
       { label: "WhatsApp Support (+91 70207 08747)", href: "https://wa.me/917020708747" },
     ],
   },
@@ -563,7 +563,7 @@ const GUIDE_CONTENT = {
     exploreLinks: [
       { label: "OIBUZ प्रोडक्ट ओवरव्यू", to: "/oibuz" },
       { label: "प्राइसिंग और प्लान्स", to: "/oibuz#pricing" },
-      { label: "5-रोल फीचर्स मैट्रिक्स", to: "/products/hrms" },
+      { label: "5-रोल फीचर्स मैट्रिक्स", to: "/oibuz#roles" },
       { label: "WhatsApp सहायता (+91 70207 08747)", href: "https://wa.me/917020708747" },
     ],
   },
@@ -1277,7 +1277,7 @@ export default function OibuzSetupGuidePage() {
               <Link to="/oibuz#pricing" className="hover:text-white transition-colors">
                 Pricing
               </Link>
-              <Link to="/products/hrms" className="hover:text-white transition-colors">
+              <Link to="/products/hrms/resources" className="hover:text-white transition-colors">
                 HRMS Docs
               </Link>
               <a

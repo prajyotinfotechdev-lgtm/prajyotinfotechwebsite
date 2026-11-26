@@ -61,7 +61,6 @@ const FAQ = lazy(() => import("./pages/FAQ.jsx"));
 const TechGlossary = lazy(() => import("./pages/TechGlossary.jsx"));
 const Careers = lazy(() => import("./pages/Careers.jsx"));
 const CareerManager = lazy(() => import("./pages/CareerManager.jsx"));
-const ConstructionHrmsPage = lazy(() => import("./pages/ConstructionHrmsPage.jsx"));
 const HrmsStoryPage = lazy(() => import("./pages/hrms/HrmsStoryPage.jsx"));
 const HrmsFeaturesPage = lazy(() => import("./pages/hrms/HrmsFeaturesPage.jsx"));
 const HrmsConstructionPage = lazy(() => import("./pages/hrms/HrmsConstructionPage.jsx"));
@@ -147,8 +146,8 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/estimate" element={<Estimate />} />
 
-            {/* Oibuz HRMS (Untouched) */}
-            <Route path="/products/hrms" element={<ConstructionHrmsPage />} />
+            {/* Oibuz HRMS — Unified onto /oibuz */}
+            <Route path="/products/hrms" element={<Navigate to="/oibuz" replace />} />
             <Route path="/products/hrms/story" element={<HrmsStoryPage />} />
             <Route path="/products/hrms/features" element={<HrmsFeaturesPage />} />
             <Route path="/products/hrms/for-construction" element={<HrmsConstructionPage />} />

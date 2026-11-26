@@ -70,7 +70,7 @@ const reviews = [
     industry: "Construction & Infrastructure",
     rating: 5,
     project: "OIBUZ Construction HRMS & Attendance System",
-    projectUrl: "/products/hrms",
+    projectUrl: "/oibuz",
     review:
       "We used to lose ₹1.5 lakh every month to fake attendances and incorrect labour payments. After installing Prajyot Infotech's OIBUZ system with geofenced selfie attendance, that dropped to nearly zero. The reports come automatically to my phone every evening. Best ROI I've ever seen on any software — paid for itself in 3 weeks.",
     results: ["₹1.5L/month leakage stopped", "Real-time attendance", "Automatic salary reports"],
