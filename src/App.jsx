@@ -69,6 +69,7 @@ const HrmsPricingPage = lazy(() => import("./pages/hrms/HrmsPricingPage.jsx"));
 const HrmsResourcesPage = lazy(() => import("./pages/hrms/HrmsResourcesPage.jsx"));
 const SiteVisitsPage = lazy(() => import("./pages/SiteVisitsPage.jsx"));
 const OibuzLandingPage = lazy(() => import("./pages/OibuzLandingPage.jsx"));
+const OibuzSetupGuidePage = lazy(() => import("./pages/OibuzSetupGuidePage.jsx"));
 const FreeBusinessAudit = lazy(() => import("./pages/FreeBusinessAudit.jsx"));
 const ThankYou = lazy(() => import("./pages/ThankYou.jsx"));
 
@@ -122,7 +123,10 @@ export default function App() {
   }, []);
 
   const location = useLocation();
-  const hideGlobalNav = location.pathname.startsWith("/products/hrms") || location.pathname === "/oibuz";
+  const hideGlobalNav =
+    location.pathname.startsWith("/products/hrms") ||
+    location.pathname === "/oibuz" ||
+    location.pathname.startsWith("/oibuz/");
 
   return (
     <LeadModalProvider>
@@ -152,6 +156,7 @@ export default function App() {
             <Route path="/products/hrms/resources" element={<HrmsResourcesPage />} />
             <Route path="/site-visits" element={<SiteVisitsPage />} />
             <Route path="/oibuz" element={<OibuzLandingPage />} />
+            <Route path="/oibuz/setup-guide" element={<OibuzSetupGuidePage />} />
 
             {/* Campaign & Locations */}
             <Route path="/free-business-tech-audit" element={<FreeBusinessAudit />} />

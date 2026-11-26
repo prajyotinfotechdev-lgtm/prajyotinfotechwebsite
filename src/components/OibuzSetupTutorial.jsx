@@ -3,6 +3,7 @@
 // v2 — Enhanced UX: cinematic caption bar, animated scenes, step progress, confetti ring, typing effect
 // Master Clock: audio.currentTime (Zero-drift requestAnimationFrame + bidirectional pointer scrubbing)
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import {
   Play,
@@ -308,10 +309,29 @@ function ProgressRing({ pct, size = 36, strokeWidth = 3, color = "#2563eb" }) {
 /* ═════════════════════════════════════════════════════════════════════════════
    MAIN INTERACTIVE TUTORIAL COMPONENT
 ═════════════════════════════════════════════════════════════════════════════ */
-export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" }) {
+export default function OibuzSetupTutorial({
+  onDemoClick,
+  id = "setup-tutorial",
+  language: controlledLanguage,
+  onLanguageChange,
+  externalJumpRequest,
+  guidePageUrl,
+  compactHeader = false,
+}) {
   const prefersReducedMotion = useReducedMotion();
 
-  const [language, setLanguage] = useState("en");
+  const [internalLanguage, setInternalLanguage] = useState("en");
+  const language = controlledLanguage ?? internalLanguage;
+  const setLanguageState = useCallback(
+    (nextLang) => {
+      if (controlledLanguage === undefined) {
+        setInternalLanguage(nextLang);
+      }
+      onLanguageChange?.(nextLang);
+    },
+    [controlledLanguage, onLanguageChange]
+  );
+
   const langData = TUTORIAL_LANGUAGES[language] || TUTORIAL_LANGUAGES.en;
   const scenes = langData.scenes;
   const ui = langData.ui;
@@ -335,6 +355,8 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
   const wasPlayingRef = useRef(false);
   const lastAudioSeekTimeRef = useRef(0);
   const pendingSwitchRef = useRef(null);
+  const prevLangRef = useRef(language);
+  const handledExternLangChangeRef = useRef(false);
 
   const trackRef = useRef(null);
   const audioRef = useRef(null);
@@ -487,14 +509,65 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
         rate: playbackRate,
       };
 
-      setLanguage(nextLang);
+      handledExternLangChangeRef.current = true;
+      setLanguageState(nextLang);
       setDuration(nextData.duration);
       setActiveSceneIndex(targetIdx);
       setCurrentTime(targetTime);
       setAudioError(null);
     },
-    [language, scenes, activeSceneIndex, hasStarted, isPlaying, isMuted, playbackRate, stopRafLoop]
+    [language, scenes, activeSceneIndex, hasStarted, isPlaying, isMuted, playbackRate, stopRafLoop, setLanguageState]
   );
+
+  // Sync if controlledLanguage prop is changed externally from a parent page
+  useEffect(() => {
+    if (prevLangRef.current === language) return;
+    const prevLang = prevLangRef.current;
+    prevLangRef.current = language;
+
+    if (handledExternLangChangeRef.current) {
+      handledExternLangChangeRef.current = false;
+      return;
+    }
+
+    const prevScenes = TUTORIAL_LANGUAGES[prevLang]?.scenes || scenes;
+    const currentScene = prevScenes[activeSceneIndex] || prevScenes[0];
+    const nextData = TUTORIAL_LANGUAGES[language] || TUTORIAL_LANGUAGES.en;
+    const targetIdx = hasStarted
+      ? resolveCrossLanguageSceneIndex(currentScene?.visualKey, language)
+      : 0;
+    const targetScene = nextData.scenes[targetIdx] || nextData.scenes[0];
+    const targetTime = hasStarted ? targetScene.start + 0.05 : 0;
+
+    const wasPlaying = isPlaying;
+    if (audioRef.current && !audioRef.current.paused) {
+      audioRef.current.pause();
+    }
+    stopRafLoop();
+    setIsPlaying(false);
+
+    pendingSwitchRef.current = {
+      time: targetTime,
+      autoPlay: wasPlaying,
+      muted: isMuted,
+      rate: playbackRate,
+    };
+    setDuration(nextData.duration);
+    setActiveSceneIndex(targetIdx);
+    setCurrentTime(targetTime);
+    setAudioError(null);
+  }, [language, scenes, activeSceneIndex, hasStarted, isPlaying, isMuted, playbackRate, stopRafLoop]);
+
+  // Allow parent Setup Guide page step cards to jump directly to a scene
+  useEffect(() => {
+    if (!externalJumpRequest?.visualKey) return;
+    const idx = resolveCrossLanguageSceneIndex(externalJumpRequest.visualKey, language);
+    if (idx !== -1) {
+      jumpToScene(idx);
+      stageShellRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [externalJumpRequest?.seq]);
 
   // Sync audio metadata, speed, mute, and pending language-switch seeks
   useEffect(() => {
@@ -701,54 +774,71 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
     <section
       id={id}
       aria-label="OIBUZ Account Setup Interactive Video Tutorial"
-      className="relative py-14 sm:py-20 lg:py-24 bg-gradient-to-b from-white via-[#f3f7ff] to-white border-y border-slate-200/80 overflow-hidden scroll-mt-20"
+      className={`relative ${
+        compactHeader ? "py-6 sm:py-10 bg-transparent" : "py-14 sm:py-20 lg:py-24 bg-gradient-to-b from-white via-[#f3f7ff] to-white border-y border-slate-200/80"
+      } overflow-hidden scroll-mt-20`}
     >
       {/* Ambient Background Glows */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-28 left-1/3 -translate-x-1/2 w-[640px] h-[300px] bg-blue-500/8 blur-[120px] rounded-full"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 right-1/4 w-[480px] h-[280px] bg-emerald-500/8 blur-[110px] rounded-full"
-      />
+      {!compactHeader && (
+        <>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-28 left-1/3 -translate-x-1/2 w-[640px] h-[300px] bg-blue-500/8 blur-[120px] rounded-full"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-0 right-1/4 w-[480px] h-[280px] bg-emerald-500/8 blur-[110px] rounded-full"
+          />
+        </>
+      )}
 
       {/* Master Audio Clock */}
       <audio ref={audioRef} src={langData.audioUrl} preload="metadata" playsInline />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* ── Section Top Header ── */}
-        <div className="text-center max-w-3xl mx-auto mb-7 sm:mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-blue-800 text-[11px] sm:text-xs font-bold tracking-wider uppercase mb-3 shadow-2xs">
-            <Languages className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-            <span>{ui.eyebrow}</span>
+        {!compactHeader && (
+          <div className="text-center max-w-3xl mx-auto mb-7 sm:mb-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 text-blue-800 text-[11px] sm:text-xs font-bold tracking-wider uppercase mb-3 shadow-2xs">
+              <Languages className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+              <span>{ui.eyebrow}</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-[#0f1f3d] tracking-tight leading-tight">
+              {ui.sectionTitlePrefix}{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-blue-600 to-emerald-600">
+                {ui.sectionTitleAccent}
+              </span>
+            </h2>
+
+            <p className="mt-2.5 sm:mt-3 text-xs sm:text-base text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
+              {ui.sectionSubtitle}
+            </p>
+
+            {/* Trust badges */}
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+              {[
+                { icon: Zap, label: "Under 2 Minutes", color: "#f59e0b" },
+                { icon: Star, label: "No Credit Card", color: "#10b981" },
+                { icon: BadgeCheck, label: "Hindi & English", color: "#2563eb" },
+              ].map((b) => (
+                <div key={b.label} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200 text-[11px] font-semibold text-slate-700 shadow-xs">
+                  <b.icon className="w-3 h-3" style={{ color: b.color }} />
+                  <span>{b.label}</span>
+                </div>
+              ))}
+              {guidePageUrl && (
+                <Link
+                  to={guidePageUrl}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#1a3a6b] hover:bg-blue-700 text-white text-[11px] font-bold shadow-xs transition-colors"
+                >
+                  <span>{language === "hi" ? "पूरा लिखित सेटअप गाइड पेज खोलें" : "Open Full Written Setup Guide Page"}</span>
+                  <ArrowUpRight className="w-3 h-3" />
+                </Link>
+              )}
+            </div>
           </div>
-
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-[#0f1f3d] tracking-tight leading-tight">
-            {ui.sectionTitlePrefix}{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-blue-600 to-emerald-600">
-              {ui.sectionTitleAccent}
-            </span>
-          </h2>
-
-          <p className="mt-2.5 sm:mt-3 text-xs sm:text-base text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
-            {ui.sectionSubtitle}
-          </p>
-
-          {/* Trust badges */}
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-            {[
-              { icon: Zap, label: "Under 2 Minutes", color: "#f59e0b" },
-              { icon: Star, label: "No Credit Card", color: "#10b981" },
-              { icon: BadgeCheck, label: "Hindi & English", color: "#2563eb" },
-            ].map((b) => (
-              <div key={b.label} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200 text-[11px] font-semibold text-slate-700 shadow-xs">
-                <b.icon className="w-3 h-3" style={{ color: b.color }} />
-                <span>{b.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        )}
 
         {/* ═══ MAIN TUTORIAL THEATRE CARD ═══ */}
         <div

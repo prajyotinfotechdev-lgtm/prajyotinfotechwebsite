@@ -1,6 +1,7 @@
 // src/pages/OibuzLandingPage.jsx
 // OIBUZ — Production Responsive Polish (v3)
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useInView, useReducedMotion } from "framer-motion";
 import {
   Users, MapPin, Clock, Calendar, FileText, CreditCard,
@@ -60,7 +61,7 @@ function OibuzHeader({ onDemoClick }) {
     { label: "For Construction", href: "#construction" },
     { label: "How It Works", href: "#how-it-works" },
     { label: "Pricing", href: "#pricing" },
-    { label: "Setup Guide", href: "#setup-tutorial" },
+    { label: "Setup Guide", to: "/oibuz/setup-guide" },
     { label: "FAQ", href: "#faq" },
   ];
 
@@ -84,22 +85,32 @@ function OibuzHeader({ onDemoClick }) {
 
           {/* Desktop nav — only at lg+ */}
           <nav className="hidden lg:flex items-center gap-5 xl:gap-7" aria-label="Main navigation">
-            {navLinks.map(l => (
-              <a
-                key={l.label}
-                href={l.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  const target = document.querySelector(l.href);
-                  if (target) {
-                    target.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-                className="text-sm font-medium text-slate-600 hover:text-[#1a3a6b] transition-colors whitespace-nowrap cursor-pointer"
-              >
-                {l.label}
-              </a>
-            ))}
+            {navLinks.map(l =>
+              l.to ? (
+                <Link
+                  key={l.label}
+                  to={l.to}
+                  className="text-sm font-semibold text-[#2563eb] hover:text-[#1a3a6b] transition-colors whitespace-nowrap cursor-pointer"
+                >
+                  {l.label}
+                </Link>
+              ) : (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const target = document.querySelector(l.href);
+                    if (target) {
+                      target.scrollIntoView({ behavior: "smooth" });
+                    }
+                  }}
+                  className="text-sm font-medium text-slate-600 hover:text-[#1a3a6b] transition-colors whitespace-nowrap cursor-pointer"
+                >
+                  {l.label}
+                </a>
+              )
+            )}
           </nav>
 
           {/* Desktop CTA */}
@@ -156,23 +167,35 @@ function OibuzHeader({ onDemoClick }) {
             className="lg:hidden bg-white border-t border-slate-100 shadow-lg overflow-y-auto max-h-[calc(100dvh-64px)]"
           >
             <nav className="px-4 pt-3 pb-6 space-y-1" aria-label="Mobile navigation">
-              {navLinks.map(l => (
-                <a
-                  key={l.label}
-                  href={l.href}
-                  className="flex items-center px-4 py-3 text-sm font-medium text-slate-700 rounded-xl hover:bg-slate-50 min-h-[48px] cursor-pointer"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setMenuOpen(false);
-                    const target = document.querySelector(l.href);
-                    if (target) {
-                      target.scrollIntoView({ behavior: "smooth" });
-                    }
-                  }}
-                >
-                  {l.label}
-                </a>
-              ))}
+              {navLinks.map(l =>
+                l.to ? (
+                  <Link
+                    key={l.label}
+                    to={l.to}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center justify-between px-4 py-3 text-sm font-bold text-[#2563eb] bg-blue-50/60 rounded-xl hover:bg-blue-50 min-h-[48px] cursor-pointer"
+                  >
+                    <span>{l.label}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                ) : (
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    className="flex items-center px-4 py-3 text-sm font-medium text-slate-700 rounded-xl hover:bg-slate-50 min-h-[48px] cursor-pointer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setMenuOpen(false);
+                      const target = document.querySelector(l.href);
+                      if (target) {
+                        target.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                  >
+                    {l.label}
+                  </a>
+                )
+              )}
               <div className="pt-3 border-t border-slate-100 space-y-2.5">
                 <a
                   href={getOibuzRegisterUrl({ source: "oibuz_landing_drawer" })}
@@ -1015,16 +1038,12 @@ function HeroSection({ onDemoClick }) {
               </div>
               <p className="text-xs sm:text-[11px] font-semibold text-slate-500 flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
                 <span>✓ Setup your company workspace yourself in 2 mins &bull; No credit card required</span>
-                <a
-                  href="#setup-tutorial"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById("setup-tutorial")?.scrollIntoView({ behavior: "smooth" });
-                  }}
+                <Link
+                  to="/oibuz/setup-guide"
                   className="text-[#1a3a6b] hover:text-blue-700 font-bold underline underline-offset-2 cursor-pointer inline-flex items-center py-0.5"
                 >
-                  Watch Setup Guide (EN / हिंदी) ↓
-                </a>
+                  Watch Setup Guide (EN / हिंदी) →
+                </Link>
               </p>
             </motion.div>
 
@@ -2309,9 +2328,24 @@ function DemoForm() {
 /* ─── FOOTER ─────────────────────────────────────────────────────────────── */
 function OibuzFooter() {
   const cols = {
-    Platform: ["Features", "For Construction", "How It Works", "Pricing", "FAQ", "Contact"],
-    Company: ["About", "Prajyot Infotech", "Support"],
-    Legal: ["Privacy Policy", "Terms & Conditions"],
+    Platform: [
+      { label: "Features", href: "#features" },
+      { label: "For Construction", href: "#construction" },
+      { label: "How It Works", href: "#how-it-works" },
+      { label: "Pricing", href: "#pricing" },
+      { label: "Setup Guide", to: "/oibuz/setup-guide" },
+      { label: "FAQ", href: "#faq" },
+    ],
+    Company: [
+      { label: "Prajyot Infotech", to: "/" },
+      { label: "About", to: "/about" },
+      { label: "HRMS Docs", to: "/products/hrms" },
+      { label: "WhatsApp Support", external: "https://wa.me/917020708747" },
+    ],
+    Legal: [
+      { label: "Privacy Policy", to: "/privacy" },
+      { label: "Terms & Conditions", to: "/terms" },
+    ],
   };
   return (
     <footer className="bg-[#0a1628] text-white pt-12 pb-24 sm:py-16">
@@ -2325,10 +2359,37 @@ function OibuzFooter() {
           {Object.entries(cols).map(([g, items]) => (
             <div key={g}>
               <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">{g}</p>
-              <ul className="space-y-2.5">
-                {items.map(i => (
-                  <li key={i}>
-                    <a href="#" className="text-sm text-slate-500 hover:text-white transition-colors block py-0.5 min-h-[32px] flex items-center">{i}</a>
+              <ul className="space-y-2">
+                {items.map(item => (
+                  <li key={item.label}>
+                    {item.to ? (
+                      <Link
+                        to={item.to}
+                        className="text-sm text-slate-400 hover:text-white transition-colors py-0.5 min-h-[32px] flex items-center"
+                      >
+                        {item.label}
+                      </Link>
+                    ) : item.external ? (
+                      <a
+                        href={item.external}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-slate-400 hover:text-white transition-colors py-0.5 min-h-[32px] flex items-center"
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      <a
+                        href={item.href}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          document.querySelector(item.href)?.scrollIntoView({ behavior: "smooth" });
+                        }}
+                        className="text-sm text-slate-400 hover:text-white transition-colors py-0.5 min-h-[32px] flex items-center"
+                      >
+                        {item.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -2346,7 +2407,18 @@ function OibuzFooter() {
 
 /* ─── ROOT ───────────────────────────────────────────────────────────────── */
 export default function OibuzLandingPage() {
+  const { hash } = useLocation();
   const scrollToDemo = () => document.getElementById("demo")?.scrollIntoView({ behavior: "smooth" });
+
+  useEffect(() => {
+    if (hash) {
+      const timer = setTimeout(() => {
+        document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [hash]);
+
   return (
     <div className="bg-white overflow-x-clip">
       <Seo
@@ -2372,7 +2444,7 @@ export default function OibuzLandingPage() {
       <WhyOibuz />
       <ControlSecurity />
       <OibuzPricingSection id="pricing" />
-      <OibuzSetupTutorial onDemoClick={scrollToDemo} />
+      <OibuzSetupTutorial onDemoClick={scrollToDemo} guidePageUrl="/oibuz/setup-guide" />
       <FAQ />
       <FinalCTA onDemoClick={scrollToDemo} />
       <DemoForm />

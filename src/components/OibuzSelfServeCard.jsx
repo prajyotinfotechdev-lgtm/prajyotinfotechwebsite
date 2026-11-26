@@ -79,12 +79,14 @@ export default function OibuzSelfServeCard({ source = "self_serve_card", dark = 
 
       <div className={`mt-3 pt-3 border-t text-center ${dark ? "border-white/10" : "border-blue-200/70"}`}>
         <Link
-          to="/products/hrms/resources#setup-tutorial"
+          to="/oibuz/setup-guide"
           onClick={(e) => {
-            const el = document.getElementById("setup-tutorial");
-            if (el) {
-              e.preventDefault();
-              el.scrollIntoView({ behavior: "smooth" });
+            if (window.location.pathname === "/oibuz/setup-guide") {
+              const el = document.getElementById("setup-tutorial");
+              if (el) {
+                e.preventDefault();
+                el.scrollIntoView({ behavior: "smooth" });
+              }
             }
           }}
           className={`inline-flex items-center justify-center gap-1.5 text-xs font-bold transition-colors ${

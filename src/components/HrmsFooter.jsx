@@ -30,6 +30,7 @@ export default function HrmsFooter() {
                 { label: "For Construction", to: "/products/hrms/for-construction" },
                 { label: "Pricing & Plans", to: "/products/hrms/pricing" },
                 { label: "Resources & FAQ", to: "/products/hrms/resources" },
+                { label: "Account Setup Guide", to: "/oibuz/setup-guide" },
               ].map((item) => (
                 <Link key={item.label} to={item.to} className="block text-sm text-slate-400 hover:text-white transition-colors">
                   {item.label}

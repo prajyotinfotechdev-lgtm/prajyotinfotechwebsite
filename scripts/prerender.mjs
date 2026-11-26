@@ -321,6 +321,25 @@ const ROUTES = [
     content: `<p style="font-size:18px;line-height:1.6;color:#334155;">Self-onboarding construction workforce platform with GPS selfie attendance, project timesheets, expense approvals, and 1-click payroll. <a href="https://www.oibuz.in/register">Start Free Trial on OIBUZ.in &rarr;</a></p>`,
   },
   {
+    path: "oibuz/setup-guide",
+    title: "OIBUZ Account Setup Guide (English & हिंदी) — Step-by-Step Walkthrough",
+    description: "Complete OIBUZ onboarding walkthrough in English and Hindi: visit oibuz.in/register, preview your company.oibuz.in URL, verify your email within 24 hours, activate your 14-day free trial, and enter the Admin Dashboard.",
+    keywords: "OIBUZ account setup guide, oibuz.in/register tutorial, how to setup oibuz account, oibuz hindi setup video, oibuz onboarding",
+    canonical: "https://www.prajyotinfotech.in/oibuz/setup-guide",
+    h1: "Set Up Your OIBUZ Workspace in Under 2 Minutes (English & हिंदी Guide)",
+    content: `
+      <p style="font-size:18px;line-height:1.6;color:#334155;max-width:850px;margin-bottom:24px;">
+        Follow the bilingual interactive audio tutorial and complete written setup documentation to register your organization at <a href="https://www.oibuz.in/register">https://www.oibuz.in/register</a>, verify your email within 24 hours, activate your 14-day free trial, and open your Admin Dashboard.
+      </p>
+      <ul style="line-height:1.8;color:#334155;font-size:15px;">
+        <li><strong>Step 1 of 2:</strong> Enter unique Organization Name (preview live subdomain <code>company.oibuz.in</code>) and Your Full Name. Reserved words (<code>www</code>, <code>app</code>, <code>api</code>, <code>admin</code>, <code>support</code>, <code>platform</code>) cannot be used.</li>
+        <li><strong>Step 2 of 2:</strong> Enter valid work or personal email (no disposable/temporary email domains), set password (min 6 characters), and accept Terms & Privacy Policy.</li>
+        <li><strong>Email Verification:</strong> Click verification link within 24 hours (resend allowed once every 60 seconds; login locked until verified).</li>
+        <li><strong>Trial Activation:</strong> 14-day free trial begins upon verification, then Proceed to Login to enter the Admin Dashboard.</li>
+      </ul>
+    `,
+  },
+  {
     path: "articles",
     title: "Engineering Articles & Tech Insights — Prajyot Infotech",
     description: "Technical guides, architecture deep dives, and business software insights from Prajyot Infotech engineers.",
