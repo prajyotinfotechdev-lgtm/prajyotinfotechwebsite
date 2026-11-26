@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import ToolSeoFaq from "../components/ToolSeoFaq.jsx";
@@ -11,12 +12,14 @@ import {
   TrendingDown,
   ShieldCheck,
   ArrowRight,
+  ArrowUpRight,
   Calculator,
   MessageSquare,
   Sparkles,
 } from "lucide-react";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
 import { useBottomBar } from "../utils/useBottomBar.js";
+import { getOibuzRegisterUrl, trackOibuzTrialClick } from "../utils/oibuzLinks.js";
 
 const WA_NUMBER = "917020708747";
 
@@ -310,22 +313,39 @@ export default function ConstructionLeakageCalculator() {
             <ShieldCheck className="w-6 h-6" />
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-white mb-3">
-            Stop Site Cash Leakages with Custom Workforce Tracking
+            Stop Site Cash Leakages with OIBUZ Construction Workforce OS
           </h2>
           <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-7 leading-relaxed">
-            Eliminate buddy punching using GPS geofenced check-ins, photo verification, and mobile site expense ledgers built for Indian contractors.
+            Eliminate buddy punching and ghost workers using GPS geofenced selfie check-ins, supervisor crew punching, and mobile site expense ledgers — live in 2 minutes.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-3">
-            <button type="button" onClick={() => openLeadModal({ projectType: "Construction Attendance & Site Leakage App" })}
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3">
+            <a
+              href={getOibuzRegisterUrl({ source: "leakage_calculator_cta" })}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackOibuzTrialClick("leakage_calculator_cta")}
+              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all min-h-[48px]"
+            >
+              <span>Start 14-Day Free Trial</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+            <Link
+              to="/oibuz"
+              className="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm flex items-center justify-center gap-2 transition-all min-h-[48px]"
+            >
+              <span>Explore OIBUZ Platform</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <button type="button" onClick={() => openLeadModal({ projectType: "Oibuz Construction Attendance & Site Leakage App" })}
               className="px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-brand-600/30 transition-all cursor-pointer min-h-[48px]">
               <span>Book 15-Minute Demo</span>
               <ArrowRight className="w-4 h-4" />
             </button>
             <a
-              href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Hi Prajyot Infotech, we calculated our construction leakage at ₹${calculations.totalMonthlyLeakage.toLocaleString("en-IN")}/mo and want a demo.`)}`}
+              href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Hi Prajyot Infotech, we calculated our construction leakage at ₹${calculations.totalMonthlyLeakage.toLocaleString("en-IN")}/mo and want a demo of OIBUZ.`)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all min-h-[48px]"
+              className="px-6 py-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all min-h-[48px]"
             >
               <MessageSquare className="w-4 h-4" />
               <span>WhatsApp Direct</span>

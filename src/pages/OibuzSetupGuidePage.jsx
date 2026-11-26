@@ -12,6 +12,7 @@ import {
   CheckCircle2,
   ChevronDown,
   Clock,
+  Copy,
   ExternalLink,
   FolderSearch,
   Globe,
@@ -28,6 +29,7 @@ import {
   RefreshCw,
   Rocket,
   Settings,
+  Share2,
   ShieldAlert,
   ShieldCheck,
   Sparkles,
@@ -38,6 +40,7 @@ import {
   Zap,
 } from "lucide-react";
 import Seo from "../components/Seo.jsx";
+import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import OibuzSetupTutorial from "../components/OibuzSetupTutorial.jsx";
 import OibuzSelfServeCard from "../components/OibuzSelfServeCard.jsx";
 import { TUTORIAL_LANGUAGES, resolveCrossLanguageSceneIndex } from "../components/OibuzSetupTutorialData.js";
@@ -576,6 +579,14 @@ export default function OibuzSetupGuidePage() {
   const [scrolled, setScrolled] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
   const [jumpRequest, setJumpRequest] = useState(null);
+  const [copiedLink, setCopiedLink] = useState(false);
+
+  const shareGuideUrl = "https://www.prajyotinfotech.in/oibuz/setup-guide";
+  const handleCopyGuideLink = useCallback(() => {
+    navigator.clipboard?.writeText(shareGuideUrl);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2500);
+  }, []);
 
   const c = GUIDE_CONTENT[language] || GUIDE_CONTENT.en;
   const langScenes = TUTORIAL_LANGUAGES[language]?.scenes || TUTORIAL_LANGUAGES.en.scenes;
@@ -633,6 +644,14 @@ export default function OibuzSetupGuidePage() {
         image="/og/og-oibuz.jpg"
         schema={howToSchema}
       />
+      <BreadcrumbsLd
+        visible={false}
+        items={[
+          { name: "Home", item: "/" },
+          { name: "OIBUZ Construction Platform", item: "/oibuz" },
+          { name: "Account Setup Guide", item: "/oibuz/setup-guide" },
+        ]}
+      />
 
       {/* ─── DEDICATED HEADER ────────────────────────────────────────────── */}
       <header
@@ -645,7 +664,7 @@ export default function OibuzSetupGuidePage() {
         <div className={CONTAINER}>
           <div className="flex items-center justify-between h-16 sm:h-[68px] gap-2">
             {/* Brand + Back link */}
-            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 shrink-0">
               <Link to="/oibuz" className="flex-shrink-0 flex items-center" aria-label="OIBUZ Overview">
                 <img
                   src="/images/oibuz-logo.png"
@@ -653,10 +672,10 @@ export default function OibuzSetupGuidePage() {
                   className="h-8 sm:h-10 w-auto object-contain"
                 />
               </Link>
-              <span className="text-slate-200 hidden sm:inline">|</span>
+              <span className="text-slate-200 hidden xl:inline">|</span>
               <Link
                 to="/oibuz"
-                className="hidden sm:inline-flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-[#1a3a6b] transition-colors whitespace-nowrap"
+                className="hidden xl:inline-flex items-center gap-1 text-xs font-semibold text-slate-500 hover:text-[#1a3a6b] transition-colors whitespace-nowrap"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>{c.backToOibuz}</span>
@@ -664,7 +683,7 @@ export default function OibuzSetupGuidePage() {
             </div>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-5" aria-label="Setup guide sections">
+            <nav className="hidden lg:flex items-center gap-3.5 xl:gap-5" aria-label="Setup guide sections">
               {c.navLinks.map((item) => (
                 <a
                   key={item.label}
@@ -844,7 +863,7 @@ export default function OibuzSetupGuidePage() {
             </p>
 
             {/* Primary CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-3 mb-6">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-3 mb-4">
               <a
                 href={getOibuzRegisterUrl({ source: "setup_guide_hero" })}
                 target="_blank"
@@ -867,6 +886,39 @@ export default function OibuzSetupGuidePage() {
                 <span>{c.secondaryCta}</span>
                 <ChevronDown className="w-4 h-4 shrink-0" />
               </a>
+            </div>
+
+            {/* Share Guide Strip (WhatsApp / Copy Link for HR & Site Supervisors) */}
+            <div className="inline-flex flex-wrap items-center justify-center gap-2 mb-6 text-xs">
+              <span className="inline-flex items-center gap-1.5 text-slate-500 font-medium">
+                <Share2 className="w-3.5 h-3.5 text-blue-600" />
+                <span>{language === "hi" ? "टीम के साथ शेयर करें:" : "Share with HR / Site Team:"}</span>
+              </span>
+              <a
+                href={`https://wa.me/?text=${encodeURIComponent(
+                  language === "hi"
+                    ? `OIBUZ अकाउंट सेटअप वीडियो और गाइड (हिंदी और English में) — सिर्फ 2 मिनट में कंपनी वर्कस्पेस बनाएं: ${shareGuideUrl}`
+                    : `Step-by-step OIBUZ Workspace Setup Video & Guide (English & Hindi): ${shareGuideUrl}`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 font-bold transition-colors"
+              >
+                <MessageCircle className="w-3.5 h-3.5" />
+                <span>{language === "hi" ? "WhatsApp पर भेजें" : "WhatsApp"}</span>
+              </a>
+              <button
+                type="button"
+                onClick={handleCopyGuideLink}
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-semibold transition-colors cursor-pointer"
+              >
+                {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-500" />}
+                <span>
+                  {copiedLink
+                    ? language === "hi" ? "लिंक कॉपी हुआ!" : "Copied!"
+                    : language === "hi" ? "लिंक कॉपी करें" : "Copy Link"}
+                </span>
+              </button>
             </div>
 
             {/* 4 Quick Fact Cards */}

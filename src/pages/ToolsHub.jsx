@@ -113,7 +113,39 @@ export default function ToolsHub() {
       </div>
 
       {/* Live Interactive Software Demos Strip */}
-      <div className="max-w-7xl mx-auto px-4 pt-12 pb-2">
+      <div className="max-w-7xl mx-auto px-4 pt-12 pb-2 space-y-5">
+        <div className="bg-gradient-to-r from-[#0f1f3d] via-[#152d57] to-[#1a3a6b] rounded-3xl p-6 sm:p-8 border border-blue-800/60 text-white flex flex-col lg:flex-row lg:items-center justify-between gap-5 shadow-lg">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-emerald-300 mb-2">
+              <Sparkles className="w-3.5 h-3.5" /> Flagship SaaS Platform · Self-Setup in 2 Mins
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-white">
+              OIBUZ — Construction Workforce, GPS Attendance &amp; Site Payroll
+            </h2>
+            <p className="text-xs sm:text-sm text-blue-100/85 mt-1.5 leading-relaxed">
+              Eliminate ghost workers across active project sites with geofenced selfie check-ins, 5-role governance, and 1-click PDF payslips. Try free for 14 days.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row flex-wrap gap-2.5 shrink-0">
+            <Link
+              to="/oibuz"
+              onMouseEnter={() => prefetchRoute("/oibuz")}
+              className="px-5 py-3 rounded-xl bg-white text-[#0f1f3d] hover:bg-blue-50 font-bold text-xs sm:text-sm inline-flex items-center justify-center gap-2 transition-colors min-h-[44px]"
+            >
+              <span>Explore OIBUZ</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/oibuz/setup-guide"
+              onMouseEnter={() => prefetchRoute("/oibuz/setup-guide")}
+              className="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm inline-flex items-center justify-center gap-2 transition-colors min-h-[44px]"
+            >
+              <PlayCircle className="w-4 h-4" />
+              <span>Setup Video Guide (EN/हिंदी)</span>
+            </Link>
+          </div>
+        </div>
+
         <div className="bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-800 text-white">
           <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
             <div>

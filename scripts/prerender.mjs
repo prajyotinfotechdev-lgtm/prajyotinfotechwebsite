@@ -1208,7 +1208,7 @@ const OG_IMAGE_MAP = {
 
 function resolveOgImage(routePath) {
   if (OG_IMAGE_MAP[routePath]) return `${SITE_URL}${OG_IMAGE_MAP[routePath]}`;
-  if (routePath.startsWith("products/hrms") || routePath === "oibuz") return `${SITE_URL}/og/og-oibuz.jpg`;
+  if (routePath.startsWith("products/hrms") || routePath.startsWith("oibuz")) return `${SITE_URL}/og/og-oibuz.jpg`;
   if (routePath === "articles/construction-site-attendance-software-india-guide" || routePath === "articles/biometric-machines-vs-gps-selfie-attendance-construction") {
     return `${SITE_URL}/og/og-oibuz.jpg`;
   }
@@ -1254,6 +1254,27 @@ function buildRouteJsonLd(route) {
         url: route.canonical,
         description: route.description,
         publisher: { "@type": "Organization", name: "Prajyot Infotech", url: SITE_URL },
+      },
+    ];
+  }
+
+  if (route.path === "oibuz/setup-guide") {
+    return [
+      breadcrumb,
+      OIBUZ_SOFTWARE_SCHEMA,
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        name: "How to Create and Activate Your OIBUZ Account",
+        description: route.description,
+        totalTime: "PT2M",
+        step: [
+          { "@type": "HowToStep", position: 1, name: "Keep a Valid Work or Personal Email Ready", text: "Prepare an active email inbox; disposable email domains are rejected." },
+          { "@type": "HowToStep", position: 2, name: "Visit www.oibuz.in/register", text: "Click Start Free Trial or open oibuz.in/register directly." },
+          { "@type": "HowToStep", position: 3, name: "Enter Organization Name, Workspace URL & Your Full Name", text: "Preview your unique company.oibuz.in subdomain and continue." },
+          { "@type": "HowToStep", position: 4, name: "Set Login Email, Password & Accept Terms", text: "Use a password of at least 6 characters and submit Create Account." },
+          { "@type": "HowToStep", position: 5, name: "Verify Email Within 24 Hours & Launch 14-Day Trial", text: "Open your verification email, click Confirm, and sign in to your Admin Dashboard." },
+        ],
       },
     ];
   }

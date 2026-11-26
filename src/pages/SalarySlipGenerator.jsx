@@ -1,10 +1,12 @@
 import React, { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
 import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import ToolSeoFaq from "../components/ToolSeoFaq.jsx";
-import { Printer, Share2, Copy, Check, Eye, PenLine, Sparkles, ArrowRight } from "lucide-react";
+import { Printer, Share2, Copy, Check, Eye, PenLine, Sparkles, ArrowRight, ArrowUpRight } from "lucide-react";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
 import { useBottomBar } from "../utils/useBottomBar.js";
+import { getOibuzRegisterUrl, trackOibuzTrialClick } from "../utils/oibuzLinks.js";
 
 function numToWords(num) {
   if (!num || num <= 0) return "Zero Rupees Only";
@@ -310,12 +312,29 @@ export default function SalarySlipGenerator() {
             Managing Payroll &amp; Attendance Manually?
           </h2>
           <p className="text-slate-300 text-sm sm:text-base mb-7">
-            Prajyot Infotech builds custom HR, attendance &amp; automated payroll portals tailored to your team structure with zero per-seat SaaS licensing fees.
+            Automate GPS attendance, daily-wage calculation, advances, and 1-click PDF salary slips with <strong className="text-white">OIBUZ</strong> — or ask us for a bespoke company HR portal.
           </p>
-          <button type="button" onClick={() => openLeadModal({ projectType: "Custom Payroll & Workforce Software" })}
-            className="px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm inline-flex items-center gap-2 cursor-pointer min-h-[48px]">
-            Request Custom HR Software Quote <ArrowRight className="w-4 h-4" />
-          </button>
+          <div className="flex flex-col sm:flex-row justify-center gap-3">
+            <Link
+              to="/oibuz"
+              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm inline-flex items-center justify-center gap-2 min-h-[48px]"
+            >
+              Explore OIBUZ Payroll &amp; HRMS <ArrowRight className="w-4 h-4" />
+            </Link>
+            <a
+              href={getOibuzRegisterUrl({ source: "salary_slip_tool_cta" })}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackOibuzTrialClick("salary_slip_tool_cta")}
+              className="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm inline-flex items-center justify-center gap-2 min-h-[48px]"
+            >
+              Start OIBUZ Free Trial <ArrowUpRight className="w-4 h-4" />
+            </a>
+            <button type="button" onClick={() => openLeadModal({ projectType: "Custom Payroll & Workforce Software" })}
+              className="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm inline-flex items-center justify-center gap-2 cursor-pointer min-h-[48px]">
+              Custom HR Quote <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
 

@@ -11,7 +11,7 @@ import {
   UserCheck, AlertCircle, ChevronRight,
   Check, Briefcase, FileSpreadsheet,
   ClipboardList, Archive, Send, Home,
-  Globe, Layers, Zap, FileCheck2,
+  Globe, Layers, Zap, FileCheck2, Share2, Copy, MessageCircle,
 } from "lucide-react";
 import OibuzAudioStory from "../components/OibuzAudioStory";
 import OibuzSetupTutorial from "../components/OibuzSetupTutorial";
@@ -70,12 +70,12 @@ function OibuzHeader({ onDemoClick }) {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled || menuOpen
-          ? "bg-white/97 backdrop-blur-md shadow-sm border-b border-slate-100"
-          : "bg-white/85 lg:bg-transparent backdrop-blur-sm lg:backdrop-blur-none border-b border-slate-100/70 lg:border-b-0"
+          ? "bg-white/98 backdrop-blur-md shadow-sm border-b border-slate-200/80"
+          : "bg-white/92 backdrop-blur-md border-b border-slate-200/60"
         }`}
     >
       <div className={container}>
-        <div className="flex items-center justify-between h-16 sm:h-[68px]">
+        <div className="flex items-center justify-between gap-3 h-16 sm:h-[68px]">
           {/* Logo */}
           <a href="#" className="flex-shrink-0 flex items-center" aria-label="Oibuz home">
             <img
@@ -86,13 +86,13 @@ function OibuzHeader({ onDemoClick }) {
           </a>
 
           {/* Desktop nav — only at lg+ */}
-          <nav className="hidden lg:flex items-center gap-5 xl:gap-7" aria-label="Main navigation">
+          <nav className="hidden lg:flex items-center gap-3.5 xl:gap-5" aria-label="Main navigation">
             {navLinks.map(l =>
               l.to ? (
                 <Link
                   key={l.label}
                   to={l.to}
-                  className="text-sm font-semibold text-[#2563eb] hover:text-[#1a3a6b] transition-colors whitespace-nowrap cursor-pointer"
+                  className="text-[13px] xl:text-sm font-semibold text-[#2563eb] hover:text-[#1a3a6b] transition-colors whitespace-nowrap cursor-pointer"
                 >
                   {l.label}
                 </Link>
@@ -107,7 +107,7 @@ function OibuzHeader({ onDemoClick }) {
                       target.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
-                  className="text-sm font-medium text-slate-600 hover:text-[#1a3a6b] transition-colors whitespace-nowrap cursor-pointer"
+                  className="text-[13px] xl:text-sm font-medium text-slate-600 hover:text-[#1a3a6b] transition-colors whitespace-nowrap cursor-pointer"
                 >
                   {l.label}
                 </a>
@@ -116,17 +116,17 @@ function OibuzHeader({ onDemoClick }) {
           </nav>
 
           {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center gap-2.5">
+          <div className="hidden lg:flex items-center gap-2 shrink-0">
             <Link
               to="/"
-              className="hidden xl:inline-flex items-center text-xs font-semibold text-slate-600 hover:text-[#1a3a6b] border border-slate-200 px-3 py-2.5 rounded-lg transition-colors whitespace-nowrap"
+              className="hidden xl:inline-flex items-center text-[11px] font-semibold text-slate-600 hover:text-[#1a3a6b] border border-slate-200 px-2.5 py-2 rounded-lg transition-colors whitespace-nowrap"
             >
               ← Prajyot Infotech
             </Link>
             <button
               onClick={onDemoClick}
               id="nav-demo-btn"
-              className="flex items-center gap-1.5 border border-slate-200 hover:border-blue-300 bg-white text-[#1a3a6b] text-sm font-semibold px-4 py-2.5 rounded-lg transition-all whitespace-nowrap cursor-pointer"
+              className="flex items-center gap-1.5 border border-slate-200 hover:border-blue-300 bg-white text-[#1a3a6b] text-[13px] xl:text-sm font-semibold px-3.5 xl:px-4 py-2 rounded-lg transition-all whitespace-nowrap cursor-pointer"
             >
               Book a Demo
             </button>
@@ -135,7 +135,7 @@ function OibuzHeader({ onDemoClick }) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackOibuzTrialClick("oibuz_landing_nav")}
-              className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-bold px-5 py-2.5 rounded-lg transition-all hover:shadow-lg whitespace-nowrap"
+              className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-[13px] xl:text-sm font-bold px-4 xl:px-5 py-2 rounded-lg transition-all hover:shadow-lg whitespace-nowrap"
             >
               Start Free Trial <ArrowUpRight className="w-3.5 h-3.5 flex-shrink-0" />
             </a>
@@ -840,7 +840,7 @@ function HeroSection({ onDemoClick }) {
       {/* Floating Micro-Particles */}
       {!reduced && <AmbientHeroParticles color={accentColor} />}
 
-      <div className={`relative ${container} py-7 sm:py-14 lg:py-20`}>
+      <div className={`relative ${container} pt-8 pb-8 sm:py-14 lg:py-20`}>
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-8 xl:gap-12 items-center">
 
           {/* LEFT: KINETIC MOTION COPY & INTERACTIVE 39s SLIDESHOW */}
@@ -2437,7 +2437,14 @@ function DemoForm() {
   const [ref, inView] = useScrollReveal();
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [copiedUrl, setCopiedUrl] = useState(false);
   const [form, setForm] = useState({ name: "", company: "", phone: "", employees: "", sites: "", message: "" });
+  const shareUrl = "https://www.prajyotinfotech.in/oibuz";
+  const handleCopyShare = () => {
+    navigator.clipboard?.writeText(shareUrl);
+    setCopiedUrl(true);
+    setTimeout(() => setCopiedUrl(false), 2500);
+  };
   const hc = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
   const hs = async (e) => {
     e.preventDefault();
@@ -2492,8 +2499,39 @@ function DemoForm() {
             ))}
           </motion.div>
 
-          <div className="mb-7">
+          <div className="mb-5">
             <OibuzSelfServeCard source="oibuz_landing_demo_section" />
+          </div>
+
+          <div className="mb-7 bg-white border border-slate-200/80 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="w-8 h-8 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
+                <Share2 className="w-4 h-4 text-[#2563eb]" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-bold text-[#0f1f3d]">Evaluating with a partner or site engineer?</p>
+                <p className="text-[11px] text-slate-500">Share this page &amp; setup video directly on WhatsApp.</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <a
+                href={`https://wa.me/?text=${encodeURIComponent("Check out OIBUZ Construction Workforce & GPS Attendance Platform — 14-day self-setup free trial: https://www.prajyotinfotech.in/oibuz")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-colors min-h-[38px]"
+              >
+                <MessageCircle className="w-3.5 h-3.5 shrink-0" />
+                <span>WhatsApp</span>
+              </a>
+              <button
+                type="button"
+                onClick={handleCopyShare}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 hover:border-blue-300 bg-slate-50 hover:bg-white text-slate-700 text-xs font-semibold transition-colors cursor-pointer min-h-[38px]"
+              >
+                {copiedUrl ? <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" /> : <Copy className="w-3.5 h-3.5 text-slate-500 shrink-0" />}
+                <span>{copiedUrl ? "Copied!" : "Copy Link"}</span>
+              </button>
+            </div>
           </div>
 
           {submitted ? (
@@ -2660,12 +2698,13 @@ export default function OibuzLandingPage() {
       <Seo
         title="OIBUZ — Construction Workforce Management & Attendance Platform | Start Free Trial"
         description="Verify every site worker with GPS geofenced selfie attendance, approve leaves & expenses in 1 click, and run construction payroll in minutes. Self-setup free trial at oibuz.in/register."
-        keywords="OIBUZ, construction attendance app, civil contractor workforce platform, gps attendance without biometric machine india"
+        keywords="OIBUZ, construction attendance app, civil contractor workforce platform, gps attendance without biometric machine india, construction hrms software, site labour attendance app, daily wage payroll india"
         path="/oibuz"
         image="/og/og-oibuz.jpg"
         schema={[OIBUZ_SOFTWARE_SCHEMA, OIBUZ_FAQ_SCHEMA]}
       />
       <BreadcrumbsLd
+        visible={false}
         items={[
           { name: "Home", item: "/" },
           { name: "Products", item: "/services" },

@@ -11,6 +11,7 @@ Allow: /tools/
 Allow: /products/hrms
 Allow: /products/hrms/
 Allow: /oibuz
+Allow: /oibuz/setup-guide
 Allow: /demo/
 Allow: /solutions/
 Allow: /compare/

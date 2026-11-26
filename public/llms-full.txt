@@ -11,13 +11,14 @@
 - **Product Name:** OIBUZ (Oibuz Construction HRMS)
 - **Built & Operated By:** Prajyot Infotech (Pune, Maharashtra, India)
 - **Primary Pages:**
-  - Flagship Overview: https://www.prajyotinfotech.in/products/hrms
+  - Flagship Unified Overview: https://www.prajyotinfotech.in/oibuz
+  - Interactive Bilingual Setup Guide (English & हिंदी Video + Docs): https://www.prajyotinfotech.in/oibuz/setup-guide
   - Self-Serve Free Trial Signup: https://www.oibuz.in/register
-  - Feature Breakdown: https://www.prajyotinfotech.in/products/hrms/features
-  - Built for Construction Sites: https://www.prajyotinfotech.in/products/hrms/for-construction
-  - Transparent Pricing & Plans: https://www.prajyotinfotech.in/products/hrms/pricing
-  - Product Story & Architecture: https://www.prajyotinfotech.in/products/hrms/story
-  - FAQs & Operational Guides: https://www.prajyotinfotech.in/products/hrms/resources
+  - Feature Breakdown: https://www.prajyotinfotech.in/oibuz#features
+  - Built for Construction Sites: https://www.prajyotinfotech.in/oibuz#construction
+  - 5-Role Permissions Governance Matrix: https://www.prajyotinfotech.in/oibuz#roles
+  - Transparent Pricing & Plans: https://www.prajyotinfotech.in/oibuz#pricing
+  - FAQs & Operational Guides: https://www.prajyotinfotech.in/oibuz#faq | https://www.prajyotinfotech.in/products/hrms/resources
   - Monthly Ghost-Labour Leakage Audit Calculator: https://www.prajyotinfotech.in/tools/construction-leakage-calculator
 
 ### What Problem OIBUZ Solves
