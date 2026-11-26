@@ -1,5 +1,6 @@
 // src/components/OibuzSetupTutorial.jsx
 // OIBUZ — Bilingual Audio-Synchronized Account Setup Interactive Tutorial (EN + हिंदी)
+// v2 — Enhanced UX: cinematic caption bar, animated scenes, step progress, confetti ring, typing effect
 // Master Clock: audio.currentTime (Zero-drift requestAnimationFrame + bidirectional pointer scrubbing)
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
@@ -40,6 +41,12 @@ import {
   Gauge,
   FolderSearch,
   Timer,
+  ChevronRight,
+  Zap,
+  Star,
+  Trophy,
+  BadgeCheck,
+  Keyboard,
 } from "lucide-react";
 import {
   TUTORIAL_LANGUAGES,
@@ -90,7 +97,7 @@ function VoiceEqualizer({ isPlaying, barCount = 4, className = "" }) {
   );
 }
 
-/* ── Teleprompter Soundwave ── */
+/* ── Cinematic Caption Soundwave ── */
 function CinematicSoundwave({ isPlaying, className = "" }) {
   const bars = [40, 75, 100, 60, 85, 45, 90, 50];
   return (
@@ -121,6 +128,85 @@ function CinematicSoundwave({ isPlaying, className = "" }) {
         />
       ))}
     </div>
+  );
+}
+
+/* ── Confetti Ring (for verified-trial scene) ── */
+function ConfettiRing({ active }) {
+  const dots = [
+    { color: "#10b981", size: 7, angle: 0 },
+    { color: "#2563eb", size: 5, angle: 45 },
+    { color: "#f59e0b", size: 6, angle: 90 },
+    { color: "#8b5cf6", size: 5, angle: 135 },
+    { color: "#10b981", size: 7, angle: 180 },
+    { color: "#ef4444", size: 5, angle: 225 },
+    { color: "#2563eb", size: 6, angle: 270 },
+    { color: "#f59e0b", size: 5, angle: 315 },
+  ];
+  return (
+    <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+      {dots.map((d, i) => {
+        const rad = (d.angle * Math.PI) / 180;
+        const r = active ? 48 : 20;
+        const x = 50 + r * Math.cos(rad);
+        const y = 50 + r * Math.sin(rad);
+        return (
+          <motion.div
+            key={i}
+            animate={
+              active
+                ? {
+                    left: `${x}%`,
+                    top: `${y}%`,
+                    opacity: [0, 1, 0.8],
+                    scale: [0, 1.2, 1],
+                  }
+                : { left: "50%", top: "50%", opacity: 0, scale: 0 }
+            }
+            transition={{ duration: 0.6, delay: i * 0.05, ease: EASE }}
+            className="absolute rounded-full -translate-x-1/2 -translate-y-1/2"
+            style={{ width: d.size, height: d.size, backgroundColor: d.color }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+/* ── Typing Animation Text ── */
+function TypingText({ text, active, className = "" }) {
+  const [displayed, setDisplayed] = useState(active ? text : "");
+  const prevActiveRef = useRef(active);
+
+  useEffect(() => {
+    if (!active) {
+      setDisplayed("");
+      return;
+    }
+    if (!prevActiveRef.current && active) {
+      setDisplayed("");
+      let i = 0;
+      const interval = setInterval(() => {
+        i++;
+        setDisplayed(text.slice(0, i));
+        if (i >= text.length) clearInterval(interval);
+      }, 38);
+      return () => clearInterval(interval);
+    } else {
+      setDisplayed(text);
+    }
+    prevActiveRef.current = active;
+  }, [active, text]);
+
+  return <span className={className}>{displayed}<span className={`inline-block w-[1.5px] h-[1em] bg-current align-middle ml-0.5 ${active && displayed.length < text.length ? "opacity-100 animate-pulse" : "opacity-0"}`} /></span>;
+}
+
+/* ── Shimmer skeleton ── */
+function Shimmer({ className = "" }) {
+  return (
+    <div className={`animate-pulse rounded bg-gradient-to-r from-slate-100 via-slate-200 to-slate-100 bg-[length:200%_100%] ${className}`}
+      style={{ animation: "shimmer 1.5s infinite", backgroundSize: "200% 100%" }}
+    />
   );
 }
 
@@ -188,6 +274,37 @@ function GuidedPointer({ label }) {
   );
 }
 
+/* ── Keyboard shortcut badge ── */
+function KbdBadge({ children }) {
+  return (
+    <kbd className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-200/80 text-slate-700 text-[9px] font-mono font-bold border border-slate-300/80 shadow-xs">
+      {children}
+    </kbd>
+  );
+}
+
+/* ── Progress ring (SVG) ── */
+function ProgressRing({ pct, size = 36, strokeWidth = 3, color = "#2563eb" }) {
+  const r = (size - strokeWidth) / 2;
+  const circ = 2 * Math.PI * r;
+  const dash = circ * Math.min(1, Math.max(0, pct / 100));
+  return (
+    <svg width={size} height={size} className="rotate-[-90deg]">
+      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#e2e8f0" strokeWidth={strokeWidth} />
+      <motion.circle
+        cx={size / 2} cy={size / 2} r={r}
+        fill="none"
+        stroke={color}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeDasharray={circ}
+        animate={{ strokeDashoffset: circ - dash }}
+        transition={{ duration: 0.3, ease: "linear" }}
+      />
+    </svg>
+  );
+}
+
 /* ═════════════════════════════════════════════════════════════════════════════
    MAIN INTERACTIVE TUTORIAL COMPONENT
 ═════════════════════════════════════════════════════════════════════════════ */
@@ -209,6 +326,7 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
   const [activeSceneIndex, setActiveSceneIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [audioError, setAudioError] = useState(null);
+  const [showKbdHint, setShowKbdHint] = useState(false);
 
   // Scrubbing State
   const [isDragging, setIsDragging] = useState(false);
@@ -558,10 +676,14 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
     [togglePlay, activeSceneIndex, scenes.length, jumpToScene]
   );
 
+  const handleTheatreFocus = useCallback(() => setShowKbdHint(true), []);
+  const handleTheatreBlur = useCallback(() => setShowKbdHint(false), []);
+
   const activeScene = scenes[activeSceneIndex] || scenes[0];
   const effectiveTime = isDragging ? dragTime : currentTime;
   const maxDuration = duration || langData.duration;
   const progressRatio = maxDuration > 0 ? Math.max(0, Math.min((effectiveTime / maxDuration) * 100, 100)) : 0;
+  const progressPct = Math.round(progressRatio);
 
   const sceneDuration = Math.max(0.1, activeScene.end - activeScene.start);
   const sceneElapsed = Math.max(0, effectiveTime - activeScene.start);
@@ -571,6 +693,9 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
   const activeBeat =
     beats.find((b) => effectiveTime >= b.start && effectiveTime < b.end) ||
     beats[beats.length - 1] || { phase: "", text: activeScene.subtext };
+
+  // Step X of Y
+  const stepFraction = `${activeSceneIndex + 1} / ${scenes.length}`;
 
   return (
     <section
@@ -609,6 +734,20 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
           <p className="mt-2.5 sm:mt-3 text-xs sm:text-base text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
             {ui.sectionSubtitle}
           </p>
+
+          {/* Trust badges */}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            {[
+              { icon: Zap, label: "Under 2 Minutes", color: "#f59e0b" },
+              { icon: Star, label: "No Credit Card", color: "#10b981" },
+              { icon: BadgeCheck, label: "Hindi & English", color: "#2563eb" },
+            ].map((b) => (
+              <div key={b.label} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200 text-[11px] font-semibold text-slate-700 shadow-xs">
+                <b.icon className="w-3 h-3" style={{ color: b.color }} />
+                <span>{b.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* ═══ MAIN TUTORIAL THEATRE CARD ═══ */}
@@ -616,11 +755,13 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
           ref={stageShellRef}
           tabIndex={0}
           onKeyDown={handleTheatreKeyDown}
+          onFocus={handleTheatreFocus}
+          onBlur={handleTheatreBlur}
           className="relative rounded-2xl sm:rounded-3xl border border-slate-200/90 bg-white shadow-2xl shadow-slate-900/10 overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
         >
           {/* Top Cinema Bar */}
           <div className="flex flex-wrap items-center justify-between gap-2 px-3.5 sm:px-6 py-2.5 sm:py-3 bg-slate-50/95 border-b border-slate-200/80 text-xs relative z-20">
-            {/* Left: Brand & Active Step */}
+            {/* Left: Brand & Active Step + progress ring */}
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <img
                 src="/images/oibuz_logo.png"
@@ -628,6 +769,15 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
                 className="h-5 sm:h-6 w-auto object-contain shrink-0"
               />
               <span className="text-slate-300 hidden sm:inline">|</span>
+
+              {/* Step fraction + ring */}
+              {hasStarted && (
+                <div className="hidden sm:flex items-center gap-1.5">
+                  <ProgressRing pct={progressPct} size={28} strokeWidth={2.5} color={activeScene.accent || "#2563eb"} />
+                  <span className="text-[10px] font-mono font-bold text-slate-500">{stepFraction}</span>
+                </div>
+              )}
+
               <span className="inline-flex items-center gap-1 font-mono font-bold text-[#1a3a6b] bg-blue-100/75 px-2 sm:px-2.5 py-0.5 rounded-md text-[10px] sm:text-xs truncate">
                 <span>
                   {ui.stepPrefix} {activeScene.chapter}
@@ -725,19 +875,43 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
               className="pointer-events-none absolute inset-0 opacity-[0.035] bg-[radial-gradient(#0f1f3d_1px,transparent_1px)] [background-size:18px_18px] z-0"
             />
 
+            {/* Keyboard shortcut hint (shown on focus) */}
+            <AnimatePresence>
+              {showKbdHint && hasStarted && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  className="absolute top-3 right-4 z-30 hidden sm:flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-slate-900/90 backdrop-blur-sm text-white text-[10px] font-mono shadow-lg border border-white/10"
+                >
+                  <Keyboard className="w-3 h-3 text-slate-400" />
+                  <KbdBadge>Space</KbdBadge>
+                  <span className="text-slate-400">play/pause</span>
+                  <KbdBadge>←</KbdBadge><KbdBadge>→</KbdBadge>
+                  <span className="text-slate-400">steps</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* ── PRE-ROLL SPLASH OVERLAY ── */}
             <AnimatePresence>
               {!hasStarted && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.25 }}
                   className="absolute inset-0 z-30 bg-white/95 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-8 text-center"
                 >
                   <div className="max-w-2xl mx-auto space-y-4 sm:space-y-5">
-                    <div className="inline-flex items-center justify-center px-4 py-2.5 rounded-2xl bg-gradient-to-br from-blue-50 to-emerald-50 border border-blue-200/80 shadow-sm">
+                    {/* Pulsing logo badge */}
+                    <motion.div
+                      animate={{ scale: [1, 1.04, 1], boxShadow: ["0 0 0px rgba(37,99,235,0)", "0 0 24px rgba(37,99,235,0.18)", "0 0 0px rgba(37,99,235,0)"] }}
+                      transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                      className="inline-flex items-center justify-center px-4 py-2.5 rounded-2xl bg-gradient-to-br from-blue-50 to-emerald-50 border border-blue-200/80 shadow-sm mx-auto"
+                    >
                       <img src="/images/oibuz_logo.png" alt="OIBUZ" className="h-8 sm:h-10 w-auto object-contain" />
-                    </div>
+                    </motion.div>
 
                     {/* Prominent Language Picker on Splash */}
                     <div className="flex flex-col items-center gap-2">
@@ -778,16 +952,22 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
                       </p>
                     </div>
 
-                    {/* Step overview chips */}
+                    {/* Step overview chips — with estimated durations */}
                     <div className="hidden sm:flex flex-wrap justify-center gap-1.5 max-w-xl mx-auto">
-                      {scenes.map((s) => (
-                        <span
-                          key={s.id}
-                          className="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-[10px] font-semibold text-slate-600 shadow-2xs"
-                        >
-                          {s.chapter} {s.shortLabel}
-                        </span>
-                      ))}
+                      {scenes.map((s) => {
+                        const dur = Math.round(s.end - s.start);
+                        return (
+                          <span
+                            key={s.id}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white border border-slate-200 text-[10px] font-semibold text-slate-600 shadow-2xs"
+                          >
+                            <span>{s.chapter}</span>
+                            <span className="text-slate-400">·</span>
+                            <span>{s.shortLabel}</span>
+                            <span className="text-slate-400 font-normal">~{dur}s</span>
+                          </span>
+                        );
+                      })}
                     </div>
 
                     <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-3">
@@ -857,16 +1037,19 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
                     scene={activeScene}
                     activePhase={activeBeat.phase}
                     language={language}
+                    effectiveTime={effectiveTime}
                     onSwitchLanguage={handleSwitchLanguage}
                     onReplay={handleReplay}
                     onDemoClick={onDemoClick}
                   />
                 </div>
 
-                {/* Live Teleprompter / Subtitle Strip */}
-                <div className="mt-auto pt-3 border-t border-slate-200/75 flex items-center justify-between gap-3 sm:gap-4">
-                  <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
-                    <CinematicSoundwave isPlaying={isPlaying} className="shrink-0" />
+                {/* ── CINEMATIC CAPTION BAR ── */}
+                <div className="mt-auto rounded-xl bg-slate-900/95 backdrop-blur-sm border border-white/10 px-3.5 sm:px-4 py-2.5 flex items-center gap-3 sm:gap-4 shadow-lg">
+                  <div className="flex items-center gap-2 shrink-0">
+                    <CinematicSoundwave isPlaying={isPlaying} />
+                  </div>
+                  <div className="flex-1 min-w-0">
                     <AnimatePresence mode="wait">
                       <motion.p
                         key={activeBeat.text}
@@ -874,16 +1057,15 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -4 }}
                         transition={{ duration: 0.2 }}
-                        className="italic text-slate-900 font-semibold leading-relaxed text-[11px] sm:text-sm tracking-tight"
+                        className="text-white font-semibold leading-relaxed text-[11px] sm:text-sm tracking-tight"
                       >
                         &ldquo;{activeBeat.text}&rdquo;
                       </motion.p>
                     </AnimatePresence>
                   </div>
-
-                  <div className="hidden sm:flex items-center gap-2 text-[11px] font-mono text-slate-400 shrink-0">
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-slate-100 font-bold text-slate-700">
-                      <Radio className="w-3 h-3 text-blue-600 animate-pulse" />
+                  <div className="hidden sm:flex items-center gap-1.5 shrink-0">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white/10 border border-white/15 font-bold text-white/80 text-[10px] font-mono">
+                      <Radio className="w-2.5 h-2.5 text-blue-400 animate-pulse" />
                       <span>{ui.masterVoiceBadge}</span>
                     </span>
                   </div>
@@ -900,6 +1082,22 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
 
           {/* ═══ SCRUBBABLE TIMELINE & STEP CAROUSEL ═══ */}
           <div className="bg-slate-50 border-t border-slate-200/80 px-3.5 sm:px-6 py-3.5 sm:py-4">
+            {/* Chapter tick labels */}
+            <div className="relative h-4 mb-0.5 hidden sm:block" aria-hidden="true">
+              {scenes.map((s) => {
+                const pct = (s.start / maxDuration) * 100;
+                return (
+                  <div
+                    key={s.id}
+                    className="absolute text-[9px] font-mono font-bold text-slate-400 -translate-x-1/2 leading-none"
+                    style={{ left: `${pct}%` }}
+                  >
+                    {s.chapter}
+                  </div>
+                );
+              })}
+            </div>
+
             {/* Bidirectional Drag Track */}
             <div
               ref={trackRef}
@@ -918,11 +1116,12 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
 
                 {scenes.map((s) => {
                   const tickPercent = (s.start / maxDuration) * 100;
+                  const isDone = hasStarted && effectiveTime >= s.end;
                   return (
                     <div
                       key={s.id}
                       style={{ left: `${tickPercent}%` }}
-                      className="absolute top-0 bottom-0 w-[1.5px] bg-white/80 pointer-events-none"
+                      className={`absolute top-0 bottom-0 w-[1.5px] ${isDone ? "bg-emerald-400/70" : "bg-white/80"} pointer-events-none transition-colors`}
                     />
                   );
                 })}
@@ -1002,6 +1201,13 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
                 <span className="ml-1 text-[11px] sm:text-xs font-mono text-slate-500 font-semibold">
                   {formatTime(effectiveTime)} / {formatTime(maxDuration)}
                 </span>
+
+                {/* Live progress % */}
+                {hasStarted && (
+                  <span className="hidden sm:inline text-[10px] font-mono font-bold text-slate-400">
+                    ({progressPct}%)
+                  </span>
+                )}
               </div>
 
               {/* Prev / Next Step + Direct Trial CTA */}
@@ -1010,18 +1216,18 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
                   type="button"
                   disabled={activeSceneIndex <= 0}
                   onClick={() => jumpToScene(activeSceneIndex - 1)}
-                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-[11px] sm:text-xs font-semibold text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:pointer-events-none transition-all cursor-pointer"
+                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-[11px] sm:text-xs font-semibold text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:pointer-events-none transition-all cursor-pointer flex items-center gap-1"
                 >
-                  &larr; {ui.prevStep}
+                  <ArrowLeft className="w-3 h-3" /> {ui.prevStep}
                 </button>
 
                 <button
                   type="button"
                   disabled={activeSceneIndex >= scenes.length - 1}
                   onClick={() => jumpToScene(activeSceneIndex + 1)}
-                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-[11px] sm:text-xs font-semibold text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:pointer-events-none transition-all cursor-pointer"
+                  className="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white text-[11px] sm:text-xs font-semibold text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:pointer-events-none transition-all cursor-pointer flex items-center gap-1"
                 >
-                  {ui.nextStep} &rarr;
+                  {ui.nextStep} <ChevronRight className="w-3 h-3" />
                 </button>
 
                 <a
@@ -1045,6 +1251,7 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
               {scenes.map((s, idx) => {
                 const isActive = idx === activeSceneIndex && hasStarted;
                 const isDone = hasStarted && effectiveTime >= s.end;
+                const dur = Math.round(s.end - s.start);
                 return (
                   <button
                     key={s.id}
@@ -1060,6 +1267,9 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
                   >
                     {isDone ? <Check className="w-3 h-3 text-emerald-600 shrink-0" /> : <span>{s.chapter}</span>}
                     <span className="whitespace-nowrap">{s.shortLabel}</span>
+                    <span className={`text-[9px] font-normal ${isActive ? "text-blue-200" : isDone ? "text-emerald-500" : "text-slate-400"}`}>
+                      ~{dur}s
+                    </span>
                   </button>
                 );
               })}
@@ -1067,33 +1277,55 @@ export default function OibuzSetupTutorial({ onDemoClick, id = "setup-tutorial" 
           </div>
         </div>
 
-        {/* ── Below-Theatre Self-Setup Callout Bar ── */}
-        <div className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div>
-            <p className="font-extrabold text-[#0f1f3d] text-sm sm:text-base mb-0.5">{ui.bottomTitle}</p>
-            <p className="text-slate-500 text-xs sm:text-sm">{ui.bottomSub}</p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-2.5 shrink-0">
-            <a
-              href={getOibuzRegisterUrl({ source: "oibuz_setup_tutorial_cta" })}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackOibuzTrialClick("oibuz_setup_tutorial_cta")}
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/20 transition-all hover:-translate-y-px whitespace-nowrap"
-            >
-              <span>{ui.openRegisterCta}</span>
-              <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-            </a>
-            {onDemoClick && (
-              <button
-                type="button"
-                onClick={onDemoClick}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#1a3a6b] hover:bg-[#15305a] text-white font-bold text-xs sm:text-sm shadow-md transition-all hover:-translate-y-px whitespace-nowrap cursor-pointer"
+        {/* ── Below-Theatre Premium Callout Bar ── */}
+        <div className="mt-6 relative overflow-hidden rounded-2xl border border-slate-200 shadow-sm bg-gradient-to-r from-[#0f1f3d] via-[#1a3a6b] to-[#0f2d55]">
+          {/* Subtle grid overlay */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 opacity-[0.04] bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]"
+          />
+          <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-5 sm:p-6">
+            <div className="text-white">
+              <div className="flex items-center gap-2 mb-1">
+                <Trophy className="w-4 h-4 text-amber-400 shrink-0" />
+                <p className="font-extrabold text-sm sm:text-base">{ui.bottomTitle}</p>
+              </div>
+              <p className="text-blue-200/80 text-xs sm:text-sm">{ui.bottomSub}</p>
+              {/* Mini trust stats */}
+              <div className="mt-2 flex flex-wrap gap-3">
+                {[
+                  { label: "No credit card" },
+                  { label: "2-min setup" },
+                  { label: "14-day free trial" },
+                ].map((t) => (
+                  <span key={t.label} className="inline-flex items-center gap-1 text-[11px] text-emerald-300 font-semibold">
+                    <Check className="w-3 h-3" /> {t.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2.5 shrink-0">
+              <a
+                href={getOibuzRegisterUrl({ source: "oibuz_setup_tutorial_cta" })}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackOibuzTrialClick("oibuz_setup_tutorial_cta")}
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-500/30 transition-all hover:-translate-y-px whitespace-nowrap"
               >
-                <span>{ui.bookDemoCta}</span>
-                <ArrowRight className="w-4 h-4 stroke-[2.5]" />
-              </button>
-            )}
+                <span>{ui.openRegisterCta}</span>
+                <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+              </a>
+              {onDemoClick && (
+                <button
+                  type="button"
+                  onClick={onDemoClick}
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white/15 hover:bg-white/25 border border-white/20 text-white font-bold text-xs sm:text-sm transition-all hover:-translate-y-px whitespace-nowrap cursor-pointer"
+                >
+                  <span>{ui.bookDemoCta}</span>
+                  <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -1109,6 +1341,7 @@ function TutorialVisualStage({
   scene,
   activePhase,
   language,
+  effectiveTime,
   onSwitchLanguage,
   onReplay,
   onDemoClick,
@@ -1128,6 +1361,7 @@ function TutorialVisualStage({
           desc: "www.oibuz.in/register",
           icon: Building2,
           color: "#2563eb",
+          bgColor: "#eff6ff",
         },
         {
           n: "02",
@@ -1135,6 +1369,7 @@ function TutorialVisualStage({
           desc: isHi ? "24 घंटे वैलिड लिंक" : "24h Inbox Link",
           icon: MailCheck,
           color: "#d97706",
+          bgColor: "#fffbeb",
         },
         {
           n: "03",
@@ -1142,6 +1377,7 @@ function TutorialVisualStage({
           desc: isHi ? "14-दिन का फ्री ट्रायल" : "14-Day Trial Begins",
           icon: Sparkles,
           color: "#059669",
+          bgColor: "#ecfdf5",
         },
         {
           n: "04",
@@ -1149,6 +1385,7 @@ function TutorialVisualStage({
           desc: isHi ? "सेटिंग्स और स्टाफ" : "Settings & Site Ops",
           icon: Settings,
           color: "#4f46e5",
+          bgColor: "#eef2ff",
         },
       ];
 
@@ -1161,21 +1398,36 @@ function TutorialVisualStage({
                 initial={{ opacity: 0.35, y: 12 }}
                 animate={showRoadmap ? { opacity: 1, y: 0 } : { opacity: 0.6, y: 0 }}
                 transition={{ delay: idx * 0.1, duration: 0.4, ease: EASE }}
-                className={`p-3.5 sm:p-4 rounded-2xl border bg-white shadow-sm transition-all ${
+                className={`relative p-3.5 sm:p-4 rounded-2xl border bg-white shadow-sm transition-all ${
                   showRoadmap ? "border-blue-200 shadow-md" : "border-slate-200"
                 }`}
               >
-                <div className="flex items-center justify-between mb-2">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center"
-                    style={{ backgroundColor: `${m.color}15` }}
-                  >
-                    <m.icon className="w-4.5 h-4.5" style={{ color: m.color }} />
+                {/* Connecting arrow (not on last) */}
+                {idx < milestones.length - 1 && (
+                  <div className="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 items-center justify-center w-6 h-6">
+                    <ChevronRight className="w-4 h-4 text-slate-300" />
                   </div>
-                  <span className="text-[10px] font-mono font-black text-slate-400">{m.n}</span>
+                )}
+                <div className="flex items-center justify-between mb-2.5">
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center shadow-xs"
+                    style={{ backgroundColor: m.bgColor }}
+                  >
+                    <m.icon className="w-5 h-5" style={{ color: m.color }} />
+                  </div>
+                  <span className="text-[10px] font-mono font-black text-slate-300">{m.n}</span>
                 </div>
                 <p className="text-xs sm:text-sm font-extrabold text-slate-900 leading-tight">{m.title}</p>
                 <p className="text-[10px] sm:text-xs text-slate-500 mt-1 font-mono truncate">{m.desc}</p>
+                {showRoadmap && (
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ delay: idx * 0.12 + 0.3, duration: 0.4 }}
+                    className="h-0.5 rounded-full mt-2.5"
+                    style={{ backgroundColor: m.color, opacity: 0.3 }}
+                  />
+                )}
               </motion.div>
             ))}
           </div>
@@ -1265,6 +1517,8 @@ function TutorialVisualStage({
     /* 03 — EMAIL READINESS (EN pre-step) */
     case "email-prep": {
       const highlightNoTemp = hasReachedPhase(beats, activePhase, "no-temp");
+      const typingActive = activePhase === "valid-email";
+
       return (
         <div className="w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
           <div className="p-4 sm:p-5 rounded-2xl border-2 border-emerald-400 bg-white shadow-md space-y-3">
@@ -1279,12 +1533,12 @@ function TutorialVisualStage({
             </div>
             <div className="space-y-2 text-xs">
               <div className="p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-100 flex items-center justify-between font-mono">
-                <span className="text-slate-800 font-semibold">ops@acmeconstruction.in</span>
-                <span className="text-emerald-700 font-bold">Work</span>
+                <TypingText text="ops@acmeconstruction.in" active={typingActive} className="text-slate-800 font-semibold" />
+                <span className="text-emerald-700 font-bold ml-2">Work</span>
               </div>
               <div className="p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-100 flex items-center justify-between font-mono">
-                <span className="text-slate-800 font-semibold">john.doe@gmail.com</span>
-                <span className="text-emerald-700 font-bold">Personal</span>
+                <TypingText text="john.doe@gmail.com" active={typingActive} className="text-slate-800 font-semibold" />
+                <span className="text-emerald-700 font-bold ml-2">Personal</span>
               </div>
             </div>
           </div>
@@ -1307,13 +1561,23 @@ function TutorialVisualStage({
             <div className="space-y-2 text-xs">
               <div className="p-2.5 rounded-xl bg-white border border-rose-100 flex items-center justify-between font-mono">
                 <span className="line-through text-slate-400">temp123@mailinator.com</span>
-                <span className="text-rose-600 font-bold">Disposable</span>
+                <span className="text-rose-600 font-bold ml-2">Disposable</span>
               </div>
               <div className="p-2.5 rounded-xl bg-white border border-rose-100 flex items-center justify-between font-mono">
                 <span className="line-through text-slate-400">test@10minutemail.net</span>
-                <span className="text-rose-600 font-bold">Temporary</span>
+                <span className="text-rose-600 font-bold ml-2">Temporary</span>
               </div>
             </div>
+            {highlightNoTemp && (
+              <motion.div
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 p-2 rounded-lg bg-rose-100 text-rose-800 text-[11px] font-semibold"
+              >
+                <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
+                <span>Automatically blocked to protect your workspace security</span>
+              </motion.div>
+            )}
           </motion.div>
         </div>
       );
@@ -1338,9 +1602,10 @@ function TutorialVisualStage({
                     <div className="text-xs sm:text-sm font-black text-[#0f1f3d]">Create Account</div>
                     <div className="text-[10px] text-slate-500">Step 1 of 2 — Organization Details</div>
                   </div>
-                  <div className="flex gap-1">
+                  <div className="flex gap-1 items-center">
                     <span className="w-6 h-1.5 rounded-full bg-blue-600" />
                     <span className="w-6 h-1.5 rounded-full bg-slate-200" />
+                    <span className="ml-1 text-[9px] font-mono text-slate-400">1/2</span>
                   </div>
                 </div>
 
@@ -1348,7 +1613,7 @@ function TutorialVisualStage({
                 <div>
                   <div className="text-[10px] font-bold text-slate-700 mb-1 flex items-center justify-between">
                     <span>Organization Name *</span>
-                    {hasOrg && <span className="text-emerald-600 font-mono">✓ Unique</span>}
+                    {hasOrg && <span className="text-emerald-600 font-mono text-[9px]">✓ Unique &amp; Available</span>}
                   </div>
                   <div
                     className={`px-3 py-2 rounded-xl border text-xs font-semibold flex items-center gap-2 transition-all ${
@@ -1357,6 +1622,13 @@ function TutorialVisualStage({
                   >
                     <Building2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                     <span>{hasOrg ? "Acme Construction" : "Enter company or business name..."}</span>
+                    {hasOrg && (
+                      <motion.span
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="ml-auto w-2 h-2 rounded-full bg-blue-500 animate-pulse"
+                      />
+                    )}
                   </div>
                 </div>
 
@@ -1373,6 +1645,9 @@ function TutorialVisualStage({
                   <div className="text-xs font-mono font-black text-[#0f1f3d] flex items-center gap-1.5">
                     <Globe className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                     <span>{hasUrl ? "https://acme-construction.oibuz.in" : "your-company.oibuz.in"}</span>
+                    {hasUrl && (
+                      <span className="ml-auto text-[9px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">LIVE</span>
+                    )}
                   </div>
                 </motion.div>
 
@@ -1485,9 +1760,10 @@ function TutorialVisualStage({
                   <div className="text-xs sm:text-sm font-black text-[#0f1f3d]">Create Account</div>
                   <div className="text-[10px] text-slate-500">Step 2 of 2 — Sign-In Credentials</div>
                 </div>
-                <div className="flex gap-1">
+                <div className="flex gap-1 items-center">
                   <span className="w-6 h-1.5 rounded-full bg-emerald-500" />
                   <span className="w-6 h-1.5 rounded-full bg-indigo-600" />
+                  <span className="ml-1 text-[9px] font-mono text-slate-400">2/2</span>
                 </div>
               </div>
 
@@ -1496,7 +1772,7 @@ function TutorialVisualStage({
                 <div className="sm:col-span-2">
                   <div className="text-[10px] font-bold text-slate-700 mb-1 flex items-center justify-between">
                     <span>Email Address *</span>
-                    {hasEmail && <span className="text-emerald-600 font-mono">✓ Valid &amp; New</span>}
+                    {hasEmail && <span className="text-emerald-600 font-mono text-[9px]">✓ Valid &amp; New</span>}
                   </div>
                   <div
                     className={`px-3 py-2 rounded-xl border text-xs font-semibold flex items-center gap-2 ${
@@ -1512,7 +1788,7 @@ function TutorialVisualStage({
                 <div>
                   <div className="text-[10px] font-bold text-slate-700 mb-1 flex items-center justify-between">
                     <span>Password *</span>
-                    {hasPw && <span className="text-emerald-600 font-mono">6+ chars ✓</span>}
+                    {hasPw && <span className="text-emerald-600 font-mono text-[9px]">6+ chars ✓</span>}
                   </div>
                   <div
                     className={`px-3 py-2 rounded-xl border text-xs font-mono flex items-center gap-2 ${
@@ -1528,7 +1804,7 @@ function TutorialVisualStage({
                 <div>
                   <div className="text-[10px] font-bold text-slate-700 mb-1 flex items-center justify-between">
                     <span>Confirm Password *</span>
-                    {hasConfirm && <span className="text-emerald-600 font-mono">Matched ✓</span>}
+                    {hasConfirm && <span className="text-emerald-600 font-mono text-[9px]">Matched ✓</span>}
                   </div>
                   <div
                     className={`px-3 py-2 rounded-xl border text-xs font-mono flex items-center gap-2 ${
@@ -1548,11 +1824,15 @@ function TutorialVisualStage({
                 }`}
               >
                 <div
-                  className={`w-4 h-4 rounded flex items-center justify-center shrink-0 mt-0.5 border ${
+                  className={`w-4 h-4 rounded flex items-center justify-center shrink-0 mt-0.5 border transition-all ${
                     hasTerms ? "bg-indigo-600 border-indigo-600 text-white" : "bg-white border-slate-300"
                   }`}
                 >
-                  {hasTerms && <Check className="w-3 h-3 stroke-[3]" />}
+                  {hasTerms && (
+                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 300, damping: 15 }}>
+                      <Check className="w-3 h-3 stroke-[3]" />
+                    </motion.div>
+                  )}
                 </div>
                 <div className="text-[10px] sm:text-xs text-slate-700 leading-snug">
                   I agree to the{" "}
@@ -1609,9 +1889,13 @@ function TutorialVisualStage({
           {/* Left: Check Your Email Screen */}
           <BrowserMockup url="https://www.oibuz.in/verify-pending" badge="PENDING">
             <div className="text-center space-y-2.5 py-1">
-              <div className="w-11 h-11 rounded-2xl bg-amber-100 border border-amber-200 text-amber-700 flex items-center justify-center mx-auto">
+              <motion.div
+                animate={{ scale: [1, 1.08, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                className="w-11 h-11 rounded-2xl bg-amber-100 border border-amber-200 text-amber-700 flex items-center justify-center mx-auto"
+              >
                 <Mail className="w-5 h-5" />
-              </div>
+              </motion.div>
               <div className="inline-block px-2.5 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-[10px] font-mono font-bold text-amber-800">
                 Account Created &bull; Pending Verification
               </div>
@@ -1672,9 +1956,13 @@ function TutorialVisualStage({
 
               <div className="relative flex items-center justify-between gap-2 bg-emerald-50/70 border border-emerald-200 rounded-xl p-2.5">
                 <span className="text-xs font-bold text-emerald-900">Verify Email Address</span>
-                <span className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-[10px] font-bold">
+                <motion.span
+                  animate={openInbox ? { scale: [1, 1.05, 1] } : {}}
+                  transition={{ duration: 1.2, repeat: openInbox ? Infinity : 0 }}
+                  className="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-[10px] font-bold"
+                >
                   Verify Link &rarr;
-                </span>
+                </motion.span>
               </div>
             </motion.div>
 
@@ -1719,16 +2007,28 @@ function TutorialVisualStage({
 
       return (
         <div className="w-full max-w-3xl">
-          <BrowserMockup url="https://www.oibuz.in/verify-email?status=success" badge="VERIFIED">
+          <BrowserMockup url="https://www.oibuz.in/verify-email?status=success" badge="VERIFIED ✓">
             <div className="text-center space-y-3 py-1">
-              <motion.div
-                initial={{ scale: 0.7, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ type: "spring", stiffness: 260, damping: 18 }}
-                className="w-12 h-12 rounded-2xl bg-emerald-100 border border-emerald-200 text-emerald-700 flex items-center justify-center mx-auto"
-              >
-                <CheckCircle2 className="w-6 h-6" />
-              </motion.div>
+              {/* Success icon with confetti ring */}
+              <div className="relative inline-flex items-center justify-center">
+                <ConfettiRing active={wsActive} />
+                <motion.div
+                  initial={{ scale: 0.7, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                  className="relative w-14 h-14 rounded-2xl bg-emerald-100 border-2 border-emerald-300 text-emerald-700 flex items-center justify-center"
+                >
+                  <CheckCircle2 className="w-7 h-7" />
+                  {wsActive && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: [0, 1.5, 1] }}
+                      transition={{ duration: 0.5 }}
+                      className="absolute inset-0 rounded-2xl bg-emerald-400/20"
+                    />
+                  )}
+                </motion.div>
+              </div>
 
               <div>
                 <div className="text-base sm:text-xl font-black text-emerald-700">Verification Successful!</div>
@@ -1762,9 +2062,19 @@ function TutorialVisualStage({
                   <div className="text-xs font-black text-slate-900 mt-0.5">
                     {isHi ? "अभी से शुरू (वेरिफिकेशन पर)" : "Starts Now (At Verification)"}
                   </div>
-                  <div className="text-[10px] text-slate-600 mt-0.5">
-                    {isHi ? "फॉर्म सबमिट करते समय नहीं" : "Not at form submission"}
-                  </div>
+                  {trialStarts && (
+                    <div className="mt-1.5">
+                      <div className="h-1 bg-slate-200 rounded-full overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: "7%" }}
+                          transition={{ duration: 1.2, ease: "easeOut" }}
+                          className="h-full bg-blue-500 rounded-full"
+                        />
+                      </div>
+                      <div className="text-[9px] text-slate-500 mt-0.5 font-mono">Day 1 of 14</div>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -1825,7 +2135,8 @@ function TutorialVisualStage({
                     </div>
                     <div className="text-[10px] text-slate-500">Welcome, John Doe (Primary Administrator)</div>
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-bold">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-bold">
+                    <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     14-Day Free Trial Active
                   </span>
                 </div>
@@ -1918,8 +2229,10 @@ function TutorialVisualStage({
           {tips.map((t) => {
             const isActive = activePhase === t.id;
             return (
-              <div
+              <motion.div
                 key={t.id}
+                animate={isActive ? { y: [0, -4, 0] } : { y: 0 }}
+                transition={{ duration: 0.4 }}
                 className={`p-4 rounded-2xl border bg-white transition-all ${
                   isActive ? "border-blue-500 shadow-lg ring-2 ring-blue-500/20 scale-[1.02]" : "border-slate-200 shadow-xs"
                 }`}
@@ -1940,7 +2253,16 @@ function TutorialVisualStage({
                 </div>
                 <div className="text-xs sm:text-sm font-extrabold text-slate-900 mb-1">{t.title}</div>
                 <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed">{t.desc}</p>
-              </div>
+                {isActive && (
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: 0.5 }}
+                    className="h-0.5 rounded-full mt-3"
+                    style={{ backgroundColor: t.color }}
+                  />
+                )}
+              </motion.div>
             );
           })}
         </div>
@@ -1953,12 +2275,21 @@ function TutorialVisualStage({
       const otherLang = isHi ? "en" : "hi";
       return (
         <div className="w-full max-w-3xl p-5 sm:p-7 rounded-2xl sm:rounded-3xl border-2 border-emerald-300 bg-gradient-to-br from-[#0f1f3d] via-[#13294d] to-[#0b3b36] text-white text-center shadow-2xl relative overflow-hidden">
+          {/* Background particle dots */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 opacity-[0.06] bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:14px_14px]"
+          />
+          {/* Ambient glow */}
+          <div aria-hidden="true" className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-emerald-500/20 blur-[60px] rounded-full" />
+
           <div className="relative z-10 space-y-4">
             <img
               src="/images/oibuz_logo.png"
               alt="OIBUZ"
               className="h-9 sm:h-11 w-auto object-contain mx-auto brightness-0 invert"
             />
+
             <div>
               <span className="inline-block text-[10px] font-mono font-bold uppercase tracking-widest text-emerald-300 bg-emerald-500/15 border border-emerald-400/30 px-3 py-1 rounded-full mb-2">
                 {isHi ? "14-दिन का फ्री ट्रायल शुरू" : "14-Day Free Trial Ready"}
@@ -1973,13 +2304,33 @@ function TutorialVisualStage({
               </p>
             </div>
 
+            {/* Achievement badges */}
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {[
+                isHi ? "✓ रजिस्टर हुआ" : "✓ Registered",
+                isHi ? "✓ वेरीफाई हुआ" : "✓ Verified",
+                isHi ? "✓ वर्कस्पेस एक्टिव" : "✓ Workspace Active",
+                isHi ? "✓ डैशबोर्ड खुला" : "✓ Dashboard Open",
+              ].map((badge) => (
+                <motion.span
+                  key={badge}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                  className="text-[10px] font-bold text-emerald-300 bg-emerald-500/15 border border-emerald-400/30 px-2 py-0.5 rounded-full"
+                >
+                  {badge}
+                </motion.span>
+              ))}
+            </div>
+
             <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1">
               <a
                 href={getOibuzRegisterUrl({ source: "oibuz_setup_tutorial_payoff" })}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackOibuzTrialClick("oibuz_setup_tutorial_payoff")}
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-xs sm:text-sm shadow-lg transition-all"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white font-extrabold text-xs sm:text-sm shadow-lg transition-all hover:scale-[1.02]"
               >
                 <span>{isHi ? "अभी अकाउंट बनाएं" : "Start Free Trial Now"}</span>
                 <ArrowUpRight className="w-4 h-4" />
