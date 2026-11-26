@@ -63,6 +63,7 @@ import BreadcrumbsLd from "../components/BreadcrumbsLd.jsx";
 import { createLead } from "../utils/leadStorage.js";
 import { useLeadModal } from "../context/LeadModalContext.jsx";
 import OibuzAudioStory from "../components/OibuzAudioStory.jsx";
+import OibuzSetupTutorial from "../components/OibuzSetupTutorial.jsx";
 import HrmsHeader from "../components/HrmsHeader.jsx";
 import HrmsFooter from "../components/HrmsFooter.jsx";
 import OibuzSelfServeCard from "../components/OibuzSelfServeCard.jsx";
@@ -697,6 +698,10 @@ export default function ConstructionHrmsPage() {
                   </span>
                   <span className="text-slate-300">•</span>
                   <span>No credit card required</span>
+                  <span className="text-slate-300">•</span>
+                  <a href="#setup-tutorial" className="text-[#1a3a6b] hover:text-blue-700 hover:underline font-bold">
+                    Watch Setup Guide (EN / हिंदी) ↓
+                  </a>
                   <span className="text-slate-300">•</span>
                   <a href="#features" className="text-blue-700 hover:underline font-bold">
                     Explore Platform ↓
@@ -1859,6 +1864,13 @@ export default function ConstructionHrmsPage() {
           </div>
         </div>
       </section>
+
+      {/* ================================================================
+          SECTION 12B ── BILINGUAL ACCOUNT SETUP TUTORIAL (EN + हिंदी)
+          ================================================================ */}
+      <OibuzSetupTutorial
+        onDemoClick={() => document.getElementById("demo-form")?.scrollIntoView({ behavior: "smooth" })}
+      />
 
       {/* ================================================================
           SECTION 13 ── FAQ

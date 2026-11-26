@@ -13,6 +13,7 @@ import {
   Globe, Layers,
 } from "lucide-react";
 import OibuzAudioStory from "../components/OibuzAudioStory";
+import OibuzSetupTutorial from "../components/OibuzSetupTutorial";
 import OibuzPricingSection from "../components/OibuzPricingSection";
 import OibuzSelfServeCard from "../components/OibuzSelfServeCard";
 import Seo from "../components/Seo.jsx";
@@ -59,6 +60,7 @@ function OibuzHeader({ onDemoClick }) {
     { label: "For Construction", href: "#construction" },
     { label: "How It Works", href: "#how-it-works" },
     { label: "Pricing", href: "#pricing" },
+    { label: "Setup Guide", href: "#setup-tutorial" },
     { label: "FAQ", href: "#faq" },
   ];
 
@@ -81,7 +83,7 @@ function OibuzHeader({ onDemoClick }) {
           </a>
 
           {/* Desktop nav — only at lg+ */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8" aria-label="Main navigation">
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-7" aria-label="Main navigation">
             {navLinks.map(l => (
               <a
                 key={l.label}
@@ -975,8 +977,18 @@ function HeroSection({ onDemoClick }) {
                   Book a Demo <ArrowRight className="w-4 h-4 flex-shrink-0" />
                 </button>
               </div>
-              <p className="text-[11px] font-semibold text-slate-500">
-                ✓ Setup your company workspace yourself in 2 mins &bull; No credit card required
+              <p className="text-[11px] font-semibold text-slate-500 flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                <span>✓ Setup your company workspace yourself in 2 mins &bull; No credit card required</span>
+                <a
+                  href="#setup-tutorial"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("setup-tutorial")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="text-[#1a3a6b] hover:text-blue-700 font-bold underline underline-offset-2 cursor-pointer"
+                >
+                  Watch Setup Guide (EN / हिंदी) ↓
+                </a>
               </p>
             </motion.div>
 
@@ -2320,6 +2332,7 @@ export default function OibuzLandingPage() {
       <WhyOibuz />
       <ControlSecurity />
       <OibuzPricingSection id="pricing" />
+      <OibuzSetupTutorial onDemoClick={scrollToDemo} />
       <FAQ />
       <FinalCTA onDemoClick={scrollToDemo} />
       <DemoForm />

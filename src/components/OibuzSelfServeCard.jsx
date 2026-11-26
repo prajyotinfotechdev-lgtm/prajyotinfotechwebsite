@@ -1,6 +1,7 @@
 // src/components/OibuzSelfServeCard.jsx
 import React from "react";
-import { ArrowUpRight, CheckCircle2, Rocket, ShieldCheck, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ArrowUpRight, CheckCircle2, Rocket, ShieldCheck, Clock, PlayCircle } from "lucide-react";
 import { getOibuzRegisterUrl, trackOibuzTrialClick } from "../utils/oibuzLinks.js";
 
 /**
@@ -75,6 +76,25 @@ export default function OibuzSelfServeCard({ source = "self_serve_card", dark = 
         <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
         <span>No credit card required &bull; Free self-onboarding</span>
       </p>
+
+      <div className={`mt-3 pt-3 border-t text-center ${dark ? "border-white/10" : "border-blue-200/70"}`}>
+        <Link
+          to="/products/hrms/resources#setup-tutorial"
+          onClick={(e) => {
+            const el = document.getElementById("setup-tutorial");
+            if (el) {
+              e.preventDefault();
+              el.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+          className={`inline-flex items-center justify-center gap-1.5 text-xs font-bold transition-colors ${
+            dark ? "text-blue-300 hover:text-white" : "text-[#1a3a6b] hover:text-blue-700"
+          }`}
+        >
+          <PlayCircle className="w-3.5 h-3.5 shrink-0" />
+          <span>Watch 4-Min Account Setup Guide (EN / हिंदी)</span>
+        </Link>
+      </div>
     </div>
   );
 }

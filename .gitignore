@@ -32,3 +32,6 @@ setup-leads-db.js
 secure-db.js
 create-admin.js
 test-leads.js
+
+# Scratch and verification scripts
+scratch/

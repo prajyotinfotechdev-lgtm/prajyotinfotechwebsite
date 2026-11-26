@@ -1,6 +1,6 @@
 // src/pages/hrms/HrmsResourcesPage.jsx
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   BookOpen,
@@ -23,6 +23,7 @@ import {
 import HrmsHeader from "../../components/HrmsHeader.jsx";
 import HrmsFooter from "../../components/HrmsFooter.jsx";
 import OibuzTrialCtaPair from "../../components/OibuzTrialCtaPair.jsx";
+import OibuzSetupTutorial from "../../components/OibuzSetupTutorial.jsx";
 import Seo from "../../components/Seo.jsx";
 import { OIBUZ_SOFTWARE_SCHEMA, OIBUZ_FAQ_SCHEMA } from "../../utils/oibuzSchema.js";
 import { useLeadModal } from "../../context/LeadModalContext.jsx";
@@ -32,6 +33,16 @@ const sxPad = "py-14 sm:py-20 lg:py-24";
 
 export default function HrmsResourcesPage() {
   const { openLeadModal } = useLeadModal();
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash === "#setup-tutorial") {
+      const timer = setTimeout(() => {
+        document.getElementById("setup-tutorial")?.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [hash]);
 
   const [activeRoleTab, setActiveRoleTab] = useState("employee");
   const [searchQuery, setSearchQuery] = useState("");
@@ -272,6 +283,18 @@ export default function HrmsResourcesPage() {
           </div>
         </div>
       </section>
+
+      {/* ─── SECTION 0: BILINGUAL ACCOUNT SETUP TUTORIAL ──────────────── */}
+      <OibuzSetupTutorial
+        onDemoClick={() =>
+          openLeadModal({
+            source: "Resources Page - Setup Tutorial Demo",
+            title: "Schedule Oibuz Technical Walkthrough",
+            subtitle: "Our construction software team will walk you through live platform capabilities.",
+            projectType: "Oibuz Construction HRMS",
+          })
+        }
+      />
 
       {/* ─── SECTION 1: PRODUCT MODULE OPERATIONAL GUIDES ─────────────── */}
       <section className={`bg-slate-50 border-b border-slate-200/80 ${sxPad}`}>
